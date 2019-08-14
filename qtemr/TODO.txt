@@ -1,0 +1,44 @@
+[Core Design]  make  visitID = julian date & delete visitAge,investigations,druglist columns
+[Core Design]  make visit load by ID & julian date
+[Core Design]  allergies operations in a separate tables
+[Core Design]  when save try to update only name && toolip to speed up inlinepatientlist.
+[UXperience]   Redesign UI & App icon
+[UXperience]   visitsbox  -->  print menu
+[UXperience]   mainwindow -->  Action Menu !!
+[UXperience]   light & dark icons
+[codeStyle]    make main window parent class and create subclasses for each speciality
+[codeStyle]    make visitsbox parent and create subclass for each speciality
+[codeStyle]    visitsbox is a widget in mainwindow
+[codeStyle]    noIfs just pure OO and make connect signals more readable
+[codeStyle]    split vitalbox to 4 subclasses so no ifs.
+[Features]     add fuild maker
+[Features]     rx cost calculate expanders
+[Features]     add expander price
+[Features]     add database optimization profiles for desktop / laptop
+[CoreDesign]   Split UI & AppCore projects and make UI never see DB but access model
+[CoreDesign]   Roshetta singleton class
+[CoewDesign]   attachment singleton !!
+[Feature]      toggle for drugs Title
+[Improvements] sync with disable not delete
+[Improvements] Portable mode
+[Improvements] MultiDevice Liscence
+[Feature]      Dropbox Integration
+
+
+
+====================================
+4.x New UI + cross plateform + open source + Portable + FREE light version + Subscription version + Life version
+@ Create App Kernel that is responsible for Holding WinServ & DataServ
+@ Make UI neve see Other Win or Data
+@ Make all in subprojects and export to DLL and Use Qt Static
+@ App will be using Single EXE and Some home made DLLs
+@ App Should be cross plateform From the begining MAC LINUX WIN
+@ Make Data Load into Memory as Patient + Visits & then View and manipulate and Save Later
+@ Make app look more like a classic app so better learning curve
+@ Postgres vs Sqlite vs MySQL
+====================================
+
+Fix getDoc and fast print easy print redundant code
+pass shortcuts to auto complete
+weeks of gestation
+list of delivery this week

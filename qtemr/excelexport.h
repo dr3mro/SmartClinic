@@ -1,0 +1,29 @@
+#ifndef EXCELEXPORT_H
+#define EXCELEXPORT_H
+
+#include <QObject>
+#include <QtSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include "mdebug.h"
+
+
+
+class excelExport : public QObject
+{
+    Q_OBJECT
+public:
+    explicit excelExport(QObject *parent = nullptr);
+    bool createXLS(QString excelFilePath);
+    bool addRow(QString ID,QString Name,QString Mobile);
+    void closeFile();
+    ~excelExport();
+private:
+    QSqlDatabase db;
+    QSqlQuery *query;
+signals:
+
+public slots:
+};
+
+#endif // EXCELEXPORT_H

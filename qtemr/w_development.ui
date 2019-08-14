@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>w_development</class>
+ <widget class="QWidget" name="w_development">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>449</width>
+    <height>149</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>3</number>
+   </property>
+   <property name="topMargin">
+    <number>3</number>
+   </property>
+   <property name="rightMargin">
+    <number>3</number>
+   </property>
+   <property name="bottomMargin">
+    <number>3</number>
+   </property>
+   <property name="spacing">
+    <number>3</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="devBox">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>110</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Developmental</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_9">
+      <item row="0" column="2">
+       <widget class="xCheckBox" name="devCrawlCB">
+        <property name="text">
+         <string>Crawl</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="xCheckBox" name="devTeethCB">
+        <property name="text">
+         <string>Teeth</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="xCheckBox" name="devSmileCB">
+        <property name="text">
+         <string>Smile</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="xCheckBox" name="devLightCB">
+        <property name="text">
+         <string>Light</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="xCheckBox" name="devSpeechCB">
+        <property name="text">
+         <string>Speech</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="xCheckBox" name="devHeadCB">
+        <property name="text">
+         <string>Head</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="xCheckBox" name="devWalkCB">
+        <property name="text">
+         <string>Walk</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="xCheckBox" name="devStandCB">
+        <property name="text">
+         <string>Stand</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="xCheckBox" name="devMotherCB">
+        <property name="text">
+         <string>Mother</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="xCheckBox" name="devSitCB">
+        <property name="text">
+         <string>Sit</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="xCheckBox" name="devSoundCB">
+        <property name="text">
+         <string>Sound</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>xCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>xcheckbox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

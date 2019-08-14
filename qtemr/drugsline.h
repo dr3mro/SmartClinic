@@ -1,0 +1,24 @@
+#ifndef DRUGSLINE_H
+#define DRUGSLINE_H
+
+#include <QObject>
+#include <QMouseEvent>
+#include <QAction>
+#include <QSettings>
+#include "genericlineedit.h"
+
+class drugsLine : public genericLineEdit
+{
+    Q_OBJECT
+public:
+    explicit drugsLine(QWidget *parent=nullptr);
+private slots:
+    void loadCompleter();
+private:
+    QAction *favAction;
+    bool favouriteDrugs;
+protected:
+    void mousePressEvent(QMouseEvent *e);
+};
+
+#endif // DRUGSLINE_H
