@@ -5,11 +5,15 @@
 #-------------------------------------------------
 QT += core gui xml network printsupport sql widgets multimedia concurrent
 
+CONFIG *= precompile_header
+
 PRECOMPILED_HEADER = pch.h
+
 precompile_header:!isEmpty(PRECOMPILED_HEADER) {
 DEFINES += USING_PCH
 }
-CONFIG += precompile_header
+
+#CONFIG += autogen_precompile_source
 
 msvc:QMAKE_CFLAGS_RELEASE += /O2
 msvc:QMAKE_CXXFLAGS_RELEASE += /O2
