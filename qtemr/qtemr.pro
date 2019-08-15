@@ -5,16 +5,6 @@
 #-------------------------------------------------
 QT += core gui xml network printsupport sql widgets multimedia concurrent
 
-CONFIG *= precompile_header
-
-PRECOMPILED_HEADER = pch.h
-
-precompile_header:!isEmpty(PRECOMPILED_HEADER) {
-DEFINES += USING_PCH
-}
-
-#CONFIG += autogen_precompile_source
-
 msvc:QMAKE_CFLAGS_RELEASE += /O2
 msvc:QMAKE_CXXFLAGS_RELEASE += /O2
 
@@ -41,6 +31,8 @@ QMAKE_EXTRA_TARGETS += build_nr
 PRE_TARGETDEPS += build_nr
 
 CONFIG += -static openssl-linked c++14
+CONFIG += precompile_header
+PRECOMPILED_HEADER = pch.h
 
 TARGET = smartClinic3
 TEMPLATE = app

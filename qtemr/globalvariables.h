@@ -1,14 +1,6 @@
 #ifndef GLOBALVARIABLES
 #define GLOBALVARIABLES
 
-#ifdef __GNUC__
-#define NO_RETURN __attribute__((noreturn))
-#elif __clang__
-#define NO_RETURN __attribute__((noreturn))
-#elif _MSC_VER
-#define NO_RETURN __declspec(noreturn)
-#endif
-
 #define MajorVer 3
 #define MinorVer 8
 #define xVer 2

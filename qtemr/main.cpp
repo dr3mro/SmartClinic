@@ -16,11 +16,10 @@
 #include "msettings.h"
 
 
-#ifdef QT_DEBUG
-  #ifdef _MSC_VER
-    #include <vld.h>
-  #endif // _MSC_VER
+#if defined(QT_DEBUG) && defined(_MSC_VER)
+#include <vld.h>
 #endif
+
 
 static bool r_p,r_c;
 static bool isSharedMemoryCreated=false;

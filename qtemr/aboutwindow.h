@@ -10,6 +10,13 @@
 #include "regapp.h"
 #include "mdialog.h"
 
+#ifdef __GNUC__
+#define COMPILER "GCC Compiler"
+#elif __clang__
+#define COMPILER "CLANG Compiler"
+#elif _MSC_VER
+#define COMPILER "MSVC Compiler"
+#endif
 
 namespace Ui {
 class AboutWindow;

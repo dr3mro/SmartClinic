@@ -21,6 +21,7 @@ AboutWindow::AboutWindow(QWidget *parent) : mDialog(parent),
     ui->serialNumber->setFont(font);
     ui->serialNumber->setFocus(Qt::OtherFocusReason);
     ui->technology->setText(QString("Using Qt %1 Technology.").arg(QT_VERSION_STR));
+    ui->compiler->setText(QString(COMPILER));
     ui->label_version->setText(APPVERSION);
     ui->label_developer->setText(DEVELOPER);
     ui->label_buildNbr->setText(QString::number(BUILD));
@@ -88,7 +89,7 @@ void AboutWindow::register_App()
     ui->unique_id_label->hide();
     ui->labelRegistered->show();
     ui->label_code->hide();
-    resize(width(),330);
+    resize(this->width(),this->minimumHeight());
 
 }
 

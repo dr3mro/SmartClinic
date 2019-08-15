@@ -56,6 +56,14 @@
 #include "mergedlg.h"
 #include "mdebug.h"
 
+#ifdef __GNUC__
+#define NO_RETURN __attribute__((noreturn))
+#elif __clang__
+#define NO_RETURN __attribute__((noreturn))
+#elif _MSC_VER
+#define NO_RETURN __declspec(noreturn)
+#endif
+
 namespace Ui {
 class MainWindow;
 }

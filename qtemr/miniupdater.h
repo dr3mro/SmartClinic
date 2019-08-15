@@ -9,7 +9,6 @@
 #include <QMessageBox>
 #include <QVersionNumber>
 #include "globalvariables.h"
-#include "build.h"
 #include "filegrabber.h"
 #include "datahelper.h"
 #include "dataiohelper.h"
