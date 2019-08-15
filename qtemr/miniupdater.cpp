@@ -161,7 +161,7 @@ void miniUpdater::closeEvent(QCloseEvent *e)
     if (downloading)
     {
         QMessageBox box;
-        int reply = box.question(0,"Confirmation","This will abort current update in progress, Are you sure?",
+        int reply = box.question(nullptr,"Confirmation","This will abort current update in progress, Are you sure?",
                                  QMessageBox::Yes,QMessageBox::No);
         if ( reply == QMessageBox::Yes)
         {
