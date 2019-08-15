@@ -2,7 +2,7 @@
 #define EMAIL_H
 
 #include <QObject>
-#include "smtp.h"
+#include "3rdparty/smtp/smtp.h"
 #include "globalvariables.h"
 
 class email : public QObject

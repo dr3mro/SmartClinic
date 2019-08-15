@@ -7,8 +7,8 @@
 #include "mymessagebox.h"
 #include "sqlbase.h"
 #include "dataiohelper.h"
-#include "3rdparty/zipreader.h"
-#include "3rdparty/zipwriter.h"
+#include "3rdparty/zip/zipreader.h"
+#include "3rdparty/zip/zipwriter.h"
 #include "globalvariables.h"
 #include "mdialog.h"
 

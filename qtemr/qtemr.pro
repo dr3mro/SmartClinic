@@ -46,6 +46,8 @@ TARGET = smartClinic3
 TEMPLATE = app
 
 SOURCES += main.cpp\
+    3rdparty/smtp/smtp.cpp \
+    3rdparty/zip/zip.cpp \
     expecteddeliveries.cpp \
     mainwindow.cpp \
     aboutwindow.cpp \
@@ -62,7 +64,6 @@ SOURCES += main.cpp\
     mymessagebox.cpp \
     textedit.cpp \
     drugindex.cpp \
-    3rdparty/zip.cpp \
     backup.cpp \
     printdrugs.cpp \
     drugstable.cpp \
@@ -85,7 +86,6 @@ SOURCES += main.cpp\
     surgicalnotes.cpp \
     msurgicalnotes.cpp \
     surgicalnoteeditor.cpp \
-    smtp.cpp \
     email.cpp \
     internet.cpp \
     richtexteditor.cpp \
@@ -182,6 +182,11 @@ SOURCES += main.cpp\
     mergedlg.cpp
 
 HEADERS  += mainwindow.h \
+    3rdparty/smtp/smtp.h \
+    3rdparty/zip/zconf.h \
+    3rdparty/zip/zipreader.h \
+    3rdparty/zip/zipwriter.h \
+    3rdparty/zip/zlib.h \
     aboutwindow.h \
     expecteddeliveries.h \
     mcashtableview.h \
@@ -199,10 +204,6 @@ HEADERS  += mainwindow.h \
     mymessagebox.h \
     textedit.h \
     drugindex.h \
-    3rdparty/zipreader.h \
-    3rdparty/zipwriter.h \
-    3rdparty/zconf.h \
-    3rdparty/zlib.h \
     backup.h \
     printdrugs.h \
     drugstable.h \
@@ -226,7 +227,6 @@ HEADERS  += mainwindow.h \
     surgicalnotes.h \
     msurgicalnotes.h \
     surgicalnoteeditor.h \
-    smtp.h \
     email.h \
     internet.h \
     richtexteditor.h \

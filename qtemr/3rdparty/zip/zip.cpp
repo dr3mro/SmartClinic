@@ -46,7 +46,7 @@
 #include <qplatformdefs.h>
 #include <qendian.h>
 #include <qdir.h>
-#include <3rdparty/zlib.h>
+#include <3rdparty/zip/zlib.h>
 #include "mdebug.h"
 
 

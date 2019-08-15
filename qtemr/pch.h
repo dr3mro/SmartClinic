@@ -104,10 +104,10 @@
 #include <QSpinBox>
 #include <QDateTimeEdit>
 #include <QSound>
-#include <3rdparty/zconf.h>
-#include <3rdparty/zipreader.h>
-#include <3rdparty/zipwriter.h>
-#include <3rdparty/zlib.h>
+#include "3rdparty/zip/zconf.h"
+#include "3rdparty/zip/zipreader.h"
+#include "3rdparty/zip/zipwriter.h"
+#include "3rdparty/zip/zlib.h"
 #include "windowmanager.h"
 #include "mdebug.h"
 #include "mdialog.h"
@@ -117,8 +117,7 @@
 #include "wm_mship.h"
 #include "email.h"
 #include "regapp.h"
-#include "smtp.h"
-
+#include "3rdparty/smtp/smtp.h"
 #include <string>
 #include <set>
 #include <map>
