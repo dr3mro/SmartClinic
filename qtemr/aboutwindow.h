@@ -4,7 +4,6 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 
-#include "build.h"
 #include "mymessagebox.h"
 #include "globalvariables.h"
 #include "regapp.h"

@@ -1,11 +1,10 @@
 #include <windows.h>
 #include "globalvariables.h"
-#include "build.h"
 
 IDI_ICON1 ICON DISCARDABLE "Graphics/AppIcon.ico"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION    MajorVer,MinorVer,xVer,BUILD
+ FILEVERSION    MajorVer,MinorVer,xVer
  PRODUCTVERSION MajorVer,MinorVer,xVer
  FILEFLAGSMASK 0x3fL
  #ifdef _DEBUG

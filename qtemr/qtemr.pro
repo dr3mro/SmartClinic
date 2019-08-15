@@ -25,11 +25,6 @@ win32-msvc*{
     LIBS           += -L"C:/Program Files (x86)/Visual Leak Detector/lib/Win32"
 }
 
-build_nr.commands = $$PWD/build_inc.bat
-build_nr.depends = FORCE
-QMAKE_EXTRA_TARGETS += build_nr
-PRE_TARGETDEPS += build_nr
-
 CONFIG += -static openssl-linked c++14
 CONFIG += precompile_header
 PRECOMPILED_HEADER = pch.h
@@ -189,7 +184,6 @@ HEADERS  += mainwindow.h \
     regapp.h \
     patientlist.h \
     visitsbox.h \
-    build.h \
     userpass.h \
     listeditor.h \
     inveslist.h \
@@ -364,7 +358,6 @@ win32:RC_FILE = MyApplication.rc
 
 OTHER_FILES += \
     MyApplication.rc \
-    build.txt \
     Theme1.css \
     TODO.txt
 
@@ -376,5 +369,4 @@ DISTFILES += \
     Graphics/newAppIcon.ico \
     README.md \
     BLUEPRINT.txt \
-    Graphics/AppIcon.ico \
-    build_inc.bat
+    Graphics/AppIcon.ico

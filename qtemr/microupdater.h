@@ -8,7 +8,6 @@
 #include <QMessageBox>
 #include "internet.h"
 #include "globalvariables.h"
-#include "build.h"
 #include "filegrabber.h"
 class microUpdater : public QObject
 {

@@ -26,4 +26,5 @@
 #define conditionsVersion 1.0
 #define drugsDatabaseVer 190504
 #define PORTABILITYLOCK ".portable"
+#define BUILD QLocale(QLocale::English,QLocale::UnitedStates).toString(QDate::currentDate(),"yyyyMMdd")
 #endif // GLOBALVARIABLES
