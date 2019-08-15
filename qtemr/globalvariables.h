@@ -1,5 +1,6 @@
 #ifndef GLOBALVARIABLES
 #define GLOBALVARIABLES
+#include <QDate>
 
 #define MajorVer 3
 #define MinorVer 8
@@ -26,5 +27,5 @@
 #define conditionsVersion 1.0
 #define drugsDatabaseVer 190504
 #define PORTABILITYLOCK ".portable"
-#define BUILD QLocale(QLocale::English,QLocale::UnitedStates).toString(QDate::currentDate(),"yyyyMMdd")
+
 #endif // GLOBALVARIABLES

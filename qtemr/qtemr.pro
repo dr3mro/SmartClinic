@@ -175,6 +175,7 @@ HEADERS  += mainwindow.h \
     3rdparty/zip/zipwriter.h \
     3rdparty/zip/zlib.h \
     aboutwindow.h \
+    build.h \
     expecteddeliveries.h \
     mcashtableview.h \
     pch.h \

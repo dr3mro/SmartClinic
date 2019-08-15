@@ -8,6 +8,7 @@
 #include "globalvariables.h"
 #include "regapp.h"
 #include "mdialog.h"
+#include "build.h"
 
 #ifdef __GNUC__
 #define COMPILER "GCC Compiler"
