@@ -3,10 +3,10 @@
 
 #define MajorVer 3
 #define MinorVer 8
-#define xVer 3
-#define APPVERSION "3.8.3"
+#define xVer 4
+#define APPVERSION "3.8.4"
 #define APPNAME "Smart Clinic"
-#define APPNAMEVER "Smart Clinic 3.8.3"
+#define APPNAMEVER "Smart Clinic 3.8.4"
 #define singleInstance "com.smartSoft.smartClinic3"
 #define DEVELOPER "AMR OSMAN"
 #define APPYEAR "2019"
