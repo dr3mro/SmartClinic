@@ -10,6 +10,9 @@ class vTypeComboBox : public QComboBox
 public:
     explicit vTypeComboBox(QWidget *parent=nullptr);
     void fillContent(int maxFollow);
+public slots:
+    void goUp();
+    void goDown();
 };
 
 #endif // VTYPECOMBOBOX_H

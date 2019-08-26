@@ -118,6 +118,7 @@ private slots:
     int getPatientsDrugsCount(int _id);
     bool doesHaveDrugsInLastVisit();
     bool doeshaveDrugsInPatient();
+    void toggleDateFollowup();
 
 signals:
     void newMessage(QString,QString);
@@ -155,6 +156,9 @@ private:
     QShortcut *printShortcut;
     QShortcut *easyPrintShortcut;
     QShortcut *printPreviewShortcut;
+    QShortcut *toggleFollowupDate;
+    QShortcut *vTypeUp;
+    QShortcut *vTypeDown;
     int visitDateTime2JulianDate();
     void connectSignals(QWidget *parent);
     void initializeVariables();

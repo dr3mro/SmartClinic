@@ -71,6 +71,7 @@ void MainWindow::boot()
     ui->DateTimeEdit->setDateTime(QDateTime::currentDateTime());
     ui->DateTimeEdit->setLocale(curLocale);
     ui->DateTimeEdit->setDisplayFormat("dd/MM/yyyy hh:mm AP");
+    ui->DateTimeEdit->calendarWidget()->setFirstDayOfWeek(Qt::Saturday);
     ui->patientnumber->setMax(indexLength-1);
     ui->patientnumber->display(ID);
 

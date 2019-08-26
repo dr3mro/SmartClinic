@@ -15,7 +15,11 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
   shift_pageDown(new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageDown), this)),
   printShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_P),this)),
   easyPrintShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this)),
-  printPreviewShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_I),this))
+  printPreviewShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_I),this)),
+  toggleFollowupDate(new QShortcut(Qt::Key_F12,this)),
+  vTypeUp(new QShortcut(Qt::Key_F10,this)),
+  vTypeDown(new QShortcut(Qt::Key_F11,this))
+
 {
   ui->setupUi(this);
   tweakui();
@@ -131,6 +135,7 @@ void visitsBox::tweakui()
       ui->LabelLL->show();
     }
   ui->dateFollowUp->setMinimumDate(QDate::currentDate());
+  ui->dateFollowUp->calendarWidget()->setFirstDayOfWeek(Qt::Saturday);
   ui->comboVisitType->fillContent(maxFollows);
   emit updateTextFont();
 
@@ -649,6 +654,9 @@ visitsBox::~visitsBox()
   delete printShortcut;
   delete printPreviewShortcut;
   delete easyPrintShortcut;
+  delete toggleFollowupDate;
+  delete vTypeUp;
+  delete vTypeDown;
 //  delete calWidget;
   sqlbase->optimize();
   sqlextra->optimize();
@@ -1380,6 +1388,14 @@ bool visitsBox::doeshaveDrugsInPatient()
   return (getPatientsDrugsCount(ID) > 0);
 }
 
+void visitsBox::toggleDateFollowup()
+{
+  if(ui->dateFollowUp->date() == QDate::currentDate())
+    ui->dateFollowUp->setDate(lastSelectedFollowupDate);
+  else if (ui->dateFollowUp->date() == lastSelectedFollowupDate)
+    ui->dateFollowUp->setDate(QDate::currentDate());
+}
+
 void visitsBox::connectSignals(QWidget *parent)
 {
   connect ( this,SIGNAL(clearInvLine()),ui->investigationsLine,SLOT(clear()),Qt::QueuedConnection);
@@ -1421,6 +1437,9 @@ void visitsBox::connectSignals(QWidget *parent)
 
   connect ( ui->vDrugsTable,SIGNAL(doeshaveDrugsInPatient()),this,SLOT(doeshaveDrugsInPatient()));
   connect ( ui->vDrugsTable,SIGNAL(doesHaveDrugsInLastVisit()),this,SLOT(doesHaveDrugsInLastVisit()));
+  connect ( toggleFollowupDate,&QShortcut::activated,this,&visitsBox::toggleDateFollowup);
+  connect ( vTypeUp,&QShortcut::activated,ui->comboVisitType,&vTypeComboBox::goUp);
+  connect ( vTypeDown,&QShortcut::activated,ui->comboVisitType,&vTypeComboBox::goDown);
 }
 
 //void visitsBox::initializeVariables()
