@@ -4,7 +4,7 @@ toast::toast(QWidget *parent):QLabel(parent)
 {
     setText("This is a notification");
     setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-
+    setWindowModality(Qt::WindowModal);
     miTimer.setInterval(30);
     moTimer.setInterval(30);
     connect(&wait,SIGNAL(timeout()),&moTimer,SLOT(start()));

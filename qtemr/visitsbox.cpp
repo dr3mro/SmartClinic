@@ -1300,25 +1300,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
 void visitsBox::followUpDateChanged(const QDate &date)
 {
-  QLocale en_US = QLocale(QLocale::English,QLocale::UnitedStates);
-
-  int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(date,ID)+1;
-  if ( selectedDateFollowUps > maxFollowUps && maxFollowUps > 0)
-    {
-      newMessage("Message",
-                 QString("Warning, Follow up limit exceeded for (%1) , current : %2, limit : %3")
-                 .arg(en_US.toString(date,"dd/MM/yyyy"))
-                 .arg(selectedDateFollowUps)
-                 .arg(maxFollowUps));
-    }
-  else if ( maxFollowUps > 0)
-    {
-      newMessage("Message",
-                 QString("The date (%1) currently has %2/%3 follow ups")
-                 .arg(en_US.toString(date,"dd/MM/yyyy"))
-                 .arg(selectedDateFollowUps)
-                 .arg(maxFollowUps));
-    }
+  int selectedDateFollowUps = followNotify(date);
   setFollowDateTooltip(selectedDateFollowUps,date);
   lastSelectedFollowupDate = date;
 }
@@ -1394,6 +1376,9 @@ void visitsBox::toggleDateFollowup()
     ui->dateFollowUp->setDate(lastSelectedFollowupDate);
   else if (ui->dateFollowUp->date() == lastSelectedFollowupDate)
     ui->dateFollowUp->setDate(QDate::currentDate());
+  QDate cd = ui->dateFollowUp->date();//currentdate
+  int selectedDateFollowUps = followNotify(cd);
+  setFollowDateTooltip(selectedDateFollowUps,cd);
 }
 
 void visitsBox::connectSignals(QWidget *parent)
@@ -1532,6 +1517,30 @@ void visitsBox::goNextVisit()
   if ( (currentIndex > 0) && (visits_count!=1))
     currentIndex--;
   goSaveVisit(currentIndex);
+}
+
+int visitsBox::followNotify(const QDate &date)
+{
+  QLocale en_US = QLocale(QLocale::English,QLocale::UnitedStates);
+
+  int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(date,ID)+1;
+  if ( selectedDateFollowUps > maxFollowUps && maxFollowUps > 0)
+    {
+      newMessage("Message",
+                 QString("Warning, Follow up limit exceeded for (%1) , current : %2, limit : %3")
+                 .arg(en_US.toString(date,"dd/MM/yyyy"))
+                 .arg(selectedDateFollowUps)
+                 .arg(maxFollowUps));
+    }
+  else if ( maxFollowUps > 0)
+    {
+      newMessage("Message",
+                 QString("The date (%1) currently has %2/%3 follow ups")
+                 .arg(en_US.toString(date,"dd/MM/yyyy"))
+                 .arg(selectedDateFollowUps)
+                 .arg(maxFollowUps));
+    }
+  return  selectedDateFollowUps;
 }
 
 bool visitsBox::mSave(sqlBase::Visit visit,bool threading)

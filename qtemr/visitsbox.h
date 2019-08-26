@@ -172,6 +172,7 @@ private:
     void goLastVisit();
     void goPreviousVisit();
     void goNextVisit();
+    int followNotify(const QDate &date);
     bool visitLoaded=false;
     bool alwaysSave;
     bool autoSave;
