@@ -1372,6 +1372,9 @@ bool visitsBox::doeshaveDrugsInPatient()
 
 void visitsBox::toggleDateFollowup()
 {
+  if( lastSelectedFollowupDate == QDate::currentDate())
+    return;
+
   if(ui->dateFollowUp->date() == QDate::currentDate())
     ui->dateFollowUp->setDate(lastSelectedFollowupDate);
   else if (ui->dateFollowUp->date() == lastSelectedFollowupDate)
