@@ -239,7 +239,7 @@
      <item>
       <widget class="QToolButton" name="toolButtonRefresh">
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload visit data from storage&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reload visit data from storage&lt;/p&gt;&lt;p&gt;F9&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
         <string>...</string>
@@ -247,6 +247,9 @@
        <property name="icon">
         <iconset resource="resources.qrc">
          <normaloff>:/Graphics/refresh</normaloff>:/Graphics/refresh</iconset>
+       </property>
+       <property name="shortcut">
+        <string>F9</string>
        </property>
       </widget>
      </item>
