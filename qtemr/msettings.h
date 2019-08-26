@@ -108,6 +108,7 @@ public:
         int maxFollowUps;
         int maxFollowUpsPerProblem;
         bool autoSetnewAfterMaxPerProblemIsReached;
+        bool remmberLastFollowupDate;
 
         bool operator==(const pSettings& psettings) const
         {
@@ -142,7 +143,8 @@ public:
                         enableVisualEffects,
                         updateNotify,
                         useToast,
-                        usePhotoViewer) ==
+                        usePhotoViewer,
+                        remmberLastFollowupDate) ==
                     std::tie(psettings.speciality,
                              psettings.autoCompleteByWord,
                              psettings.showChronicConditions,
@@ -173,7 +175,8 @@ public:
                              psettings.enableVisualEffects,
                              psettings.updateNotify,
                              psettings.useToast,
-                             psettings.usePhotoViewer);
+                             psettings.usePhotoViewer,
+                             psettings.remmberLastFollowupDate);
         }
 
     };
@@ -335,6 +338,7 @@ public:
     bool isUpdateNotify();
     bool isUseToast();
     bool isUseNativePhotoViewer();
+    bool isRemmberlastFollowupDate();
     int getAutoSaveInterval();
     QString getSelectedTheme();
     bool isInLinePatientList();

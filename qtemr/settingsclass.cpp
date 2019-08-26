@@ -109,7 +109,7 @@ mSettings::pSettings settingsClass::getValuesFromUI()
     _settings.updateNotify = ui->updateNotify->isChecked();
     _settings.useToast = ui->useToast->isChecked();
     _settings.usePhotoViewer = ui->usePhotoViewer->isChecked();
-
+    _settings.remmberLastFollowupDate = ui->remmberLastFollowupDate->isChecked();
     return _settings;
 }
 
@@ -146,6 +146,7 @@ void settingsClass::setValuesToUI(mSettings::pSettings _settings)
     ui->updateNotify->setChecked(_settings.updateNotify);
     ui->useToast->setChecked(_settings.useToast);
     ui->usePhotoViewer->setChecked(_settings.usePhotoViewer);
+    ui->remmberLastFollowupDate->setChecked(_settings.remmberLastFollowupDate);
     ui->stylerWidget->setSelectedTheme(_settings.selectedTheme);
     ui->appDir->setText(dataIOhelper::getCurrentFolder());
     ui->encryptionSwitch->setChecked(sqlbase->isEncryptionEnabled());

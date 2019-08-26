@@ -104,339 +104,31 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>465</width>
-            <height>594</height>
+            <width>463</width>
+            <height>596</height>
            </rect>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_5">
+          <layout class="QGridLayout" name="gridLayout_8">
            <property name="leftMargin">
-            <number>2</number>
+            <number>3</number>
            </property>
            <property name="topMargin">
-            <number>2</number>
+            <number>3</number>
            </property>
            <property name="rightMargin">
-            <number>2</number>
+            <number>3</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
+            <number>3</number>
            </property>
            <property name="spacing">
-            <number>2</number>
+            <number>1</number>
            </property>
-           <item row="0" column="0">
-            <widget class="Line" name="line_14">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_24">
-             <item>
-              <widget class="QLabel" name="label_58">
-               <property name="text">
-                <string>Minimize Application to tray icon instead of task bar.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="minimizeToTray">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="4" column="0">
-            <widget class="Line" name="line_2">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="Line" name="line_3">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_27">
-             <item>
-              <widget class="QLabel" name="label_62">
-               <property name="text">
-                <string>Adjust visual element to low resolution displays.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="checkBoxSmallScreen">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip">
-                <string/>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="7" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_26">
-             <item>
-              <widget class="QLabel" name="label_61">
-               <property name="text">
-                <string>Hide all examination boxes except General Examination.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="checkBoxSimpleExamination">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip">
-                <string/>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="8" column="0">
-            <widget class="Line" name="line_4">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_28">
-             <item>
-              <widget class="QLabel" name="label_63">
-               <property name="text">
-                <string>Show navigation arrows on right and left of patient record number.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="checkBoxNavArrow">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip">
-                <string/>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="10" column="0">
-            <widget class="Line" name="line_5">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="0">
-            <widget class="Line" name="line_6">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_15">
-             <item>
-              <widget class="QLabel" name="label_48">
-               <property name="text">
-                <string>Show common conditions checkboxes  on application main window.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="checkBoxChronic">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="toolTip">
-                <string/>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="13" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_20">
-             <item>
-              <widget class="QLabel" name="label_54">
-               <property name="text">
-                <string>Show patients list on application main window.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="inLinePatientList">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="14" column="0">
-            <widget class="Line" name="line_7">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_22">
-             <item>
-              <widget class="QLabel" name="label_56">
-               <property name="text">
-                <string>Enable fading animation while closing or opening windows.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="enableVisualEffects">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
            <item row="16" column="0">
             <widget class="Line" name="line_8">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="17" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_19">
-             <item>
-              <widget class="QLabel" name="label_53">
-               <property name="text">
-                <string>Auto close printing dialog after clicking on print.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="checkBoxAutoClosePrintDlg">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="18" column="0">
-            <widget class="Line" name="line_9">
              <property name="frameShadow">
               <enum>QFrame::Sunken</enum>
              </property>
@@ -475,35 +167,25 @@
              </item>
             </layout>
            </item>
-           <item row="20" column="0">
-            <widget class="Line" name="line_10">
-             <property name="frameShadow">
-              <enum>QFrame::Sunken</enum>
-             </property>
-             <property name="midLineWidth">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="21" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_23">
+           <item row="11" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_15">
              <item>
-              <widget class="QLabel" name="label_57">
+              <widget class="QLabel" name="label_48">
                <property name="text">
-                <string>Notify me when a new update is available.</string>
+                <string>Show common conditions checkboxes  on application main window.</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="Switch" name="updateNotify">
+              <widget class="Switch" name="checkBoxChronic">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string/>
                </property>
                <property name="text">
                 <string/>
@@ -525,32 +207,8 @@
              </property>
             </widget>
            </item>
-           <item row="23" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_25">
-             <item>
-              <widget class="QLabel" name="label_60">
-               <property name="text">
-                <string>Use Toast notification System.</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="Switch" name="useToast">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="26" column="0">
-            <widget class="Line" name="line_12">
+           <item row="6" column="0">
+            <widget class="Line" name="line_3">
              <property name="frameShadow">
               <enum>QFrame::Sunken</enum>
              </property>
@@ -562,22 +220,25 @@
              </property>
             </widget>
            </item>
-           <item row="25" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item row="9" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_28">
              <item>
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="label_63">
                <property name="text">
-                <string>Use built in photo viewer.</string>
+                <string>Show navigation arrows on right and left of patient record number.</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="Switch" name="usePhotoViewer">
+              <widget class="Switch" name="checkBoxNavArrow">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string/>
                </property>
                <property name="text">
                 <string/>
@@ -586,7 +247,20 @@
              </item>
             </layout>
            </item>
-           <item row="27" column="0">
+           <item row="2" column="0">
+            <widget class="Line" name="line">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="29" column="0">
             <layout class="QGridLayout" name="gridLayout_11">
              <property name="leftMargin">
               <number>3</number>
@@ -654,8 +328,8 @@
              </item>
             </layout>
            </item>
-           <item row="28" column="0">
-            <widget class="Line" name="line_13">
+           <item row="10" column="0">
+            <widget class="Line" name="line_5">
              <property name="frameShadow">
               <enum>QFrame::Sunken</enum>
              </property>
@@ -667,8 +341,59 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="Line" name="line">
+           <item row="15" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_22">
+             <item>
+              <widget class="QLabel" name="label_56">
+               <property name="text">
+                <string>Enable fading animation while closing or opening windows.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="enableVisualEffects">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="5" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_27">
+             <item>
+              <widget class="QLabel" name="label_62">
+               <property name="text">
+                <string>Adjust visual element to low resolution displays.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="checkBoxSmallScreen">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="18" column="0">
+            <widget class="Line" name="line_9">
              <property name="frameShadow">
               <enum>QFrame::Sunken</enum>
              </property>
@@ -679,6 +404,54 @@
               <enum>Qt::Horizontal</enum>
              </property>
             </widget>
+           </item>
+           <item row="25" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Use built in photo viewer.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="usePhotoViewer">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="27" column="0">
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Remmber Last Selected followup date</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="Switch" name="remmberLastFollowupDate">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item row="1" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_29">
@@ -707,8 +480,266 @@
              </item>
             </layout>
            </item>
+           <item row="20" column="0">
+            <widget class="Line" name="line_10">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="0">
+            <widget class="Line" name="line_7">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_20">
+             <item>
+              <widget class="QLabel" name="label_54">
+               <property name="text">
+                <string>Show patients list on application main window.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="inLinePatientList">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
            <item row="24" column="0">
             <widget class="Line" name="line_15">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="30" column="0">
+            <widget class="Line" name="line_13">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="28" column="0">
+            <widget class="Line" name="line_12">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="Line" name="line_2">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="17" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_19">
+             <item>
+              <widget class="QLabel" name="label_53">
+               <property name="text">
+                <string>Auto close printing dialog after clicking on print.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="checkBoxAutoClosePrintDlg">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="8" column="0">
+            <widget class="Line" name="line_4">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="Line" name="line_14">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_26">
+             <item>
+              <widget class="QLabel" name="label_61">
+               <property name="text">
+                <string>Hide all examination boxes except General Examination.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="checkBoxSimpleExamination">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="12" column="0">
+            <widget class="Line" name="line_6">
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <property name="midLineWidth">
+              <number>0</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_24">
+             <item>
+              <widget class="QLabel" name="label_58">
+               <property name="text">
+                <string>Minimize Application to tray icon instead of task bar.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="minimizeToTray">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="21" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_23">
+             <item>
+              <widget class="QLabel" name="label_57">
+               <property name="text">
+                <string>Notify me when a new update is available.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="updateNotify">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="23" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_25">
+             <item>
+              <widget class="QLabel" name="label_60">
+               <property name="text">
+                <string>Use Toast notification System.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="Switch" name="useToast">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="26" column="0">
+            <widget class="Line" name="line_17">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>

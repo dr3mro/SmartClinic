@@ -3235,6 +3235,7 @@ void sqlBase::createNewVisit(int ID,
                              QDateTime datetime,
                              int visitType,
                              double visitPrice,
+                             const QDate &lastSelectedFollowupDate,
                              DrugsItemModel *drugsModel,
                              InvestModel *investModel,
                              sqlExtra *sqlextra)
@@ -3275,7 +3276,7 @@ void sqlBase::createNewVisit(int ID,
 
     visit.ID = ID;
     visit.visitDateTime = englishDateTime;
-    visit.followDate = QString::number(nextDateJulian);
+    visit.followDate = QString::number(settings.isRemmberlastFollowupDate()? static_cast<int>(lastSelectedFollowupDate.toJulianDay()):nextDateJulian);
     visit.visitType = QString::number(visitType);
 
     visitData vdata;

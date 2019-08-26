@@ -25,6 +25,7 @@ void mSettings::saveSettings(mSettings::pSettings &psets)
     settings.setValue(_updateNotify,psettings.updateNotify);
     settings.setValue(_useToast,psettings.useToast);
     settings.setValue(_usePhotoViewer,psettings.usePhotoViewer);
+    settings.setValue(_remmberLastFollowupDate,psettings.remmberLastFollowupDate);
     settings.setValue(_selectedTheme,psettings.selectedTheme);
 
     settings.beginGroup(_clinic);
@@ -70,6 +71,7 @@ mSettings::pSettings mSettings::readSettings()
     psettings.updateNotify = settings.value(_updateNotify,QVariant(true)).toBool();
     psettings.useToast = settings.value(_useToast,QVariant(true)).toBool();
     psettings.usePhotoViewer = settings.value(_usePhotoViewer,QVariant(true)).toBool();
+    psettings.remmberLastFollowupDate = settings.value(_remmberLastFollowupDate,QVariant(false)).toBool();
     psettings.selectedTheme = settings.value(_selectedTheme).toString();
 
     settings.beginGroup(_clinic);
@@ -306,7 +308,12 @@ bool mSettings::isUseToast()
 
 bool mSettings::isUseNativePhotoViewer()
 {
-    return psettings.usePhotoViewer;
+  return psettings.usePhotoViewer;
+}
+
+bool mSettings::isRemmberlastFollowupDate()
+{
+  return  psettings.remmberLastFollowupDate;
 }
 
 int mSettings::getAutoSaveInterval()

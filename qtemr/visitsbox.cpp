@@ -10,7 +10,7 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
   add2CompleterWorker(new wm_add2Completer),
   visitSaverWorker(new wm_visitSaver),
   print(new printDrugs(this)),
-  calWidget(new mCalendarWidget(this)),
+  //calWidget(new mCalendarWidget(this)),
   shift_pageUp(new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageUp), this)),
   shift_pageDown(new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageDown), this)),
   printShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_P),this)),
@@ -25,7 +25,7 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
 void visitsBox::tweakui()
 {
   this->setLocale(QLocale("en_US"));
-  ui->dateFollowUp->setCalendarWidget(calWidget);
+  ui->dateFollowUp->setCalendarPopup(true);
   shift_pageUp->setContext(Qt::WindowShortcut);
   shift_pageDown->setContext(Qt::WindowShortcut);
   ui->presentationAnalysis->setMaximumHeight(this->height()/6);
@@ -176,14 +176,14 @@ void visitsBox::on_ButtonNew_clicked()
 
     }
 
-  ui->dateFollowUp->setDate(QDate::currentDate());
+//  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
   ui->dateFollowUp->setMinimumDate(QDate::currentDate());
   ui->lmpDate->setDate(QDate::currentDate());
 
   sqlBase::Visit visit = grabVisit();
 
-  if (vEditMode)
-    save(visit,false);
+//  if (vEditMode)
+//    save(visit,false);
 
   visitindex = 0;
   double visitPrice = settings.getVisitPrice(visitindex);
@@ -192,6 +192,7 @@ void visitsBox::on_ButtonNew_clicked()
                           datetime,
                           visitindex,
                           visitPrice,
+                          lastSelectedFollowupDate,
                           ui->vDrugsTable->getDrugsModel(),
                           ui->InvestigationsTable->getInvestigationsModel(),
                           sqlextra);
@@ -202,7 +203,6 @@ void visitsBox::on_ButtonNew_clicked()
   emit newMessage("Information","A New visit was Created");
   newVisitCreationInProgress=false;
   ui->ButtonNew->setEnabled(true);
-
 }
 
 void visitsBox::on_ButtonSave_clicked()
@@ -345,7 +345,7 @@ void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
     {
       ui->presentation->setFocus();
       QString visitDateString = comboSelectedDataTime.left(10);
-      ui->dateFollowUp->setDate(QDate::fromString(visitDateString,"dd/MM/yyyy")); //.addDays(7));
+      ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::fromString(visitDateString,"dd/MM/yyyy")); //.addDays(7));
       ui->dateFollowUp->setMinimumDate(QDate::fromString(visitDateString,"dd/MM/yyyy"));
       ui->vDrugsTable->loadPatientDrugsModel(ID,visitDateTime2JulianDate());
       ui->InvestigationsTable->populateInvests(ID,visitDateTime2JulianDate());
@@ -554,6 +554,9 @@ void visitsBox::on_ButtonVisit_clicked()
     }
   ui->ButtonVisit->setEnabled(false);
 
+//  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
+  ui->dateFollowUp->setMinimumDate(QDate::currentDate());
+
   sqlBase::Visit visit = grabVisit();
 
   if ( dtJulian != visit.followDate.toInt())
@@ -588,6 +591,7 @@ void visitsBox::on_ButtonVisit_clicked()
                           datetime,
                           visitindex,
                           visitPrice,
+                          lastSelectedFollowupDate,
                           ui->vDrugsTable->getDrugsModel(),
                           ui->InvestigationsTable->getInvestigationsModel(),
                           sqlextra);
@@ -645,7 +649,7 @@ visitsBox::~visitsBox()
   delete printShortcut;
   delete printPreviewShortcut;
   delete easyPrintShortcut;
-  delete calWidget;
+//  delete calWidget;
   sqlbase->optimize();
   sqlextra->optimize();
   delete sqlbase;
@@ -1308,6 +1312,7 @@ void visitsBox::followUpDateChanged(const QDate &date)
                  .arg(maxFollowUps));
     }
   setFollowDateTooltip(selectedDateFollowUps,date);
+  lastSelectedFollowupDate = date;
 }
 
 void visitsBox::onShift_pageUp()
@@ -1387,7 +1392,7 @@ void visitsBox::connectSignals(QWidget *parent)
   connect ( ui->InvestigationsTable,SIGNAL(popUpMessage(QString,QString)),parent,SLOT(popUpMessage(QString,QString)));
   connect ( ui->visitLists,SIGNAL(loadCompleted()),this,SLOT(toggleContollers()));
   connect ( ui->visitLists,SIGNAL(saveVisit()),this,SLOT(grabSave()));
-  connect ( calWidget,SIGNAL(clicked(QDate)),this,SLOT(followUpDateChanged(QDate)));
+  connect ( ui->dateFollowUp->calendarWidget(),SIGNAL(clicked(QDate)),this,SLOT(followUpDateChanged(QDate)));
   connect ( ui->vDrugsTable,SIGNAL(reloadDrugsLineAutoComplete()),ui->drugLine,SLOT(mUpdateCompleter()));
   connect ( this,SIGNAL(updateDrugsCompleter()),ui->drugLine,SIGNAL(updateDrugsCompleter()));
   connect ( autoSaveTimer,SIGNAL(timeout()),this,SLOT(autosave()));
@@ -1540,6 +1545,7 @@ bool visitsBox::mSave(sqlBase::Visit visit,bool threading)
       saving = false;
       return b;
     }
+
 }
 void visitsBox::toggleSyncPrintButtons()
 {

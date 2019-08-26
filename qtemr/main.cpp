@@ -16,7 +16,7 @@
 #include "msettings.h"
 
 
-#if defined(QT_DEBUG) && defined(_MSC_VER)
+#if MEMLEAK == 1 && defined(QT_DEBUG) && defined(_MSC_VER)
 #include <vld.h>
 #endif
 

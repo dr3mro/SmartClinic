@@ -55,6 +55,7 @@
 #define _investigationsWidth "investigationsWidth"
 #define _showDrugsTitle "showDrugsTitle"
 #define _setEastArabicNumbers "setEastArabicNumbers"
+#define _remmberLastFollowupDate "remmberLastFollowupDate"
 
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"

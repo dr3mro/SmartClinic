@@ -149,7 +149,7 @@ private:
     wm_add2Completer *add2CompleterWorker;
     wm_visitSaver *visitSaverWorker;
     printDrugs *print;
-    mCalendarWidget *calWidget;
+    //mCalendarWidget *calWidget;
     QShortcut *shift_pageUp;
     QShortcut *shift_pageDown;
     QShortcut *printShortcut;
@@ -198,6 +198,7 @@ private:
     bool drugLoadCompleted=false;
     QString printableAge;
     bool aboutToClose=false;
+    QDate lastSelectedFollowupDate=QDate::currentDate();
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *e);
