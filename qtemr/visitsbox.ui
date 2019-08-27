@@ -490,6 +490,9 @@
              </item>
              <item>
               <widget class="genericLineEdit" name="presentation">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="placeholderText">
                 <string>Main complaint</string>
                </property>
@@ -573,6 +576,9 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="alternatingRowColors">
               <bool>false</bool>
@@ -669,6 +675,9 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="placeholderText">
                 <string>enter investigation</string>
                </property>
@@ -704,6 +713,9 @@
            </item>
            <item>
             <widget class="genericLineEdit" name="Diagnosis">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+3&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="placeholderText">
               <string>type diagnosises</string>
              </property>
@@ -827,6 +839,9 @@
              </item>
              <item>
               <widget class="drugsLine" name="drugLine">
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+4&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
                <property name="placeholderText">
                 <string>enter drug name here - All drugs</string>
                </property>
@@ -1228,6 +1243,9 @@ Middle Click (CTRL+O) : Prints immediately.</string>
               </item>
               <item row="0" column="3">
                <widget class="vitalBox" name="pRR">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+6&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
                 <property name="inputMethodHints">
                  <set>Qt::ImhNone</set>
                 </property>
@@ -1245,6 +1263,9 @@ Middle Click (CTRL+O) : Prints immediately.</string>
               </item>
               <item row="0" column="1">
                <widget class="vitalBox" name="pPulse">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+5&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
                 <property name="inputMethodHints">
                  <set>Qt::ImhNone</set>
                 </property>
@@ -1261,6 +1282,9 @@ Middle Click (CTRL+O) : Prints immediately.</string>
                   <height>0</height>
                  </size>
                 </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+7&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
                 <property name="inputMethodHints">
                  <set>Qt::ImhDigitsOnly</set>
                 </property>
@@ -1274,6 +1298,9 @@ Middle Click (CTRL+O) : Prints immediately.</string>
               </item>
               <item row="0" column="8">
                <widget class="vitalBox" name="pTemp">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>

@@ -630,6 +630,42 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
     {
       e->ignore();
     }
+  else if ( e->modifiers() == Qt::ControlModifier)
+    {
+      switch(e->key()){
+        case Qt::Key_1:
+          ui->presentation->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_2:
+          ui->investigationsLine->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_3:
+          ui->Diagnosis->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_4:
+          ui->drugLine->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_5:
+          ui->pPulse->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_6:
+          ui->pRR->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_7:
+          ui->pBP->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_8:
+          ui->pTemp->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_9:
+          ui->InvestigationsTable->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_0:
+          ui->vDrugsTable->setFocus(Qt::OtherFocusReason);
+          break;
+      }
+    }
+
   mDialog::keyPressEvent(e);
 }
 
