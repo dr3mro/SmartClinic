@@ -17,7 +17,7 @@ void drugsLine::loadCompleter()
     delimeter = *delimterNone;
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
     setToolTip("Middle mouse click or Shift + left click here to toggle between All \n"
-               "drugs & Favourite drugs autocomplete modes ");
+               "drugs & Favourite drugs autocomplete modes - [CTRL+4] to focus");
     favouriteDrugs = reg.value(QString("enableFavourites_%1").arg(windowName)).toBool();
     if ( favouriteDrugs )
     {

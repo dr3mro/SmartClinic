@@ -49,6 +49,7 @@ drugsTable::drugsTable(QWidget *parent):zTableView(parent)
     okDose->setToolTip("Set this as dose.");
 
     setToolTip("<ul>"
+               "<li>CTRL+0 to focus.</li>"
                "<li>Shift + up or down arrows moves selected drug up or down.</li>"
                "<li>Right mouse button click shows context menu.</li>"
                "<li>Middle mouse button double click or (Shift + Left) or Space bar key to toggle item.</li>"
