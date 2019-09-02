@@ -560,9 +560,11 @@ void visitsBox::on_ButtonVisit_clicked()
   ui->ButtonVisit->setEnabled(false);
 
 //  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
-  ui->dateFollowUp->setMinimumDate(QDate::currentDate());
+
 
   sqlBase::Visit visit = grabVisit();
+
+  ui->dateFollowUp->setMinimumDate(QDate::currentDate());
 
   if ( dtJulian != visit.followDate.toInt())
     {
