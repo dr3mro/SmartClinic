@@ -537,16 +537,11 @@ void visitsBox::on_ButtonVisit_clicked()
 {
   if(newVisitCreationInProgress||aboutToClose)
     return;
-
   newVisitCreationInProgress=true;
-
   visitindex = ui->comboVisitType->currentIndex();
-
   QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
   QDateTime datetime = QDateTime::currentDateTime();
-
   int dtJulian = static_cast<int>(datetime.date().toJulianDay());
-
   for ( int i = 0 ; i < ui->visitLists->count() ; i++ )
     {
       int visitJ = static_cast<int>(locale.toDateTime(ui->visitLists->itemText(i),"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
@@ -560,12 +555,7 @@ void visitsBox::on_ButtonVisit_clicked()
   ui->ButtonVisit->setEnabled(false);
 
 //  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
-
-
   sqlBase::Visit visit = grabVisit();
-
-  ui->dateFollowUp->setMinimumDate(QDate::currentDate());
-
   if ( dtJulian != visit.followDate.toInt())
     {
       int reply = msgbox->question(this,"Warning","<center>You are creating a new follow up visit in a date that differs from the squeduled date in last visit, do you want to set today as the follow up date for the last visit? ( <b>yes</b> or <b>No</b>) \n <b> Note: THIS CANNOT BE UNDONE!</b></center>",QMessageBox::Yes,QMessageBox::No,QMessageBox::Cancel);
@@ -607,7 +597,7 @@ void visitsBox::on_ButtonVisit_clicked()
   updateVisitAge();
   emit newMessage("Information","A New follow up visit was Created");
   newVisitCreationInProgress=false;
-
+  ui->dateFollowUp->setMinimumDate(QDate::currentDate());
 }
 
 
