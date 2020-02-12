@@ -13,7 +13,7 @@ dbOptimizer::dbOptimizer(QWidget *parent) :
     connect(ui->sw_optimize,SIGNAL(toggled(bool)),ui->sw_shrinkMemory,SLOT(setEnabled(bool)));
     movie->setScaledSize(ui->loading->size());
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    qRegisterMetaType<QTextCursor>("QTextCursor");
+    //qRegisterMetaType<QTextCursor>("QTextCursor");
     initialDbOptions = settings.readDbOptions();
     putDbOptions(initialDbOptions);
 }

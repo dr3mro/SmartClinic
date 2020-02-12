@@ -143,7 +143,7 @@ void patientTable::setConnection(QString conname)
     connectionName = conname;
     sqlbase = new sqlBase(this,connectionName,false);
     sqlbase->createPatientItemModel();
-    qRegisterMetaType<QVector<int> >("QVector<int>");
+    //qRegisterMetaType<QVector<int> >("QVector<int>");
     connect (sqlbase,SIGNAL(patientIconSet(bool,int)),this,SLOT(setPatientIcon(bool,int)));
     connect(this,SIGNAL(modelLoadingFinished()),this,SLOT(tweaksAfterModelLoadingIsFinished()));
     initModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getPatientsTableModel);

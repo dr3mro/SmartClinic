@@ -16,8 +16,8 @@ searchWidget::searchWidget(QWidget *parent) :
     ui->filtersWidget->hide();
     ui->PatientListTableView->hideColumn(2);
 
-    qRegisterMetaType<QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
-    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+//    qRegisterMetaType<QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
+//    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
 
     connect(this,SIGNAL(loadPatient()),ui->PatientListTableView,SLOT(loadPatient()));
     connect(this,SIGNAL(updatePatients()),ui->PatientListTableView,SLOT(updatePatients()));

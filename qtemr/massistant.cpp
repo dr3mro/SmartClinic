@@ -16,7 +16,7 @@ mAssistant::mAssistant(mLabelMsg& labelMsg, QWidget *parent,bool& eMode) :
     toCalWidget(new mCalendarWidget(this))
 {
     ui->setupUi(this);
-    qRegisterMetaType<Qt::Orientation>("Qt::Orientation");
+    //qRegisterMetaType<Qt::Orientation>("Qt::Orientation");
     setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
     ui->fromDate->setCalendarWidget(fromCalWidget);
     ui->toDate->setCalendarWidget(toCalWidget);

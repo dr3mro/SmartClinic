@@ -3,7 +3,7 @@
 internet::internet(QObject *parent) : QObject(parent),
     tcpSocket(new QTcpSocket(nullptr))
 {
-    qRegisterMetaType<QAbstractSocket::SocketState>();
+    //qRegisterMetaType<QAbstractSocket::SocketState>();
     connect(tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(timeout(QAbstractSocket::SocketError)));
     connect(tcpSocket, SIGNAL(connected()), this, SLOT(socketConnected()),Qt::QueuedConnection);
     connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(socketDisconnected()),Qt::QueuedConnection);

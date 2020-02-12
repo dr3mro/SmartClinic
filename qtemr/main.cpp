@@ -227,6 +227,15 @@ int main(int argc, char *argv[])
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
     QApplication a(argc, argv);
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+
+    qRegisterMetaType<QVector<int> >("QVector<int>");
+    qRegisterMetaType<QTextCursor>("QTextCursor");
+    qRegisterMetaType<QAbstractSocket::SocketState>();
+    qRegisterMetaType<Qt::Orientation>("Qt::Orientation");
+    qRegisterMetaType<QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
+    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+
+
     welcomeBanner *banner = new welcomeBanner;
     banner->show();
 
