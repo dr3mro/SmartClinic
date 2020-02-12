@@ -1400,6 +1400,9 @@ bool visitsBox::doeshaveDrugsInPatient()
 
 void visitsBox::toggleDateFollowup()
 {
+  if(!vEditMode)
+    return;
+
   if( lastSelectedFollowupDate == QDate::currentDate())
     return;
 
