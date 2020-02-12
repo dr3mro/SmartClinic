@@ -2945,12 +2945,12 @@ QList<QBrush> sqlBase::getVisitColors()
 {
     QList<QBrush> brushes;
 
-    brushes.append(QBrush(Qt::green));
-    brushes.append(QBrush(Qt::yellow));
+    brushes.append(QBrush(Qt::darkGreen));
+    brushes.append(QBrush(Qt::darkYellow));
     brushes.append(QBrush(Qt::lightGray));
-    brushes.append(QBrush(Qt::lightGray));
-    brushes.append(QBrush(Qt::lightGray));
-    brushes.append(QBrush(Qt::white));
+    brushes.append(QBrush(Qt::gray));
+    brushes.append(QBrush(Qt::darkGray));
+    brushes.append(QBrush(Qt::darkCyan));
     return brushes;
 }
 
@@ -3187,12 +3187,12 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         if ( count > 0 )
         {
             QStandardItem *itemService = new QStandardItem(service);
-            itemService->setBackground(QBrush(Qt::magenta));
+            itemService->setBackground(QBrush(Qt::darkMagenta));
             QStandardItem *itemCount = new QStandardItem(QString::number(count));
-            itemCount->setBackground(QBrush(Qt::magenta));
+            itemCount->setBackground(QBrush(Qt::darkMagenta));
             itemCount->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
             QStandardItem *itemPrice = new QStandardItem(QString::number(subTOTAL));
-            itemPrice->setBackground(QBrush(Qt::magenta));
+            itemPrice->setBackground(QBrush(Qt::darkMagenta));
             itemPrice->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
             calcModel->appendRow(QList<QStandardItem*>() << itemService << itemCount << itemPrice );
         }
