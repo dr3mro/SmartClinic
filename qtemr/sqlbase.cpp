@@ -3019,7 +3019,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
                                                     QStandardItemModel *calcModel,
                                                     sqlExtra *sqlextra,
                                                     const QModelIndexList &selection,
-                                                    int &TOTAL)
+                                                    double &TOTAL)
 {
     calcModel->clear();
     int maxFollowsPerProblem = settings.getMaxFollowUpsPerProblem();
@@ -3039,7 +3039,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
 
     int count;
     QString service;
-    int subTOTAL=0;
+    double subTOTAL=0;
     QString visitType;
 
     int newVisitCOUNT = 0;
@@ -3171,7 +3171,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         calcModel->appendRow(QList<QStandardItem*>() << freeItem << freeCOUNT << freeSUBTOTAL );
     }
 
-    TOTAL = static_cast<int>(subTotalNewVisits + subTotalFollow1Visits + subTotalFollow2Visits + subTotalFollow3Visits + subTotalFollow4Visits +subTotalFree);
+    TOTAL = static_cast<double>(subTotalNewVisits + subTotalFollow1Visits + subTotalFollow2Visits + subTotalFollow3Visits + subTotalFollow4Visits +subTotalFree);
     for ( int c=startCol; c<endCol;c++)
     {
         count = 0;

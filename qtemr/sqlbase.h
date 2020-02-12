@@ -625,7 +625,7 @@ public:
     QStringList getDeceasedList();
     void toggleDeceased(int ID, int state, int row);
     void agendaAttendedLoader(int julianDate, QStandardItemModel *agendaModel, double &percent);
-    QStandardItemModel *getMyRegisterCalcModel(QStandardItemModel *myRegisterModel, QStandardItemModel *calcModel, sqlExtra *sqlextra, const QModelIndexList &selection, int &TOTAL);
+    QStandardItemModel *getMyRegisterCalcModel(QStandardItemModel *myRegisterModel, QStandardItemModel *calcModel, sqlExtra *sqlextra, const QModelIndexList &selection, double &TOTAL);
     QStandardItemModel* getMyRegisterModel(RegisterRange timeFrame, QStandardItemModel *myRegisterModel, sqlExtra *sqlextra);
     void registerServiceLoader(QStandardItemModel *myRegisterModel,sqlExtra *sqlextra);
     void createNewVisit(int ID, QString previous , QDateTime datetime, int visitType, double visitPrice, const QDate &lastSelectedFollowupDate, DrugsItemModel *drugsModel, InvestModel *investModel, sqlExtra *sqlextra);

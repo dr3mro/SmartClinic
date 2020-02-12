@@ -176,7 +176,7 @@ void mAssistant::loadAgenda()
 
 void mAssistant::doCalcs()
 {
-    int TOTAL=0;
+    double TOTAL=0;
     QModelIndexList selection = ui->cashTableView->selectionModel()->selectedRows();
 
     calcModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getMyRegisterCalcModel,
@@ -192,7 +192,7 @@ void mAssistant::doCalcs()
     ui->calcTableView->setColumnWidth(1,50);
     ui->calcTableView->setColumnWidth(2,50);
     ui->calcTableView->horizontalHeader()->setStretchLastSection(true);
-    ui->SUMlineEdit->setText(QString::number(TOTAL));
+    ui->SUMlineEdit->setText(QString::number(TOTAL,'f',2));
     labelMsg.hide();
 
 }
@@ -507,7 +507,7 @@ void mAssistant::on_cbSinceLastCheckout_toggled(bool checked)
 
 void mAssistant::on_cashCalendar_clicked(const QDate &date)
 {
-    Q_UNUSED(date);
+    Q_UNUSED(date)
     ui->cbSinceLastCheckout->setChecked(false);
     setTimePeriod();
     loadRegister();
@@ -524,6 +524,6 @@ void mAssistant::load()
 
 void mAssistant::on_agendaCalendar_clicked(const QDate &date)
 {
-    Q_UNUSED(date);
+    Q_UNUSED(date)
     loadCurrentSelectedAgenda();
 }
