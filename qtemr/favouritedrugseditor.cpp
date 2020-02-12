@@ -87,14 +87,14 @@ void favouriteDrugsEditor::on_ButtonNew_clicked()
 
     if ( list.contains(tradeName,Qt::CaseInsensitive))
     {
-        msgbox.information(0,"Error","Error adding this item, alreay exisits!");
+        msgbox.information(nullptr,"Error","Error adding this item, alreay exisits!");
         return;
     }
     else
     {
         if (!sqlextra->addDefaultDrugDose(tradeName,dose))
         {
-            msgbox.information(0,"Error","Error adding this item, unknown Error!");
+            msgbox.information(nullptr,"Error","Error adding this item, unknown Error!");
             return;
         }
         else
@@ -115,14 +115,14 @@ void favouriteDrugsEditor::on_ButtonNew_clicked()
 
 void favouriteDrugsEditor::dataChanged(QModelIndex topLeft, QModelIndex bottomRight, QVector<int> vect)
 {
-    Q_UNUSED(bottomRight);
-    Q_UNUSED(vect);
+    Q_UNUSED(bottomRight)
+    Q_UNUSED(vect)
     QMessageBox msgbox;
     QString modifiedString = topLeft.data(Qt::DisplayRole).toString();
     int length = modifiedString.length();
     if (length < 2)
     {
-        msgbox.information(0,"Error","Error modifying this item, insufficient length!");
+        msgbox.information(nullptr,"Error","Error modifying this item, insufficient length!");
         model->revertAll();
     }
     else
