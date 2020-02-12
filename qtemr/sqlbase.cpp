@@ -2945,12 +2945,12 @@ QList<QBrush> sqlBase::getVisitColors()
 {
     QList<QBrush> brushes;
 
-    brushes.append(QBrush(Qt::darkGreen));
-    brushes.append(QBrush(Qt::darkYellow));
-    brushes.append(QBrush(Qt::lightGray));
-    brushes.append(QBrush(Qt::gray));
-    brushes.append(QBrush(Qt::darkGray));
-    brushes.append(QBrush(Qt::darkCyan));
+    brushes.append(QBrush(QColor::fromRgb(204,229,255)));
+    brushes.append(QBrush(QColor::fromRgb(255,255,204)));
+    brushes.append(QBrush(QColor::fromRgb(229,255,204)));
+    brushes.append(QBrush(QColor::fromRgb(204,255,204)));
+    brushes.append(QBrush(QColor::fromRgb(204,255,229)));
+    brushes.append(QBrush(QColor::fromRgb(204,255,255)));
     return brushes;
 }
 
@@ -3001,7 +3001,7 @@ void sqlBase::agendaAttendedLoader(int julianDate,QStandardItemModel *agendaMode
             for (int c=0 ; c < m->columnCount(); c++) {
                 m->item(r,c)->setBackground(( attended.visitType ==1
                                               && julianDate < QDate::currentDate().toJulianDay() )?
-                                                QBrush(Qt::red):brushes.at(attended.visitType));
+                                                QBrush(QColor::fromRgb(255,204,255)):brushes.at(attended.visitType));
                 //qApp->processEvents();
             }
         }
@@ -3187,12 +3187,12 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         if ( count > 0 )
         {
             QStandardItem *itemService = new QStandardItem(service);
-            itemService->setBackground(QBrush(Qt::darkMagenta));
+            itemService->setBackground(QBrush(QColor::fromRgb(255,204,255)));
             QStandardItem *itemCount = new QStandardItem(QString::number(count));
-            itemCount->setBackground(QBrush(Qt::darkMagenta));
+            itemCount->setBackground(QBrush(QColor::fromRgb(255,204,255)));
             itemCount->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
             QStandardItem *itemPrice = new QStandardItem(QString::number(subTOTAL));
-            itemPrice->setBackground(QBrush(Qt::darkMagenta));
+            itemPrice->setBackground(QBrush(QColor::fromRgb(255,204,255)));
             itemPrice->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
             calcModel->appendRow(QList<QStandardItem*>() << itemService << itemCount << itemPrice );
         }
