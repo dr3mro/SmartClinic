@@ -199,34 +199,36 @@ void mAssistant::doCalcs()
 
 void mAssistant::setTimePeriod()
 {
+    mSettings::checkout checkout = settings.getCheckout();
+    QDate checkDate = QDate::fromJulianDay(checkout.date);
+    QTime checkTime = QTime::fromMSecsSinceStartOfDay(checkout.time*1000);
+    bool isCheckout = ui->cbSinceLastCheckout->isChecked();
+
     QDate selectedDate = ui->cashCalendar->selectedDate();
     QDate yesterDate = selectedDate.addDays(-1);
     QDate tomorroDate = selectedDate.addDays(1);
     QDate currentDate = QDate::currentDate();
 
-    ui->fromDate->setDate(selectedDate);
-    ui->toDate->setDate(tomorroDate);
-
     if (QTime::currentTime() >= QTime::fromString("08:00","HH:mm") &&
             QTime::currentTime() <= QTime::fromString("23:59","HH:mm"))
     {
-        ui->fromDate->setDate(selectedDate);
+        ui->fromDate->setDate(isCheckout? checkDate:selectedDate);
         ui->toDate->setDate(tomorroDate);
     }
     else
     {
         if ( selectedDate == currentDate)
         {
-            ui->fromDate->setDate(yesterDate);
+            ui->fromDate->setDate(isCheckout? checkDate:yesterDate);
             ui->toDate->setDate(currentDate);
         }
         else
         {
-            ui->fromDate->setDate(selectedDate);
+            ui->fromDate->setDate(isCheckout? checkDate:selectedDate);
             ui->toDate->setDate(tomorroDate);
         }
     }
-    ui->fromTime->setTime(QTime::fromString("08:00","HH:mm"));
+    ui->fromTime->setTime(isCheckout? checkTime:QTime::fromString("08:00","HH:mm"));
     ui->toTime->setTime(QTime::fromString("07:59","HH:mm"));
 }
 
