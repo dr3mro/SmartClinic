@@ -2950,7 +2950,7 @@ QList<QBrush> sqlBase::getVisitColors()
     brushes.append(QBrush(QColor::fromRgb(229,255,204)));
     brushes.append(QBrush(QColor::fromRgb(204,255,204)));
     brushes.append(QBrush(QColor::fromRgb(204,255,229)));
-    brushes.append(QBrush(QColor::fromRgb(204,255,255)));
+    brushes.append(QBrush(QColor::fromRgb(255,255,255)));
     return brushes;
 }
 
