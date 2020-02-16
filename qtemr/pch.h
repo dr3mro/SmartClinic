@@ -112,7 +112,6 @@
 #include "mdebug.h"
 #include "mdialog.h"
 #include "switch.h"
-#include "switch.h"
 #include "mship.h"
 #include "wm_mship.h"
 #include "email.h"
