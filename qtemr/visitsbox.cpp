@@ -1108,7 +1108,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
   double invPad = mPrintsettings.invPad * static_cast<double>(logicalDpiX());
   int drugsWidth = static_cast<int>(pageWidth *  static_cast<double>(mPrintsettings.drugsColPerc/ 100));
-  int bannerWidth = static_cast<int>(pageWidth *   static_cast<double>((mPrintsettings.bannerWidth/100)));
+  //int bannerWidth = static_cast<int>(pageWidth *   static_cast<double>((mPrintsettings.bannerWidth/100)));
   int dietWidth = static_cast<int>(mPrintsettings.dietWidth * static_cast<double>(logicalDpiX()));
   int invWidth= static_cast<int>((static_cast<double>(mPrintsettings.investigationsWidth) - 0.2 )* logicalDpiX());
 
@@ -1129,7 +1129,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
       QString followDate = (visitDate==ui->dateFollowUp->text())? QString():ui->dateFollowUp->text();
 
       banner = QString(
-            "<table width=\"%1\">"
+            "<table width=\"%1%\">"
             "<tr><td colspan=\"3\"><hr/></td></tr>"
             "<tr>"
             "<td width=\"50%\"><b>Name :</b> %2 </td>"
@@ -1144,7 +1144,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
             "<tr><td colspan=\"3\"><hr/></td></tr>"
             "</table>"
             )
-          .arg(bannerWidth)
+          .arg(mPrintsettings.bannerWidth)
           .arg(pName)
           .arg(printableAge)
           .arg(ID)

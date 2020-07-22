@@ -6,7 +6,7 @@ wm_texteditCompleterLoader::wm_texteditCompleterLoader(QObject *parent) : QObjec
             .arg(QString("dictionary"))
             .arg(qrand())
             .arg(QTime::currentTime().msecsSinceStartOfDay());
-    sqlextra = new sqlExtra(this,connectionName,true);
+    sqlextra = new sqlExtra(this,connectionName,false);
 
 
 }
