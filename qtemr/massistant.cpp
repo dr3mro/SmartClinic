@@ -55,7 +55,7 @@ mAssistant::mAssistant(mLabelMsg& labelMsg, QWidget *parent,bool& eMode) :
     ui->agendaTableView->setToolTip("<html>"
                                     "<table>"
                                     "<tr><b>Tips:</b></tr>"
-                                    "<tr><b>Use F11 & F12 to change current Date.</b></tr>"
+                                    "<tr><b>Use F9 to F12 to change current Date.</b></tr>"
                                     "<tr><b style=\"color:Green; \"> &#9632;</b> : New Visit.</tr>"
                                     "<tr><b style=\"color:Yellow;\"> &#9632;</b> : Attended First follow up.</tr>"
                                     "<tr><b style=\"color:Red;   \"> &#9632;</b> : Missed First Follow up.</tr>"
@@ -64,15 +64,15 @@ mAssistant::mAssistant(mLabelMsg& labelMsg, QWidget *parent,bool& eMode) :
                                     "</table>"
                                     "</html>");
     ui->cashTableView->setToolTip("<html>"
-                                    "<table>"
-                                    "<tr><b>Tips:</b></tr>"
-                                    "<tr><b>Use F11 & F12 to change current Date.</b></tr>"
-                                    "<tr><b style=\"color:Green; \"> &#9632;</b> : New Visit.</tr>"
-                                    "<tr><b style=\"color:Yellow;\"> &#9632;</b> : Attended First follow up.</tr>"
-                                    "<tr><b style=\"color:Grey;  \"> &#9632;</b> : Subsequent Follow ups.</tr>"
-                                    "<tr><b style=\"color:Black; \"> &#9633;</b> : Free Visit.</tr>"
-                                    "</table>"
-                                    "</html>");
+                                  "<table>"
+                                  "<tr><b>Tips:</b></tr>"
+                                  "<tr><b>Use F9 to F12 to change current Date.</b></tr>"
+                                  "<tr><b style=\"color:Green; \"> &#9632;</b> : New Visit.</tr>"
+                                  "<tr><b style=\"color:Yellow;\"> &#9632;</b> : Attended First follow up.</tr>"
+                                  "<tr><b style=\"color:Grey;  \"> &#9632;</b> : Subsequent Follow ups.</tr>"
+                                  "<tr><b style=\"color:Black; \"> &#9633;</b> : Free Visit.</tr>"
+                                  "</table>"
+                                  "</html>");
 }
 
 mAssistant::~mAssistant()
@@ -329,21 +329,33 @@ void mAssistant::keyPressEvent(QKeyEvent *event)
     }else if ( event->key() == Qt::Key_F2){
         ui->mAssistantTabWidget->setCurrentIndex(1);
     }else if (ui->mAssistantTabWidget->currentIndex() == 0){
-        if (event->key() == Qt::Key_F11){
-                ui->agendaCalendar->setSelectedDate(ui->agendaCalendar->selectedDate().addDays(-1));
-                emit ui->agendaCalendar->clicked(ui->agendaCalendar->selectedDate());
-            }else if (event->key() == Qt::Key_F12 ){
-                ui->agendaCalendar->setSelectedDate(ui->agendaCalendar->selectedDate().addDays(1));
-                emit ui->agendaCalendar->clicked(ui->agendaCalendar->selectedDate());
-            }
+        if (event->key() == Qt::Key_F9){
+            ui->agendaCalendar->setSelectedDate(ui->agendaCalendar->selectedDate().addDays(-1));
+            emit ui->agendaCalendar->clicked(ui->agendaCalendar->selectedDate());
+        }else if (event->key() == Qt::Key_F10 ){
+            ui->agendaCalendar->setSelectedDate(ui->agendaCalendar->selectedDate().addDays(7));
+            emit ui->agendaCalendar->clicked(ui->agendaCalendar->selectedDate());
+        }else if (event->key() == Qt::Key_F11 ){
+            ui->agendaCalendar->setSelectedDate(ui->agendaCalendar->selectedDate().addDays(-7));
+            emit ui->agendaCalendar->clicked(ui->agendaCalendar->selectedDate());
+        }else if (event->key() == Qt::Key_F12 ){
+            ui->agendaCalendar->setSelectedDate(ui->agendaCalendar->selectedDate().addDays(1));
+            emit ui->agendaCalendar->clicked(ui->agendaCalendar->selectedDate());
+        }
     }else if (ui->mAssistantTabWidget->currentIndex() == 1){
-        if (event->key() == Qt::Key_F11){
-                ui->cashCalendar->setSelectedDate(ui->cashCalendar->selectedDate().addDays(-1));
-                emit ui->cashCalendar->clicked(ui->cashCalendar->selectedDate());
-            }else if (event->key() == Qt::Key_F12 ){
-                ui->cashCalendar->setSelectedDate(ui->cashCalendar->selectedDate().addDays(1));
-                emit ui->cashCalendar->clicked(ui->cashCalendar->selectedDate());
-            }
+        if (event->key() == Qt::Key_F9){
+            ui->cashCalendar->setSelectedDate(ui->cashCalendar->selectedDate().addDays(-1));
+            emit ui->cashCalendar->clicked(ui->cashCalendar->selectedDate());
+        }else if (event->key() == Qt::Key_F10 ){
+            ui->cashCalendar->setSelectedDate(ui->cashCalendar->selectedDate().addDays(7));
+            emit ui->cashCalendar->clicked(ui->cashCalendar->selectedDate());
+        }else if (event->key() == Qt::Key_F11 ){
+            ui->cashCalendar->setSelectedDate(ui->cashCalendar->selectedDate().addDays(-7));
+            emit ui->cashCalendar->clicked(ui->cashCalendar->selectedDate());
+        }else if (event->key() == Qt::Key_F12 ){
+            ui->cashCalendar->setSelectedDate(ui->cashCalendar->selectedDate().addDays(1));
+            emit ui->cashCalendar->clicked(ui->cashCalendar->selectedDate());
+        }
     }
     mDialog::keyPressEvent(event);
 }
