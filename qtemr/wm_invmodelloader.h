@@ -4,7 +4,7 @@
 #include <QObject>
 #include "investmodel.h"
 #include "sqlbase.h"
-
+#include <QRandomGenerator>
 class wm_invModelLoader : public QObject
 {
     Q_OBJECT
@@ -25,6 +25,7 @@ private:
     InvestModel *model;
     int r;
     QString connectionName;
+    QRandomGenerator generator;
 };
 
 #endif // WM_INVMODELLOADER_H

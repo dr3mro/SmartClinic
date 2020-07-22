@@ -3,7 +3,7 @@
 
 patientTable::patientTable(QWidget *parent):QTableView(parent)
 {
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     filterColumn =  reg.value("filterColumn").toInt();
     loadingIsFinished = false;
     connect(&watcher, SIGNAL(finished()), this, SLOT(updatePatientsCompleted()));
@@ -168,7 +168,7 @@ void patientTable::reOpenDatabase()
 patientTable::~patientTable()
 {
     modelFuture.waitForFinished();
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     reg.setValue("filterColumn",filterColumn);
     setFilter(filterColumn);
     delete model;

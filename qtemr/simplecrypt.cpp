@@ -113,7 +113,7 @@ QByteArray SimpleCrypt::encryptToByteArray(QByteArray plaintext)
     }
  
     //prepend a random char to the string
-    char randomChar = char(qrand() & 0xFF);
+    char randomChar = char(generator.generate() & 0xFF);
     ba = randomChar + integrityProtection + ba;
  
     int pos(0);

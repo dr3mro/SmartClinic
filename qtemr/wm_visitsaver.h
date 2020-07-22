@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "sqlbase.h"
-
+#include <QRandomGenerator>
 class wm_visitSaver : public QObject
 {
     Q_OBJECT
@@ -22,6 +22,7 @@ private:
     QString tableName;
     sqlBase *sqlbase=nullptr;
     QString connectionName;
+    QRandomGenerator generator;
 
 };
 

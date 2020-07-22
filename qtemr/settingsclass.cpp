@@ -8,8 +8,8 @@ settingsClass::settingsClass(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    exConName = QString("qt_sql_extra_settings_connection_%1").arg(qrand());
-    bsConName = QString("qt_sql_base_settings_connection_%1").arg(qrand());
+    exConName = QString("qt_sql_extra_settings_connection_%1").arg(generator.generate());
+    bsConName = QString("qt_sql_base_settings_connection_%1").arg(generator.generate());
     sqlextra = new sqlExtra(this,exConName,false);
     sqlbase = new sqlBase(this,bsConName,false);
 

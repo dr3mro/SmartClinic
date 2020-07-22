@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "sqlbase.h"
-
+#include <QRandomGenerator>
 class wm_patientnamesCompleterLoader : public QObject
 {
     Q_OBJECT
@@ -15,6 +15,7 @@ public slots:
 private:
     sqlBase *sqlbase;
     QString connectionName;
+    QRandomGenerator generator;
 signals:
 
 public slots:

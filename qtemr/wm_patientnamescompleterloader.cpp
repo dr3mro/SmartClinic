@@ -4,7 +4,7 @@ wm_patientnamesCompleterLoader::wm_patientnamesCompleterLoader(QObject *parent) 
 {
     connectionName = QString("qt_sql_base_%1_%2_%3")
             .arg(QString("patientNames"))
-            .arg(qrand())
+            .arg(generator.generate())
             .arg(QTime::currentTime().msecsSinceStartOfDay());
     sqlbase = new sqlBase(nullptr,connectionName,false);
 }

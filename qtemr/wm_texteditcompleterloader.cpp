@@ -4,7 +4,7 @@ wm_texteditCompleterLoader::wm_texteditCompleterLoader(QObject *parent) : QObjec
 {
     connectionName = QString("qt_sql_extra_%1_%2_%3")
             .arg(QString("dictionary"))
-            .arg(qrand())
+            .arg(generator.generate())
             .arg(QTime::currentTime().msecsSinceStartOfDay());
     sqlextra = new sqlExtra(this,connectionName,false);
 

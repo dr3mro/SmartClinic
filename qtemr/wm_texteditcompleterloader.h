@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "sqlextra.h"
-
+#include <QRandomGenerator>
 class wm_texteditCompleterLoader : public QObject
 {
     Q_OBJECT
@@ -18,6 +18,7 @@ public slots:
 private:
     sqlExtra *sqlextra;
     QString connectionName;
+    QRandomGenerator generator;
 };
 
 #endif // WM_TEXTEDITCOMPLETERLOADER_H

@@ -11,10 +11,10 @@
 #include <QMouseEvent>
 #include <QRegExp>
 #include <QLabel>
-
+#include <QRandomGenerator>
 #include <QFuture>
 #include <QtConcurrent>
-
+#include <QRandomGenerator>
 #include "setdosedrugnamewidget.h"
 #include "sqlextra.h"
 #include "genericlineedit.h"
@@ -122,7 +122,6 @@ private:
     QAction *a_cp4rmPWin;
     QAction *a_overWrite2pWin;
     QAction *a_cp4rmLastVisit;
-
     sqlExtra *sqlextra;
     sqlCore *sqlcore;
     QStandardItemModel *findModel;
@@ -130,9 +129,6 @@ private:
     void findAltDrug(QString col, QStringList filters);
     QStringList coreDrugs;
     bool drugsSyncLoadingOperation=false;
-
-
-private:
     void createDrugsModel();
     void createDrugsTableConMenu();
     void tweakDrugsTable();
@@ -151,6 +147,7 @@ private:
     QFutureWatcher<DrugsItemModel*> watcher;
     int sortCol=5;
     bool working=false;
+    QRandomGenerator generator;
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

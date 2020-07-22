@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <QVector>
 #include <QFlags>
 #include "mdebug.h"
-
+#include <QRandomGenerator>
 /**
   @short Simple encryption and decryption of strings and byte arrays
  
@@ -212,14 +212,13 @@ public:
                    };
     Q_DECLARE_FLAGS(CryptoFlags, CryptoFlag)
 private:
- 
     void splitKey();
- 
     quint64 m_key;
     QVector<char> m_keyParts;
     CompressionMode m_compressionMode;
     IntegrityProtectionMode m_protectionMode;
     Error m_lastError;
+    QRandomGenerator generator;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(SimpleCrypt::CryptoFlags)
  

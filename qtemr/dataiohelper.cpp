@@ -240,7 +240,7 @@ QString dataIOhelper::setCurrentFolder(bool forceChange)
         {
             pathChanged=true;
         }
-        QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+        QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
         reg.setValue("ApplicationPath", newAppPath);
     }
 
@@ -260,7 +260,7 @@ QString dataIOhelper::getCurrentFolder()
 {
     bool portablity = isPortable();
     QString currentAppPath;
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
 
     if(portablity)
         currentAppPath = QCoreApplication::applicationDirPath().replace('/','\\');

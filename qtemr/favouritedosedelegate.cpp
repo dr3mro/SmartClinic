@@ -3,7 +3,7 @@
 favouriteDoseDelegate::favouriteDoseDelegate(QWidget *parent):
     QItemDelegate(parent)
 {
-    connectionName = QString("favoriteDelegate_%1").arg(qrand());
+    connectionName = QString("favoriteDelegate_%1").arg(generator.generate());
     sqlextra = new sqlExtra(this,connectionName,false);
 }
 

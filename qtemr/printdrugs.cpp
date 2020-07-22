@@ -13,7 +13,7 @@ printDrugs::printDrugs(QWidget *parent) :
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
 
     t.setInterval(600);//this timer to set limit to printing per second
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
 
     connect(ui->setInkColor,SIGNAL(clicked(bool)),cp,SLOT(show()));
     connect(cp,SIGNAL(newColor(QColor)),this,SLOT(setInkColor(QColor)));
@@ -289,7 +289,7 @@ void printDrugs::showEvent(QShowEvent *e)
     setMaxValues();
     emit loadPreview();
     ui->optionsTabWidget->setCurrentIndex(0);
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     restoreGeometry(reg.value("printWindowGeometry").toByteArray());
     QDialog::showEvent(e);
     tweakRoshetta();
@@ -401,7 +401,7 @@ QTextDocument *printDrugs::getDoc()
 
 void printDrugs::closeEvent(QCloseEvent *e)
 {
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     reg.setValue("selectedPrintingProfile", ui->printerProfile->currentIndex());
     reg.setValue("printWindowGeometry",saveGeometry());
     pSettings = grabPrintSettings();

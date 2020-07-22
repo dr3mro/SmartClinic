@@ -21,7 +21,7 @@ mAssistant::mAssistant(mLabelMsg& labelMsg, QWidget *parent,bool& eMode) :
     ui->fromDate->setCalendarWidget(fromCalWidget);
     ui->toDate->setCalendarWidget(toCalWidget);
 
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     if (reg.value("viewSinceLastCheckout").toBool())
         ui->cbSinceLastCheckout->setChecked(true);
     else
@@ -84,7 +84,7 @@ mAssistant::~mAssistant()
     registerServiceLoaderFuture.waitForFinished();
     calcModelFuture.waitForFinished();
 
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     reg.setValue("viewSinceLastCheckout",ui->cbSinceLastCheckout->isChecked());
 
     sqlbase->optimize();

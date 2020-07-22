@@ -92,7 +92,7 @@ mSettings::pSettings mSettings::readSettings()
     psettings.defaultFont = settings.value(_defaultFont,QVariant("Tahome")).toString();
     psettings.defaultFontSize = settings.value(_defaultFontSize,QVariant(8)).toDouble();
     psettings.defaultFontBold = settings.value(_defaultFontBold,QVariant(false)).toBool();
-    psettings.textboxFont = settings.value(_textboxFont,QVariant("tahome")).toString();
+    psettings.textboxFont = settings.value(_textboxFont,QVariant("Tahoma")).toString();
     psettings.textboxFontSize = settings.value(_textboxFontSize,QVariant(8)).toDouble();
     psettings.textboxFontBold = settings.value(_textboxFontBold,QVariant(false)).toBool();
     settings.endGroup();

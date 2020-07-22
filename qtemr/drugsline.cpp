@@ -15,7 +15,7 @@ void drugsLine::loadCompleter()
     char delimterNone[] = "";
 
     delimeter = *delimterNone;
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     setToolTip("Middle mouse click or Shift + left click here to toggle between All \n"
                "drugs & Favourite drugs autocomplete modes - [CTRL+4] to focus");
     favouriteDrugs = reg.value(QString("enableFavourites_%1").arg(windowName)).toBool();
@@ -53,7 +53,7 @@ void drugsLine::mousePressEvent(QMouseEvent *e)
             setPlaceholderText("enter drug name here - All drugs");
             mSetCompleter("drugs");
         }
-        QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+        QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
         reg.setValue(QString("enableFavourites_%1").arg(windowName),favouriteDrugs);
     }
 

@@ -9,7 +9,7 @@ searchWidget::searchWidget(QWidget *parent) :
     validator.setRegExp(QRegExp("^\\S(.*\\S)?$"));
     ui->filterLineEdit->setValidator(&validator);
 
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinic2",QSettings::NativeFormat);
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     setFilter(reg.value("filterColumn").toInt());
 
     ui->PatientListTableView->setConnection();

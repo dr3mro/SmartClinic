@@ -8,7 +8,7 @@
 #include "sqlcore.h"
 #include "servicemodel.h"
 #include "msql.h"
-
+#include <QRandomGenerator>
 class sqlExtra : public msql
 {
     Q_OBJECT
@@ -52,6 +52,7 @@ public:
 private:
     QSqlTableModel *tableModel;
     QSqlTableModel *stdDosesModel;
+    QRandomGenerator generator;
 signals:
 private slots:
     void tableModelUpdateValidator(QModelIndex index, QModelIndex);

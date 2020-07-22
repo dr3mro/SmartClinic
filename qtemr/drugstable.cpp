@@ -6,9 +6,9 @@ drugsTable::drugsTable(QWidget *parent):zTableView(parent)
     createDrugsModel();
     createDrugsTableConMenu();
     tweakDrugsTable();
-    exConName = QString("qt_sql_extra_drugsTable_%1_%2").arg(this->objectName()).arg(qrand());
-    coConName = QString("qt_sql_core_drugsTable_%1_%2").arg(this->objectName()).arg(qrand());
-    //sqlbase = new sqlBase(this);
+    exConName = QString("qt_sql_extra_drugsTable_%1_%2").arg(this->objectName()).arg(generator.generate());
+    coConName = QString("qt_sql_core_drugsTable_%1_%2").arg(this->objectName()).arg(generator.generate());
+
     sqlextra = new sqlExtra(this,exConName,false);
     sqlcore = new sqlCore(this,coConName);
     lo_setDose = new QGridLayout(this);

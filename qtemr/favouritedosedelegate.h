@@ -5,6 +5,7 @@
 #include <QItemDelegate>
 #include <QLineEdit>
 #include <QCompleter>
+#include <QRandomGenerator>
 #include "sqlextra.h"
 class favouriteDoseDelegate : public QItemDelegate
 {
@@ -18,6 +19,7 @@ private:
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
     sqlExtra *sqlextra;
     QString connectionName;
+    QRandomGenerator generator;
 };
 
 #endif // FAVOURITEDOSEDELEGATE_H
