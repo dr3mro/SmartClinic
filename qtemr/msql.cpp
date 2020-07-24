@@ -31,6 +31,7 @@ QString msql::sqlExec(QString sqlCmd)
 
 msql::~msql()
 {
+   // mDebug() << "stop:" <<ConnectionName;
     query->finish();
     db.commit();
     db.close();
@@ -59,7 +60,7 @@ void msql::setPragmas()
 bool msql::createConnection(QString connectionName, QString path)
 {
     ConnectionName = connectionName;
-
+    //mDebug() << "start:"<< ConnectionName;
     if ( QSqlDatabase::contains(connectionName))
     {
         db = QSqlDatabase::database(connectionName);

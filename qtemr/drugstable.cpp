@@ -6,8 +6,14 @@ drugsTable::drugsTable(QWidget *parent):zTableView(parent)
     createDrugsModel();
     createDrugsTableConMenu();
     tweakDrugsTable();
-    exConName = QString("qt_sql_extra_drugsTable_%1_%2").arg(this->objectName()).arg(generator.generate());
-    coConName = QString("qt_sql_core_drugsTable_%1_%2").arg(this->objectName()).arg(generator.generate());
+    exConName = QString("qt_sql_extra_drugsTable_%1_%2_%3")
+            .arg(this->objectName())
+            .arg(qrand())
+            .arg(qrand());
+    coConName = QString("qt_sql_core_drugsTable_%1_%2_%3")
+            .arg(this->objectName())
+            .arg(qrand())
+            .arg(qrand());
 
     sqlextra = new sqlExtra(this,exConName,false);
     sqlcore = new sqlCore(this,coConName);

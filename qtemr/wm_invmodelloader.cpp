@@ -2,7 +2,7 @@
 
 wm_invModelLoader::wm_invModelLoader(QObject *parent) : QObject(parent)
 {
-    r = generator.generate();
+    r = qrand();
     connectionName = QString("qt_sql_base_investigations_%1").arg(r);
     sqlbase = new sqlBase(this,connectionName,false);
 }

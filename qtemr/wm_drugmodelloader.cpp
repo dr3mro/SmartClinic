@@ -2,7 +2,9 @@
 
 wm_drugModelLoader::wm_drugModelLoader(QObject *parent) : QObject(parent)
 {
-    connectionName = QString("qt_sql_base_drugsModel_%1").arg(generator.generate());
+    connectionName = QString("qt_sql_base_drugsModel_%1_%2")
+            .arg(qrand())
+            .arg(qrand());
     sqlbase = new sqlBase(this,connectionName,false);
 }
 

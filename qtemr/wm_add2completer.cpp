@@ -2,7 +2,7 @@
 
 wm_add2Completer::wm_add2Completer(QObject *parent) : QObject(parent)
 {
-    connectionName = QString("qt_sql_extra_add2Completer_%1_%2").arg(generator.generate()).arg(QTime::currentTime().msecsSinceStartOfDay());
+    connectionName = QString("qt_sql_extra_add2Completer_%1_%2").arg(qrand()).arg(QTime::currentTime().msecsSinceStartOfDay());
     sqlextra = new sqlExtra(this,connectionName,false);
 }
 

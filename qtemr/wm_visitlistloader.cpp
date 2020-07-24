@@ -2,7 +2,7 @@
 
 wm_visitListLoader::wm_visitListLoader(QObject *parent) : QObject(parent)
 {
-    connectionName = QString("qt_sql_base_visitListLoader_%1").arg(generator.generate());
+    connectionName = QString("qt_sql_base_visitListLoader_%1").arg(qrand());
     sqlbase = new sqlBase(this,connectionName,false);
 }
 

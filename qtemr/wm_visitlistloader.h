@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "sqlbase.h"
-#include <QRandomGenerator>
+
 class wm_visitListLoader : public QObject
 {
     Q_OBJECT
@@ -15,7 +15,7 @@ private:
     sqlBase *sqlbase;
     int ID;
     QString connectionName;
-    QRandomGenerator generator;
+    
 
 public slots:
     QVector<sqlBase::visitItem> Work();

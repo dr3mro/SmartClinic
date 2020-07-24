@@ -14,7 +14,7 @@
 #include "msettings.h"
 #include "dataiohelper.h"
 #include <QFileSystemWatcher>
-#include <QRandomGenerator>
+
 namespace Ui {
 class settingsClass;
 }
@@ -81,7 +81,7 @@ private:
     QMovie *movie;
     bool working=false;
     bool encryptionToggled=false;
-    QRandomGenerator generator;
+    
 };
 
 #endif // SETTINGSCLASS_H

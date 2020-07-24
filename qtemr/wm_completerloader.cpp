@@ -2,7 +2,7 @@
 
 wm_CompleterLoader::wm_CompleterLoader(QObject *parent) : QObject(parent)
 {
-    r = generator.generate();
+    r = qrand();
 }
 
 QStringList wm_CompleterLoader::Work()

@@ -2,7 +2,7 @@
 
 wm_visitSaver::wm_visitSaver(QObject *parent) : QObject(parent)
 {
-    connectionName = QString("qt_sql_base_visitSaver_%1_%2").arg(generator.generate()).arg(QTime::currentTime().msecsSinceStartOfDay());
+    connectionName = QString("qt_sql_base_visitSaver_%1_%2").arg(qrand()).arg(QTime::currentTime().msecsSinceStartOfDay());
     sqlbase = new sqlBase(this,connectionName,false);
 }
 

@@ -4,7 +4,7 @@
 #include <QObject>
 #include "sqlbase.h"
 #include "sqlextra.h"
-#include <QRandomGenerator>
+
 class wm_CompleterLoader : public QObject
 {
     Q_OBJECT
@@ -22,7 +22,7 @@ private:
     QString tableName;
     sqlExtra *sqlextra=nullptr;
     QString connectionName;
-    QRandomGenerator generator;
+    
 };
 
 #endif // WM_COMPLETERLOADER_H

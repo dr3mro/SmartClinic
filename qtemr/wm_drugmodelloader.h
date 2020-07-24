@@ -4,7 +4,7 @@
 #include <QObject>
 #include "drugsitemmodel.h"
 #include "sqlbase.h"
-#include <QRandomGenerator>
+
 class wm_drugModelLoader : public QObject
 {
     Q_OBJECT
@@ -22,7 +22,7 @@ private:
     sqlBase *sqlbase;
     DrugsItemModel *model;
     QString connectionName;
-    QRandomGenerator generator;
+    
 public slots:
     DrugsItemModel *Work();
 };

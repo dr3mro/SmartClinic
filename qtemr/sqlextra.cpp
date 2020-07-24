@@ -18,7 +18,7 @@ sqlExtra::sqlExtra(QObject *parent, QString connectionName, bool cTable) :
 
     if ( !doesCustomDrugsTableExists())
     {
-        QString coreconName = QString("qt_sql_core_coreDrugList_%1").arg(generator.generate());
+        QString coreconName = QString("qt_sql_core_coreDrugList_%1").arg(qrand());
         sqlCore *sqlcore = new sqlCore(this,coreconName);
         db.transaction();
         createTable("drugs");

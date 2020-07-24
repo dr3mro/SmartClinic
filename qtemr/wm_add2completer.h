@@ -5,7 +5,7 @@
 #include "sqlextra.h"
 #include "datahelper.h"
 #include "sqlbase.h"
-#include <QRandomGenerator>
+
 class wm_add2Completer : public QObject
 {
     Q_OBJECT
@@ -31,7 +31,7 @@ private:
     QStringList splitDict(QString &dict);
     sqlExtra *sqlextra;
     QString connectionName;
-    QRandomGenerator generator;
+    
     QString husband;
 };
 

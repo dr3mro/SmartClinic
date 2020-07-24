@@ -11,10 +11,10 @@
 #include <QMouseEvent>
 #include <QRegExp>
 #include <QLabel>
-#include <QRandomGenerator>
+
 #include <QFuture>
 #include <QtConcurrent>
-#include <QRandomGenerator>
+
 #include "setdosedrugnamewidget.h"
 #include "sqlextra.h"
 #include "genericlineedit.h"
@@ -147,7 +147,7 @@ private:
     QFutureWatcher<DrugsItemModel*> watcher;
     int sortCol=5;
     bool working=false;
-    QRandomGenerator generator;
+
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
