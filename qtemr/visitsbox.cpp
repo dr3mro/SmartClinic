@@ -649,11 +649,14 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
         case Qt::Key_8:
           ui->pTemp->setFocus(Qt::OtherFocusReason);
           break;
-        case Qt::Key_9:
+        case Qt::Key_Comma:
+          ui->vDrugsTable->setFocus(Qt::OtherFocusReason);
+          break;
+        case Qt::Key_Period:
           ui->InvestigationsTable->setFocus(Qt::OtherFocusReason);
           break;
-        case Qt::Key_0:
-          ui->vDrugsTable->setFocus(Qt::OtherFocusReason);
+        case Qt::Key_Semicolon:
+          ui->dateFollowUp->setFocus(Qt::OtherFocusReason);
           break;
       }
     }
