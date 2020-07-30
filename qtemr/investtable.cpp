@@ -17,7 +17,6 @@ investTable::investTable(QWidget *parent):zTableView(parent)
     setToolTip("<html>"
                "<b>Tips:</b>"
                "<ul>"
-               "<li><b>CTRL+9 to focus.</b></li>"
                "<li><b>SHIFT+Double Left click:</b> toggles item printable / calculable.</li>"
                "<li><b>Double Middle click:</b> toggles item printable / calculable.</li>"
                "<li><b>SHIFT+↑/↓:</b> moves item up and down.</li>"
