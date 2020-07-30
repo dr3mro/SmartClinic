@@ -80,6 +80,8 @@ private:
     mCalendarWidget *toCalWidget;
     mSettings& settings = mSettings::instance();
     ExpectedDeliveries expectedDeliveries;
+    QCalendarWidget *calendar;
+
     void loadCurrentSelectedAgenda();
     void tweakRegisterTable();
     void loadRegister();
