@@ -13,6 +13,7 @@
 #include <QShortcut>
 #include <QtConcurrentRun>
 #include <QFutureWatcher>
+#include <QTime>
 #include "mdebug.h"
 #include "regapp.h"
 #include "patientlist.h"
@@ -239,6 +240,7 @@ private:
     bool opAdAltered=false;
     QFuture<QString> themeFuture;
     QFutureWatcher<QString> themeFutureWatcher;
+    QTimer clickTimer;
 
 };
 #endif // MAINWINDOW_H

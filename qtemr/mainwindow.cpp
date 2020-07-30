@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 
 void MainWindow::boot()
 {
+    clickTimer.setInterval(500);
     selected_date = QDate::currentDate();
     BirthDateWindow.setLayout(&layoutCal);
     layoutCal.addWidget(calWidget);
@@ -122,6 +123,7 @@ void MainWindow::boot()
     connect (add2CompleterWorker,SIGNAL(finished()),this,SIGNAL(reloadCompleter()));
     connect (assistant,SIGNAL(loadThisPatient(int)),this,SLOT(loadThisPatient(int)));
     connect (assistant,SIGNAL(toggleEditMode(bool)),this,SLOT(toggleEditMODE(bool)));
+    connect (&clickTimer,&QTimer::timeout,&clickTimer,&QTimer::stop);
 
     if ( ! settings.isDeviceActivated())
         mship->run();
@@ -409,6 +411,11 @@ void MainWindow::grabPatient()
 
 void MainWindow::on_ButtonSaveEdit_clicked()
 {
+    if (clickTimer.isActive())
+        return;
+
+    clickTimer.start();
+
     ui->ButtonVisit->setEnabled(false);
     ui->ButtonDelete->setEnabled(false);
 
@@ -524,6 +531,10 @@ bool MainWindow::save()
 
 void MainWindow::on_buttonNewCancel_clicked()
 {
+    if (clickTimer.isActive())
+        return;
+
+    clickTimer.start();
 
     int maxID = indexLength -1;
     int reply;
@@ -621,8 +632,10 @@ void MainWindow::clear()
 
 void MainWindow::on_ButtonDelete_clicked()
 {
-    if ( appLocked() )
+    if ( clickTimer.isActive() || appLocked() )
         return;
+
+    clickTimer.start();
 
     applyBlurEffect();
 
@@ -646,6 +659,11 @@ void MainWindow::on_ButtonDelete_clicked()
 
 void MainWindow::on_ButtonVisit_clicked()
 {
+    if (clickTimer.isActive())
+        return;
+
+    clickTimer.start();
+
     ID = patient.ID;
     visitsbox->toggleVisualEffects(settings.isVisualEffectsEnabled());
     visitsbox->setPatient(ID,patient.age,patient.name,ui->ObstWidget->getFPAL());
