@@ -3,13 +3,13 @@
 
 #define MajorVer 3
 #define MinorVer 8
-#define xVer 7
-#define APPVERSION "3.8.7"
+#define xVer 9
+#define APPVERSION "3.8.9"
 #define APPNAME "Smart Clinic"
-#define APPNAMEVER "Smart Clinic 3.8.7"
+#define APPNAMEVER "Smart Clinic 3.8.9"
 #define singleInstance "com.smartSoft.smartClinic3"
 #define DEVELOPER "AMR OSMAN"
-#define APPYEAR "2019"
+#define APPYEAR "2020"
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
 #define whiteListUrl "https://dr3mro.000webhostapp.com/wlist"
@@ -24,7 +24,7 @@
 #define dbVersion 2.87
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
-#define drugsDatabaseVer 191026
+#define drugsDatabaseVer 200626
 #define PORTABILITYLOCK ".portable"
 
 #endif // GLOBALVARIABLES
