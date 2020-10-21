@@ -16,11 +16,13 @@ void vTypeComboBox::fillContent(int maxFollow)
 
 void vTypeComboBox::goUp()
 {
-  setCurrentIndex(currentIndex()>0? currentIndex()-1:0);
+    if(isEnabled())
+        setCurrentIndex(currentIndex()>0? currentIndex()-1:0);
 }
 
 void vTypeComboBox::goDown()
 {
-  setCurrentIndex(currentIndex() < count()-1? currentIndex()+1:count()-1);
+    if(isEnabled())
+        setCurrentIndex(currentIndex() < count()-1? currentIndex()+1:count()-1);
 }
 
