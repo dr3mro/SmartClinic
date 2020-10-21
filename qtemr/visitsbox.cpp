@@ -15,7 +15,7 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
   shift_pageDown(new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageDown), this)),
   printShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_P),this)),
   easyPrintShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this)),
-  printPreviewShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_I),this)),
+  printPreviewShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R),this)),
   toggleFollowupDate(new QShortcut(Qt::Key_F12,this)),
   vTypeUp(new QShortcut(Qt::Key_F10,this)),
   vTypeDown(new QShortcut(Qt::Key_F11,this))
@@ -649,13 +649,13 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
         case Qt::Key_8:
           ui->pTemp->setFocus(Qt::OtherFocusReason);
           break;
-        case Qt::Key_Comma:
+        case Qt::Key_D:
           ui->vDrugsTable->setFocus(Qt::OtherFocusReason);
           break;
-        case Qt::Key_Period:
+        case Qt::Key_I:
           ui->InvestigationsTable->setFocus(Qt::OtherFocusReason);
           break;
-        case Qt::Key_Semicolon:
+        case Qt::Key_F:
           ui->dateFollowUp->setFocus(Qt::OtherFocusReason);
           break;
       }

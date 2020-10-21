@@ -967,9 +967,7 @@
               </sizepolicy>
              </property>
              <property name="toolTip">
-              <string>Left Click (CTRL+P): Shows print dialog.
-Right Click (CTRL+I): Shows print preview dialog.
-Middle Click (CTRL+O) : Prints immediately.</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Left Click (CTRL+P): Shows print dialog.&lt;/p&gt;&lt;p&gt;Right Click (CTRL+R): Shows print preview dialog.&lt;/p&gt;&lt;p&gt;Middle Click (CTRL+O) : Prints immediately.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="text">
               <string>Print</string>
