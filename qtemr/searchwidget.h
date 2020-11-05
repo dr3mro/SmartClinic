@@ -35,12 +35,13 @@ private slots:
     void on_filterByMobileRadio_toggled(bool checked);
     void on_filterLineEdit_returnPressed();
     void on_PatientListTableView_activated(const QModelIndex &index);
-
+    void on_fuzzyCheckBox_clicked(bool checked);
 
 private:
     Ui::searchWidget *ui;
     void filterToggled();
     bool filtersVisibility=false;
+    bool isFuzzySearchEnabled=true;
     QRegExpValidator validator;
 
 signals:

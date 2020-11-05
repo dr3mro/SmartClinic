@@ -67,7 +67,14 @@
        <number>0</number>
       </property>
       <item>
-       <spacer name="horizontalSpacer_9">
+       <widget class="QCheckBox" name="fuzzyCheckBox">
+        <property name="text">
+         <string>Fuzzy</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_10">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -117,19 +124,6 @@
          <string>Ctrl+3</string>
         </property>
        </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_10">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>

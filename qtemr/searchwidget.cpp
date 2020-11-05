@@ -11,6 +11,8 @@ searchWidget::searchWidget(QWidget *parent) :
 
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     setFilter(reg.value("filterColumn").toInt());
+    isFuzzySearchEnabled = reg.value("enableFuzzySearch").toBool();
+    ui->fuzzyCheckBox->setChecked(isFuzzySearchEnabled);
 
     ui->PatientListTableView->setConnection();
     ui->filtersWidget->hide();
@@ -137,6 +139,20 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
         }
         //setFilter
     }
+    // enable fuzzy search
+
+    if(isFuzzySearchEnabled)
+    {
+        str.replace(" ","*");
+        str.replace(QRegExp("[آ|أ|إ|ا]"),"[آ,أ,إ,ا]");
+        str.replace(QRegExp("[ه|ة]"),"[ه,ة]");
+        str.replace(QRegExp("[ى|ي]"),"[ى,ي]");
+        str.replace(QRegExp("بو"),"[بو,بو ]");
+        str.replace(QRegExp("عبد"),"[عبد,عبد ]");
+        //str.replace(QRegExp("[ؤ|و]"),"[ؤ,و]");
+    }
+
+
     ui->PatientListTableView->FilterPatients(str);
     ui->PatientListTableView->selectRow(0);
 }
@@ -183,4 +199,12 @@ void searchWidget::on_PatientListTableView_activated(const QModelIndex &index)
     int ID = ui->PatientListTableView->getSelectedPatientID(&index);
     emit loadPatient(ID);
     emit closePatientList();
+}
+
+void searchWidget::on_fuzzyCheckBox_clicked(bool checked)
+{
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    isFuzzySearchEnabled = checked;
+    reg.setValue("enableFuzzySearch",isFuzzySearchEnabled);
+    on_filterLineEdit_textChanged(ui->filterLineEdit->text());
 }
