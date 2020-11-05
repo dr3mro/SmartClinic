@@ -92,6 +92,8 @@ void patientTable::setMyModel()
     proxy_model->setFilterKeyColumn(filterColumn);
     proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
     proxy_model->setSourceModel(model);
+    proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxy_model->setSortCaseSensitivity(Qt::CaseInsensitive);
     setModel(proxy_model);
     selectRow(0);
     emit setFilter(filterColumn);
