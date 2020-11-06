@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QValidator>
+#include <QString>
 
 namespace Ui {
 class searchWidget;

@@ -139,7 +139,6 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
         }
         //setFilter
     }
-    // enable fuzzy search
 
     if(isFuzzySearchEnabled)
     {
@@ -147,9 +146,9 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
         str.replace(QRegExp("[آ|أ|إ|ا]"),"[آ,أ,إ,ا]");
         str.replace(QRegExp("[ه|ة]"),"[ه,ة]");
         str.replace(QRegExp("[ى|ي]"),"[ى,ي]");
-        str.replace(QRegExp("بو"),"[بو,بو ]");
-        str.replace(QRegExp("عبد"),"[عبد,عبد ]");
-        //str.replace(QRegExp("[ؤ|و]"),"[ؤ,و]");
+        str.replace(QString("بو"),"[ب][و]*");
+        str.replace(QString("عبد"),"[ع][ب][د]*");
+        str.replace(QRegExp("[ؤ|و][ء]*"),"[ؤ,و]*");
     }
 
 
