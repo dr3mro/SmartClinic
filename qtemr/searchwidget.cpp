@@ -148,7 +148,7 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
         str.replace(QRegExp("[ى|ي]"),"[ى,ي]");
         str.replace(QString("بو"),"[ب][و]*");
         str.replace(QString("عبد"),"[ع][ب][د]*");
-        str.replace(QRegExp("[ؤ|و][ء]*"),"[ؤ,و]*");
+        str.replace(QRegExp("(?<!ب)[ؤ,و]+[ء]*"),"[ؤ,و]*");
     }
 
 
