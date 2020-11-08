@@ -404,7 +404,7 @@ bool drugsTable::isWorking()
 void drugsTable::loadPatientDrugsModel(int ID, int julianDate,bool syncLoader)
 {
     working = true;
-//    drugsModel->blockSignals(true);
+    drugsModel->blockSignals(true);
     drugsSyncLoadingOperation = syncLoader;
     worker->setIDJulianDate(ID,julianDate);
     future = QtConcurrent::run(worker,&wm_drugModelLoader::Work);
