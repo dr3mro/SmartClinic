@@ -408,6 +408,7 @@ void visitsBox::closeEvent(QCloseEvent *event)
 
   emit onVisitBoxClose();//this will clear popups and lineedits
 
+  ui->visitLists->stopLoading();
   if ( vEditMode && isVisitModified()  )
     {
       if(!alwaysSave)
@@ -1643,7 +1644,6 @@ void visitsBox::setPatient(int id, QString Age, QString Name, QString fpal)
   ui->eddDate->setHidden(!ui->checkBoxAntenatal->isChecked());
   ui->labelEDD->setHidden(!ui->checkBoxAntenatal->isChecked());
   ui->presentation->setFocus(Qt::OtherFocusReason);
-
   //    auto _cons = cons;
 
   //    cons = QSqlDatabase::connectionNames();

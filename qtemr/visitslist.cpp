@@ -24,9 +24,29 @@ void visitsList::makeReadWrite(bool b)
     isReadOnly = !b;
 }
 
+void visitsList::stopLoading()
+{
+    _stopLoadingNow=true;
+}
+
 void visitsList::setMaxFollows(int mxf)
 {
     maxFollows=mxf;
+}
+
+void visitsList::addDetails()
+{
+    int i=0;
+    foreach (sqlBase::visitItem item, list)
+    {
+        if(!_stopLoadingNow){
+            setItemIcon(i,getVisitIcon(item.visitType));
+            setItemData(i,item.Diagnosis,Qt::ToolTipRole);
+            qApp->processEvents();
+            i++;
+        }
+    }
+    emit loadCompleted();
 }
 
 visitsList::~visitsList()
@@ -38,16 +58,16 @@ void visitsList::insertVisits()
 {
     clear();
     int i=0;
-    QVector<sqlBase::visitItem> list = watcher.result();
+    list = watcher.result();
     foreach (sqlBase::visitItem item, list)
     {
-        addItem(getVisitIcon(item.visitType),item.visitDateTime);
-        setItemData(i,item.Diagnosis,Qt::ToolTipRole);
+        addItem(item.visitDateTime);
         i++;
     }
 
     setCurrentIndex(0);
-    emit loadCompleted();
+    _stopLoadingNow=false;
+    QTimer::singleShot(250,this,&visitsList::addDetails);
 }
 
 bool visitsList::eventFilter(QObject *o, QEvent *e)

@@ -10,7 +10,6 @@
 #include <QFutureWatcher>
 #include "wm_visitlistloader.h"
 
-
 class visitsList : public QComboBox
 {
     Q_OBJECT
@@ -20,13 +19,16 @@ public:
     void populateWithVisitList(int ID);
     void setMaxFollows(int mxf);
     ~visitsList();
+
 public slots:
     void insertVisits();
     void makeReadWrite(bool b);
+    void stopLoading();
 
 signals:
     void loadCompleted();
     void saveVisit();
+
 private:
     bool eventFilter(QObject *o, QEvent *e);
     int ID;
@@ -36,6 +38,11 @@ private:
     QFuture<QVector<sqlBase::visitItem> > future;
     QFutureWatcher<QVector<sqlBase::visitItem> > watcher;
     QIcon getVisitIcon(int visitType) const;
+    QVector<sqlBase::visitItem> list;
+    bool _stopLoadingNow=false;
+
+private slots:
+    void addDetails();
 
 protected:
     void wheelEvent(QWheelEvent *e);
