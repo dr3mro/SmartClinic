@@ -3254,8 +3254,12 @@ void sqlBase::createNewVisit(int ID,
     else
     {
         visit = getPatientVisitData(ID,previous);
+        drugsModel->blockSignals(true);
+        investModel->blockSignals(true);
         drugsModel = readDrugs(ID,previousDateJulian,drugsModel);
         investModel = getInvestigationsModel(investModel,ID,previousDateJulian);
+        drugsModel->blockSignals(false);
+        investModel->blockSignals(false);
 
         visit.bp.clear();
         visit.pulse.clear();
