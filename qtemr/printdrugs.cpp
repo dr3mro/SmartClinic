@@ -202,6 +202,7 @@ void printDrugs::setDefaultFontPoint(const QString &arg1)
     ui->Roshetta->setFontPointSize(defaultPoint);
     ui->Roshetta->setTextCursor(cursor);
     ui->Roshetta->setPalette(palette);
+    ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
 
 }
 
@@ -216,6 +217,7 @@ void printDrugs::setDefaultFont(const QString &arg1)
     ui->Roshetta->setTextCursor(cursor);
     ui->Roshetta->setPalette(palette);
     ui->Roshetta->setInkFont(arg1);
+    ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
 }
 
 void printDrugs::setDefaultBold(bool bold)
@@ -311,8 +313,7 @@ void printDrugs::tweakRoshetta()
     ui->Roshetta->setLineWrapColumnOrWidth(WidthPixels);
     ui->Roshetta->setReadOnly(pSettings.showInvestigations);
     setupPrinter(printer,pSettings);
-    ui->Roshetta->document()->setPageSize(printer->pageRect().size());
-
+    ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
 }
 
 void printDrugs::setMaxValues()
@@ -361,6 +362,7 @@ void printDrugs::setupPrinter(QPrinter *p,mSettings::prescriptionPrintSettings p
 void printDrugs::printDoc(QPrinter *p,QTextDocument *doc,bool preview)
 {
     int reply=0;
+    doc->setPageSize((QSizeF) p->pageLayout().pageSize().sizePoints());
     if (doc->pageCount() > 1 && !preview)
         reply = QMessageBox::question(nullptr,"Warning","Your print might be splitted over more than one page."
                                                   " please recheck your print preview. Are you sure?",
