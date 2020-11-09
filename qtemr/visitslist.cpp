@@ -53,7 +53,9 @@ void visitsList::addDetails()
             i++;
         }
     }
-        _view->setUpdatesEnabled(true);
+    _view->blockSignals(false);
+    _view->setUpdatesEnabled(true);
+
     emit loadCompleted();
 }
 
@@ -65,6 +67,7 @@ visitsList::~visitsList()
 void visitsList::insertVisits()
 {
     _view->setUpdatesEnabled(false);
+    _view->blockSignals(true);
     clear();
     //QElapsedTimer t;
     list = watcher.result();
