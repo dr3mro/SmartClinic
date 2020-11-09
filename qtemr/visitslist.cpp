@@ -53,8 +53,8 @@ void visitsList::addDetails()
             i++;
         }
     }
-    _view->blockSignals(false);
-    _view->setUpdatesEnabled(true);
+    //_view->blockSignals(false);
+    //_view->setUpdatesEnabled(true);
 
     emit loadCompleted();
 }
@@ -66,17 +66,19 @@ visitsList::~visitsList()
 
 void visitsList::insertVisits()
 {
-    _view->setUpdatesEnabled(false);
-    _view->blockSignals(true);
+    //_view->setUpdatesEnabled(false);
+    //_view->blockSignals(true);
     clear();
     //QElapsedTimer t;
     list = watcher.result();
+    QStringList vStrings;
     //t.start();
-    foreach (sqlBase::visitItem item, list)
+    for (sqlBase::visitItem &item: list)
     {
-        addItem(item.visitDateTime);
+        vStrings.append(item.visitDateTime);
         //qApp->processEvents();
     }
+    addItems(vStrings);
     //mDebug() <<t.elapsed();
     setCurrentIndex(0);
     _stopLoadingNow=false;
