@@ -7,6 +7,12 @@ visitsList::visitsList(QWidget *parent): QComboBox(parent)
     worker = new wm_visitListLoader;
     connect(&watcher,SIGNAL(finished()),this,SLOT(insertVisits()));
     setIconSize(QSize(22,22));
+    setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
+    _view = (QListView *)this->view();
+    _view->setLayoutMode(QListView::Batched);
+    _view->setBatchSize(10);
+    _view->setAlternatingRowColors(true);
+
 }
 
 
@@ -36,6 +42,7 @@ void visitsList::setMaxFollows(int mxf)
 
 void visitsList::addDetails()
 {
+
     int i=0;
     foreach (sqlBase::visitItem item, list)
     {
@@ -46,6 +53,7 @@ void visitsList::addDetails()
             i++;
         }
     }
+        _view->setUpdatesEnabled(true);
     emit loadCompleted();
 }
 
@@ -56,15 +64,17 @@ visitsList::~visitsList()
 
 void visitsList::insertVisits()
 {
+    _view->setUpdatesEnabled(false);
     clear();
-    int i=0;
+    //QElapsedTimer t;
     list = watcher.result();
+    //t.start();
     foreach (sqlBase::visitItem item, list)
     {
         addItem(item.visitDateTime);
-        i++;
+        //qApp->processEvents();
     }
-
+    //mDebug() <<t.elapsed();
     setCurrentIndex(0);
     _stopLoadingNow=false;
     QTimer::singleShot(250,this,&visitsList::addDetails);

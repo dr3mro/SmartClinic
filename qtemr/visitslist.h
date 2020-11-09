@@ -40,9 +40,10 @@ private:
     QIcon getVisitIcon(int visitType) const;
     QVector<sqlBase::visitItem> list;
     bool _stopLoadingNow=false;
-
+    QListView *_view;
 private slots:
     void addDetails();
+
 
 protected:
     void wheelEvent(QWheelEvent *e);
