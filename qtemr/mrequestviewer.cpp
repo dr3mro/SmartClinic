@@ -9,13 +9,10 @@ mRequestViewer::mRequestViewer(QWidget *parent) :
     QRect screenres = QApplication::desktop()->screenGeometry(QCursor::pos());
     resize(screenres.width(),screenres.height());
     setStyleSheet("background-color: rgba(0, 0, 0, 196);");
-    //setAttribute(Qt::WA_NoSystemBackground, true);
-    //setAttribute(Qt::WA_TranslucentBackground, true);
-    //setStyleSheet("background:transparent");
-    setAttribute(Qt::WA_NoSystemBackground);
-    setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_NoSystemBackground, true);
+    setAttribute(Qt::WA_TranslucentBackground, true);
     setWindowFlags(Qt::FramelessWindowHint | Qt::SplashScreen);
-    //setWindowState(Qt::WindowFullScreen);
+    setWindowState(Qt::WindowFullScreen);
     ui->graphicsView->setScene(&scene);
     connect(ui->graphicsView,SIGNAL(closeViewer()),this,SLOT(close()),Qt::QueuedConnection);
     connect(ui->graphicsView,SIGNAL(loadPreviousRequest()),this,SLOT(loadPreviousRequest()),Qt::QueuedConnection);
@@ -33,7 +30,6 @@ void mRequestViewer::loadRequest(QString &path)
     scene.setSceneRect(media->sceneBoundingRect());
     ui->graphicsView->setRequest(media);
     ui->graphicsView->fitInView(scene.sceneRect(),Qt::KeepAspectRatio);
-    //ui->graphicsView->fitInView(this->rect(),Qt::AspectRatioMode::KeepAspectRatio);
     iReader.device()->close();
     emit repaint();
 }
