@@ -163,12 +163,12 @@ void mRequestViewer::paintEvent(QPaintEvent *event)
     painter.save();
     QFont font;
     font.setFamily("Calibri");
-    font.setPointSize(20);
+    font.setPointSize(32);
     font.setBold(true);
     painter.setFont(font);
     painter.setPen(QPen(Qt::black));
-    painter.drawText(42,42,banner);
+    painter.drawText(64,64,banner);
     painter.setPen(QPen(Qt::white));
-    painter.drawText(40,40,banner);
+    painter.drawText(62,62,banner);
     painter.restore();
 }

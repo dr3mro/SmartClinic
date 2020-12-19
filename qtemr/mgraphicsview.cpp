@@ -2,7 +2,8 @@
 
 mGraphicsView::mGraphicsView(QWidget *parent):QGraphicsView(parent)
 {
-    setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+   //setRenderHints(QPainter::Antialiasing  | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform );
+
 
 }
 
@@ -62,7 +63,7 @@ void mGraphicsView::mouseReleaseEvent (QMouseEvent *event)
 
 void mGraphicsView::wheelEvent(QWheelEvent *event)
 {
-    double scaleFactor = 1.15;
+    double scaleFactor = 1.05;
 
     if(event->delta() > 0)
         scale(scaleFactor, scaleFactor);
