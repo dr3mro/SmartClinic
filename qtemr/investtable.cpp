@@ -158,7 +158,7 @@ bool investTable::addNewInvest(int ID, int julianDate, QString newInvest, int st
 
 bool investTable::addInvMedia(bool setState)
 {
-
+    myMessageBox msgbox;
     int row = selectionModel()->currentIndex().row();
     QLocale locale(QLocale::English , QLocale::UnitedStates );
 
@@ -192,6 +192,11 @@ bool investTable::addInvMedia(bool setState)
         setModel(invModel);
         saveInvestigation(ID,visitJulianDate);
         emit popUpMessage("Information",QString("Image file has been added to patient's file as [%1].").arg(inv2Name));
+        int reply = msgbox.question(this,"Alert!","Do you Agree to delete source image after adding to patient profile?",QMessageBox::Yes,QMessageBox::No);
+
+        if (reply == QMessageBox::Yes)
+            QFile::remove(selectedImagePath);
+
         return true;
     }
     else
