@@ -733,11 +733,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
             return;
 
         }
-        if (reply == QMessageBox::No)
-        {
-            event->ignore();
-            return;
-        }
+        event->ignore();
+        return;
     }
 }
 
