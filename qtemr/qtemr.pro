@@ -39,6 +39,7 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     aboutwindow.cpp \
     mcashtableview.cpp \
+    netserver.cpp \
     squeeze.cpp \
     settingsclass.cpp \
     emptyprofiles.cpp \
@@ -178,6 +179,7 @@ HEADERS  += mainwindow.h \
     build.h \
     expecteddeliveries.h \
     mcashtableview.h \
+    netserver.h \
     pch.h \
     squeeze.h \
     settingsclass.h \

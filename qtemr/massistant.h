@@ -19,6 +19,7 @@
 #include "mdialog.h"
 #include "expecteddeliveries.h"
 #include "mcashtableview.h"
+#include "netserver.h"
 
 namespace Ui {
 class mAssistant;
@@ -81,13 +82,14 @@ private:
     mSettings& settings = mSettings::instance();
     ExpectedDeliveries expectedDeliveries;
     QCalendarWidget *calendar;
-
+    NetServer netserver;
     void loadCurrentSelectedAgenda();
     void tweakRegisterTable();
     void loadRegister();
     void loadAgenda();
     void setTimePeriod();
     void setcheckoutTooltip();
+
 
 protected:
     void keyPressEvent(QKeyEvent *event);
