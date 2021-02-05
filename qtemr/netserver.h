@@ -20,7 +20,7 @@ private slots:
     void appendToSocketList(QTcpSocket* socket);
     void readSocket();
 signals:
-
+    void loadVisitors();
 private:
     QTcpServer* m_server;
     QSet<QTcpSocket*> connection_set;

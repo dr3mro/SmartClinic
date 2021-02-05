@@ -17,7 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     QuitShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this, SLOT(close()))),
     settingsShortcut(new QShortcut(QKeySequence(Qt::Key_F9), this, SLOT(show_settings_win()))),
     menuShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_M),this)),
-    blureffect(new QGraphicsBlurEffect(this))
+    remoteAssistShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1), this, SLOT(showRemoteAssistWin()))),
+    blureffect(new QGraphicsBlurEffect(this)),
+    rAssistant(new remoteAssist(this))
 {
     ui->setupUi(this);
 }
@@ -124,7 +126,9 @@ void MainWindow::boot()
     connect (assistant,SIGNAL(loadThisPatient(int)),this,SLOT(loadThisPatient(int)));
     connect (assistant,SIGNAL(toggleEditMode(bool)),this,SLOT(toggleEditMODE(bool)));
     connect (&clickTimer,&QTimer::timeout,&clickTimer,&QTimer::stop);
-
+    connect (&netserver,&NetServer::loadVisitors,rAssistant,&remoteAssist::loadVisitors);
+    connect (rAssistant,&remoteAssist::search,ui->searchWidgetx,&searchWidget::setSearchString);
+    connect (rAssistant,&remoteAssist::createVisitor,this,&MainWindow::newPatientWithData);
     if ( ! settings.isDeviceActivated())
         mship->run();
 
@@ -895,6 +899,11 @@ void MainWindow::on_buttonAgenda_clicked()
     removeBlurEffect();
 }
 
+void MainWindow::showRemoteAssistWin()
+{
+    rAssistant->exec();
+}
+
 
 void MainWindow::on_buttonRemoveOP_clicked()
 {
@@ -1511,7 +1520,7 @@ MainWindow::~MainWindow()
     delete assistant;
     delete gSettings;
     delete mship;
-
+    delete rAssistant;
     sqlextra->optimize();
     sqlbase->optimize();
     sqlcore->optimize();
@@ -1877,4 +1886,34 @@ void MainWindow::loadThemeWatcher()
 {
     this->setStyleSheet(themeFuture.result());
     on_patientMobile_textChanged(ui->patientMobile->text());// this to fix bug that not update color
+}
+
+void MainWindow::newPatientWithData(const remoteAssist::Visitor &visitor)
+{
+    ID = indexLength;
+    toggleEditMODE(true);
+    clear();
+    patient.clear();
+    selected_date = QDate::currentDate();
+    ui->ButtonVisit->setEnabled(false);
+    ui->ButtonDelete->setEnabled(false);
+    ui->ButtonRefresh->setEnabled(false);
+    ui->patientnumber->display( ID );
+
+
+    ui->searchWidgetx->clearFilter();
+    ui->searchWidgetx->setID(ID);
+    ui->perinatal->setID(ID);
+    ui->dev->setID(ID);
+    ui->ObstWidget->setID(ID);
+    ui->conditionswidget->setID(ID);
+
+    ui->patientName->setText(visitor.name);
+    ui->spinBoxAge->setValue(visitor.age);
+    ui->patientGender->setCurrentIndex(visitor.sex);
+    ui->comboBoxMaritalStatus->setCurrentIndex(visitor.marital);
+    ui->patientResidence->setText(visitor.residence);
+    ui->patientPlaceBirth->setText(visitor.placeofbirth);
+    ui->patientOccupation->setText(visitor.job);
+    ui->patientMobile->setText(visitor.tel);
 }

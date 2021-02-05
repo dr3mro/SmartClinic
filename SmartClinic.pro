@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    qtemr/qtemr.pro
+    qtemr/qtemr.pro \
+    sc_assistant

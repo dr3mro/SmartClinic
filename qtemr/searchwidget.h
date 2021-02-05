@@ -28,6 +28,7 @@ public slots:
     void focusFilter();
     void focusList();
     void setID(int ID);
+    void setSearchString(const QString &str);
 
 private slots:
     void on_filterLineEdit_textChanged(const QString &arg1);

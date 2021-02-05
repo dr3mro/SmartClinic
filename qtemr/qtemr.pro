@@ -40,6 +40,7 @@ SOURCES += main.cpp\
     aboutwindow.cpp \
     mcashtableview.cpp \
     netserver.cpp \
+    remoteassist.cpp \
     squeeze.cpp \
     settingsclass.cpp \
     emptyprofiles.cpp \
@@ -181,6 +182,7 @@ HEADERS  += mainwindow.h \
     mcashtableview.h \
     netserver.h \
     pch.h \
+    remoteassist.h \
     squeeze.h \
     settingsclass.h \
     emptyprofiles.h \
@@ -316,6 +318,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     aboutwindow.ui \
     expecteddeliveries.ui \
+    remoteassist.ui \
     settingsclass.ui \
     emptyprofiles.ui \
     patientlist.ui \

@@ -58,6 +58,11 @@ void searchWidget::setID(int ID)
     ui->PatientListTableView->setID(ID);
 }
 
+void searchWidget::setSearchString(const QString &str)
+{
+    ui->filterLineEdit->setText(str);
+}
+
 void searchWidget::closeDatabase()
 {
     ui->PatientListTableView->closeDatabase();

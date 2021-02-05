@@ -68,6 +68,8 @@ void NetServer::readSocket()
         file.setFileName(fileName);
         if(file.open(QIODevice::WriteOnly)){
                 file.write(buffer);
+                file.close();
+                emit loadVisitors();
                 qDebug() <<  QString("INFO :: Attachment from sd:%1 successfully stored on disk under the path %2").arg(socket->socketDescriptor()).arg(QString(filePath));
             }else
                 qDebug() <<  "QTCPServer" << "An error occurred while trying to write the attachment.";

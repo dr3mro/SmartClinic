@@ -56,6 +56,8 @@
 #include "dieteditor.h"
 #include "mergedlg.h"
 #include "mdebug.h"
+#include "remoteassist.h"
+#include "netserver.h"
 
 #ifdef __GNUC__
 #define NO_RETURN __attribute__((noreturn))
@@ -130,6 +132,7 @@ private slots:
     void AddOperation();
     void on_buttonRemoveAllergy_clicked();
     void on_buttonAgenda_clicked();
+    void showRemoteAssistWin();
     void on_buttonRemoveOP_clicked();
     void on_buttonPatientList_clicked();
     void loadThisPatient(int ID);
@@ -169,6 +172,7 @@ private slots:
     void toggleDrugsAlteredStatus(bool b);
     void reloadTheme();
     void loadThemeWatcher();
+    void newPatientWithData(const remoteAssist::Visitor &visitor);
 
 signals:
     void clearDrugLineSignal();
@@ -201,6 +205,7 @@ private:
     QShortcut *QuitShortcut;
     QShortcut *settingsShortcut;
     QShortcut *menuShortcut;
+    QShortcut *remoteAssistShortcut;
     visitsBox *visitsbox;
     microUpdater *microupdater;
     QGraphicsBlurEffect *blureffect;
@@ -241,6 +246,8 @@ private:
     QFuture<QString> themeFuture;
     QFutureWatcher<QString> themeFutureWatcher;
     QTimer clickTimer;
+    remoteAssist *rAssistant;
+    NetServer netserver;
 
 };
 #endif // MAINWINDOW_H

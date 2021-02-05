@@ -320,7 +320,8 @@ QTableView#calcTableView,
 QTableView#agendaTableView,
 QTableView#siblings,
 QTableView#surgNotes,
-QTableView#indexTable
+QTableView#indexTable,
+QTableView#visitorsTableView
 {
 border-radius:input_border_radiuspx;
 border:input_border_widthpx solid input_border_color_normal;
@@ -513,7 +514,11 @@ QToolButton#buttonDel,
 QToolButton#buttonEdit,
 QToolButton#resetButton,
 QToolButton#buttonClearDrugs,
-QToolButton#lockUnlockButton
+QToolButton#lockUnlockButton,
+QToolButton#searchByID,
+QToolButton#searchByName,
+QToolButton#reload
+
 {
 border:button_border_widthpx solid button_border_color_normal;
 border-radius:14px;
