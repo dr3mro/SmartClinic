@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+        <file>sc_assistant_ar_EG.qm</file>
+        <file>sc_assistant_ar_EG.ts</file>
+        <file>main.qml</file>
+        <file>icon.icns</file>
+    </qresource>
+</RCC>
