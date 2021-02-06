@@ -51,7 +51,7 @@ private:
     QJsonDocument getJsonDocument();
     QStandardItemModel *model;
     remoteAssist::Visitor getVisitor(const int & row);
-    void showVisitor(const Visitor &visitor);
+    void showVisitor(const QModelIndex &current, const QModelIndex &previous);
     void tweakTable();
     sqlBase *sqlbase;
     Ui::remoteAssist *ui;

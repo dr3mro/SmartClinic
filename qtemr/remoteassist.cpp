@@ -8,17 +8,16 @@ remoteAssist::remoteAssist(QWidget *parent) :
     ui(new Ui::remoteAssist)
 {
     ui->setupUi(this);
+    ui->visitorsTableView->setModel(model);
     connect(ui->searchByID,&QToolButton::clicked,this,&remoteAssist::searchByID);
     connect(ui->searchByName,&QToolButton::clicked,this,&remoteAssist::searchByName);
     connect(ui->searchByTel,&QToolButton::clicked,this,&remoteAssist::searchByTel);
     connect(ui->reload,&QToolButton::clicked,this,&remoteAssist::loadVisitors);
+    connect(ui->visitorsTableView->selectionModel(),&QItemSelectionModel::currentRowChanged,this,&remoteAssist::showVisitor);
 
 
 
-    ui->visitorsTableView->setModel(model);
 
-
-    tweakTable();
     loadVisitors();
 
 }
@@ -107,8 +106,11 @@ remoteAssist::Visitor remoteAssist::getVisitor(const int &row)
     return  visitor;
 }
 
-void remoteAssist::showVisitor(const Visitor &visitor)
+void remoteAssist::showVisitor(const QModelIndex &current, const QModelIndex &previous)
 {
+    Q_UNUSED(previous)
+
+    Visitor visitor = getVisitor(current.row());
     ui->_id->setText(visitor.ID);
     ui->_name->setText(visitor.name);
     ui->_martital->setCurrentIndex(visitor.marital);
@@ -165,12 +167,6 @@ void remoteAssist::showVisitor(const Visitor &visitor)
 void remoteAssist::tweakTable()
 {
     model->setHorizontalHeaderLabels( QStringList() << "ID" << "Name " );
-
-    ui->visitorsTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->visitorsTableView->horizontalHeader()->setStretchLastSection( true );
-    ui->visitorsTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->visitorsTableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->visitorsTableView->setSelectionBehavior(QAbstractItemView::SelectRows );
     ui->visitorsTableView->setColumnHidden(2,true);
     ui->visitorsTableView->setColumnHidden(3,true);
     ui->visitorsTableView->setColumnHidden(4,true);
@@ -179,15 +175,20 @@ void remoteAssist::tweakTable()
     ui->visitorsTableView->setColumnHidden(7,true);
     ui->visitorsTableView->setColumnHidden(8,true);
     ui->visitorsTableView->setColumnHidden(9,true);
+    ui->visitorsTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->visitorsTableView->horizontalHeader()->setStretchLastSection( true );
+    ui->visitorsTableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    ui->visitorsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->visitorsTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->visitorsTableView->setSelectionBehavior(QAbstractItemView::SelectRows );
+
     ui->visitorsTableView->selectRow(0);
-    Visitor visitor = getVisitor(0);
-    showVisitor(visitor);
+
 }
 
 void remoteAssist::on_visitorsTableView_clicked(const QModelIndex &index)
 {
-    Visitor visitor = getVisitor(index.row());
-    showVisitor(visitor);
+    showVisitor(index,index);
 }
 
 void remoteAssist::searchByID()
