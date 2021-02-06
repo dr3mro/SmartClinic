@@ -109,6 +109,8 @@ remoteAssist::Visitor remoteAssist::getVisitor(const int &row)
 void remoteAssist::showVisitor(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous)
+    if(current.row() < 0)
+        return;
 
     Visitor visitor = getVisitor(current.row());
     ui->_id->setText(visitor.ID);
