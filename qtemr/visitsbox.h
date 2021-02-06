@@ -67,6 +67,7 @@ public slots:
     void navButtonsRightClicked();
     mSettings::defaultFont getDefaultFont();
     bool isCompleteByWord();
+    void setSuggestedVisitType(const int & _visitType);
 
 private slots:
     void on_ButtonNew_clicked();
@@ -204,6 +205,7 @@ private:
     QString printableAge;
     bool aboutToClose=false;
     QDate lastSelectedFollowupDate=QDate::currentDate();
+    int suggestedVisitType=0;//for remote assistant created patient to modify this
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *e);

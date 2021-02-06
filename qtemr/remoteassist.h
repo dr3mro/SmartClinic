@@ -7,6 +7,8 @@
 #include <QJsonArray>
 #include <QDir>
 #include <QFile>
+#include "sqlbase.h"
+#include "mdebug.h"
 
 namespace Ui {
 class remoteAssist;
@@ -40,8 +42,10 @@ private slots:
     void on_visitorsTableView_clicked(const QModelIndex &index);
     void searchByID();
     void searchByName();
-
+    void searchByTel();
     void on_visitorsTableView_doubleClicked(const QModelIndex &index);
+    void on_loadID_clicked();
+    void on_loadName_clicked();
 
 private:
     QJsonDocument getJsonDocument();
@@ -49,6 +53,7 @@ private:
     remoteAssist::Visitor getVisitor(const int & row);
     void showVisitor(const Visitor &visitor);
     void tweakTable();
+    sqlBase *sqlbase;
     Ui::remoteAssist *ui;
 
 signals:

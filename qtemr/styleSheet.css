@@ -14,6 +14,10 @@ width: 13px;
 height: 13px;
 }
 
+QCheckBox::indicator:partiallychecked {
+image: url(":/Graphics/partiallycheckedbox");
+}
+
 
 QCheckBox::indicator:unchecked {
 image: url(":/Graphics/uncheckedbox");
@@ -22,7 +26,6 @@ image: url(":/Graphics/uncheckedbox");
 QCheckBox::indicator:checked {
 image: url(":/Graphics/checkedbox");
 }
-
 
 QComboBox
 {
@@ -517,7 +520,10 @@ QToolButton#buttonClearDrugs,
 QToolButton#lockUnlockButton,
 QToolButton#searchByID,
 QToolButton#searchByName,
-QToolButton#reload
+QToolButton#searchByTel,
+QToolButton#reload,
+QToolButton#loadID,
+QToolButton#loadName
 
 {
 border:button_border_widthpx solid button_border_color_normal;
@@ -555,7 +561,13 @@ QToolButton#buttonDel:disabled,
 QToolButton#buttonEdit:disabled,
 QToolButton#resetButton:disabled,
 QToolButton#buttonClearDrugs:disabled,
-QToolButton#lockUnlockButton:disabled
+QToolButton#lockUnlockButton:disabled,
+QToolButton#searchByID:disabled,
+QToolButton#searchByName:disabled,
+QToolButton#searchByTel:disabled,
+QToolButton#reload:disabled,
+QToolButton#loadID:disabled,
+QToolButton#loadName:disabled
 {
 border:button_border_widthpx solid button_border_color_diabled;
 background-color:button_color_disabled;
@@ -587,7 +599,13 @@ QToolButton#buttonDel:hover,
 QToolButton#buttonEdit:hover
 QToolButton#resetButton:hover,
 QToolButton#buttonClearDrugs:hover,
-QToolButton#lockUnlockButton:hover
+QToolButton#lockUnlockButton:hover,
+QToolButton#searchByID:hover,
+QToolButton#searchByName:hover,
+QToolButton#searchByTel:hover,
+QToolButton#reload:hover,
+QToolButton#loadID:hover,
+QToolButton#loadName:hover
 {
 border:button_border_widthpx solid button_border_color_hover;
 background-color:button_color_hover;
@@ -620,6 +638,12 @@ QToolButton#buttonEdit:focus
 QToolButton#resetButton:focus,
 QToolButton#buttonClearDrugs:focus,
 QToolButton#lockUnlockButton:focus,
+QToolButton#searchByID:focus,
+QToolButton#searchByName:focus,
+QToolButton#searchByTel:focus,
+QToolButton#reload:focus,
+QToolButton#loadID:focus,
+QToolButton#loadName:focus,
 QToolButton#buttonPatientList:pressed,
 QToolButton#buttonAgenda:pressed,
 QToolButton#buttonStats:pressed,
@@ -646,7 +670,13 @@ QToolButton#buttonDel:pressed,
 QToolButton#buttonEdit:pressed
 QToolButton#resetButton:pressed,
 QToolButton#buttonClearDrugs:pressed,
-QToolButton#lockUnlockButton:pressed
+QToolButton#lockUnlockButton:pressed,
+QToolButton#searchByID:pressed,
+QToolButton#searchByName:pressed,
+QToolButton#searchByTel:pressed,
+QToolButton#reload:pressed,
+QToolButton#loadID:pressed,
+QToolButton#loadName:pressed
 {
 border:button_border_widthpx solid button_border_color_focus;
 background-color:button_color_focus;

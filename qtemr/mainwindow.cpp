@@ -574,6 +574,7 @@ void MainWindow::on_buttonNewCancel_clicked()
         ID =  (!sqlbase->isPatientExists(ID)) ? maxID:ID;
         toggleEditMODE(false);
         loadThisPatient(ID);
+        visitsbox->setSuggestedVisitType(0);
     }
     else
     {
@@ -1916,4 +1917,5 @@ void MainWindow::newPatientWithData(const remoteAssist::Visitor &visitor)
     ui->patientPlaceBirth->setText(visitor.placeofbirth);
     ui->patientOccupation->setText(visitor.job);
     ui->patientMobile->setText(visitor.tel);
+    visitsbox->setSuggestedVisitType(visitor.visitType);
 }

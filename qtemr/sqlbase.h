@@ -601,6 +601,7 @@ public:
     QList<QPair<QString, QString> > sqlExecPair(QString sqlCmd);
     QString genericQuery(int ID , QString col , QString table);
     bool haveSameNameWithDifferentID(int ID , QString name);
+    bool haveSameNameWithSameID(int ID , QString name);
     QStandardItemModel *patientTableModel;
     QList< QPair<QString,QString> > getListVisitsType(int ID);
     InvestModel *getInvestigationsModel(InvestModel *investModel, int ID, int visitJulianDate);

@@ -3539,6 +3539,31 @@ bool sqlBase::haveSameNameWithDifferentID(int ID, QString name)
 
 }
 
+bool sqlBase::haveSameNameWithSameID(int ID, QString name)
+{
+    encryptionEnabled=isEncryptionEnabled();
+    QString sName;
+    int sID;
+
+
+    QString sqlPhrase = QString("SELECT ID,Name FROM patients");
+
+    QList<QPair<QString,QString> > list = sqlExecPair(sqlPhrase);
+    QPair<QString,QString> pair;
+
+    foreach (pair, list)
+    {
+        sID = pair.first.toInt();
+        sName = pair.second;
+
+        if ( ( getHumanizedName(sName) == name ) && (sID == ID))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 QList<QPair<QString, QString> > sqlBase::getListVisitsType(int ID)
 {

@@ -4,11 +4,13 @@
 remoteAssist::remoteAssist(QWidget *parent) :
     QDialog(parent),
     model(new QStandardItemModel),
+    sqlbase (new sqlBase(this,QString("qt_sql_base_remoteAssistant_connection"),false)),
     ui(new Ui::remoteAssist)
 {
     ui->setupUi(this);
     connect(ui->searchByID,&QToolButton::clicked,this,&remoteAssist::searchByID);
     connect(ui->searchByName,&QToolButton::clicked,this,&remoteAssist::searchByName);
+    connect(ui->searchByTel,&QToolButton::clicked,this,&remoteAssist::searchByTel);
     connect(ui->reload,&QToolButton::clicked,this,&remoteAssist::loadVisitors);
 
 
@@ -117,6 +119,47 @@ void remoteAssist::showVisitor(const Visitor &visitor)
     ui->_occu->setText(visitor.job);
     ui->_tel->setText(visitor.tel);
     ui->_visitType->setCurrentIndex(visitor.visitType);
+
+    bool idExists= sqlbase->isPatientExists(visitor.ID.toInt());
+    bool nameExists = sqlbase->isPatientNameUsed(visitor.name);
+    bool nameIdMatch = sqlbase->haveSameNameWithSameID(visitor.ID.toInt(),visitor.name);
+
+
+    if(nameIdMatch)
+    {
+        ui->id_check->setCheckState(Qt::CheckState::Checked);
+        ui->name_check->setCheckState(Qt::CheckState::Checked);
+        ui->loadID->setEnabled(true);
+        ui->loadName->setEnabled(true);
+    }
+    else
+    {
+        if(idExists)
+        {
+            ui->id_check->setCheckState(Qt::CheckState::PartiallyChecked);
+            ui->loadID->setEnabled(true);
+        }
+        else
+        {
+            ui->id_check->setCheckState(Qt::CheckState::Unchecked);
+            ui->loadID->setEnabled(false);
+        }
+        if(nameExists)
+        {
+            ui->name_check->setCheckState(Qt::CheckState::PartiallyChecked);
+            ui->loadName->setEnabled(true);
+        }
+        else
+        {
+            ui->name_check->setCheckState(Qt::CheckState::Unchecked);
+            ui->loadName->setEnabled(false);
+        }
+
+    }
+
+
+
+
 }
 
 void remoteAssist::tweakTable()
@@ -157,9 +200,26 @@ void remoteAssist::searchByName()
     search(ui->_name->text());
 }
 
+void remoteAssist::searchByTel()
+{
+    search(ui->_tel->text());
+}
+
+
 void remoteAssist::on_visitorsTableView_doubleClicked(const QModelIndex &index)
 {
-    Visitor visitor = getVisitor(index.row());
+    int row = index.row();
+    Visitor visitor = getVisitor(row);
     createVisitor(visitor);
     close();
+}
+
+void remoteAssist::on_loadID_clicked()
+{
+
+}
+
+void remoteAssist::on_loadName_clicked()
+{
+
 }

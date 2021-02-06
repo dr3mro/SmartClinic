@@ -72,6 +72,7 @@
         <file alias="bolt">Graphics/bolt-8x.png</file>
         <file alias="redSkull">Graphics/Red-Skull-icon.png</file>
         <file alias="loadanimation">Graphics/loader.gif</file>
+        <file alias="partiallycheckedbox">Graphics/task-8xpd.png</file>
     </qresource>
     <qresource prefix="/Themes">
         <file>styleSheet.css</file>
