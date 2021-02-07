@@ -49,7 +49,7 @@ void myMessageLogger(QtMsgType type, const QMessageLogContext &context, const QS
     QFile outFile("./error.log");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
-    ts << txt << endl;
+    ts << txt << '\n';
     outFile.close();
 }
 
