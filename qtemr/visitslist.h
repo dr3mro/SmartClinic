@@ -20,7 +20,7 @@ class visitsList : public QComboBox
 
 public:
     explicit visitsList(QWidget *parent = nullptr);
-    void populateWithVisitList(int ID);
+    void populateWithVisitList(const int &ID);
     void setMaxFollows(int mxf);
     ~visitsList();
 

@@ -202,6 +202,8 @@ private:
     settingsClass *gSettings;
     mCalendarWidget *calWidget;
     drugIndex *drugindex;
+    mLabelMsg labelMsg;
+    bool pEditingMode;
     mAssistant *assistant;
     mShip *mship;
     myMessageBox *msgbox;
@@ -226,7 +228,7 @@ private:
     sqlBase::Patient patient; //
     int ID;
     bool eval_copy;
-    bool pEditingMode;
+    
     bool reg_status;
     regApp regMyApp;
     QWidget BirthDateWindow ;
@@ -237,7 +239,6 @@ private:
     int indexLength;
     int user_speciality;
     QDate selected_date;
-    mLabelMsg labelMsg;
     errorLogViewer errViewer;
     QTimer t_bugTicker;
     toast tNotify;

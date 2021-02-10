@@ -27,7 +27,7 @@ void patientNumber::display(int value)
         emit enableGoLower(true);
         emit enableGoHigher(false);
     }
-    else if ( value > 1 && value < maxValue)
+    else //if ( value > 1 && value < maxValue)
     {
         emit enableGoLower(true);
         emit enableGoHigher(true);

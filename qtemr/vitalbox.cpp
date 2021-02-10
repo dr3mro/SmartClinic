@@ -74,7 +74,7 @@ void vitalBox::pulseRate(QString pulserate)
         setStyleSheet(style.warningStylesheet);
         return;
     }
-    else if (pulseRate > 150 || pulseRate <= 45)
+    else //if (pulseRate > 150 || pulseRate <= 45)
     {
         setStyleSheet(style.errorStylesheet);
         return;
@@ -142,7 +142,7 @@ void vitalBox::respiratoryRate(QString respiratoryrate)
         setStyleSheet(style.normalStylesheet);
         return;
     }
-    else if ( respRate <16 || respRate > 20)
+    else //if ( respRate <16 || respRate > 20)
     {
         setStyleSheet(style.errorStylesheet);
         return;

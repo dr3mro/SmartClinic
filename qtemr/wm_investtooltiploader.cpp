@@ -14,7 +14,7 @@ void wm_investTooltipLoader::setInvestigationsModel(InvestModel *investModel)
     model = investModel;
 }
 
-void wm_investTooltipLoader::setScale(int &s)
+void wm_investTooltipLoader::setScale(const int &s)
 {
     scale = s;
 }

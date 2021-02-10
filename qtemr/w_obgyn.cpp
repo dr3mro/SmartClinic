@@ -83,9 +83,9 @@ sqlBase::obGyn w_obGyn::getObgyne(int id)
     return og;
 }
 
-void w_obGyn::load(int ID)
+void w_obGyn::load(int _ID)
 {
-    sqlBase::obGyn og = sqlbase->getObGyn(ID);
+    sqlBase::obGyn og = sqlbase->getObGyn(_ID);
     ui->gpa->setText(og.GPA);
     ui->fpal->setText(og.FPAL);
     ui->menarche->setText(og.menarche);
@@ -96,8 +96,8 @@ void w_obGyn::load(int ID)
     ui->LMP->setDate(QDate::fromJulianDay(og.LMP));
     ui->checkBoxMenoPause->setChecked(og.menoPause);
     ui->husband->setHtml(og.husband);
-    ui->siblings->populateSiblings(ID);
-    this->ID = ID;
+    ui->siblings->populateSiblings(_ID);
+    this->ID = _ID;
 }
 
 bool w_obGyn::isObGynModified()

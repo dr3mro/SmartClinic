@@ -72,8 +72,7 @@ bool  userpass::compare_pass()
 
 void userpass::on_passwordLine_returnPressed()
 {
-    passwordaccepted  = compare_pass();
-    decide_what_to_do();
+    on_submit_button_clicked();
 
 }
 

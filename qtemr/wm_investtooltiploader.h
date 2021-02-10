@@ -16,7 +16,7 @@ class wm_investTooltipLoader : public QObject
 public:
     explicit wm_investTooltipLoader(QObject *parent = nullptr);
     void setInvestigationsModel(InvestModel *investModel);
-    void setScale(int &s);
+    void setScale(const int &s);
 
 signals:
 

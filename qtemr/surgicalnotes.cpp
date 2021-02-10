@@ -5,11 +5,11 @@
 #include "surgicalnotes.h"
 #include "ui_surgicalnotes.h"
 
-surgicalNotes::surgicalNotes(int ID,QWidget *parent) :
+surgicalNotes::surgicalNotes(const int &_ID,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::surgicalNotes)
 {
-    this->ID = ID;
+    this->ID = _ID;
     ui->setupUi(this);
     connect(ui->notes,SIGNAL(disableDeleteEditButton()),this,SLOT(disableDeleteEditButtons()));
     connect(ui->notes,SIGNAL(clicked(QModelIndex)),this,SLOT(toggleDeleteEditButtons()));
@@ -37,9 +37,9 @@ surgicalNotes::~surgicalNotes()
 
 }
 
-void surgicalNotes::reloadNotes(int ID)
+void surgicalNotes::reloadNotes(const int &_ID)
 {
-    ui->notes->fillTable(ID);
+    ui->notes->fillTable(_ID);
 }
 
 void surgicalNotes::on_closeButton_clicked()
@@ -49,11 +49,9 @@ void surgicalNotes::on_closeButton_clicked()
 
 void surgicalNotes::on_buttonAdd_clicked()
 {
-    addNewNote = new surgicalNoteEditor(false,NULL,NULL,NULL,NULL,this);
-    connect(addNewNote,SIGNAL(addSurgicalNote(QString,int,QString,QString)),this,SLOT(addsNote(QString,int,QString,QString)));
-    addNewNote->exec();
-    delete addNewNote;
-
+    surgicalNoteEditor addNewNote(false,NULL,NULL,NULL,NULL,this);
+    connect(&addNewNote,SIGNAL(addSurgicalNote(QString,int,QString,QString)),this,SLOT(addsNote(QString,int,QString,QString)));
+    addNewNote.exec();
 }
 
 void surgicalNotes::addsNote(QString surgeryID, int julianDate, QString opName, QString opReport)

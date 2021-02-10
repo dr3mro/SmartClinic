@@ -84,7 +84,7 @@ void zTableView::setReadOnly(bool b)
     isReadOnly =b;
 }
 
-void zTableView::setSortColumn(int &col)
+void zTableView::setSortColumn(const int &col)
 {
     sortColumn = col;
 }

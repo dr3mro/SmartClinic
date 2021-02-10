@@ -20,10 +20,10 @@ visitsList::visitsList(QWidget *parent): QComboBox(parent)
 }
 
 
-void visitsList::populateWithVisitList(int ID)
+void visitsList::populateWithVisitList(const int &_ID)
 {
-    this->ID = ID;
-    worker->setID(ID);
+    this->ID = _ID;
+    worker->setID(_ID);
     future = QtConcurrent::run(worker,&wm_visitListLoader::Work);
     watcher.setFuture(future);
 }

@@ -481,8 +481,7 @@ void visitsBox::on_buttonRemoveDrug_clicked()
 
 void visitsBox::on_drugLine_returnPressed()
 {
-    QString newDrugName = ui->drugLine->text().simplified();
-    addNewDrug(newDrugName);
+    on_buttonAddDrug_clicked();
 }
 
 void visitsBox::on_buttonAddInvestigations_clicked()
@@ -513,9 +512,7 @@ void visitsBox::on_buttonRemoveInvestigations_clicked()
 
 void visitsBox::on_investigationsLine_returnPressed()
 {
-    QString newInvestigation = ui->investigationsLine->text().simplified();//.replace(QRegExp("[^A-Za-z\\d\\s]"),"_")  ;
-    addNewInvestigation(newInvestigation);
-    emit clearInvLine();
+    on_buttonAddInvestigations_clicked();
 }
 
 
@@ -855,18 +852,18 @@ void visitsBox::toggleEditMode()
     return;
 }
 
-void visitsBox::enableEditMode(bool vEditMode)
+void visitsBox::enableEditMode(bool _vEditMode)
 {
-    ui->buttonAddInvestigations->setEnabled(ui->investigationsLine->text().isEmpty()? false:vEditMode);
-    ui->buttonAddDrug->setEnabled(ui->drugLine->text().isEmpty()? false:vEditMode);
-    ui->buttonRemoveInvestigations->setEnabled((ui->InvestigationsTable->getSelectedRows() > 0)? vEditMode:false);
-    ui->buttonRemoveDrug->setEnabled(( ui->vDrugsTable->getSelectedRows() > 0)? vEditMode:false);
-    ui->lmpDate->setReadOnly(!vEditMode);
-    ui->comboVisitType->setEnabled(vEditMode);
-    ui->toolButtonRefresh->setEnabled(vEditMode);
-    ui->dateFollowUp->setEnabled(( ! dataHelper::str2bool(loadedVisit.checkButtonCaseClose) )? vEditMode:false);
-    ui->lockUnlockButton->setIcon(QIcon(vEditMode? ":/Graphics/unlock":":/Graphics/lock"));
-    emit setReadWrite(vEditMode);
+    ui->buttonAddInvestigations->setEnabled(ui->investigationsLine->text().isEmpty()? false:_vEditMode);
+    ui->buttonAddDrug->setEnabled(ui->drugLine->text().isEmpty()? false:_vEditMode);
+    ui->buttonRemoveInvestigations->setEnabled((ui->InvestigationsTable->getSelectedRows() > 0)? _vEditMode:false);
+    ui->buttonRemoveDrug->setEnabled(( ui->vDrugsTable->getSelectedRows() > 0)? _vEditMode:false);
+    ui->lmpDate->setReadOnly(!_vEditMode);
+    ui->comboVisitType->setEnabled(_vEditMode);
+    ui->toolButtonRefresh->setEnabled(_vEditMode);
+    ui->dateFollowUp->setEnabled(( ! dataHelper::str2bool(loadedVisit.checkButtonCaseClose) )? _vEditMode:false);
+    ui->lockUnlockButton->setIcon(QIcon(_vEditMode? ":/Graphics/unlock":":/Graphics/lock"));
+    emit setReadWrite(_vEditMode);
 }
 
 bool sortDrugsStar(const QString &s1,const QString &s2)
@@ -1015,7 +1012,7 @@ void visitsBox::on_comboVisitType_currentIndexChanged(int index)
         ui->visitLists->setItemIcon(currentSelectedVisit,QIcon(":/Graphics/newvisit"));
     else if (index <= maxFollows)
         ui->visitLists->setItemIcon(currentSelectedVisit,QIcon(":/Graphics/fvisit"));
-    else if (index > maxFollows)
+    else //if (index > maxFollows)
         ui->visitLists->setItemIcon(currentSelectedVisit,QIcon(":/Graphics/free"));
 }
 

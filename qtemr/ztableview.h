@@ -23,7 +23,7 @@ public:
     void setReadOnly(bool b);
     QStandardItemModel *tableModel;
     bool isReadOnly;
-    void setSortColumn(int &col);
+    void setSortColumn(const int &col);
 
 public slots:
     void makeReadWrite(bool rw);

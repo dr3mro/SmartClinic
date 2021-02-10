@@ -20,14 +20,14 @@ class surgicalNotes : public QDialog
     Q_OBJECT
 
 public:
-    explicit surgicalNotes(int ID, QWidget *parent = nullptr);
-    surgicalNoteEditor *addNewNote;
+    explicit surgicalNotes(const int &_ID, QWidget *parent = nullptr);
+    //surgicalNoteEditor *addNewNote;
 
     int ID;
     ~surgicalNotes();
 
 public slots:
-    void reloadNotes(int ID);
+    void reloadNotes(const int &_ID);
 private slots:
     void on_closeButton_clicked();
     void on_buttonAdd_clicked();
