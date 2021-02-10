@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 /*
 Copyright (c) 2013 Raivis Strogonovs
 
@@ -28,7 +32,7 @@ Smtp::Smtp( const QString &user, const QString &pass, const QString &host, int p
     this->timeout = timeout;
 }
 
-void Smtp::sendMail(const QString &from, const QString &to, const QString &subject, const QString &body)
+void Smtp::sendMail(const QString &_from, const QString &to, const QString &subject, const QString &body)
 {
     message.append("User-Agent: Mozilla Thunderbird 1.0.6 (Macintosh/20050716)\n");
     message.append("X-Accept-Language: ar_EG, en_US\n");
@@ -44,7 +48,7 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
     message.replace( QString::fromLatin1( "\n" ), QString::fromLatin1( "\r\n" ) );
     message.replace( QString::fromLatin1( "\r\n.\r\n" ),QString::fromLatin1( "\r\n..\r\n" ) );
 
-    this->from = from;
+    this->from = _from;
     rcpt = to;
     state = Init;
     socket->connectToHostEncrypted(host, quint16(port)); //"smtp.gmail.com" and 465 for gmail TLS

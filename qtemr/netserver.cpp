@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "netserver.h"
 
 NetServer::NetServer(QObject *parent) : QObject(parent)
@@ -62,8 +66,8 @@ void NetServer::readSocket()
 
     if(fileType=="attachment"){
         QString fileName = header.split(",")[1].split(":")[1];
-        QString ext = fileName.split(".")[1];
-        QString size = header.split(",")[2].split(":")[1].split(";")[0];
+        //QString ext = fileName.split(".")[1];
+        //QString size = header.split(",")[2].split(":")[1].split(";")[0];
         QString filePath = "visitors.json";
         file.setFileName(fileName);
         if(file.open(QIODevice::WriteOnly)){

@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "conditionswidget.h"
 
 conditionsWidget::conditionsWidget(QWidget *parent) : QWidget(parent),
@@ -10,9 +14,9 @@ conditionsWidget::conditionsWidget(QWidget *parent) : QWidget(parent),
     load();
 }
 
-void conditionsWidget::fillConditions(int ID)
+void conditionsWidget::fillConditions(const int &_ID)
 {
-    this->ID=ID;
+    this->ID=_ID;
     QList<QPair<QString, int> > list = sqlbase->readPatientConditions(ID);
     QPair<QString, int> pair;
     foreach (pair, list)

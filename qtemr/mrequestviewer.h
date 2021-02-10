@@ -1,4 +1,8 @@
-﻿#ifndef MREQUESTVIEWER_H
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+#ifndef MREQUESTVIEWER_H
 #define MREQUESTVIEWER_H
 
 #include <QKeyEvent>
@@ -31,14 +35,14 @@ class mRequestViewer : public mDialog
 public:
     explicit mRequestViewer(QWidget *parent = nullptr);
     void loadRequest(QString &path);
-    void setRequests(QVector<QVector<QString> > &vector, int &i);
+    void setRequests(const QVector<QVector<QString> > &vector, const int &i);
     ~mRequestViewer();
 
 private slots:
     void loadPreviousRequest();
     void loadNextRequest();
     void deleteRequestMedia();
-    void saveRotation(qreal &r);
+    void saveRotation(const qreal &r);
     void openInWinPhotoViewer();
 
 private:

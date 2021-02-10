@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "printdrugs.h"
 #include "ui_printdrugs.h"
 
@@ -346,24 +350,24 @@ void printDrugs::resetMaxValues()
     ui->dietTopPadding->setMaximum(100);
 }
 
-void printDrugs::setupPrinter(QPrinter *p,mSettings::prescriptionPrintSettings pSettings, bool preview)
+void printDrugs::setupPrinter(QPrinter *p,mSettings::prescriptionPrintSettings _pSettings, bool preview)
 {
-    double left = pSettings.leftMargin;
-    double top = pSettings.topMargin;
-    double right = pSettings.rightMargin;
-    double bottom = pSettings.bottomMargin;
-    p->setPaperSize(QSizeF(pSettings.pageWidth,pSettings.pageHeight),QPrinter::Inch);
+    double left = _pSettings.leftMargin;
+    double top = _pSettings.topMargin;
+    double right = _pSettings.rightMargin;
+    double bottom = _pSettings.bottomMargin;
+    p->setPaperSize(QSizeF(_pSettings.pageWidth,_pSettings.pageHeight),QPrinter::Inch);
     p->setPageMargins(left,top,right,bottom,QPrinter::Inch);
-    p->setFullPage(pSettings.fullPage);
+    p->setFullPage(_pSettings.fullPage);
     if(!preview)
-        p->setOrientation((pSettings.pageOrientation==0)? QPrinter::Portrait:QPrinter::Landscape);
+        p->setOrientation((_pSettings.pageOrientation==0)? QPrinter::Portrait:QPrinter::Landscape);
 }
 
-void printDrugs::printDoc(QPrinter *p,QTextDocument *doc,bool preview)
+void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool preview)
 {
     int reply=0;
-    doc->setPageSize((QSizeF) p->pageLayout().pageSize().sizePoints());
-    if (doc->pageCount() > 1 && !preview)
+    _doc->setPageSize((QSizeF) p->pageLayout().pageSize().sizePoints());
+    if (_doc->pageCount() > 1 && !preview)
         reply = QMessageBox::question(nullptr,"Warning","Your print might be splitted over more than one page."
                                                   " please recheck your print preview. Are you sure?",
                                       QMessageBox::Yes,
@@ -376,7 +380,7 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *doc,bool preview)
 
     if(!t.isActive())
     {
-        doc->print(p);
+        _doc->print(p);
         isPrinting=true;
     }
 
@@ -396,9 +400,9 @@ QTextDocument *printDrugs::getDoc()
 {
 
     refreshView();
-    QTextDocument *doc = ui->Roshetta->document();
+    QTextDocument *_doc = ui->Roshetta->document();
     //doc->setHtml(refreshRoshetta(pSettings,selectedDiet,drugsMode));
-    return doc;
+    return _doc;
 }
 
 void printDrugs::closeEvent(QCloseEvent *e)

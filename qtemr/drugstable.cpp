@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "drugstable.h"
 
 drugsTable::drugsTable(QWidget *parent):zTableView(parent)
@@ -833,7 +837,7 @@ void drugsTable::showContextMenu(const QPoint &pos)
 {
     QModelIndex cell = selectionModel()->currentIndex();
     bool no_drugs = (drugsModel->rowCount() == 0);
-    bool null_selected=true;
+    bool null_selected;
     QString tradeName="";
     QString genericName="";
     bool canFetchDrugInfo=false;
@@ -1241,7 +1245,7 @@ void drugsTable::calculateRxCosts()
         if (state == 1)
         {
             cost += itemPrice;
-            if (itemPrice == 0)
+            if (itemPrice == (double) 0)
                 percision = false;
         }
     }

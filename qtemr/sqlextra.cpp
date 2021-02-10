@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "sqlextra.h"
 
 sqlExtra::sqlExtra(QObject *parent, QString connectionName, bool cTable) :
@@ -227,8 +231,12 @@ bool sqlExtra::resetDrugsTable()
     }
     else
     {
-        if (! createTable("drugs"))
+        if (!createTable("drugs"))
+        {
+            delete sqlcore;
             return false;
+        }
+            
 
         db.transaction();
 

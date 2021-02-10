@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "patienttable.h"
 
 
@@ -47,18 +51,18 @@ void patientTable::updatePatients()
 
 bool patientTable::eventFilter(QObject *o, QEvent *e)
 {
-    int ID,row;
+    int _ID,row;
     bool deceased;
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(e);
     if ( (o == this->viewport() ) && ( e->type() == QEvent::MouseButtonDblClick ) && ( mouseEvent->buttons() == Qt::MiddleButton ))
     {
         QModelIndex cell =  selectionModel()->currentIndex();
         row = cell.row();
-        ID = proxy_model->data(cell.sibling(row,0)).toInt();
-        if ( !cell.isValid() || ID == 0 )
+        _ID = proxy_model->data(cell.sibling(row,0)).toInt();
+        if ( !cell.isValid() || _ID == 0 )
             return QObject::eventFilter(o,e);
-        deceased = sqlbase->getDeceasedList().contains(QString::number(ID));
-        sqlbase->toggleDeceased(ID,(deceased)? 0:1,row);
+        deceased = sqlbase->getDeceasedList().contains(QString::number(_ID));
+        sqlbase->toggleDeceased(_ID,(deceased)? 0:1,row);
     }
     return QObject::eventFilter(o,e);
 }

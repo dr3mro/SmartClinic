@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "dataiohelper.h"
 
 dataIOhelper::dataIOhelper(QObject *parent) : QObject(parent)
@@ -35,7 +39,7 @@ QStringList dataIOhelper::getTextFileContentsAsList(QString filePath)
 
 QStandardItemModel* dataIOhelper::getBackUpModel(QObject *parent)
 {
-    double version = dbVersion;
+    double version = (double) dbVersion;
     QStandardItemModel *model = new QStandardItemModel(parent);
     QStandardItem *item1,*item2,*item3,*item4;
     QXmlStreamReader xmlread;

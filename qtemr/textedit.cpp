@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "textedit.h"
 
 TextEdit::TextEdit(QWidget *parent) :
@@ -486,7 +490,6 @@ void TextEdit::mousePressEvent(QMouseEvent *e)
 
 void TextEdit::keyPressEvent(QKeyEvent *e)
 {
-
     bool isCTRL = e->modifiers().testFlag(Qt::KeyboardModifier::ControlModifier);
     bool isALT = e->modifiers().testFlag(Qt::KeyboardModifier::AltModifier);
 

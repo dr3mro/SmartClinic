@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "inveslist.h"
 #include "ui_inveslist.h"
 
@@ -198,11 +202,11 @@ void invesList::addInvestigation(QString invName, QString selectedImagePath)
 void invesList::on_ButtonDel_clicked()
 {
     int row = ui->tableView->selectionModel()->currentIndex().row();
-    int ID = model->item(row,0)->text().toInt();
+    int _ID = model->item(row,0)->text().toInt();
     QString invName = model->item(row,1)->text();
     int visitDate = model->item(row,2)->text().toInt();
     QString path = model->item(row,3)->text();
-    sqlbase->deleteInvestigation(ID,visitDate,path,invName);
+    sqlbase->deleteInvestigation(_ID,visitDate,path,invName);
     ui->ButtonDel->setEnabled(false);
     uptodate();
 }

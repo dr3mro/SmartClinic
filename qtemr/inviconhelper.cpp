@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "inviconhelper.h"
 
 invIconHelper::invIconHelper(QObject *parent) : QObject(parent)
@@ -5,7 +9,7 @@ invIconHelper::invIconHelper(QObject *parent) : QObject(parent)
 
 }
 
-QString invIconHelper::getInvestigationTooltip(QString &path, QString &name,int &scale)
+QString invIconHelper::getInvestigationTooltip(const QString &path, const QString &name,const int &scale)
 {
     if(path.endsWith(".jpg",Qt::CaseInsensitive) || path.endsWith(".jpeg",Qt::CaseInsensitive) )
     {

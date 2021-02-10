@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "mrequestviewer.h"
 #include "ui_mrequestviewer.h"
 
@@ -18,7 +22,7 @@ mRequestViewer::mRequestViewer(QWidget *parent) :
     connect(ui->graphicsView,SIGNAL(loadPreviousRequest()),this,SLOT(loadPreviousRequest()),Qt::QueuedConnection);
     connect(ui->graphicsView,SIGNAL(loadNextRequest()),this,SLOT(loadNextRequest()),Qt::QueuedConnection);
     connect(ui->graphicsView,SIGNAL(deleteRequest()),this,SLOT(deleteRequestMedia()));
-    connect(ui->graphicsView,SIGNAL(saveRotation(qreal&)),this,SLOT(saveRotation(qreal&)));
+    connect(ui->graphicsView,SIGNAL(saveRotation(const qreal&)),this,SLOT(saveRotation(const qreal&)));
     connect(ui->graphicsView,SIGNAL(openInWinPhotoViewer()),this,SLOT(openInWinPhotoViewer()));
 }
 
@@ -34,7 +38,7 @@ void mRequestViewer::loadRequest(QString &path)
     emit repaint();
 }
 
-void mRequestViewer::setRequests(QVector<QVector <QString> > &vector, int &i)
+void mRequestViewer::setRequests(const QVector<QVector <QString> > &vector, const int &i)
 {
     requests = vector;
     index = i;
@@ -82,7 +86,7 @@ void mRequestViewer::deleteRequestMedia()
     }
 }
 
-void mRequestViewer::saveRotation(qreal &r)
+void mRequestViewer::saveRotation(const qreal &r)
 {
     bool b;
     int reply = QMessageBox::question(nullptr,tr("Warning"),tr("Are you sure that you want to save rotation to media file? "

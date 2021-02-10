@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "richtexteditor.h"
 #include "ui_richtexteditor.h"
 
@@ -144,7 +148,7 @@ void richTextEditor::fadeout()
 void richTextEditor::decreaseOpacity()
 {
     setWindowOpacity(this->windowOpacity()-0.05);
-    if (windowOpacity() == 0.00)
+    if (windowOpacity() == qreal(0.00))
     {
         hide();
         setWindowOpacity(1.00);

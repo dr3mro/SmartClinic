@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "searchwidget.h"
 #include "ui_searchwidget.h"
 
@@ -184,9 +188,7 @@ void searchWidget::on_filterByMobileRadio_toggled(bool checked)
 
 void searchWidget::filterToggled()
 {
-    ui->filterLineEdit->setFocus(Qt::OtherFocusReason);
-    int row = ui->PatientListTableView->currentIndex().row();
-    ui->PatientListTableView->selectRow((row >=0)? row:0 );
+    focusFilter();
 }
 
 void searchWidget::on_filterLineEdit_returnPressed()

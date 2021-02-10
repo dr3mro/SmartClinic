@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -263,42 +267,42 @@ void MainWindow::tweakui()
     setAgeCalButtonToolTip();
 }
 
-void MainWindow::fillPatient(sqlBase::Patient patient)
+void MainWindow::fillPatient(sqlBase::Patient _patient)
 {
-    ID = patient.ID;
-    ui->patientnumber->display(patient.ID);
-    ui->patientName->setText(patient.name);
-    ui->DateTimeEdit->setDateTime(datetime.fromString(patient.dateTime,"yyyy-MM-dd hh:mm:ss"));
-    ui->patientAge->setText(dataHelper::daysToAge( patient.age.toInt()));
+    ID = _patient.ID;
+    ui->patientnumber->display(_patient.ID);
+    ui->patientName->setText(_patient.name);
+    ui->DateTimeEdit->setDateTime(datetime.fromString(_patient.dateTime,"yyyy-MM-dd hh:mm:ss"));
+    ui->patientAge->setText(dataHelper::daysToAge( _patient.age.toInt()));
     if (settings.userSpeciality() != dataHelper::Speciality::Paediatrics)
     {
-        ui->spinBoxAge->setValue(dataHelper::ageToYear(patient.age.toInt()));
-        ui->spinBoxAge->setToolTip(dataHelper::daysToAge(patient.age.toInt()));
+        ui->spinBoxAge->setValue(dataHelper::ageToYear(_patient.age.toInt()));
+        ui->spinBoxAge->setToolTip(dataHelper::daysToAge(_patient.age.toInt()));
     }
 
-    selected_date = QDate::fromJulianDay(patient.age.split(" ").at(0).toInt());
+    selected_date = QDate::fromJulianDay(_patient.age.split(" ").at(0).toInt());
     calWidget->setSelectedDate(selected_date);
     setAgeCalButtonToolTip();
-    ui->patientGender->setCurrentText(patient.gender);
-    ui->patientResidence->setText(patient.residence);
-    ui->comboBoxMaritalStatus->setCurrentText(patient.maritalStatus);
-    ui->patientPlaceBirth->setText(patient.birthPlace);
-    ui->patientOccupation->setText(patient.occupation);
-    ui->checkBoxSmoker->setChecked(dataHelper::str2bool(patient.smoker));
-    ui->spinBoxCigarettesPerDay->setValue(patient.cigarretsPerDay.toInt());
+    ui->patientGender->setCurrentText(_patient.gender);
+    ui->patientResidence->setText(_patient.residence);
+    ui->comboBoxMaritalStatus->setCurrentText(_patient.maritalStatus);
+    ui->patientPlaceBirth->setText(_patient.birthPlace);
+    ui->patientOccupation->setText(_patient.occupation);
+    ui->checkBoxSmoker->setChecked(dataHelper::str2bool(_patient.smoker));
+    ui->spinBoxCigarettesPerDay->setValue(_patient.cigarretsPerDay.toInt());
     //--------------------------------------------------------------------------------------------//
     int y =0;
-    if(patient.smokingYears.toInt() !=0)
-        y = QDate::currentDate().year()-patient.smokingYears.toInt();
+    if(_patient.smokingYears.toInt() !=0)
+        y = QDate::currentDate().year()-_patient.smokingYears.toInt();
     ui->spinBoxSmokingYears->setValue(y);
     //--------------------------------------------------------------------------------------------//
-    ui->patientMobile->setText(patient.mobile);
-    ui->checkBoxAlcohol->setChecked(dataHelper::str2bool(patient.alcohol));
-    ui->ABO->setCurrentIndex(patient.ABO);
+    ui->patientMobile->setText(_patient.mobile);
+    ui->checkBoxAlcohol->setChecked(dataHelper::str2bool(_patient.alcohol));
+    ui->ABO->setCurrentIndex(_patient.ABO);
 
-    ui->PastHx->setHtml(patient.pastHistory);
-    ui->familyHx->setHtml(patient.familyHistory);
-    ui->Notes->setHtml(patient.notes);
+    ui->PastHx->setHtml(_patient.pastHistory);
+    ui->familyHx->setHtml(_patient.familyHistory);
+    ui->Notes->setHtml(_patient.notes);
 
     ui->allergyList->clear();
     ui->opAdmissionsList->clear();
@@ -306,8 +310,8 @@ void MainWindow::fillPatient(sqlBase::Patient patient)
     opAdAltered=false;
     ui->pDrugsTable->loadPatientDrugsModel(ID,0);
 
-    ui->allergyList->addItems(patient.allergy.split("|"));
-    ui->opAdmissionsList->addItems(patient.operations.split("|"));
+    ui->allergyList->addItems(_patient.allergy.split("|"));
+    ui->opAdmissionsList->addItems(_patient.operations.split("|"));
 
     for ( int x = 0 ; x < ui->allergyList->count() ; x++)
     {
@@ -326,7 +330,7 @@ void MainWindow::fillPatient(sqlBase::Patient patient)
     }
 
     ui->buttonNewCancel->setEnabled(true);
-    if (pEditingMode || patient.name.contains(QString("#%1").arg(ID) ) || patient.name.length() < 6 )
+    if (pEditingMode || _patient.name.contains(QString("#%1").arg(ID) ) || _patient.name.length() < 6 )
     {
         ui->ButtonDelete->setEnabled(false);
         ui->ButtonVisit->setEnabled(false);
@@ -340,7 +344,7 @@ void MainWindow::fillPatient(sqlBase::Patient patient)
     }
 
     if (settings.isInLinePatientList())
-        ui->searchWidgetx->selectRow(patient.ID-1);
+        ui->searchWidgetx->selectRow(_patient.ID-1);
 
     ui->conditionswidget->fillConditions(ID);
     ui->dev->load(ID);
@@ -974,15 +978,15 @@ void MainWindow::on_buttonPatientList_clicked()
     }
 }
 
-void MainWindow::loadThisPatient(int ID)
+void MainWindow::loadThisPatient(int _ID)
 {
     //mDebug() << QSqlDatabase::connectionNames().count();
     int _xID_ = patient.ID;
-    patient = sqlbase->getPatientData(ID);
+    patient = sqlbase->getPatientData(_ID);
     clear();
     fillPatient(patient);
-    if ( _xID_ != ID )
-        popUpMessage("Message",QString("Patient ID (%1) is Loaded Successfully.").arg(ID));
+    if ( _xID_ != _ID )
+        popUpMessage("Message",QString("Patient ID (%1) is Loaded Successfully.").arg(_ID));
 }
 
 void MainWindow::popUpMessage(QString title, QString Message )
@@ -1216,7 +1220,7 @@ void MainWindow::on_PatientSelected(int _id )
             return;
         }
     }
-    else if ( ! pEditingMode )
+    else
     {
         ID = _id;
         int _xID_ = patient.ID;
@@ -1374,9 +1378,9 @@ void MainWindow::exportPatientList()
         QMessageBox::information(nullptr,"Message","Export Failed!");
 }
 
-void MainWindow::addSurgicalNotes(int ID,QString surgeryID ,int julianDate, QString opName, QString opReport)
+void MainWindow::addSurgicalNotes(int _ID,QString surgeryID ,int julianDate, QString opName, QString opReport)
 {
-    sqlbase->addSurgicalNote(ID,surgeryID,julianDate,opName,opReport);
+    sqlbase->addSurgicalNote(_ID,surgeryID,julianDate,opName,opReport);
 }
 
 void MainWindow::show_listEdit_win()

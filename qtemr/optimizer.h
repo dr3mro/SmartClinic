@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #ifndef OPTIMIZER_H
 #define OPTIMIZER_H
 
@@ -14,8 +18,8 @@ public:
     ~optimizer();
     void integrityCheck();
     void vacuum();
-    void setDatabases(bool &patients, bool &core, bool &drugs);
-    void setQuick(bool &c);
+    void setDatabases(const bool &patients, const bool &core, const bool &drugs);
+    void setQuick(const bool &c);
     void WAL_CheckPoint(QString Mode);
     void terminate(bool flag);
 signals:

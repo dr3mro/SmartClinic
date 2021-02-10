@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "investmodel.h"
 
 InvestModel::InvestModel(QObject *parent):QStandardItemModel(parent)
@@ -13,7 +17,7 @@ QVector<QVector<QString> > InvestModel::getMediaVector()
     QVector<QString> titles;
     QVector<QString> urls;
     QVector<QVector<QString> > vector;
-    QStringList mediaList;
+    //QStringList mediaList;
 
     for(int row=0;row<rows;row++)
     {

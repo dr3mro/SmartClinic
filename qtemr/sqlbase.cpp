@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "sqlbase.h"
 
 sqlBase::sqlBase(QObject *parent, QString connectionName, bool createTables) : msql(parent)
@@ -96,17 +100,17 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
     return patientTableModel;
 }
 
-bool sqlBase::addPatient2myDataBase(Patient patient)
+bool sqlBase::addPatient2myDataBase(Patient _patient)
 {
     QString sqlPhrase = createPatientInsertPreparePhrase();
-    bool b = bindAndExecPatientSqlQuery(sqlPhrase,patient);
+    bool b = bindAndExecPatientSqlQuery(sqlPhrase,_patient);
     return b;
 }
 
-bool sqlBase::addVisit2myDataBase(Visit visit)
+bool sqlBase::addVisit2myDataBase(Visit _visit)
 {
     QString sqlPhrase = createVisitInsertPreparePhrase();
-    return bindAndExecVisitSqlQuery(sqlPhrase,visit);
+    return bindAndExecVisitSqlQuery(sqlPhrase,_visit);
 }
 
 bool sqlBase::addSurgicalNote(int ID,QString surgeryID ,int julianDate, QString opName, QString opReport)
@@ -2550,7 +2554,7 @@ bool sqlBase::migrateConditions()
         condition.tuberculosis = int(dataHelper::str2bool(p.tuberculosis));
         condition.varicoseVeins = int(dataHelper::str2bool(p.varicoseVeins));
 
-        QString query = QString("INSERT INTO conditions_patients "
+        QString mQuery = QString("INSERT INTO conditions_patients "
                                 "(ID,"
                                 "c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,"
                                 "c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,"
@@ -2593,7 +2597,7 @@ bool sqlBase::migrateConditions()
                 .arg(condition.PERIPHERALNEUROPATHY)
                 .arg(i);
 
-        queryExec(query);
+        queryExec(mQuery);
     }
 
 
@@ -3298,8 +3302,11 @@ void sqlBase::createNewVisit(int ID,
 
 QSqlTableModel *sqlBase::getConditionsModel(QSqlTableModel *conditionsModel)
 {
-    conditionsModel = new QSqlTableModel(this,db);
-    conditionsModel->clear();
+    if(conditionsModel == nullptr)
+        conditionsModel = new QSqlTableModel(this,db);
+    else
+        conditionsModel->clear();
+    
     conditionsModel->setTable("conditions");
     conditionsModel->setSort(0,Qt::AscendingOrder);
     conditionsModel->setEditStrategy(QSqlTableModel::OnFieldChange);

@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "genericonlinesearch.h"
 #include "ui_genericonlinesearch.h"
 
@@ -24,7 +28,7 @@ void genericOnlineSearch::setModel(QStringList drugs)
         height = drugs_count*23;
     else if ( drugs_count <=3 )
         height = 100;
-    else if ( drugs_count >= 22 )
+    else //if ( drugs_count >= 22 )
         height = 500;
 
     resize(this->width(),(height<100)? 100:height);

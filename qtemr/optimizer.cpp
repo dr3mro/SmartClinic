@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "optimizer.h"
 
 optimizer::optimizer(QObject *parent) : QObject(parent)
@@ -48,14 +52,14 @@ void optimizer::vacuum()
     emit toggleProgress(false);
 }
 
-void optimizer::setDatabases(bool &patients, bool &core, bool &drugs)
+void optimizer::setDatabases(const bool &patients, const bool &core, const bool &drugs)
 {
     db_patients = patients;
     db_core = core;
     db_drugsindex = drugs;
 }
 
-void optimizer::setQuick(bool &c)
+void optimizer::setQuick(const bool &c)
 {
     quick = c;
 }

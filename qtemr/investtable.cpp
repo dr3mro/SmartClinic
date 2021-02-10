@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "investtable.h"
 
 investTable::investTable(QWidget *parent):zTableView(parent)
@@ -60,7 +64,7 @@ void investTable::populateInvests(int id, int julianDate)
     watcher.setFuture(future);
 }
 
-bool investTable::saveInvestigation(int ID, int julianDate)
+bool investTable::saveInvestigation(const int &ID, const int &julianDate)
 {
     if(!working)
         return sqlbase->saveInvestigationsModel(ID,julianDate,invModel);
@@ -68,7 +72,7 @@ bool investTable::saveInvestigation(int ID, int julianDate)
     return false;
 }
 
-bool investTable::addNewInvest(int ID, int julianDate, QString newInvest, int state,double price)
+bool investTable::addNewInvest(int _ID, int _julianDate, QString newInvest, int state,double price)
 {
     if ( newInvest.simplified().isEmpty())
         return false;
@@ -115,9 +119,9 @@ bool investTable::addNewInvest(int ID, int julianDate, QString newInvest, int st
     QStandardItem *resultsItem =new QStandardItem;
 
     //set text
-    IDItem->setText(QString::number(ID));
+    IDItem->setText(QString::number(_ID));
     nameItem->setText(newInvest);
-    visitDateItem->setText(QString::number(julianDate));
+    visitDateItem->setText(QString::number(_julianDate));
     invStateItem->setText(QString::number(state));
     invDateItem->setText(QString::number(QDate::currentDate().toJulianDay()));
     invTimeItem->setText(QString::number(QTime::currentTime().msecsSinceStartOfDay()/1000));
@@ -177,10 +181,10 @@ bool investTable::addInvMedia(bool setState)
     QString inv2Name = invName;
     QString localCopyPath = QString ( "data/media/%1/" ).arg(this->ID);
     QString localImagePath = QString("%1%2_%3.jpg").arg(localCopyPath).arg(inv2Name.replace(" ","_")).arg(dt);
-    QImage img;
+    QImage mImg;
     QDir mediaDir(localCopyPath);
 
-    if ( img.load(selectedImagePath))
+    if ( mImg.load(selectedImagePath))
     {
         mediaDir.mkpath("./");
         QFile::copy(selectedImagePath,localImagePath);
@@ -302,7 +306,7 @@ void investTable::putToolTip()
 
 }
 
-void investTable::toggleInvestaigationState(int &state, QModelIndex &cell)
+void investTable::toggleInvestaigationState(const int &state, const QModelIndex &cell)
 {
     if(state==InvestModel::InvestigationsStates::hasMedia)
     {

@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "filegrabber.h"
 
 fileGrabber::fileGrabber(bool save, QUrl url, QObject *parent) : QObject(parent)
@@ -11,11 +15,11 @@ fileGrabber::fileGrabber(bool save, QUrl url, QObject *parent) : QObject(parent)
     connect(&t,SIGNAL(timeout()),SLOT(processData()));
 }
 
-void fileGrabber::doDownload(const QUrl &url)
+void fileGrabber::doDownload(const QUrl &_url)
 {
     //mDebug() << "Download Starting..";
 
-    QNetworkRequest request(url);
+    QNetworkRequest request(_url);
     reply = manager.get(request);
     if (save)
     {
@@ -28,9 +32,9 @@ void fileGrabber::doDownload(const QUrl &url)
 #endif
 }
 
-QString fileGrabber::saveFileName(const QUrl &url)
+QString fileGrabber::saveFileName(const QUrl &_url)
 {
-    QString path = url.path();
+    QString path = _url.path();
     QString basename = QString("update/%1").arg(QFileInfo(path).fileName());
     //mDebug() << basename;
     if (basename.isEmpty())
@@ -80,12 +84,12 @@ void fileGrabber::execute()
     doDownload(url);
 }
 
-void fileGrabber::downloadFinished(QNetworkReply *reply)
+void fileGrabber::downloadFinished(QNetworkReply *_reply)
 {
-    if (reply->error()) {
+    if (_reply->error()) {
         fprintf(stderr, "Download of %s failed: %s\n",
                 url.toEncoded().constData(),
-                qPrintable(reply->errorString()));
+                qPrintable(_reply->errorString()));
     }
     else if (save)
     {
@@ -95,7 +99,7 @@ void fileGrabber::downloadFinished(QNetworkReply *reply)
     }
     else
     {
-        emit returnDownloadedData(reply->readAll());
+        emit returnDownloadedData(_reply->readAll());
     }
     emit finished();
     //mDebug() << "Download finnished";

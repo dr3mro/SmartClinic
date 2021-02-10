@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "mprintpreviewdialog.h"
 
 mPrintPreviewDialog::mPrintPreviewDialog(QWidget *parent):QPrintPreviewDialog(parent)
@@ -17,7 +21,7 @@ mPrintPreviewDialog::mPrintPreviewDialog(QWidget *parent):QPrintPreviewDialog(pa
     setMinimumSize(800,600);
 }
 
-void mPrintPreviewDialog::setPageOrientation(QPrinter::Orientation _orientation)
+void mPrintPreviewDialog::setPageOrientation(const QPrinter::Orientation &_orientation)
 {
     printer()->setOrientation(_orientation);
     if(_orientation ==  QPrinter::Portrait)

@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "conditionsedit.h"
 #include "ui_conditionsedit.h"
 
@@ -62,7 +66,5 @@ int conditionsEdit::getModelLength()
 
 void conditionsEdit::on_lineEdit_returnPressed()
 {
-    int _id = getModelLength();
-    QString name = ui->lineEdit->text().simplified();
-    addCondition(name,_id);
+    on_buttonAdd_clicked();
 }

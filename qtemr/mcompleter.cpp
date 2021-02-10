@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "mcompleter.h"
 
 
@@ -46,8 +50,8 @@ QString mCompleter::pathFromIndex(const QModelIndex &index) const {
     // If cursor position was saved, restore it, else save it
     if(cursor_pos != originalPos)
         line_edit->setCursorPosition(cursor_pos);
-    else
-        cursor_pos = originalPos;
+ //   else
+ //       cursor_pos = originalPos;
 
     // Get current prosition
     int cur_index = line_edit->cursorPosition();
@@ -72,7 +76,7 @@ QString mCompleter::pathFromIndex(const QModelIndex &index) const {
     QString part1 = str.mid(0, prev_delimiter_index + 1);
 
     // Get string value from before auto finished string is selected
-    QString pre = str.mid(prev_delimiter_index + 1, cur_index - prev_delimiter_index - 1);
+    //QString pre = str.mid(prev_delimiter_index + 1, cur_index - prev_delimiter_index - 1);
 
     // Get part of string that occurs AFTER cursor
     QString part2 = str.mid(next_delimiter_index);
