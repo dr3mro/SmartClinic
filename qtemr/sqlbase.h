@@ -51,10 +51,17 @@ public:
         void clear()
         {
             ID = 0;
-            name = pastHistory =  familyHistory = allergy ="";
-            operations = notes ="";
-            dateTime = residence = birthPlace = "";
-            occupation = mobile= "";
+            name.clear();
+            pastHistory.clear();
+            familyHistory.clear();
+            allergy.clear();
+            operations.clear();
+            notes.clear();
+            dateTime.clear();
+            residence.clear();
+            birthPlace.clear();
+            occupation.clear();
+            mobile.clear();
             maritalStatus = "Single";
             gender = "Male";
             age = QString::number(QDate::currentDate().toJulianDay());
@@ -634,7 +641,7 @@ public:
     QStandardItemModel* getMyRegisterModel(RegisterRange timeFrame, QStandardItemModel *myRegisterModel, sqlExtra *sqlextra);
     void registerServiceLoader(QStandardItemModel *myRegisterModel,sqlExtra *sqlextra);
     void createNewVisit(int ID, QString previous , QDateTime datetime, int visitType, double visitPrice, const QDate &lastSelectedFollowupDate, DrugsItemModel *drugsModel, InvestModel *investModel, sqlExtra *sqlextra);
-    QSqlTableModel *getConditionsModel(QSqlTableModel *conditionsModel);
+    QSqlTableModel *getConditionsModel();
     bool addCondition(QString name,int _id);
     QList<QPair<int,QString> > getConditions();
     bool insertDefaultConditions();

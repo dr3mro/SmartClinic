@@ -29,7 +29,7 @@ class settingsClass : public mDialog
 public:
     explicit settingsClass(QWidget *parent = nullptr);
     mSettings::pSettings getValuesFromUI();
-    void setValuesToUI(mSettings::pSettings _settings);
+    void setValuesToUI(const mSettings::pSettings &_settings);
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *e);
     int exec();
@@ -50,7 +50,7 @@ private slots:
     void on_serviceLine_returnPressed();
     void addNewService();
     void on_serviceLine_textChanged(const QString &arg1);
-    void on_servicesTable_clicked(const QModelIndex);
+    void on_servicesTable_clicked(const QModelIndex&);
     void on_comboBoxSpeciality_currentIndexChanged(int index);
     void shortcutChecker();
     void portabilityChecker();

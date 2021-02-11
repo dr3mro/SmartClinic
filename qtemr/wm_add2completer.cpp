@@ -17,12 +17,12 @@ wm_add2Completer::~wm_add2Completer()
     QSqlDatabase::removeDatabase(connectionName);
 }
 
-void wm_add2Completer::setVisitData(sqlBase::Visit v)
+void wm_add2Completer::setVisitData(const sqlBase::Visit &v)
 {
     visit = v;
 }
 
-void wm_add2Completer::setPatientData(sqlBase::Patient p)
+void wm_add2Completer::setPatientData(const sqlBase::Patient &p)
 {
     patient = p;
 }

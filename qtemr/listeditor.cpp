@@ -35,6 +35,7 @@ listEditor::listEditor(QWidget *parent) :
     connect(ui->lineEdit,SIGNAL(completerLoaded()),this,SLOT(completerInitialized()));
     emit setReadWrite(true);
     ui->comboList->addItems(lists);
+    this->setStyleSheet(settings.themeMaker());
     setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
 
 }

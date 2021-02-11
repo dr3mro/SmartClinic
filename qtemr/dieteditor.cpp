@@ -22,6 +22,7 @@ DietEditor::DietEditor(QWidget *parent) :
     setEditable(false);
     ui->buttonEdit->setEnabled(false);
     ui->buttonDelete->setEnabled(false);
+    this->setStyleSheet(settings.themeMaker());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
 }

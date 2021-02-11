@@ -66,9 +66,9 @@ void surgicalNotes::savesNote(QString surgeryID, int julianDate, QString opName,
 
 void surgicalNotes::on_buttonDel_clicked()
 {
-    myMessageBox *msgbox =  new myMessageBox(this);
+    myMessageBox msgbox;
     //msgbox->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    int reply = msgbox->question(this,"Message","This Will <b>Delete</b> the currently Selected Post-Operative Note Are you Sure?<center> <i>This Can't be undone!</i></center>",
+    int reply = msgbox.question(this,"Message","This Will <b>Delete</b> the currently Selected Post-Operative Note Are you Sure?<center> <i>This Can't be undone!</i></center>",
                                   QMessageBox::Yes,QMessageBox::No);
 
     if (reply == QMessageBox::No) {
@@ -78,7 +78,6 @@ void surgicalNotes::on_buttonDel_clicked()
     QString uID = ui->notes->model->data(ui->notes->model->index(row,0)).toString();
     emit deleteNote(uID);
     toggleDeleteEditButtons();
-    delete msgbox;
 }
 
 void surgicalNotes::on_buttonEdit_clicked()
@@ -88,9 +87,8 @@ void surgicalNotes::on_buttonEdit_clicked()
     QString opDate = ui->notes->model->data(ui->notes->model->index(row,2)).toString();
     QString opName = ui->notes->model->data(ui->notes->model->index(row,3)).toString();
     QString opReport = ui->notes->model->data(ui->notes->model->index(row,4)).toString();
-    surgicalNoteEditor *editNote = new surgicalNoteEditor(true,uID,opDate,opName,opReport,this);
-    connect(editNote,SIGNAL(saveSurgicalNote(QString,int,QString,QString)),this,SLOT(savesNote(QString,int,QString,QString)));
-    editNote->exec();
-    delete editNote;
+    surgicalNoteEditor editNote(true,uID,opDate,opName,opReport,this);
+    connect(&editNote,SIGNAL(saveSurgicalNote(QString,int,QString,QString)),this,SLOT(savesNote(QString,int,QString,QString)));
+    editNote.exec();
 
 }

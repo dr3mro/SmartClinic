@@ -8,6 +8,7 @@
 #include <QDialog>
 #include "sqlextra.h"
 #include "mdialog.h"
+#include "msettings.h"
 
 namespace Ui {
 class drugExapnder;
@@ -32,6 +33,7 @@ private slots:
 
 private:
     Ui::drugExapnder *ui;
+    mSettings& settings=mSettings::instance();
     sqlExtra *sqlextra;
     QStringListModel *model;
     QSortFilterProxyModel *proxy_model;

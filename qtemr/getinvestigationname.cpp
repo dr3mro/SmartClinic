@@ -44,11 +44,10 @@ void getInvestigationName::on_closeButton_clicked()
 
 void getInvestigationName::setPath()
 {
-    QFileDialog *fileDialog = new QFileDialog(this);
+    QFileDialog fileDialog;
     QString desktop = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-    QString selectedImagePath = fileDialog->getOpenFileName(this,"Select Photo Copy",desktop, "*.jpg *.jpeg");
+    QString selectedImagePath = fileDialog.getOpenFileName(this,"Select Photo Copy",desktop, "*.jpg *.jpeg");
     ui->Path->setText(selectedImagePath);
-    delete fileDialog;
 }
 
 

@@ -15,6 +15,7 @@
 #include "3rdparty/zip/zipwriter.h"
 #include "globalvariables.h"
 #include "mdialog.h"
+#include "msettings.h"
 
 namespace Ui {
 class backup;
@@ -39,6 +40,7 @@ protected:
     void keyPressEvent(QKeyEvent *e);
 private:
     Ui::backup *ui;
+    mSettings& settings=mSettings::instance();
     QString getZipMD5(QString zipFile);
     void makeList();
     bool clearFolders();

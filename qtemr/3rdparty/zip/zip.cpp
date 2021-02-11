@@ -9,7 +9,7 @@
 **
 ** This file is part of the QtGui module of the Qt Toolkit.
 **
-** $QT_BEGIN_LICENSE:LGPL$
+** $QT_BEGIN_LICENSE:LGPL$ //-V1042
 ** Commercial License Usage
 ** Licensees holding valid commercial Qt licenses may use this file in
 ** accordance with the commercial license agreement provided with the
@@ -133,7 +133,7 @@ static void writeMSDosDate(uchar *dest, const QDateTime& dt)
 {
     if (dt.isValid()) {
         quint16 time =
-            (dt.time().hour() << 11)    // 5 bit hour
+            (dt.time().hour() << 11)    // 5 bit hour //-V807
             | (dt.time().minute() << 5)   // 6 bit minute
             | (dt.time().second() >> 1);  // 5 bit double seconds
 
@@ -141,7 +141,7 @@ static void writeMSDosDate(uchar *dest, const QDateTime& dt)
         dest[1] = time >> 8;
 
         quint16 date =
-            ((dt.date().year() - 1980) << 9) // 7 bit year 1980-based
+            ((dt.date().year() - 1980) << 9) // 7 bit year 1980-based //-V807
             | (dt.date().month() << 5)           // 4 bit month
             | (dt.date().day());                 // 5 bit day
 
@@ -356,7 +356,7 @@ struct FileHeader
     QByteArray file_comment;
 };
 
-ZipReader::FileInfo::FileInfo()
+ZipReader::FileInfo::FileInfo() //-V730
     : isDir(false), isFile(false), isSymLink(false), crc32(0), size(0)
 {
 }
@@ -500,10 +500,10 @@ void ZipReaderPrivate::scanFiles()
 
     // find EndOfDirectory header
     int i = 0;
-    int start_of_directory = -1;
+    int start_of_directory = -1; //-V688
     int num_dir_entries = 0;
     EndOfDirectory eod;
-    while (start_of_directory == -1) {
+    while (start_of_directory == -1) { //-V654
         int pos = device->size() - sizeof(EndOfDirectory) - i;
         if (pos < 0 || i > 65535) {
             mDebug() << "QZip: EndOfDirectory not found";
@@ -934,7 +934,7 @@ bool ZipReader::extractAll(const QString &destinationDir) const
     // set up symlinks
     foreach (FileInfo fi, allFiles) {
         QApplication::processEvents();
-        const QString absPath = destinationDir + QDir::separator() + fi.filePath;
+        const QString absPath = destinationDir + QDir::separator() + fi.filePath; //-V821
         if (fi.isSymLink) {
             QString destination = QFile::decodeName(fileData(fi.filePath));
             if (destination.isEmpty())
@@ -953,7 +953,7 @@ bool ZipReader::extractAll(const QString &destinationDir) const
 
     foreach (FileInfo fi, allFiles) {
         QApplication::processEvents();
-        const QString absPath = destinationDir + QDir::separator() + fi.filePath;
+        const QString absPath = destinationDir + QDir::separator() + fi.filePath; //-V821
         if (fi.isFile) {
             QFile f(absPath);
             if (!f.open(QIODevice::WriteOnly))

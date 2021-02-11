@@ -13,6 +13,7 @@
 #include "mdebug.h"
 #include "windowmanager.h"
 #include "mymessagebox.h"
+#include "msettings.h"
 
 namespace Ui {
 class MergeDlg;
@@ -34,6 +35,7 @@ private slots:
 
 private:
     Ui::MergeDlg *ui;
+    mSettings& settings=mSettings::instance();
     sqlBase *sqlbase;
     bool valid=false;
     QStringList getSelectedVisits();

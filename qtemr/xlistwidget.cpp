@@ -4,7 +4,7 @@
 
 #include "xlistwidget.h"
 
-xListWidget::xListWidget(QWidget *parent)
+xListWidget::xListWidget(QWidget *parent) //-V730
 {
     connect(parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeReadWrite(bool)));
     connect(this,SIGNAL(popUpMessage(QString,QString)),parent->window(),SLOT(popUpMessage(QString,QString)));

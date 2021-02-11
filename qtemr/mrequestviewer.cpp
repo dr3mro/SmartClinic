@@ -137,7 +137,7 @@ QImage mRequestViewer::readImage(QString &path)
     return iReader.read();
 }
 
-bool mRequestViewer::writeImage(QString path,QImage pic)
+bool mRequestViewer::writeImage(const QString &path,const QImage &pic)
 {
     QImageWriter writer(path,"jpeg");
     return writer.write(pic);

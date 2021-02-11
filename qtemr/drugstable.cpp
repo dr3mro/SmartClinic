@@ -656,16 +656,16 @@ void drugsTable::genDrugTableToolTip()
         dateLabel = (current)? "Start Date   ":"Stop Date   ";
         currentTag = (current)? "Yes":"No";
 
-        if ( category == "")
+        if ( category.isEmpty())
             category = "UNKNOWN";
 
-        if (price == "")
+        if (price.isEmpty())
             price = "UNKNOWN";
 
-        if ( genericName == "")
+        if (genericName.isEmpty())
             genericName = "UNKNOWN";
 
-        if ( expander == "")
+        if (expander.isEmpty())
         {
             isExpander= false;
         }

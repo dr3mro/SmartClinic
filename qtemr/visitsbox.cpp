@@ -528,7 +528,7 @@ void visitsBox::save(sqlBase::Visit visit,bool threading)
 
     updateVisitAge();
 
-    if ( visit.visitDateTime == "")
+    if ( visit.visitDateTime.isEmpty())
     {
         QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
         QDateTime date = QDateTime::currentDateTime();
@@ -874,10 +874,9 @@ bool sortDrugsStar(const QString &s1,const QString &s2)
 
 void visitsBox::on_buttonInvest_clicked()
 {
-    invesList *invList = new invesList(this,ID);
-    invList->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    invList->exec();
-    delete invList;
+    invesList invList(this,ID);
+    invList.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    invList.exec();
 }
 
 void visitsBox::autosave()
@@ -1495,7 +1494,7 @@ void visitsBox::connectSignals(QWidget *parent)
 //    printPreviewShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_I),this);
 //}
 
-void visitsBox::addThisToCompleter(sqlBase::Visit visit)
+void visitsBox::addThisToCompleter(const sqlBase::Visit& visit)
 {
     add2CompleterWorker->setVisitData(visit);
     add2CompleterWorker->setMode(autoCompleteByWord);
@@ -1598,7 +1597,7 @@ int visitsBox::followNotify(const QDate &date)
     return  selectedDateFollowUps;
 }
 
-bool visitsBox::mSave(sqlBase::Visit visit,bool threading)
+bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
 {
     saving = true;
 
@@ -1700,8 +1699,9 @@ void visitsBox::enableRemoveDrugButton()
 }
 
 
-void visitsBox::on_InvestigationsTable_clicked(const QModelIndex )
+void visitsBox::on_InvestigationsTable_clicked(const QModelIndex &index)
 {
+    Q_UNUSED(index)
     ui->buttonRemoveInvestigations->setEnabled(vEditMode && (ui->InvestigationsTable->getSelectedRows() != -1 ));
 }
 

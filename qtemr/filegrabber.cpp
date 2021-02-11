@@ -4,12 +4,11 @@
 
 #include "filegrabber.h"
 
-fileGrabber::fileGrabber(bool save, QUrl url, QObject *parent) : QObject(parent)
+fileGrabber::fileGrabber(bool _save, QUrl _url, QObject *parent) : QObject(parent),
+        url(_url),
+        save(_save)
 {
-    this->url = url;
-    this->save = save;
-    connect(&manager, SIGNAL(finished(QNetworkReply*)),
-            SLOT(downloadFinished(QNetworkReply*)));
+    connect(&manager, SIGNAL(finished(QNetworkReply*)),SLOT(downloadFinished(QNetworkReply*)));
 
     t.setInterval(1000);
     connect(&t,SIGNAL(timeout()),SLOT(processData()));

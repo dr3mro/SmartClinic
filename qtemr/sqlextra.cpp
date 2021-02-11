@@ -223,7 +223,7 @@ void sqlExtra::closeDataBase()
 
 bool sqlExtra::resetDrugsTable()
 {
-    sqlCore *sqlcore = new sqlCore(this,"qt_sql_core_resetDrugs");
+    sqlCore sqlcore(this,"qt_sql_core_resetDrugs");
     bool x = executeQuery("DROP TABLE drugs");
     if ( !x )
     {
@@ -233,14 +233,13 @@ bool sqlExtra::resetDrugsTable()
     {
         if (!createTable("drugs"))
         {
-            delete sqlcore;
             return false;
         }
             
 
         db.transaction();
 
-        foreach ( QString drug , sqlcore->getCoreDrugList())
+        foreach ( QString drug , sqlcore.getCoreDrugList())
             addToAutoComplete("drugs",drug,true);
 
         foreach ( QString exp , getExpandList())
@@ -248,9 +247,7 @@ bool sqlExtra::resetDrugsTable()
 
         db.commit();
     }
-    sqlcore->optimize();
-    delete sqlcore;
-    QSqlDatabase::removeDatabase("qt_sql_core_resetDrugs");
+    sqlcore.optimize();
     return x;
 }
 

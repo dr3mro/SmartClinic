@@ -4,7 +4,7 @@
 
 #include "xcombobox.h"
 
-xComboBox::xComboBox(QWidget *parent)
+xComboBox::xComboBox(QWidget *parent) //-V730
 {
     connect(parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeReadWrite(bool)));
 }

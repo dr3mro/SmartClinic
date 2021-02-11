@@ -30,6 +30,7 @@ backup::backup(QWidget *parent) :
     }
     this->setFixedSize(this->width(),this->height());
     ui->buttonNew->setEnabled((indexLENGTH>1));
+    this->setStyleSheet(settings.themeMaker());
     setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
 
 }

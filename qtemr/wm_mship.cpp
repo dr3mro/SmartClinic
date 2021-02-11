@@ -63,7 +63,7 @@ bool wm_mShip::isWhiteListed(QByteArray ba)
         return true;
     }
 
-    if (savedReg == rApp.trialCrypted() || savedReg == "")
+    if (savedReg == rApp.trialCrypted() || savedReg.isEmpty())
     {
         return true;
     }

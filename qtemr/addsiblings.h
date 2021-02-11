@@ -34,7 +34,7 @@ private:
     sqlBase::Sibling getSibling();
 
 signals:
-    void addSibling(sqlBase::Sibling);
+    void addSibling(const sqlBase::Sibling&);
     void editSibling(int,sqlBase::Sibling);
     void loadCompleters();
     void setReadWrite(bool);

@@ -3300,13 +3300,9 @@ void sqlBase::createNewVisit(int ID,
     //    investigationLoaded = false;
 }
 
-QSqlTableModel *sqlBase::getConditionsModel(QSqlTableModel *conditionsModel)
+QSqlTableModel *sqlBase::getConditionsModel()
 {
-    if(conditionsModel == nullptr)
-        conditionsModel = new QSqlTableModel(this,db);
-    else
-        conditionsModel->clear();
-    
+    QSqlTableModel *conditionsModel = new QSqlTableModel(this,db);
     conditionsModel->setTable("conditions");
     conditionsModel->setSort(0,Qt::AscendingOrder);
     conditionsModel->setEditStrategy(QSqlTableModel::OnFieldChange);
@@ -3433,8 +3429,7 @@ QList<QPair<QString, int> > sqlBase::readPatientConditions(int ID)
         mDebug() << "Failed to load patient conditions" << query->lastError().text();
     }
 
-    QSqlTableModel conditionsModel;
-    int cols = getConditionsModel(&conditionsModel)->rowCount();
+    int cols = getConditionsModel()->rowCount();
 
     while (query->next())
     {

@@ -104,8 +104,8 @@ private slots:
     void on_fastPrint_rightButtonClicked();
     void on_fastPrint_middleButtonClicked();
     void enableRemoveDrugButton();
-    void on_InvestigationsTable_clicked(const QModelIndex);
-    bool mSave(sqlBase::Visit visit, bool threading=true);
+    void on_InvestigationsTable_clicked(const QModelIndex &index);
+    bool mSave(const sqlBase::Visit &visit,const bool &threading=true);
     void toggleSyncPrintButtons();
     void on_lmpDate_userDateChanged(const QDate &date);
     void on_lineEditWeight_textChanged(const QString &arg1);
@@ -166,8 +166,8 @@ private:
     QShortcut *vTypeDown;
     int visitDateTime2JulianDate();
     void connectSignals(QWidget *parent);
-    void initializeVariables();
-    void addThisToCompleter(sqlBase::Visit visit);
+    //void initializeVariables();
+    void addThisToCompleter(const sqlBase::Visit& visit);
     void toggleAntenatal(bool checked);
     void initializeAutoSave();
     bool isVisitModified();

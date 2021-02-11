@@ -10,6 +10,7 @@ drugExapnder::drugExapnder(QWidget *parent) :
     ui(new Ui::drugExapnder)
 {
     ui->setupUi(this);
+    this->setStyleSheet(settings.themeMaker());
     this->setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
     sqlextra = new sqlExtra(this,"qt_sql_extra_connection",false);
 

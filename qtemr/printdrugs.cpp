@@ -350,7 +350,7 @@ void printDrugs::resetMaxValues()
     ui->dietTopPadding->setMaximum(100);
 }
 
-void printDrugs::setupPrinter(QPrinter *p,mSettings::prescriptionPrintSettings _pSettings, bool preview)
+void printDrugs::setupPrinter(QPrinter *p,const mSettings::prescriptionPrintSettings &_pSettings, bool preview)
 {
     double left = _pSettings.leftMargin;
     double top = _pSettings.topMargin;

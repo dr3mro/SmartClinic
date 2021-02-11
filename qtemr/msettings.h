@@ -204,49 +204,49 @@ public:
     };
     struct textboxFont
     {
-        QString fontName;
         double fontSize;
+        QString fontName;
         bool fontBold;
     };
     struct defaultFont
     {
-        QString fontName;
         double fontSize;
+        QString fontName;
         bool fontBold;
     };
     struct prescriptionPrintSettings
     {
-        bool bold;
-        int point;
-        QString font;
-        QString color;
-        int pageOrientation;
+        double investigationsWidth;
         double leftMargin;
         double topMargin;
         double rightMargin;
         double bottomMargin;
         double pageWidth;
         double pageHeight;
-        bool tradeNameinBold;
-        bool doseinNewLine;
-        bool compactMode;
-        bool noQty;
         double dietLeftPadding;
         double dietTopPadding;
         double drugsColPerc;
         double invPad;
-        bool showInvestigations;
         double dietWidth;
+        int point;
+        int pageOrientation;
+        int bannerWidth;
+        QString font;
+        QString color;
         bool showDrugs;
         bool centerRequests;
         bool centerDrugs;
         bool showBanner;
         bool showDrugsSeparator;
         bool fullPage;
-        int bannerWidth;
-        double investigationsWidth;
+        bool tradeNameinBold;
+        bool doseinNewLine;
+        bool compactMode;
+        bool bold;
+        bool noQty;
         bool showDrugsTitle;
         bool setEastArabicNumbers;
+        bool showInvestigations;
 
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {

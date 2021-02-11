@@ -81,7 +81,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     void boot();
     void grabPatient();
-    void fillPatient(sqlBase::Patient patient);
+    void fillPatient(const sqlBase::Patient &patient);
     void addSurgicalNotes(int ID, QString surgeryID, int julianDate, QString opName, QString opReport);
     ~MainWindow();
 
@@ -128,7 +128,7 @@ private slots:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *e);
     void on_ButtonAgeCal_clicked();
-    void on_birthDateClicked(const QDate birthDate);
+    void on_birthDateClicked(const QDate &birthDate);
     void on_patientName_returnPressed();
     void on_buttonRemoveDrug_clicked();
     void addDrug();

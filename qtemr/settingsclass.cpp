@@ -117,7 +117,7 @@ mSettings::pSettings settingsClass::getValuesFromUI()
     return _settings;
 }
 
-void settingsClass::setValuesToUI(mSettings::pSettings _settings)
+void settingsClass::setValuesToUI(const mSettings::pSettings &_settings)
 {
     ui->checkBoxAutoCompleteByWord->setChecked(_settings.autoCompleteByWord);
     ui->comboBoxSpeciality->setCurrentIndex(_settings.speciality);
@@ -306,6 +306,7 @@ void settingsClass::on_resetDrugsButton_clicked()
             newMessage(tr("System Message"),tr("Drugs autocompleter reset operation was failed."));
         }
     }
+    QSqlDatabase::removeDatabase("qt_sql_core_resetDrugs");
 
 }
 
@@ -358,7 +359,7 @@ void settingsClass::on_serviceLine_textChanged(const QString &arg1)
     ui->buttonAddService->setEnabled(arg1.length() > 0);
 }
 
-void settingsClass::on_servicesTable_clicked(const QModelIndex)
+void settingsClass::on_servicesTable_clicked(const QModelIndex&)
 {
     ui->buttonDeleteService->setEnabled(true);
 }

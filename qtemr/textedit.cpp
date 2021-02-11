@@ -612,19 +612,18 @@ void TextEdit::keyPressEvent(QKeyEvent *e)
             isAutoSelection = true;
         }
 
-        if (crsr.selectedText().length() > 0 && ! completar->popup()->isVisible())
+        if (crsr.selectedText().length() > 0 && completar != nullptr && ! completar->popup()->isVisible())
             showRichTextToolBox();
         isSelectionStyled = false;
         return;
     }
 
-
     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_E); // CTRL+E
-    if (!completar || !isShortcut) // dont process the shortcut when we have a completer
+    if (completar == nullptr|| !isShortcut) // dont process the shortcut when we have a completer
         QTextEdit::keyPressEvent(e);
 
     const bool ctrlOrShift = e->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier);
-    if (!completar || (ctrlOrShift && e->text().isEmpty()))
+    if (completar == nullptr|| (ctrlOrShift && e->text().isEmpty()))
         return;
 
     static QString eow("~!@#$%^&*()_+{}|:\"<>?,./;'[]\\-="); // end of word

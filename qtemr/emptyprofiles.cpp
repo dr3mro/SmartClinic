@@ -17,6 +17,7 @@ EmptyProfiles::EmptyProfiles(QWidget *parent) :
     ui->progressBar->setAlignment(Qt::AlignCenter);
     connect ( sqlbase,SIGNAL(emptyProfileProgressbar(int,int)),this,SLOT(progressBarWorker(int,int)));
     connect ( this,SIGNAL(killLoop()),sqlbase,SLOT(killLoopFlag()));
+    this->setStyleSheet(settings.themeMaker());
     setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
 }
 

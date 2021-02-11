@@ -49,6 +49,7 @@ private:
     Ui::listEditor *ui;
     QStringListModel *model;
     QSortFilterProxyModel *proxy_model;
+    mSettings& settings=mSettings::instance();
 
 protected:
     void closeEvent(QCloseEvent *event);

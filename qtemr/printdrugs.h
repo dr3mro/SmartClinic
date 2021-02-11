@@ -65,7 +65,7 @@ private:
     void tweakRoshetta();
     void setMaxValues();
     void resetMaxValues();
-    void setupPrinter(QPrinter *p,mSettings::prescriptionPrintSettings pSettings, bool preview=false);
+    void setupPrinter(QPrinter *p,const mSettings::prescriptionPrintSettings &pSettings, bool preview=false);
     void printDoc(QPrinter *p, QTextDocument *doc, bool preview=false);
     QTextDocument *getDoc();
     QPrinter *printer;

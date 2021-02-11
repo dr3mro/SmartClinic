@@ -11,6 +11,7 @@ MergeDlg::MergeDlg(QWidget *parent) :
 {
     ui->setupUi(this);
     sqlbase = new sqlBase(this,"qt_sql_base_merge",false);
+    this->setStyleSheet(settings.themeMaker());
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
 
     connect(ui->cbAccept,SIGNAL(toggled(bool)),ui->btnApply,SLOT(setEnabled(bool)));

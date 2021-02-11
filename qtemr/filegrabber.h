@@ -41,12 +41,13 @@ signals:
     void verifyFile(QString path);
     void finished();
 private:
+    QUrl url;
+    bool save;
     QNetworkAccessManager manager;
     QNetworkReply *reply;
     QFile file;
     QTimer t;
-    QUrl url;
-    bool save;
+
 };
 
 #endif // FILEGRABBER_H

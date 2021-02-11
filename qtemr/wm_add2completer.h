@@ -16,8 +16,8 @@ class wm_add2Completer : public QObject
 public:
     explicit wm_add2Completer(QObject *parent = nullptr);
     ~wm_add2Completer();
-    void setVisitData(sqlBase::Visit v);
-    void setPatientData(sqlBase::Patient p);
+    void setVisitData(const sqlBase::Visit &v);
+    void setPatientData(const sqlBase::Patient &p);
     void setHusband(QString h);
     void setMode(bool b);
     void save2Dict(QStringList dict);

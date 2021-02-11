@@ -36,7 +36,7 @@ private slots:
 
 private:
     void setEditable(bool state);
-    //mSettings& settings=mSettings::instance();
+    mSettings& settings=mSettings::instance();
     QSqlTableModel *dietModel;
     sqlExtra *sqlextra;
     Ui::DietEditor *ui;

@@ -11,7 +11,7 @@ conditionsEdit::conditionsEdit(QWidget *parent) :
 {
     ui->setupUi(this);
     sqlbase = new sqlBase(this,"conditions",false);
-    model = sqlbase->getConditionsModel(model);
+    model = sqlbase->getConditionsModel();
     proxy_model = new CheckableSortFilterProxyModel(this);
     proxy_model->setSourceModel(model);
     ui->tableView->setModel(proxy_model);

@@ -59,7 +59,7 @@ private:
     QString title;
     QString request;
     QImage readImage(QString &path);
-    bool writeImage(QString path, QImage pic);
+    bool writeImage(const QString &path,const QImage &pic);
 
 protected:
     void hideEvent(QHideEvent *event);

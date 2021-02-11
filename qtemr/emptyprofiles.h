@@ -46,6 +46,7 @@ private:
     Ui::EmptyProfiles *ui;
     bool isEmptyRecordsCreated=false;
     int startPatientID=1;
+    mSettings& settings=mSettings::instance();
 
 protected:
     void closeEvent(QCloseEvent *e);

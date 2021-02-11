@@ -231,7 +231,7 @@
 
 #ifndef STDC
 #  ifndef const /* cannot use !defined(STDC) && !defined(const) on Mac */
-#    define const       /* note: need a more gentle solution here */
+#    define const       /* note: need a more gentle solution here */ //-V1059
 #  endif
 #endif
 

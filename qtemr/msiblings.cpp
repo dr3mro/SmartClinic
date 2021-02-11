@@ -132,7 +132,7 @@ QStandardItemModel *mSiblings::getModel()
     return model;
 }
 
-void mSiblings::appendRow(sqlBase::Sibling sibling)
+void mSiblings::appendRow(const sqlBase::Sibling& sibling)
 {
     QStandardItem *dob_item = new QStandardItem;
     QStandardItem *tod_item = new QStandardItem;

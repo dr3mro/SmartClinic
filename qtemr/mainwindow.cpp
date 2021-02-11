@@ -267,7 +267,7 @@ void MainWindow::tweakui()
     setAgeCalButtonToolTip();
 }
 
-void MainWindow::fillPatient(sqlBase::Patient _patient)
+void MainWindow::fillPatient(const sqlBase::Patient &_patient)
 {
     ID = _patient.ID;
     ui->patientnumber->display(_patient.ID);
@@ -315,7 +315,7 @@ void MainWindow::fillPatient(sqlBase::Patient _patient)
 
     for ( int x = 0 ; x < ui->allergyList->count() ; x++)
     {
-        if ( ui->allergyList->item(x)->text() == "" )
+        if ( ui->allergyList->item(x)->text().isEmpty() )
         {
             delete ui->allergyList->item(x);
         }
@@ -323,7 +323,7 @@ void MainWindow::fillPatient(sqlBase::Patient _patient)
 
     for ( int z = 0 ; z < ui->opAdmissionsList->count() ; z++)
     {
-        if ( ui->opAdmissionsList->item(z)->text() == "" )
+        if ( ui->opAdmissionsList->item(z)->text().isEmpty() )
         {
             delete ui->opAdmissionsList->item(z);
         }
@@ -756,7 +756,7 @@ void MainWindow::on_ButtonAgeCal_clicked()
     BirthDateWindow.show();
 }
 
-void MainWindow::on_birthDateClicked(const QDate birthDate)
+void MainWindow::on_birthDateClicked(const QDate &birthDate)
 {
     int birthDateInDays = static_cast<int>(birthDate.toJulianDay());
     ui->patientAge->setText(dataHelper::daysToAge(birthDateInDays));
@@ -833,18 +833,17 @@ void MainWindow::show_gen_win()
         return;
     }
 
-    EmptyProfiles *generator = new EmptyProfiles(this);
-    generator->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    connect( generator ,SIGNAL(updatePList()),ui->searchWidgetx,SLOT(updatePatientList()));
-    connect( generator ,SIGNAL(loadPatient(int)),this,SLOT(loadThisPatient(int)));
-    connect( generator ,SIGNAL(toggleEditMode(bool)),this,SLOT(toggleEditMODE(bool)) );
+    EmptyProfiles generator;
+    generator.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    connect(&generator ,SIGNAL(updatePList()),ui->searchWidgetx,SLOT(updatePatientList()));
+    connect(&generator ,SIGNAL(loadPatient(int)),this,SLOT(loadThisPatient(int)));
+    connect(&generator ,SIGNAL(toggleEditMode(bool)),this,SLOT(toggleEditMODE(bool)) );
     applyBlurEffect();
-    generator->exec();
+    generator.exec();
     removeBlurEffect();
     indexLength = sqlbase->getPatientIndexLength();
     ui->patientnumber->setMax(indexLength-1);
     ui->buttonNewCancel->setEnabled( (indexLength > 1) );
-    delete generator;
 }
 
 void MainWindow::on_buttonRemoveDrug_clicked()
@@ -1315,36 +1314,32 @@ void MainWindow::hideWorkingWindow()
 
 void MainWindow::show_expand_win()
 {
-    drugExapnder *dexpand = new drugExapnder(this);
-    dexpand->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    //connect(dexpand,SIGNAL(reloadCompleter()),this,SIGNAL(reloadCompleter()));
-    connect(dexpand,SIGNAL(reloadDrugsCompleter()),ui->drugLine,SIGNAL(updateDrugsCompleter()));
-    connect(dexpand,SIGNAL(reloadDrugsCompleter()),visitsbox,SIGNAL(updateDrugsCompleter()));
-    connect(dexpand,SIGNAL(newMessage(QString,QString)),this,SLOT(popUpMessage(QString,QString)));
+    drugExapnder dexpand;
+    dexpand.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    connect(&dexpand,SIGNAL(reloadDrugsCompleter()),ui->drugLine,SIGNAL(updateDrugsCompleter()));
+    connect(&dexpand,SIGNAL(reloadDrugsCompleter()),visitsbox,SIGNAL(updateDrugsCompleter()));
+    connect(&dexpand,SIGNAL(newMessage(QString,QString)),this,SLOT(popUpMessage(QString,QString)));
     applyBlurEffect();
-    dexpand->exec();
+    dexpand.exec();
     showWorkingWindow("Please wait...");
     removeBlurEffect();
-    delete dexpand;
     hideWorkingWindow();
 }
 
 void MainWindow::showDieteditWin()
 {
     applyBlurEffect();
-    DietEditor *dietedit = new DietEditor(this);
-    dietedit->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    dietedit->exec();
+    DietEditor dietedit;
+    dietedit.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    dietedit.exec();
     removeBlurEffect();
-    delete dietedit;
 }
 //MOVE TO KERNEL
 void MainWindow::exportPatientList()
 {
-    QFileDialog *fileDialog = new QFileDialog(this);
+    QFileDialog fileDialog;
     QString desktop = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-    QString savePath = fileDialog->getSaveFileName(this,"Select Export File",desktop, "Microsoft Excel (*.xls);;XML files (*.xml)",nullptr);
-    delete fileDialog;
+    QString savePath = fileDialog.getSaveFileName(this,"Select Export File",desktop, "Microsoft Excel (*.xls);;XML files (*.xml)",nullptr);
     QFileInfo info(savePath);
 
     if (info.baseName().isEmpty())
@@ -1385,13 +1380,12 @@ void MainWindow::addSurgicalNotes(int _ID,QString surgeryID ,int julianDate, QSt
 
 void MainWindow::show_listEdit_win()
 {
-    listEditor *listeditor = new listEditor(this);
-    listeditor->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    connect ( listeditor ,SIGNAL ( reloadCompleter() ),this,SIGNAL(reloadCompleter()) );
+    listEditor listeditor;
+    listeditor.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    connect ( &listeditor ,SIGNAL ( reloadCompleter() ),this,SIGNAL(reloadCompleter()) );
     applyBlurEffect();
-    listeditor->exec();
+    listeditor.exec();
     removeBlurEffect();
-    delete listeditor;
 }
 
 void MainWindow::show_favouritesDrugs_win()
@@ -1407,10 +1401,9 @@ void MainWindow::show_favouritesDrugs_win()
 void MainWindow::on_buttonInvestigations_clicked()
 {
     applyBlurEffect();
-    invesList *invList = new invesList(this,ID);
-    invList->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    invList->exec();
-    delete invList;
+    invesList invList(this,ID);
+    invList.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    invList.exec();
     removeBlurEffect();
 }
 
@@ -1557,17 +1550,15 @@ void MainWindow::toggleBlur(bool b)
 void MainWindow::show_backup_win()
 {
     applyBlurEffect();
-    backup *b = new backup(this);
-    b->toggleVisualEffects(settings.isVisualEffectsEnabled());
-//    connect (b,SIGNAL(destroyed()),ui->searchWidgetx,SLOT(updatePatientList()));
-    connect (b,SIGNAL(loadFirstPatient()),this,SLOT(loadFirstPatient()));
-    connect (b,SIGNAL(closeDataBase()),this,SLOT(closeDataBase()));
-    connect (b,SIGNAL(reOpenDataBase()),this,SLOT(reOpenDataBase()));
+    backup b;
+    b.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    connect (&b,SIGNAL(loadFirstPatient()),this,SLOT(loadFirstPatient()));
+    connect (&b,SIGNAL(closeDataBase()),this,SLOT(closeDataBase()));
+    connect (&b,SIGNAL(reOpenDataBase()),this,SLOT(reOpenDataBase()));
     sqlbase->WAL_CheckPoint(QString("TRUNCATE"));
     sqlextra->WAL_CheckPoint(QString("TRUNCATE"));
-    b->exec();
+    b.exec();
     removeBlurEffect();
-    delete b;
 }
 
 void MainWindow::show_update_win()
@@ -1581,25 +1572,23 @@ void MainWindow::show_update_win()
 
 void MainWindow::show_commonConditionsEdit()
 {
-    conditionsEdit *conEdit = new conditionsEdit;//;(this);
-    connect(conEdit,SIGNAL(reload()),ui->conditionswidget,SLOT(reload()));
-    conEdit->exec();
-    delete conEdit;
+    conditionsEdit conEdit;
+    connect(&conEdit,SIGNAL(reload()),ui->conditionswidget,SLOT(reload()));
+    conEdit.exec();
 }
 
 void MainWindow::showMergedlg()
 {
     applyBlurEffect();
     emit toggleTrayMenuActions(false);
-    MergeDlg *mDlg = new MergeDlg(this);
-    connect (mDlg,SIGNAL(reloadPatientsList()),ui->searchWidgetx,SLOT(updatePatientList()));
-    connect (mDlg,SIGNAL(loadThisPatient(int)),this,SLOT(loadThisPatient(int)));
-    connect (mDlg,SIGNAL(toggleEditMode(bool)),this,SLOT(toggleEditMODE(bool)) );
-    mDlg->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    mDlg->exec();
+    MergeDlg mDlg;
+    connect (&mDlg,SIGNAL(reloadPatientsList()),ui->searchWidgetx,SLOT(updatePatientList()));
+    connect (&mDlg,SIGNAL(loadThisPatient(int)),this,SLOT(loadThisPatient(int)));
+    connect (&mDlg,SIGNAL(toggleEditMode(bool)),this,SLOT(toggleEditMODE(bool)) );
+    mDlg.toggleVisualEffects(settings.isVisualEffectsEnabled());
+    mDlg.exec();
     removeBlurEffect();
     emit toggleTrayMenuActions(true);
-    delete mDlg;
 }
 
 void MainWindow::loadFirstPatient()
@@ -1644,14 +1633,13 @@ void MainWindow::appendCheckBoxTextToPastHx(QString text)
 
 void MainWindow::on_buttonSuricalNotes_clicked()
 {
-    surgicalNotes *surgNotes = new surgicalNotes(ID,this);
-    connect(surgNotes,SIGNAL(addsNoteSignal(QString,int,QString,QString)),this,SLOT(addsNoteSlot(QString,int,QString,QString)));
-    connect(surgNotes,SIGNAL(savesNoteSignal(QString,int,QString,QString)),this,SLOT(savesNoteSlot(QString,int,QString,QString)));
-    connect(surgNotes,SIGNAL(deleteNote(QString)),this,SLOT(deleteNoteSlot(QString)));
-    connect(this,SIGNAL(reloadSurgeryNotes(int)),surgNotes,SLOT(reloadNotes(int)));
+    surgicalNotes surgNotes(ID,this);
+    connect(&surgNotes,SIGNAL(addsNoteSignal(QString,int,QString,QString)),this,SLOT(addsNoteSlot(QString,int,QString,QString)));
+    connect(&surgNotes,SIGNAL(savesNoteSignal(QString,int,QString,QString)),this,SLOT(savesNoteSlot(QString,int,QString,QString)));
+    connect(&surgNotes,SIGNAL(deleteNote(QString)),this,SLOT(deleteNoteSlot(QString)));
+    connect(this,SIGNAL(reloadSurgeryNotes(int)),&surgNotes,SLOT(reloadNotes(int)));
     applyBlurEffect();
-    surgNotes->exec();
-    delete surgNotes;
+    surgNotes.exec();
     removeBlurEffect();
 }
 

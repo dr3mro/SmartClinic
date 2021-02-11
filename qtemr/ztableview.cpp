@@ -4,7 +4,7 @@
 
 #include "ztableview.h"
 
-zTableView::zTableView(QWidget *parent):QTableView(parent)
+zTableView::zTableView(QWidget *parent):QTableView(parent) //-V730
 {
     connect( parent->window(),SIGNAL(updateTextFont()),this,SLOT(setDefaultFont()));
 }
@@ -27,7 +27,7 @@ void zTableView::moveRowDown()
     if ((row >= getRowsCount()-1) ||  isValidRow(row+1) || isReadOnly)
         return;
     QList<QStandardItem*> aItems = tableModel->takeRow(row);
-    QList<QStandardItem*> bItems = tableModel->takeRow(row);
+    QList<QStandardItem*> bItems = tableModel->takeRow(row); //-V656
     tableModel->insertRow(row,bItems);
     tableModel->insertRow(row+1,aItems);
     selectRow(row+1);
