@@ -5,9 +5,9 @@
 #include "massistant.h"
 #include "ui_massistant.h"
 
-mAssistant::mAssistant(mLabelMsg& labelMsg, QWidget *parent,bool& eMode) :
+mAssistant::mAssistant(mLabelMsg &_labelMsg, QWidget *parent,bool& eMode) :
     mDialog(parent),
-    labelMsg(labelMsg),
+    labelMsg(_labelMsg),
     editingMode(eMode),
     sqlbase(new sqlBase(this,"qt_sql_base_mAssist",false)),
     sqlextra(new sqlExtra(this,"qt_sql_extra_mAssist",false)),
