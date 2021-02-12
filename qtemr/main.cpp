@@ -1,7 +1,6 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include <QApplication>
 #include <QDir>
 #include <QTime>
@@ -20,10 +19,10 @@
 #include "msettings.h"
 
 
+
 #if MEMLEAK == 1 && defined(QT_DEBUG) && defined(_MSC_VER)
 #include <vld.h>
 #endif
-
 
 static bool r_p,r_c;
 static bool isSharedMemoryCreated=false;
@@ -228,6 +227,12 @@ void initializeSettings()
 
 int main(int argc, char *argv[])
 {
+
+#if defined(_DEBUG) && MEMLEAK == 2
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+#endif 
+
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
     QApplication a(argc, argv);
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
@@ -278,7 +283,16 @@ int main(int argc, char *argv[])
     banner->setProgress(100);
     QTimer::singleShot(1000,banner,SLOT(close()));
     QTimer::singleShot(1500,banner,SLOT(deleteLater()));
-    //banner->close();
-    //delete banner;
-    return  a.exec();
+    banner->close();
+    delete banner;
+    auto exitCode = a.exec();
+    //_CrtDumpMemoryLeaks();
+    
+    //int* p = new int();
+    //int n = 5;
+    //p = &n;
+    //while (n--) {
+    //    new int;
+    //}
+    return  exitCode;// a.exec();;
 }

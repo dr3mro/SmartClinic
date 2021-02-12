@@ -4,10 +4,8 @@
 
 #include "netserver.h"
 
-NetServer::NetServer(QObject *parent) : QObject(parent)
+NetServer::NetServer(QObject *parent) : QObject(parent),m_server(new QTcpServer)
 {
-    m_server = new QTcpServer();
-
     if(m_server->listen(QHostAddress::Any, 8080))
     {
        connect(m_server, &QTcpServer::newConnection, this, &NetServer::newConnection);
@@ -28,7 +26,7 @@ NetServer::~NetServer()
     }
 
     m_server->close();
-    m_server->deleteLater();
+    delete m_server;
 }
 
 void NetServer::newConnection()

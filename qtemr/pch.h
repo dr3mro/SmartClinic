@@ -8,22 +8,31 @@
 #endif // PCH_H
 // Add C includes here
 
-#if defined __cplusplus
+
+
+
 // Add C++ includes here
-#include <QMainWindow>
-#include <QString>
-#include <QEvent>
-#include <QSystemTrayIcon>
-#include <QLocale>
-#include <QGraphicsBlurEffect>
-#include <QShortcut>
+
+
+#if defined __cplusplus
+
+
+
 #include <QtConcurrentRun>
+#if defined _DEBUG && MEMLEAK == 2
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h> 
+#include <crtdbg.h>
+#define new new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
+#endif 
+
+#include <QVector>
 #include <QThread>
+#include <QPair>
+#include <QString>
 #include <QValidator>
 #include <QFrame>
 #include <QSpacerItem>
-#include <QStandardItemModel>
-#include <QStandardItem>
 #include <QSqlTableModel>
 #include <QFutureWatcher>
 #include <QDialog>
@@ -34,24 +43,51 @@
 #include <QFuture>
 #include <QCompleter>
 #include <QList>
-#include <QPair>
-#include <QComboBox>
-#include <QFileDialog>
-#include <QMenu>
-#include <QTextEdit>
-#include <QAction>
-#include <QApplication>
-#include <QCalendarWidget>
-#include <QObject>
-#include <QTextStream>
+#include <QMainWindow>
+#include <QEvent>
+#include <QSystemTrayIcon>
+#include <QLocale>
+#include <QGraphicsBlurEffect>
+#include <QShortcut>
 #include <QStandardItemModel>
-#include <QXmlStreamReader>
-#include <QDomDocument>
-#include <QDir>
-#include <QSettings>
-#include <QCryptographicHash>
-#include <QSortFilterProxyModel>
-#include <QSqlQueryModel>
+#include <QStandardItem>
+#include <QFontComboBox>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QVersionNumber>
+#include <QGraphicsDropShadowEffect>
+#include <QRegExpValidator>
+#include <QPrintPreviewDialog>
+#include <QPrinter>
+#include <QToolBar>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QDateTimeEdit>
+#include <QSound>
+#include <QImage>
+#include <QPixmap>
+#include <QBuffer>
+#include <QImageReader>
+#include <QDesktopWidget>
+#include <QRect>
+#include <QAbstractItemView>
+#include <QPropertyAnimation>
+#include <QTableView>
+#include <QItemDelegate>
+#include <QLineEdit>
+#include <QFile>
+#include <QFileInfo>
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QSslError>
+#include <QTimer>
+#include <QUrl>
+#include <QStringListModel>
+#include <QDesktopServices>
+#include <QtNetwork/QTcpSocket>
 #include <QWidget>
 #include <QToolButton>
 #include <QColor>
@@ -70,44 +106,25 @@
 #include <QtSql>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QTableView>
-#include <QItemDelegate>
-#include <QLineEdit>
-#include <QFile>
-#include <QFileInfo>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QSslError>
-#include <QTimer>
-#include <QUrl>
-#include <QStringListModel>
-#include <QDesktopServices>
-#include <QtNetwork/QTcpSocket>
-#include <QVector>
-#include <QImage>
-#include <QPixmap>
-#include <QBuffer>
-#include <QImageReader>
-#include <QDesktopWidget>
-#include <QRect>
-#include <QAbstractItemView>
-#include <QPropertyAnimation>
-#include <QFontComboBox>
-#include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QGraphicsItem>
-#include <QVersionNumber>
-#include <QGraphicsDropShadowEffect>
-#include <QRegExpValidator>
-#include <QPrintPreviewDialog>
-#include <QPrinter>
-#include <QToolBar>
-#include <QPushButton>
-#include <QSpinBox>
-#include <QDateTimeEdit>
-#include <QSound>
+#include <QComboBox>
+#include <QFileDialog>
+#include <QMenu>
+#include <QTextEdit>
+#include <QAction>
+#include <QApplication>
+#include <QCalendarWidget>
+#include <QObject>
+#include <QTextStream>
+#include <QStandardItemModel>
+#include <QXmlStreamReader>
+#include <QDomDocument>
+#include <QDir>
+#include <QSettings>
+#include <QCryptographicHash>
+#include <QSortFilterProxyModel>
+#include <QSqlQueryModel>
+
+
 #include "3rdparty/zip/zconf.h"
 #include "3rdparty/zip/zipreader.h"
 #include "3rdparty/zip/zipwriter.h"
@@ -147,4 +164,6 @@
 #include <mutex>
 #include <thread>
 #include <condition_variable>
+
 #endif
+
