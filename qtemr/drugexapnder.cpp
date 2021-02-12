@@ -65,7 +65,7 @@ void drugExapnder::setFilter(QString arg)
     proxy_model->setFilterWildcard(arg);
 }
 
-void drugExapnder::currentRowChanged(QModelIndex i, QModelIndex)
+void drugExapnder::currentRowChanged(const QModelIndex &i,const QModelIndex&)
 {
     load(i);
 }

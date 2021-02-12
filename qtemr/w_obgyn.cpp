@@ -175,6 +175,6 @@ void w_obGyn::on_siblings_clicked(const QModelIndex &index)
 void w_obGyn::on_editSiblingButton_clicked()
 {
     addSiblings addsiblings(ui->siblings->getSelectedRow(),ui->siblings->getSelectedRowContent(),this,true);
-    connect (&addsiblings,SIGNAL(editSibling(int,sqlBase::Sibling)),ui->siblings,SLOT(editRow(int,sqlBase::Sibling)));
+    connect (&addsiblings,SIGNAL(editSibling(int,const sqlBase::Sibling&)),ui->siblings,SLOT(editRow(int,const sqlBase::Sibling&)));
     addsiblings.exec();
 }

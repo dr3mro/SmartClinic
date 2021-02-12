@@ -7,7 +7,7 @@
 colorButton::colorButton(QWidget *parent):QToolButton(parent)
 {}
 
-void colorButton::setColor(QColor c)
+void colorButton::setColor(const QColor &c)
 {
     setText("");
     color = c;

@@ -22,15 +22,15 @@ richTextEditor::richTextEditor(QWidget *parent) :
     ui->backgroundColor->setColor(Qt::white);
 
     connect(ui->textColor,SIGNAL(leftButtonClicked()),cp1,SLOT(show()));
-    connect(ui->textColor,SIGNAL(midButtonClicked(QColor)),this,SLOT(setForegroundColor(QColor)));
+    connect(ui->textColor,SIGNAL(midButtonClicked(const QColor&)),this,SLOT(setForegroundColor(const QColor&)));
     connect(ui->backgroundColor,SIGNAL(leftButtonClicked()),cp2,SLOT(show()));
-    connect(ui->backgroundColor,SIGNAL(midButtonClicked(QColor)),this,SLOT(setBackgroundColor(QColor)));
+    connect(ui->backgroundColor,SIGNAL(midButtonClicked(const QColor&)),this,SLOT(setBackgroundColor(const QColor&)));
 
 
-    connect(cp1,SIGNAL(newColor(QColor)),this,SLOT(setForegroundColor(QColor)));
-    connect(cp1,SIGNAL(newColor(QColor)),ui->textColor,SLOT(setColor(QColor)));
-    connect(cp2,SIGNAL(newColor(QColor)),this,SLOT(setBackgroundColor(QColor)));
-    connect(cp2,SIGNAL(newColor(QColor)),ui->backgroundColor,SLOT(setColor(QColor)));
+    connect(cp1,SIGNAL(newColor(const QColor&)),this,SLOT(setForegroundColor(const QColor&)));
+    connect(cp1,SIGNAL(newColor(const QColor&)),ui->textColor,SLOT(setColor(const QColor&)));
+    connect(cp2,SIGNAL(newColor(const QColor&)),this,SLOT(setBackgroundColor(const QColor&)));
+    connect(cp2,SIGNAL(newColor(const QColor&)),ui->backgroundColor,SLOT(setColor(const QColor&)));
 
     connect(ui->fontComboBox,SIGNAL(currentFontChanged(QFont)),parent,SLOT(setFont(QFont)));
     connect(ui->fontComboBox,SIGNAL(highlighted(QString)),parent,SLOT(setFont(QString)));
@@ -106,12 +106,12 @@ richTextEditor::~richTextEditor()
     delete ui;
 }
 
-void richTextEditor::setBackgroundColor(QColor color)
+void richTextEditor::setBackgroundColor(const QColor &color)
 {
     emit setBGcolor(color);
 }
 
-void richTextEditor::setForegroundColor(QColor color)
+void richTextEditor::setForegroundColor(const QColor &color)
 {
     emit setFGcolor(color);
 }

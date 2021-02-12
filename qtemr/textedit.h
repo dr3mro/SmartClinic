@@ -66,14 +66,14 @@ public slots:
     void redFlagHighLight();
     void greenFlagHighLight();
     void blueFlagHighLight();
-    void setFlagHighLight(QColor color);
+    void setFlagHighLight(const QColor &color);
     void clear();
 
 private slots:
     void insertCompletion(const QString &completion);
     void showRichTextToolBox();
-    void setForegroundColor(QColor color);
-    void setBackgroundColor(QColor color);
+    void setForegroundColor(const QColor &color);
+    void setBackgroundColor(const QColor &color);
     void createRichTextToolBox();
     void setDefaultFont();
     void completerLoader();

@@ -166,7 +166,7 @@ void mSiblings::appendRow(const sqlBase::Sibling& sibling)
     tweakCoulmnSize();
 }
 
-void mSiblings::editRow(int row, sqlBase::Sibling sibling)
+void mSiblings::editRow(int row, const sqlBase::Sibling &sibling)
 {
     model->item(row,0)->setText(sibling.DateOfBirth);
     model->item(row,1)->setText(sibling.TypeOfDelivery);

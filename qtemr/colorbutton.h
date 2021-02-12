@@ -19,15 +19,15 @@ public:
     QColor getColor();
     bool colorPicker=false;
 public slots:
-    void setColor(QColor c);
+    void setColor(const QColor &c);
 private:
     QColor color;
 private slots:
     void colorSelected();
 signals:
-    void newColorSelected(QColor);
+    void newColorSelected(const QColor&);
     void leftButtonClicked();
-    void midButtonClicked(QColor);
+    void midButtonClicked(const QColor&);
 protected:
     void mousePressEvent(QMouseEvent *e);
 

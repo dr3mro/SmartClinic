@@ -6,7 +6,7 @@
 
 visitsList::visitsList(QWidget *parent): QComboBox(parent)
 {
-    this->installEventFilter(this);
+    installEventFilter(this);
     connect(parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeReadWrite(bool)));
     worker = new wm_visitListLoader;
     connect(&watcher,SIGNAL(finished()),this,SLOT(insertVisits()));

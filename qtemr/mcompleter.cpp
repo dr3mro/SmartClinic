@@ -112,7 +112,7 @@ void mCompleter::connectSignals()
 
 }
 
-void mCompleter::onActivated(const QString)
+void mCompleter::onActivated(const QString&)
 {
     cursor_pos = originalPos;
 }

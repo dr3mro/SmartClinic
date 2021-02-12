@@ -791,7 +791,7 @@
               <bool>false</bool>
              </attribute>
              <attribute name="verticalHeaderVisible">
-              <bool>false</bool>
+              <bool>true</bool>
              </attribute>
              <attribute name="verticalHeaderMinimumSectionSize">
               <number>20</number>
@@ -800,7 +800,7 @@
               <number>20</number>
              </attribute>
              <attribute name="verticalHeaderHighlightSections">
-              <bool>false</bool>
+              <bool>true</bool>
              </attribute>
             </widget>
            </item>

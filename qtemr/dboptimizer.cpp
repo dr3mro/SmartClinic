@@ -195,7 +195,7 @@ void dbOptimizer::message(QString msg)
 void dbOptimizer::on_buttonClose_clicked()
 {
     abort();
-    close();
+    close(); //-V779
 }
 
 void dbOptimizer::on_resetTweaks_clicked()

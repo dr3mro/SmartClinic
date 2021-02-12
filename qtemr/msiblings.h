@@ -33,7 +33,7 @@ public:
 
 public slots:
     void appendRow(const sqlBase::Sibling &sibling);
-    void editRow(int row,sqlBase::Sibling sibling);
+    void editRow(int row,const sqlBase::Sibling &sibling);
 private:
     QStandardItemModel *model;
     sqlBase *sqlbase;

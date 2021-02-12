@@ -29,7 +29,7 @@ private slots:
     void addThisName();
     void save();
     void setFilter(QString arg);
-    void currentRowChanged(QModelIndex i,QModelIndex);
+    void currentRowChanged(const QModelIndex &i,const QModelIndex&);
 
 private:
     Ui::drugExapnder *ui;

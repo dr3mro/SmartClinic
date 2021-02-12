@@ -35,7 +35,7 @@ private:
 
 signals:
     void addSibling(const sqlBase::Sibling&);
-    void editSibling(int,sqlBase::Sibling);
+    void editSibling(int,const sqlBase::Sibling&);
     void loadCompleters();
     void setReadWrite(bool);
     void reloadCompleter();

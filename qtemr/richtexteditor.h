@@ -39,8 +39,8 @@ public:
     ~richTextEditor();
 
 private slots:
-    void setBackgroundColor(QColor color);
-    void setForegroundColor(QColor color);
+    void setBackgroundColor(const QColor &color);
+    void setForegroundColor(const QColor &color);
     void resetFont();
     void fadeout();
     void decreaseOpacity();
@@ -67,8 +67,8 @@ protected:
     bool eventFilter(QObject *o, QEvent *e);
 
 signals:
-    void setFGcolor(QColor);
-    void setBGcolor(QColor);
+    void setFGcolor(const QColor&);
+    void setBGcolor(const QColor&);
     void insertChar(QString);
     void deleteText();
     void setPointPlusOne();

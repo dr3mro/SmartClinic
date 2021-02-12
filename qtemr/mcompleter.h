@@ -42,7 +42,7 @@ private:
 signals:
 
 private slots:
-    void onActivated(const QString);
+    void onActivated(const QString&);
     void onCursorPositionChanged(int old_pos, int new_pos);
     void removeItemFromModel(int row);
 

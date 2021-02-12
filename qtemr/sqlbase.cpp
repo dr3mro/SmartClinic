@@ -3235,8 +3235,8 @@ void sqlBase::registerServiceLoader(QStandardItemModel *myRegisterModel,sqlExtra
 }
 
 void sqlBase::createNewVisit(int ID,
-                             QString previous,
-                             QDateTime datetime,
+                             QString previous, 
+                             const QDateTime &datetime,
                              int visitType,
                              double visitPrice,
                              const QDate &lastSelectedFollowupDate,
@@ -3607,7 +3607,7 @@ InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int
         nameItem =new QStandardItem(name);
         //nameItem->setToolTip(invIconHelper::getInvestigationTooltip(path,name));
         visitDateItem =new QStandardItem(QString::number(query->value(2).toInt()));
-        pathItem =new QStandardItem(query->value(3).toString());
+        pathItem =new QStandardItem(path);
         invDateItem =new QStandardItem();
         invTimeItem =new QStandardItem();
         invStateItem =new QStandardItem(QString::number(query->value(6).toInt()));
@@ -3618,7 +3618,7 @@ InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int
         {
             invDateItem->setText(locale.toString(QDate::fromJulianDay(query->value(4).toInt()),"dd/MM/yyyy"));
             if ( ! paths.contains(query->value(3).toString()))
-                paths << query->value(3).toString();
+                paths << path;
             else
                 continue;
         }

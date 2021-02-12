@@ -208,7 +208,7 @@ void TextEdit::blueFlagHighLight()
     isSelectionStyled=true;
 }
 
-void TextEdit::setFlagHighLight(QColor color)
+void TextEdit::setFlagHighLight(const QColor &color)
 {
     QTextCharFormat fmt;
     fmt.setBackground(color);
@@ -229,8 +229,8 @@ void TextEdit::clear()
 void TextEdit::createRichTextToolBox()
 {
     rt = new richTextEditor(this);
-    connect(rt,SIGNAL(setFGcolor(QColor)),this,SLOT(setForegroundColor(QColor)));
-    connect(rt,SIGNAL(setBGcolor(QColor)),this,SLOT(setBackgroundColor(QColor)));
+    connect(rt,SIGNAL(setFGcolor(const QColor&)),this,SLOT(setForegroundColor(const QColor&)));
+    connect(rt,SIGNAL(setBGcolor(const QColor&)),this,SLOT(setBackgroundColor(const QColor&)));
     connect(rt,SIGNAL(getSelectedText()),this,SLOT(getSelectedText()));
     connect(rt,SIGNAL(clearSelection()),this,SLOT(clearSelection()));
 }
@@ -416,7 +416,7 @@ void TextEdit::alignLeft()
     isSelectionStyled=true;
 }
 
-void TextEdit::setForegroundColor(QColor color)
+void TextEdit::setForegroundColor(const QColor &color)
 {
     QTextCharFormat fmt;
     QTextCursor cursor = this->textCursor();
@@ -426,7 +426,7 @@ void TextEdit::setForegroundColor(QColor color)
     isSelectionStyled=true;
 }
 
-void TextEdit::setBackgroundColor(QColor color)
+void TextEdit::setBackgroundColor(const QColor &color)
 {
     QTextCharFormat fmt;
     QTextCursor cursor = textCursor();
@@ -516,6 +516,7 @@ void TextEdit::keyPressEvent(QKeyEvent *e)
         break;
     }
 
+    
     if (completar && completar->popup()->isVisible()) {
         if ( e->modifiers() == Qt::SHIFT && e->key() == Qt::Key_Delete )
         {

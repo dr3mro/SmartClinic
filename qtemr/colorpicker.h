@@ -24,7 +24,7 @@ private:
     Ui::colorPicker *ui;
     void setColors();
 signals:
-    void newColor(QColor);
+    void newColor(const QColor&);
 protected:
     void showEvent(QShowEvent *e);
 
