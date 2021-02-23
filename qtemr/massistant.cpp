@@ -146,9 +146,10 @@ void mAssistant::tweakRegisterTable()
 
 void mAssistant::loadRegister()
 {
-    if(cashModelFuture.isRunning() || calcModelFuture.isRunning() )
+    if(cashModelFuture.isRunning() || calcModelFuture.isRunning() || registerServiceLoaderFuture.isRunning())
         return;
 
+    ui->goButton->setEnabled(false);
     if(ui->mAssistantTabWidget->currentIndex() == 1){
         labelMsg.setMessage("<b> Please wait... </b>");
         labelMsg.show();
@@ -198,7 +199,7 @@ void mAssistant::doCalcs()
     ui->calcTableView->horizontalHeader()->setStretchLastSection(true);
     ui->SUMlineEdit->setText(QString::number(TOTAL,'f',2));
     labelMsg.hide();
-
+    ui->goButton->setEnabled(true);
 }
 
 void mAssistant::setTimePeriod()

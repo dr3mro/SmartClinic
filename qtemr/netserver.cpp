@@ -52,7 +52,7 @@ void NetServer::readSocket()
     QByteArray buffer;
     QFile file;
     QDataStream socketStream(socket);
-    socketStream.setVersion(QDataStream::Qt_5_15);
+    socketStream.setVersion(QDataStream::Qt_DefaultCompiledVersion);
 
     socketStream.startTransaction();
     socketStream >> buffer;

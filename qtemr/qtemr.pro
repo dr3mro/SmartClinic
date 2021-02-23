@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 QT += core gui xml network printsupport sql widgets multimedia concurrent
-DEFINES += "MEMLEAK=2"
+DEFINES += "MEMLEAK=0"
 msvc:QMAKE_CFLAGS_RELEASE += /O2
 msvc:QMAKE_CXXFLAGS_RELEASE += /O2
 
