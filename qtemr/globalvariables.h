@@ -28,7 +28,7 @@
 #define dbVersion 2.87
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
-#define drugsDatabaseVer 200626
+#define drugsDatabaseVer 210129
 #define PORTABILITYLOCK ".portable"
 
 #endif // GLOBALVARIABLES

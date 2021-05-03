@@ -9,11 +9,11 @@ NetServer::NetServer(QObject *parent) : QObject(parent),m_server(new QTcpServer)
     if(m_server->listen(QHostAddress::Any, 8080))
     {
        connect(m_server, &QTcpServer::newConnection, this, &NetServer::newConnection);
-       qDebug() <<"Server is listening...";
+       //qDebug() <<"Server is listening...";
     }
     else
     {
-        qDebug() << QString("Unable to start the server: %1.").arg(m_server->errorString());
+       // qDebug() << QString("Unable to start the server: %1.").arg(m_server->errorString());
     }
 }
 
