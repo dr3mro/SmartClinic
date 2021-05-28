@@ -270,7 +270,7 @@ void MainWindow::tweakui()
 void MainWindow::fillPatient(const sqlBase::Patient &_patient)
 {
     ID = _patient.ID;
-    ui->patientnumber->display(_patient.ID);
+    ui->patientnumber->display(ID);
     ui->patientName->setText(_patient.name);
     ui->DateTimeEdit->setDateTime(datetime.fromString(_patient.dateTime,"yyyy-MM-dd hh:mm:ss"));
     ui->patientAge->setText(dataHelper::daysToAge( _patient.age.toInt()));
@@ -985,7 +985,7 @@ void MainWindow::loadThisPatient(int _ID)
     clear();
     fillPatient(patient);
     if ( _xID_ != _ID )
-        popUpMessage("Message",QString("Patient ID (%1) is Loaded Successfully.").arg(_ID));
+        popUpMessage("Message",QString("Patient ID (%1) is Loaded Successfully.").arg(QString::number(_ID).rightJustified(5, '0')));
 }
 
 void MainWindow::popUpMessage(QString title, QString Message )
@@ -1225,7 +1225,7 @@ void MainWindow::on_PatientSelected(int _id )
         int _xID_ = patient.ID;
         if (ID == _xID_)
         {
-            popUpMessage("Message",QString("Patient ID (%1) is already loaded.").arg(ID));
+            popUpMessage("Message",QString("Patient ID (%1) is already loaded.").arg(QString::number(ID).rightJustified(5, '0')));
             return;
         }
         else

@@ -71,7 +71,7 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
             row = query->value(0).toInt() -1 ;
             ID  = query->value(0).toInt();
             QStandardItem *id_Item = new QStandardItem();
-            id_Item->setData(QVariant(ID), Qt::DisplayRole);
+            id_Item->setData(QString::number(ID).rightJustified(5, '0'), Qt::DisplayRole);
             info.Name = getHumanizedName(query->value(1).toString());
             info.Mobile = query->value(2).toString();
             QStandardItem *name_Item = new QStandardItem(info.Name);

@@ -254,5 +254,6 @@ private:
     remoteAssist *rAssistant;
     NetServer netserver;
 
+
 };
 #endif // MAINWINDOW_H

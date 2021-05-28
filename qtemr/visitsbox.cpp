@@ -1168,7 +1168,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                 .arg(mPrintsettings.bannerWidth)
                 .arg(pName)
                 .arg(printableAge)
-                .arg(QStringLiteral("%1").arg(ID, 6, 10, QLatin1Char('0')))
+                .arg(QStringLiteral("%1").arg(ID, 5, 10, QLatin1Char('0')))
                 .arg(ui->Diagnosis->text().simplified())
                 .arg(ui->visitLists->getParentVisitDate(ui->visitLists->currentIndex()))
                 .arg(followDate)
