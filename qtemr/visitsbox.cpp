@@ -1121,7 +1121,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     QLocale locale(QLocale::English, QLocale::UnitedStates);
 
     //QString visitDate = locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date().toString("dd/MM/yyyy");
-    QString visitDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dd/MM/yyyy");
+    QString visitDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dddd dd/MM/yyyy");
 
     double pageWidth = (mPrintsettings.pageOrientation == 0)?
                 mPrintsettings.pageWidth * static_cast<double>(logicalDpiX()):mPrintsettings.pageHeight * static_cast<double>(logicalDpiX());
@@ -1138,7 +1138,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     HTML = QString("<!DOCTYPE HTML style=\"width:%1;\"><html><head><meta name=\"qrichtext\" content=\"1\" /></head>").arg(pageWidth);
     body = QString("<body style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4px;background-color:#FF0000;\">")
             .arg(mPrintsettings.font)
-            .arg(mPrintsettings.point)
+            .arg(mPrintsettings.point-1)
             .arg(mPrintsettings.bold? "bold":"normal")
             .arg(pageWidth);
 
@@ -1154,13 +1154,13 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                     "<tr><td colspan=\"3\"><hr/></td></tr>"
                     "<tr>"
                     "<td width=\"50%\"><b>Name:</b> %2 </td>"
-                    "<td><b> Age:</b>%3 </td>"
-                    "<td><b> Code:</b>%4▶%8</td>"
+                    "<td><b>Age:</b>%3 </td>"
+                    "<td><b>Code:</b>%4 ▶ %8</td>"
                     "</tr>"
                     "<tr>"
                     "<td width=\"50%\"><b>Diagnosis:</b> %5 </td>"
-                    "<td><b> Date:</b>%6 </td>"
-                    "<td><b> Next:</b>%7 </td>"
+                    "<td><b>Date:</b>%6</td>"
+                    "<td><b>Next:</b>%7</td>"
                     "</tr>"
                     "<tr><td colspan=\"3\"><hr/></td></tr>"
                     "</table>"
@@ -1306,7 +1306,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
             model_index+=1;
         }
 
-        HTML.append(QString("<b style=\"text-align:left;\"> Printed on</b>: <i> %1 </i> <b style=\"text-align:right;\"> Signature</b>:").arg(visitDate));
+        HTML.append(QString("<tr><b style=\"float:left;\"> Printed on</b>: <i> %1 </i></tr><tr><b style=\"float:right;\"> Physician's Signature</b>:</tr>").arg(visitDate));
         HTML.append("</table>");
 
     }
@@ -1322,20 +1322,21 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
         HTML.append(QString("<table bgcolor=\"Aliceblue\" style=\"display:inline-block;float:left;margin-left:%1px;\">")
                     .arg(invPad));
-        HTML.append("<tr><th style=\"padding:3px;\" ><div style=\"background-color:LightSteelBlue;\"><b>REQUESTS</b></div></th></tr>");
+        HTML.append(QString("<tr><th style=\"padding:3px;\" ><div style=\"background-color:LightSteelBlue;font-size:%1pt;\"><b>REQUESTS</b></div></th></tr>").arg(mPrintsettings.point-1));
         foreach (QString inv, investigations)
         {
-            HTML.append(QString("<tr><td  width=\"%4\" ><div %3 %1>&#9679; %2</div></td></tr>")
+            HTML.append(QString("<tr><td  width=\"%4\" ><div style=\"%3font-size:%5pt;\" %1>&#9679; %2</div></td></tr>")
                         .arg(align)
                         .arg(inv)
-                        .arg(mPrintsettings.bold? "style=\"font-weight:bold;\"":"")
-                        .arg(invWidth));
+                        .arg(mPrintsettings.bold? "font-weight:bold;":"")
+                        .arg(invWidth)
+                        .arg(mPrintsettings.point-1));
         }
 
         HTML.append("</table>");
     }
 
-    if(selectedDiet!="-")
+   if(selectedDiet!="-")
     {
         HTML.append(QString("<table style=\"display:inline-block;float:left;margin-top:%1px;margin-left:%2px;\">")
                     .arg(mPrintsettings.dietTopPadding*logicalDpiX())

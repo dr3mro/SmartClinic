@@ -31,7 +31,7 @@ QString dataHelper::julianToAge(int totalDays,dataHelper::AgeStyle style)
         _string = "%1 Years %2 Months %3 Days.";
         break;
     case AgeStyle::compact:
-        _string = "<b>%1</b>Y<b> %2</b>M <b>%3</b>D";
+        _string = "<b>%1</b>Y<b>%2</b>M<b>%3</b>D";
         break;
     default:
         break;

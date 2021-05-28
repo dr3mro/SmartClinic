@@ -7,13 +7,13 @@
 
 #define MajorVer 3
 #define MinorVer 8
-#define xVer 10
-#define APPVERSION "3.8.10"
+#define xVer 11
+#define APPVERSION "3.8.11"
 #define APPNAME "Smart Clinic"
-#define APPNAMEVER "Smart Clinic 3.8.10"
+#define APPNAMEVER "Smart Clinic 3.8.11"
 #define singleInstance "com.smartSoft.smartClinic3"
 #define DEVELOPER "AMR OSMAN"
-#define APPYEAR "2020"
+#define APPYEAR "2021"
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
 #define whiteListUrl "https://dr3mro.000webhostapp.com/wlist"
