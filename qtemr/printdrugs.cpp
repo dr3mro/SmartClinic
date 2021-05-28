@@ -207,6 +207,7 @@ void printDrugs::setDefaultFontPoint(const QString &arg1)
     ui->Roshetta->setTextCursor(cursor);
     ui->Roshetta->setPalette(palette);
     ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
+    refreshView();
 
 }
 
@@ -222,6 +223,7 @@ void printDrugs::setDefaultFont(const QString &arg1)
     ui->Roshetta->setPalette(palette);
     ui->Roshetta->setInkFont(arg1);
     ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
+
 }
 
 void printDrugs::setDefaultBold(bool bold)

@@ -22,6 +22,8 @@ public:
     explicit visitsList(QWidget *parent = nullptr);
     void populateWithVisitList(const int &ID);
     void setMaxFollows(int mxf);
+    QString getParentVisitDate(int index);
+    void setVisitIcon(int type, QIcon icon);
     ~visitsList();
 
 public slots:

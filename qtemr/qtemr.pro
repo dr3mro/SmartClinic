@@ -16,9 +16,9 @@ gcc:QMAKE_LFLAGS += -static-libgcc -static-libstdc++ --enable-stdcall-fixup -Wl,
 msvc:LIBS += -L$$PWD/zlib/msvc2017 -lzlib
 gcc:LIBS += -L$$PWD/zlib/mingw730 -llibz
 
-win32-g++ {
-   QMAKE_CXXFLAGS += -Werror
-}
+#win32-g++ {
+#   QMAKE_CXXFLAGS += -Werror
+#}
 win32-msvc*{
     QMAKE_CXXFLAGS += /WX
     INCLUDEPATH    += "C:/Program Files (x86)/Visual Leak Detector/include/"

@@ -865,7 +865,7 @@ void visitsBox::enableEditMode(bool _vEditMode)
     ui->lockUnlockButton->setIcon(QIcon(_vEditMode? ":/Graphics/unlock":":/Graphics/lock"));
     emit setReadWrite(_vEditMode);
 }
-
+// obselete method
 bool sortDrugsStar(const QString &s1,const QString &s2)
 {
     return s1.endsWith("*") < s2.endsWith("*");
@@ -1006,13 +1006,12 @@ void visitsBox::SyncLastVisit()
 
 void visitsBox::on_comboVisitType_currentIndexChanged(int index)
 {
-    int currentSelectedVisit = ui->visitLists->currentIndex();
     if ( index == 0 )
-        ui->visitLists->setItemIcon(currentSelectedVisit,QIcon(":/Graphics/newvisit"));
+        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/newvisit"));
     else if (index <= maxFollows)
-        ui->visitLists->setItemIcon(currentSelectedVisit,QIcon(":/Graphics/fvisit"));
+        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/fvisit"));
     else //if (index > maxFollows)
-        ui->visitLists->setItemIcon(currentSelectedVisit,QIcon(":/Graphics/free"));
+        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/free"));
 }
 
 void visitsBox::on_closeButton_clicked()
@@ -1119,6 +1118,10 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         return QString();
         //break;
     }
+    QLocale locale(QLocale::English, QLocale::UnitedStates);
+
+    //QString visitDate = locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date().toString("dd/MM/yyyy");
+    QString visitDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dd/MM/yyyy");
 
     double pageWidth = (mPrintsettings.pageOrientation == 0)?
                 mPrintsettings.pageWidth * static_cast<double>(logicalDpiX()):mPrintsettings.pageHeight * static_cast<double>(logicalDpiX());
@@ -1139,27 +1142,25 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
             .arg(mPrintsettings.bold? "bold":"normal")
             .arg(pageWidth);
 
+    QStringList vSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
     if (mPrintsettings.showBanner)
     {
 
-        QLocale locale(QLocale::English, QLocale::UnitedStates);
 
-        //QString visitDate = locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date().toString("dd/MM/yyyy");
-        QString visitDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dd/MM/yyyy");
         QString followDate = (visitDate==ui->dateFollowUp->text())? QString():ui->dateFollowUp->text();
 
         banner = QString(
                     "<table width=\"%1%\">"
                     "<tr><td colspan=\"3\"><hr/></td></tr>"
                     "<tr>"
-                    "<td width=\"50%\"><b>Name :</b> %2 </td>"
-                    "<td><b> Age :</b> %3 </td>"
-                    "<td><b> Code :</b> %4 </td>"
+                    "<td width=\"50%\"><b>Name:</b> %2 </td>"
+                    "<td><b> Age:</b>%3 </td>"
+                    "<td><b> Code:</b>%4▶%8</td>"
                     "</tr>"
                     "<tr>"
-                    "<td width=\"50%\"><b>Diagnosis :</b> %5 </td>"
-                    "<td><b> Date :</b> %6 </td>"
-                    "<td><b> Next :</b> %7 </td>"
+                    "<td width=\"50%\"><b>Diagnosis:</b> %5 </td>"
+                    "<td><b> Date:</b>%6 </td>"
+                    "<td><b> Next:</b>%7 </td>"
                     "</tr>"
                     "<tr><td colspan=\"3\"><hr/></td></tr>"
                     "</table>"
@@ -1167,10 +1168,11 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                 .arg(mPrintsettings.bannerWidth)
                 .arg(pName)
                 .arg(printableAge)
-                .arg(ID)
+                .arg(QStringLiteral("%1").arg(ID, 6, 10, QLatin1Char('0')))
                 .arg(ui->Diagnosis->text().simplified())
-                .arg(visitDate)
-                .arg(followDate);
+                .arg(ui->visitLists->getParentVisitDate(ui->visitLists->currentIndex()))
+                .arg(followDate)
+                .arg(vSymbole.at(ui->comboVisitType->currentIndex()));
 
         HTML.append(banner);
 
@@ -1188,10 +1190,10 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         t_nCompact = mPrintsettings.compactMode ? "":"<br/>";
         drugsSeparator = mPrintsettings.showDrugsSeparator ? "<hr/>":"";
 
-        t_oneColumn = "<tr valign=\"top\"><td><div align=\"%4\">%1</div><div dir=RTL "
+        t_oneColumn = "<tr valign=\"top\"><td><div align=\"%4\">%1 ▶<i style=\"font-size:6px\">%6</i></div>  <div dir=RTL "
                       "valign =\"%3\" align=\"%5\" >%2</div></td></tr>";
         t_twoColumn = "<tr valign=\"top\"><td><div align=\"%4\" >%1&#160;"+t_nCompact+drugsSeparator+"</div></td><td>"
-                                                                                                     "<div dir=RTL valign =\"%3\" align=\"%5\" >&#160;%2</div></td></tr>";
+                                                                                                     "<div dir=RTL valign =\"%3\" align=\"%5\" >&#160;%2</div></td></tr>%6";
 
         HTML.append(QString("<table border=\"0\" width=\"%1\" "
                             "style=\"display:inline-block;float:left;table-layout:fixed;\">").arg(drugsWidth));
@@ -1278,6 +1280,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                         continue;
                     }
                     drug = drugsModel->item(d,0)->text();
+                    QString drugStartDate = drugsModel->item(d,3)->text();
                     if ( mPrintsettings.noQty )
                     {
                         drug.remove("(IMP)");
@@ -1293,7 +1296,8 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                             .arg(mPrintsettings.bold? QString(dose_b).arg(dose):dose)
                             .arg("top")
                             .arg(drugAlign)
-                            .arg(doseAlign);
+                            .arg(doseAlign)
+                            .arg(mPrintsettings.doseinNewLine ? QDate::fromJulianDay(drugStartDate.toInt()).toString("dd/MM/yyyy"):"");
 
                     DrugsFound = true;
                     HTML.append(unit);
@@ -1301,6 +1305,8 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
             }
             model_index+=1;
         }
+
+        HTML.append(QString("<b style=\"text-align:left;\"> Printed on</b>: <i> %1 </i> <b style=\"text-align:right;\"> Signature</b>:").arg(visitDate));
         HTML.append("</table>");
 
     }

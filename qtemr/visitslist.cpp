@@ -44,6 +44,25 @@ void visitsList::setMaxFollows(int mxf)
     maxFollows=mxf;
 }
 
+QString visitsList::getParentVisitDate(int index)
+{
+    for(int x = index; x< list.length();x++)
+    {
+        if ( (list.at(x).visitType == 0) || (list.at(x).visitType == 5) ){
+            return QDate::fromJulianDay(list.at(x).julianDay).toString("dd/MM/yyyy");
+        }
+    }
+
+    return QString(QDate::fromJulianDay(list.at(index).julianDay).toString("dd/MM/yyyy"));
+}
+
+void visitsList::setVisitIcon(int type, QIcon icon)
+{
+    setItemIcon(currentIndex(),icon);
+    if (list.length()!=0)
+        list[currentIndex()].visitType = type;
+}
+
 void visitsList::addDetails()
 {
 
@@ -109,7 +128,7 @@ bool visitsList::eventFilter(QObject *o, QEvent *e)
 QIcon visitsList::getVisitIcon(int visitType) const
 {
     if( visitType == 0 )
-         return QIcon(":/Graphics/newvisit");
+        return QIcon(":/Graphics/newvisit");
     else if ( visitType <= maxFollows )
         return QIcon(":/Graphics/fvisit");
     else if ( visitType > maxFollows )
