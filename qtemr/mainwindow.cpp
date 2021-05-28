@@ -270,7 +270,8 @@ void MainWindow::tweakui()
 void MainWindow::fillPatient(const sqlBase::Patient &_patient)
 {
     ID = _patient.ID;
-    ui->patientnumber->display(ID);
+    lcdID = QString("%1").arg(ID,5,10,QLatin1Char('0'));
+    ui->patientnumber->display(lcdID);
     ui->patientName->setText(_patient.name);
     ui->DateTimeEdit->setDateTime(datetime.fromString(_patient.dateTime,"yyyy-MM-dd hh:mm:ss"));
     ui->patientAge->setText(dataHelper::daysToAge( _patient.age.toInt()));

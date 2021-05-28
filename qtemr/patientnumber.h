@@ -18,9 +18,11 @@ public:
 
 public slots:
     void display(int value);
+    void display(const QString &str);
 
 private:
     int maxValue;
+    void toggleButtons(int &value);
 
 signals:
     void enableGoLower(bool);

@@ -253,7 +253,7 @@ private:
     QTimer clickTimer;
     remoteAssist *rAssistant;
     NetServer netserver;
-
+    QString lcdID;
 
 };
 #endif // MAINWINDOW_H

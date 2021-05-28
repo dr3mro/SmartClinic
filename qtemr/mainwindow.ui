@@ -171,7 +171,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>90</width>
+              <width>80</width>
               <height>25</height>
              </size>
             </property>
@@ -191,7 +191,7 @@
              <number>0</number>
             </property>
             <property name="digitCount">
-             <number>6</number>
+             <number>5</number>
             </property>
             <property name="segmentStyle">
              <enum>QLCDNumber::Flat</enum>
@@ -839,6 +839,7 @@
                  </property>
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -884,6 +885,7 @@
                  </property>
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -952,6 +954,7 @@
                  </property>
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -977,6 +980,7 @@
                  </property>
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>50</weight>
                    <bold>false</bold>
                   </font>
@@ -1009,6 +1013,7 @@
                  </property>
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>50</weight>
                    <bold>false</bold>
                   </font>
@@ -1055,6 +1060,7 @@
                  </property>
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -1076,6 +1082,7 @@
                 <widget class="genericLineEdit" name="patientOccupation">
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -1092,6 +1099,7 @@
                  </property>
                  <property name="font">
                   <font>
+                   <pointsize>10</pointsize>
                    <weight>50</weight>
                    <bold>false</bold>
                   </font>
@@ -1339,6 +1347,7 @@
            <widget class="xListWidget" name="allergyList">
             <property name="font">
              <font>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -1355,6 +1364,7 @@
            <widget class="xListWidget" name="opAdmissionsList">
             <property name="font">
              <font>
+              <pointsize>10</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
