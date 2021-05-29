@@ -1147,7 +1147,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     {
 
 
-        QString followDate = (visitDate==ui->dateFollowUp->text())? QString():ui->dateFollowUp->text();
+        QString followDate = /*(visitDate==ui->dateFollowUp->text())? QString():*/ui->dateFollowUp->text();
 
         banner = QString(
                     "<table width=\"%1%\">"
@@ -1254,7 +1254,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                                         .arg("CURRENT ACTIVE DRUGS"));
                         isActiveHeaderPrinted=true;
                     }
-
+                    QString drugStartDate = drugsModel->item(d,3)->text();
                     expandName = drugsModel->item(d,0)->text();
                     if (sqlextra->isExpandExists(expandName))
                     {
@@ -1274,13 +1274,14 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                                 .arg(mPrintsettings.bold? QString(dose_b).arg(dose):dose)
                                 .arg("bottom")
                                 .arg(drugAlign)
-                                .arg(doseAlign);
+                                .arg(doseAlign)
+                                .arg(mPrintsettings.doseinNewLine ? QDate::fromJulianDay(drugStartDate.toInt()).toString("dd/MM/yyyy"):"");
                         HTML.append(unit);
                         DrugsFound = true;
                         continue;
                     }
                     drug = drugsModel->item(d,0)->text();
-                    QString drugStartDate = drugsModel->item(d,3)->text();
+
                     if ( mPrintsettings.noQty )
                     {
                         drug.remove("(IMP)");

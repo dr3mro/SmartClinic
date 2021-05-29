@@ -16,15 +16,15 @@ void patientNumber::setMax(int max)
 
 void patientNumber::display(int value)
 {
-
+    QString lcdID = QString("%1").arg(value,5,10,QLatin1Char('0'));
     toggleButtons(value);
-    QLCDNumber::display(value);
+    QLCDNumber::display(lcdID);
 }
 
 void patientNumber::display(const QString &str)
 {
-    int value = str.toInt();
-    toggleButtons(value);
+    //int value = str.toInt();
+    //toggleButtons(value);
     QLCDNumber::display(str);
 }
 

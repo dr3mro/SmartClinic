@@ -270,8 +270,7 @@ void MainWindow::tweakui()
 void MainWindow::fillPatient(const sqlBase::Patient &_patient)
 {
     ID = _patient.ID;
-    lcdID = QString("%1").arg(ID,5,10,QLatin1Char('0'));
-    ui->patientnumber->display(lcdID);
+    ui->patientnumber->display(ID);
     ui->patientName->setText(_patient.name);
     ui->DateTimeEdit->setDateTime(datetime.fromString(_patient.dateTime,"yyyy-MM-dd hh:mm:ss"));
     ui->patientAge->setText(dataHelper::daysToAge( _patient.age.toInt()));
@@ -590,7 +589,7 @@ void MainWindow::on_buttonNewCancel_clicked()
         ui->ButtonVisit->setEnabled(false);
         ui->ButtonDelete->setEnabled(false);
         ui->ButtonRefresh->setEnabled(false);
-        ui->patientnumber->display( maxID + 1 );
+        ui->patientnumber->display(maxID + 1);
         ID = maxID+1;
 
         ui->searchWidgetx->clearFilter();
@@ -1892,7 +1891,7 @@ void MainWindow::newPatientWithData(const remoteAssist::Visitor &visitor)
     ui->ButtonVisit->setEnabled(false);
     ui->ButtonDelete->setEnabled(false);
     ui->ButtonRefresh->setEnabled(false);
-    ui->patientnumber->display( ID );
+    ui->patientnumber->display(ID);
 
 
     ui->searchWidgetx->clearFilter();
