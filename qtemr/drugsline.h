@@ -20,7 +20,9 @@ private slots:
     void loadCompleter();
 private:
     QAction *favAction;
-    bool favouriteDrugs;
+    QAction *eyeAction;
+    int DrugsAutocompleteMode;
+    mSettings& msettings = mSettings::instance();
 protected:
     void mousePressEvent(QMouseEvent *e);
 };

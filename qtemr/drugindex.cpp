@@ -10,19 +10,25 @@ drugIndex::drugIndex(QWidget *parent) :
     ui(new Ui::drugIndex)
 {
     ui->setupUi(this);
-    sqlcore = new sqlCore(this,"qt_sql_core_drugsIndex");
+    drugsdb = msettings.getDefaultDrugsDatabase();
+    sqlcoreIndex = new sqlCore(DRUGSINDEXPATH,this,"qt_sql_coreIndex_drugsIndex");
+    sqlcoreEye = new sqlCore(DRUGEYEPATH,this,"qt_sql_coreEye_drugsIndex");
     QLocale locale("en_US");
-    ui->updated->setText(locale.toString(QDate::fromString(QString::number(sqlcore->getDrugsDatabaseVersion()),"yyMMdd"),"MMMM,yy"));
+    ui->updated->setText(locale.toString(QDate::fromString(QString::number(sqlcoreIndex->getDrugsDatabaseVersion()),"yyMMdd"),"MMMM,yy"));
     proxy_model = new mSortFilterProxyModel(this);
     QTimer::singleShot(0,this,SLOT(load()));
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    ui->DrugsDatabase->setCurrentIndex(drugsdb);
 }
 
 drugIndex::~drugIndex()
 {
-    sqlcore->optimize();
-    delete sqlcore;
-    QSqlDatabase::removeDatabase("qt_sql_core_drugsIndex");
+    sqlcoreIndex->optimize();
+    sqlcoreEye->optimize();
+    delete sqlcoreIndex;
+    delete sqlcoreEye;
+    QSqlDatabase::removeDatabase("qt_sql_coreIndex_drugsIndex");
+    QSqlDatabase::removeDatabase("qt_sql_coreEye_drugsIndex");
     delete proxy_model;
     delete ui;
 }
@@ -121,7 +127,12 @@ void drugIndex::setFilters()
     ui->manufacturer->insertItem(0,"All Companies");
     ui->form->insertItem(0,"All Forms");
 
-    sqlCore::filters f = sqlcore->getFilters();
+    sqlCore::filters f;
+    if(drugsdb == mSettings::Database::Standard)
+        f = sqlcoreIndex->getFilters();
+    else if (drugsdb == mSettings::Database::drugEye)
+        f = sqlcoreEye->getFilters();
+
     ui->categories->insertItems(1,f.categories);
     ui->manufacturer->insertItems(1,f.companies);
     ui->form->insertItems(1,f.forms);
@@ -130,7 +141,12 @@ void drugIndex::setFilters()
 
 void drugIndex::load()
 {
-    model = sqlcore->getDrugsIndexModel();
+    loadComplete = false;
+    if(drugsdb != mSettings::Database::drugEye)
+        model = sqlcoreIndex->getDrugsIndexModel();
+    else
+        model = sqlcoreEye->getDrugsIndexModel();
+
     ui->tradeName->setChecked(true);
     ui->indexTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->indexTable->horizontalHeader()->setStretchLastSection( true );
@@ -161,4 +177,18 @@ void drugIndex::load()
     connect(proxy_model,SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(setResultsCount(QModelIndex,int,int)));
     toggleResetButton();
     setFilters();
+    loadComplete = true;
+}
+
+void drugIndex::on_DrugsDatabase_currentIndexChanged(int index)
+{
+    if(!loadComplete || drugsdb == index)
+        return;
+
+    drugsdb = (mSettings::Database) index;
+    model->clear();
+    ui->form->clear();
+    ui->manufacturer->clear();
+    ui->categories->clear();
+    load();
 }

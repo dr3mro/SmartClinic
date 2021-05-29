@@ -6,8 +6,10 @@
 
 drugsLine::drugsLine(QWidget *parent):genericLineEdit(parent)
 {
-    favAction = addAction(QIcon(":/Graphics/expand"), QLineEdit::ActionPosition::TrailingPosition);
+    favAction = addAction(QIcon(":/Graphics/heart"), QLineEdit::ActionPosition::TrailingPosition);
+    eyeAction = addAction(QIcon(":/Graphics/eye"), QLineEdit::ActionPosition::TrailingPosition);
     favAction->setVisible(false);
+    eyeAction->setVisible(false);
     connect (parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeEditable(bool)),Qt::UniqueConnection);
     connect (parent->window(),SIGNAL(reloadCompleter()),this,SLOT(mUpdateCompleter()),Qt::UniqueConnection);
     connect (parent->window(),SIGNAL(loadCompleters()),this,SLOT(loadCompleter()),Qt::UniqueConnection);
@@ -22,18 +24,27 @@ void drugsLine::loadCompleter()
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     setToolTip("Middle mouse click or Shift + left click here to toggle between All \n"
                "drugs & Favourite drugs autocomplete modes - [CTRL+4] to focus");
-    favouriteDrugs = reg.value(QString("enableFavourites_%1").arg(windowName)).toBool();
-    if ( favouriteDrugs )
+    DrugsAutocompleteMode = reg.value("DrugsAutocompleteMode").toInt();
+    if ( DrugsAutocompleteMode == mSettings::Database::Favourite )
     {
+         eyeAction->setVisible(false);
          favAction->setVisible(true);
          setPlaceholderText("enter drug name here - Favourites");
          tableName = "favourites";
     }
-    else
+    else if ( DrugsAutocompleteMode == mSettings::Database::Standard )
     {
         favAction->setVisible(false);
-        setPlaceholderText("enter drug name here - All drugs");
+        eyeAction->setVisible(false);
+        setPlaceholderText("enter drug name here - EasyDrugs");
         tableName = "drugs";
+    }
+    else if ( DrugsAutocompleteMode == mSettings::Database::drugEye )
+    {
+        favAction->setVisible(false);
+        eyeAction->setVisible(true);
+        setPlaceholderText("enter drug name here - DrugEye");
+        tableName = "drugEye";
     }
     createCompleter();
 }
@@ -41,25 +52,35 @@ void drugsLine::loadCompleter()
 void drugsLine::mousePressEvent(QMouseEvent *e)
 {
     bool isSHiftModifier = e->modifiers().testFlag(Qt::KeyboardModifier::ShiftModifier);
-    if (  (e->button() == Qt::MiddleButton || (e->button() == Qt::LeftButton && isSHiftModifier) ) && !isReadOnly() )
-    {
-        if ( !favouriteDrugs )
+    if (  (e->button() == Qt::MiddleButton || (e->button() == Qt::LeftButton && isSHiftModifier) ) && !isReadOnly() ){
+        DrugsAutocompleteMode++;
+        if (DrugsAutocompleteMode > mSettings::Database::Favourite)
+            DrugsAutocompleteMode = mSettings::Database::Standard;
+
+        if ( DrugsAutocompleteMode == mSettings::Database::Favourite )
         {
-             favAction->setVisible(true);
-             setPlaceholderText("enter drug name here - Favourites");
-             favouriteDrugs = true;
-             mSetCompleter("favourites");
+            mSetCompleter("favourites");
+            favAction->setVisible(true);
+            eyeAction->setVisible(false);
+            setPlaceholderText("enter drug name here - Favourites");
         }
-        else
+        else if ( DrugsAutocompleteMode == mSettings::Database::Standard )
         {
             favAction->setVisible(false);
-            favouriteDrugs = false;
-            setPlaceholderText("enter drug name here - All drugs");
+            eyeAction->setVisible(false);
+            setPlaceholderText("enter drug name here - EasyDrugs");
             mSetCompleter("drugs");
         }
-        QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
-        reg.setValue(QString("enableFavourites_%1").arg(windowName),favouriteDrugs);
+        else if ( DrugsAutocompleteMode == mSettings::Database::drugEye )
+        {
+            favAction->setVisible(false);
+            eyeAction->setVisible(true);
+            setPlaceholderText("enter drug name here - DrugEye");
+            mSetCompleter("drugEye");
+        }
     }
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    reg.setValue("DrugsAutocompleteMode",DrugsAutocompleteMode);
 
     QLineEdit::mousePressEvent(e);
 }

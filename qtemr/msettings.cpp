@@ -31,6 +31,7 @@ void mSettings::saveSettings(mSettings::pSettings &psets)
     settings.setValue(_usePhotoViewer,psettings.usePhotoViewer);
     settings.setValue(_remmberLastFollowupDate,psettings.remmberLastFollowupDate);
     settings.setValue(_selectedTheme,psettings.selectedTheme);
+    settings.setValue(_DefaultDrugsDatabase,psettings.drugsDatabase);
 
     settings.beginGroup(_clinic);
     settings.setValue(_maxFollowUps,psettings.maxFollowUps);
@@ -77,7 +78,7 @@ mSettings::pSettings mSettings::readSettings()
     psettings.usePhotoViewer = settings.value(_usePhotoViewer,QVariant(true)).toBool();
     psettings.remmberLastFollowupDate = settings.value(_remmberLastFollowupDate,QVariant(false)).toBool();
     psettings.selectedTheme = settings.value(_selectedTheme).toString();
-
+    psettings.drugsDatabase = (mSettings::Database) settings.value(_DefaultDrugsDatabase,QVariant(0)).toInt();
     settings.beginGroup(_clinic);
     psettings.maxFollowUps = settings.value(_maxFollowUps,QVariant(7)).toInt();
     psettings.maxFollowUpsPerProblem = settings.value(_maxFollowUpsPerProblem,QVariant(4)).toInt();
@@ -468,4 +469,9 @@ mSettings::lineStyle mSettings::getLineStylesheet()
     linestyle.normalStylesheet = QString("QLineEdit{background-color: %1; color:%2;}").arg(normalBackgroundColor).arg(normalTextColor);
 
     return linestyle;
+}
+
+mSettings::Database mSettings::getDefaultDrugsDatabase()
+{
+    return psettings.drugsDatabase;
 }

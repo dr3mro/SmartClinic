@@ -198,7 +198,8 @@ private:
     wm_add2Completer *add2CompleterWorker;
     sqlBase *sqlbase;
     sqlExtra *sqlextra;
-    sqlCore *sqlcore;
+    sqlCore *sqlcoreIndex;
+    sqlCore *sqlcoreEye;
     settingsClass *gSettings;
     mCalendarWidget *calWidget;
     drugIndex *drugindex;

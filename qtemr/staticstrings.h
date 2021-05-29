@@ -82,6 +82,8 @@
 #define _printWinWidth "printWinWidth"
 #define _printWinHeight "printWinHeight"
 
+#define _DefaultDrugsDatabase "defaultDrugsDatabase"
+
 #define _dbOptions "dbOptions"
 #define _autovacuum "autovacuum"
 #define _optimize "optimize"

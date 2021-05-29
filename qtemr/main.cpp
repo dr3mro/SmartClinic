@@ -68,12 +68,22 @@ void createFolders()
         }
     }
 }
+void dumpDrugEyeDatabase()
+{
+    QFile resDrugsdb(":/databases/drugEye.db");
+    QFile drugsdb(DRUGEYEPATH);
+    resDrugsdb.open(QIODevice::ReadOnly);
+    QByteArray dbArray = resDrugsdb.readAll();
+    drugsdb.open(QIODevice::WriteOnly);
+    drugsdb.write(dbArray);
+    drugsdb.close();
+    resDrugsdb.close();
+}
 
-
-void dumpDrugsDatabase()
+void dumpDrugsIndexDatabase()
 {
     QFile resDrugsdb(":/databases/drugsIndex.db");
-    QFile drugsdb("./data/drugs.db");
+    QFile drugsdb(DRUGSINDEXPATH);
     resDrugsdb.open(QIODevice::ReadOnly);
     QByteArray dbArray = resDrugsdb.readAll();
     drugsdb.open(QIODevice::WriteOnly);
@@ -84,30 +94,42 @@ void dumpDrugsDatabase()
 
 void copyDrugsDatabase2LocalDataFolder()
 {
-    QFile drugsdb("./data/drugs.db");
+    QFile drugsIndex(DRUGSINDEXPATH);
+    QFile drugEye(DRUGEYEPATH);
 
-    int currentLocalVersion;
-    int latestAvailableVersion;
+    sqlCore drugsIndexCore(DRUGSINDEXPATH);
+    sqlCore drugEyeCore(DRUGEYEPATH);
 
-    if(drugsdb.exists())
+    int drugsIndexCurrentLocalVersion=drugsIndexCore.getDrugsDatabaseVersion();
+    int drugsIndexLatestAvailableVersion = drugsDatabaseVer;
+    int drugEyeCurrentLocalVersion=drugEyeCore.getDrugsDatabaseVersion();
+    int drugEyeLatestAvailableVersion = drugEyeDatabaseVer;
+
+
+    drugsIndexCore.closeDataBase();
+    drugEyeCore.closeDataBase();
+
+
+    if(drugsIndex.exists())
     {
-        sqlCore sqlcore;
-
-        currentLocalVersion = sqlcore.getDrugsDatabaseVersion();
-        latestAvailableVersion = drugsDatabaseVer;
-        sqlcore.closeDataBase();
-
-        if(latestAvailableVersion > currentLocalVersion )
+        if(drugsIndexLatestAvailableVersion > drugsIndexCurrentLocalVersion )
         {
-            dumpDrugsDatabase();
-            return;
+            dumpDrugsIndexDatabase();
         }
     }
+    else{
+        dumpDrugsIndexDatabase();
+    }
 
-    if ( !drugsdb.exists() )
+    if(drugEye.exists())
     {
-        dumpDrugsDatabase();
-        return;
+        if(drugEyeLatestAvailableVersion > drugEyeCurrentLocalVersion )
+        {
+            dumpDrugEyeDatabase();
+        }
+    }
+    else{
+        dumpDrugEyeDatabase();
     }
 }
 

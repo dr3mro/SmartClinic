@@ -29,7 +29,8 @@ public:
     bool removeFromAutoComplete(QString table,QString phrase);
     bool executeQuery(QString queryStatement);
     QStringList getAutoCompleteList(QString table);
-    bool doesCustomDrugsTableExists();
+    bool doesDrugsIndexTableExists();
+    bool doesDrugEyeTableExists();
     void closeDataBase();
     bool resetDrugsTable();
     bool createServicesTable();

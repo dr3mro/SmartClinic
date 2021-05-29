@@ -127,11 +127,13 @@ private:
     QAction *a_overWrite2pWin;
     QAction *a_cp4rmLastVisit;
     sqlExtra *sqlextra;
-    sqlCore *sqlcore;
+    sqlCore *sqlcoreIndex;
+    sqlCore *sqlcoreEye;
     QStandardItemModel *findModel;
     QString getSelectedDrugTradeName();
-    void findAltDrug(QString col, QStringList filters);
-    QStringList coreDrugs;
+    void findAltDrug(QString col, QStringList filters, sqlCore *sqlcore);
+    QStringList coreDrugsIndex;
+    QStringList coreDrugsEye;
     bool drugsSyncLoadingOperation=false;
     void createDrugsModel();
     void createDrugsTableConMenu();
@@ -142,7 +144,8 @@ private:
     bool isPriceEqual(int row, QString tradeName);
     wm_drugModelLoader *worker;
     QString exConName;
-    QString coConName;
+    QString coConNameIndex;
+    QString coConNameEye;
     setDoseDrugNameWidget selectedDrugLabel;
     int insertUnknownDrugCounter=0;
     QString insertUnknownDrugName;
@@ -151,7 +154,7 @@ private:
     QFutureWatcher<DrugsItemModel*> watcher;
     int sortCol=5;
     bool working=false;
-
+    mSettings& msettings = mSettings::instance();
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

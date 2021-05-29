@@ -28,7 +28,8 @@ signals:
 private:
     sqlExtra *sqlextra;
     sqlBase *sqlbase;
-    sqlCore *sqlcore;
+    sqlCore *sqlcoreIndex;
+    sqlCore *sqlcoreEye;
     bool db_patients;
     bool db_core;
     bool db_drugsindex;

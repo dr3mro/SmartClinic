@@ -4,11 +4,11 @@
 
 #include "sqlcore.h"
 
-sqlCore::sqlCore(QObject *parent,QString connectionName) : msql(parent),
+sqlCore::sqlCore(const QString &path, QObject *parent,QString connectionName) : msql(parent),
     model(new QStandardItemModel(parent)),
     drugModel(new QStringListModel(parent))
 {
-    QString path = QString("./data/drugs.db");
+    //QString path = QString("./data/drugs.db");
     if ( ! createConnection(connectionName,path) )
         mDebug() << "Failed to connect to drugs index data base";
 }

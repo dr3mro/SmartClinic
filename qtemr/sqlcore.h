@@ -17,7 +17,7 @@ class sqlCore : public msql
     Q_OBJECT
 public:
     struct filters{QStringList categories;QStringList companies;QStringList forms;};
-    explicit sqlCore(QObject *parent=nullptr, QString connectionName="qt_sql_core_connection");
+    explicit sqlCore(const QString &path, QObject *parent=nullptr, QString connectionName="qt_sql_core_connection");
     QStandardItemModel *getDrugsIndexModel();
     QStandardItemModel *getFindDrugsModel(QStandardItemModel *model, QString col, QStringList filters);
     QStringListModel *getCoreDrugListModel();

@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     add2CompleterWorker (new wm_add2Completer),
     sqlbase (new sqlBase(this,QString("qt_sql_base_MainWin_connection"),true)),
     sqlextra(new sqlExtra(this,QString("qt_sql_extra_MainWin_connection"),true)),
-    sqlcore (new sqlCore(this,QString("qt_sql_core_MainWin_connection"))),
+    sqlcoreIndex (new sqlCore(DRUGSINDEXPATH,this,QString("qt_sql_coreIndex_MainWin_connection"))),
+    sqlcoreEye (new sqlCore(DRUGEYEPATH,this,QString("qt_sql_coreEye_MainWin_connection"))),
     gSettings(new settingsClass(this)),
     calWidget(new mCalendarWidget),
     drugindex(new drugIndex(this)),
@@ -1242,16 +1243,20 @@ void MainWindow::closeDataBase()
 {
     sqlbase->optimize();
     sqlextra->optimize();
-    sqlcore->optimize();
+    sqlcoreIndex->optimize();
+    sqlcoreEye->optimize();
     sqlbase->closeDataBase();
     sqlextra->closeDataBase();
-    sqlcore->closeDataBase();
+    sqlcoreIndex->closeDataBase();
+    sqlcoreEye->closeDataBase();
     delete sqlbase;
     delete sqlextra;
-    delete sqlcore;
+    delete sqlcoreIndex;
+    delete sqlcoreEye;
     QSqlDatabase::removeDatabase("qt_sql_base_MainWin_connection");
     QSqlDatabase::removeDatabase("qt_sql_extra_MainWin_connection");
-    QSqlDatabase::removeDatabase("qt_sql_core_MainWin_connection");
+    QSqlDatabase::removeDatabase("qt_sql_coreIndex_MainWin_connection");
+    QSqlDatabase::removeDatabase("qt_sql_coreEye_MainWin_connection");
     ui->searchWidgetx->closeDatabase();
     delete visitsbox;
 }
@@ -1260,7 +1265,8 @@ void MainWindow::reOpenDataBase()
 {
     sqlbase = new sqlBase(this,"qt_sql_base_MainWin_connection",false);
     sqlextra = new sqlExtra(this,"qt_sql_extra_MainWin_connection",false);
-    sqlcore = new sqlCore(this,"qt_sql_core_MainWin_connection");
+    sqlcoreIndex = new sqlCore(DRUGSINDEXPATH,this,"qt_sql_coreIndex_MainWin_connection");
+    sqlcoreEye = new sqlCore(DRUGEYEPATH,this,"qt_sql_coreEye_MainWin_connection");
     setCompleters();
     indexLength = sqlbase->getPatientIndexLength();
     ui->searchWidgetx->reConnectDatabase();
@@ -1522,14 +1528,16 @@ MainWindow::~MainWindow()
     delete rAssistant;
     sqlextra->optimize();
     sqlbase->optimize();
-    sqlcore->optimize();
+    sqlcoreIndex->optimize();
+    sqlcoreEye->optimize();
     delete sqlextra;
     delete sqlbase;
-    delete sqlcore;
+    delete sqlcoreIndex;
+    delete sqlcoreEye;
     QSqlDatabase::removeDatabase("qt_sql_base_MainWin_connection");
     QSqlDatabase::removeDatabase("qt_sql_extra_MainWin_connection");
-    QSqlDatabase::removeDatabase("qt_sql_core_MainWin_connection");
-
+    QSqlDatabase::removeDatabase("qt_sql_coreIndex_MainWin_connection");
+    QSqlDatabase::removeDatabase("qt_sql_coreEye_MainWin_connection");
     deleteLockFile();
 
     delete ui;

@@ -8,7 +8,8 @@ optimizer::optimizer(QObject *parent) : QObject(parent)
 {
     sqlextra = new sqlExtra(this,"qt_sql_extra_Optimizer_connection",false);
     sqlbase = new sqlBase(this,"qt_sql_base_Optimizer_connection",false);
-    sqlcore = new sqlCore(this,"qt_sql_core_Optimizer_connection");
+    sqlcoreIndex = new sqlCore(DRUGSINDEXPATH,this,"qt_sql_coreIndex_Optimizer_connection");
+    sqlcoreEye = new sqlCore(DRUGEYEPATH,this,"qt_sql_coreEye_Optimizer_connection");
 }
 
 optimizer::~optimizer()
@@ -17,11 +18,14 @@ optimizer::~optimizer()
     delete sqlextra;
     sqlbase->optimize();
     delete sqlbase;
-    sqlcore->optimize();
-    delete sqlcore;
+    sqlcoreIndex->optimize();
+    delete sqlcoreIndex;
+    sqlcoreEye->optimize();
+    delete sqlcoreEye;
     QSqlDatabase::removeDatabase("qt_sql_extra_Optimizer_connection");
     QSqlDatabase::removeDatabase("qt_sql_base_Optimizer_connection");
-    QSqlDatabase::removeDatabase("qt_sql_core_Optimizer_connection");
+    QSqlDatabase::removeDatabase("qt_sql_coreIndex_Optimizer_connection");
+    QSqlDatabase::removeDatabase("qt_sql_coreEye_Optimizer_connection");
 }
 
 void optimizer::integrityCheck()
@@ -33,8 +37,10 @@ void optimizer::integrityCheck()
     if ( db_core && !abort)
         emit status ("core.db",sqlextra->integrityCheck(quick));
 
-    if ( db_drugsindex && !abort)
-        emit status ("drugs.db",sqlcore->integrityCheck(quick));  
+    if ( db_drugsindex && !abort){
+        emit status ("drugs.db",sqlcoreIndex->integrityCheck(quick));
+        emit status ("drugEye.db",sqlcoreEye->integrityCheck(quick));
+    }
     emit toggleProgress(false);
 }
 
@@ -47,8 +53,10 @@ void optimizer::vacuum()
     if ( db_core && !abort)
         emit status ("[vacuum]:core.db",sqlextra->vacuum());
 
-    if ( db_drugsindex && !abort)
-        emit status ("[vacuum]:drugs.db",sqlcore->vacuum());
+    if ( db_drugsindex && !abort){
+        emit status ("[vacuum]:drugs.db",sqlcoreIndex->vacuum());
+        emit status ("[vacuum]:drugEye.db",sqlcoreEye->vacuum());
+    }
     emit toggleProgress(false);
 }
 
@@ -68,7 +76,8 @@ void optimizer::WAL_CheckPoint(QString Mode)
 {
     sqlbase->WAL_CheckPoint(Mode);
     sqlextra->WAL_CheckPoint(Mode);
-    sqlcore->WAL_CheckPoint(Mode);
+    sqlcoreIndex->WAL_CheckPoint(Mode);
+    sqlcoreEye->WAL_CheckPoint(Mode);
 }
 
 void optimizer::terminate(bool flag)

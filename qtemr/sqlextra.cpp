@@ -20,18 +20,33 @@ sqlExtra::sqlExtra(QObject *parent, QString connectionName, bool cTable) :
         createTables();
     }
 
-    if ( !doesCustomDrugsTableExists())
+    if ( !doesDrugsIndexTableExists())
     {
-        QString coreconName = QString("qt_sql_core_coreDrugList_%1").arg(qrand());
-        sqlCore *sqlcore = new sqlCore(this,coreconName);
+        QString coreconName = QString("qt_sql_coreIndex_coreDrugList_%1").arg(qrand());
+        sqlCore *sqlcoreIndex = new sqlCore(DRUGSINDEXPATH,this,coreconName);
         db.transaction();
         createTable("drugs");
-        foreach ( QString drug , sqlcore->getCoreDrugList())
+        foreach ( QString drug , sqlcoreIndex->getCoreDrugList())
         {
             addToAutoComplete("drugs",drug,true);
         }
-        sqlcore->optimize();
-        delete sqlcore;
+        sqlcoreIndex->optimize();
+        delete sqlcoreIndex;
+        QSqlDatabase::removeDatabase(coreconName);
+        db.commit();
+    }
+    if ( !doesDrugEyeTableExists())
+    {
+        QString coreconName = QString("qt_sql_core_coreDrugList_%1").arg(qrand());
+        sqlCore *sqlcoreEye = new sqlCore(DRUGEYEPATH,this,coreconName);
+        db.transaction();
+        createTable("drugEye");
+        foreach ( QString drug , sqlcoreEye->getCoreDrugList())
+        {
+            addToAutoComplete("drugEye",drug,true);
+        }
+        sqlcoreEye->optimize();
+        delete sqlcoreEye;
         QSqlDatabase::removeDatabase(coreconName);
         db.commit();
     }
@@ -198,11 +213,27 @@ QStringList sqlExtra::getAutoCompleteList(QString table)
     return sList;
 }
 
-bool sqlExtra::doesCustomDrugsTableExists()
+bool sqlExtra::doesDrugsIndexTableExists()
 {
     query->clear();
     QString value;
     if (!query->exec("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='drugs'") || !query->first())
+    {
+        mDebug() << query->lastError().text();
+    }
+    else
+    {
+        value = query->value(0).toString();
+    }
+    query->finish();
+    return bool(value.toInt());
+}
+
+bool sqlExtra::doesDrugEyeTableExists()
+{
+    query->clear();
+    QString value;
+    if (!query->exec("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='drugEye'") || !query->first())
     {
         mDebug() << query->lastError().text();
     }
@@ -223,7 +254,9 @@ void sqlExtra::closeDataBase()
 
 bool sqlExtra::resetDrugsTable()
 {
-    sqlCore sqlcore(this,"qt_sql_core_resetDrugs");
+    sqlCore sqlcoreIndex(DRUGSINDEXPATH,this,"qt_sql_coreIndex_resetDrugs");
+    sqlCore sqlcoreEye(DRUGEYEPATH,this,"qt_sql_coreEye_resetDrugs");
+
     bool x = executeQuery("DROP TABLE drugs");
     if ( !x )
     {
@@ -239,7 +272,7 @@ bool sqlExtra::resetDrugsTable()
 
         db.transaction();
 
-        foreach ( QString drug , sqlcore.getCoreDrugList())
+        foreach ( QString drug , sqlcoreIndex.getCoreDrugList())
             addToAutoComplete("drugs",drug,true);
 
         foreach ( QString exp , getExpandList())
@@ -247,8 +280,34 @@ bool sqlExtra::resetDrugsTable()
 
         db.commit();
     }
-    sqlcore.optimize();
-    return x;
+
+    bool y = executeQuery("DROP TABLE drugEye");
+    if ( !y )
+    {
+        mDebug() << "FAILED TO DELETE DRUGYE TABLE";
+    }
+    else
+    {
+        if (!createTable("drugEye"))
+        {
+            return false;
+        }
+
+
+        db.transaction();
+
+        foreach ( QString drug , sqlcoreEye.getCoreDrugList())
+            addToAutoComplete("drugEye",drug,true);
+
+        foreach ( QString exp , getExpandList())
+            addToAutoComplete("drugEye",exp,true);
+
+        db.commit();
+    }
+    sqlcoreIndex.optimize();
+    sqlcoreEye.optimize();
+
+    return x&y;
 }
 
 bool sqlExtra::createServicesTable()

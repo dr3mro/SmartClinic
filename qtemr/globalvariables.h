@@ -29,6 +29,9 @@
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
 #define drugsDatabaseVer 210129
+#define drugEyeDatabaseVer 210528
+#define DRUGSINDEXPATH "./data/drugs.db"
+#define DRUGEYEPATH "./data/drugEye.db"
 #define PORTABILITYLOCK ".portable"
 
 #endif // GLOBALVARIABLES

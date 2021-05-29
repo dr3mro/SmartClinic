@@ -53,11 +53,17 @@ private:
     QStandardItemModel *model;
     int filterColumn;
     mSortFilterProxyModel *proxy_model;
-    sqlCore *sqlcore;
-
+    sqlCore *sqlcoreIndex;
+    sqlCore *sqlcoreEye;
+    mSettings::Database drugsdb;
+    mSettings& msettings = mSettings::instance();
+    bool loadComplete=false;
 private slots:
     void setFilters();
     void load();
+    void on_DrugsDatabase_currentIndexChanged(int index);
+
+
 signals:
 
 

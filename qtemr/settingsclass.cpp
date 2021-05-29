@@ -105,6 +105,7 @@ mSettings::pSettings settingsClass::getValuesFromUI()
     _settings.textboxFont = ui->textboxFont->currentText();
     _settings.textboxFontSize = ui->textboxFontSize->currentText().toDouble();
     _settings.textboxFontBold = ui->textboxFontBold->isChecked();
+    _settings.drugsDatabase = (mSettings::Database) ui->DrugsDatabase->currentIndex();
     _settings.maxFollowUps = ui->maxFollowUps->value();
     _settings.autoClosePrintDlg = ui->checkBoxAutoClosePrintDlg->isChecked();
     _settings.autoSetnewAfterMaxPerProblemIsReached = ui->checkBoxAutoNewVisit->isChecked();
@@ -142,6 +143,7 @@ void settingsClass::setValuesToUI(const mSettings::pSettings &_settings)
     ui->textboxFont->setCurrentText(_settings.textboxFont);
     ui->textboxFontSize->setCurrentText(QString::number(_settings.textboxFontSize));
     ui->textboxFontBold->setChecked(_settings.textboxFontBold);
+    ui->DrugsDatabase->setCurrentIndex(_settings.drugsDatabase);
     ui->maxFollowUps->setValue(_settings.maxFollowUps);
     ui->checkBoxAutoClosePrintDlg->setChecked(_settings.autoClosePrintDlg);
     ui->maxFollowUpsPerProblem->setValue(_settings.maxFollowUpsPerProblem);

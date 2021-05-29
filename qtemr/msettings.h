@@ -76,6 +76,12 @@ public:
                         );
         }
     };
+    enum Database{
+        Standard=0,
+        drugEye=1,
+        Favourite=2
+    };
+
     struct pSettings
     {
         int speciality;
@@ -108,7 +114,7 @@ public:
         QString textboxFont;
         double textboxFontSize;
         bool textboxFontBold;
-
+        Database drugsDatabase;
         int maxFollowUps;
         int maxFollowUpsPerProblem;
         bool autoSetnewAfterMaxPerProblemIsReached;
@@ -140,6 +146,7 @@ public:
                         textboxFont,
                         textboxFontSize,
                         textboxFontBold,
+                        drugsDatabase,
                         maxFollowUps,
                         autoClosePrintDlg,
                         maxFollowUpsPerProblem,
@@ -172,6 +179,7 @@ public:
                              psettings.textboxFont,
                              psettings.textboxFontSize,
                              psettings.textboxFontBold,
+                             psettings.drugsDatabase,
                              psettings.maxFollowUps,
                              psettings.autoClosePrintDlg,
                              psettings.maxFollowUpsPerProblem,
@@ -358,6 +366,7 @@ public:
     void saveDbOptions(const dbOptions &options);
     mStyler::Style &getStyle();
     lineStyle getLineStylesheet();
+    Database getDefaultDrugsDatabase();
 
 public slots:
     void setSelectedTheme(QString t);

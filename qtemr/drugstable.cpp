@@ -14,13 +14,20 @@ drugsTable::drugsTable(QWidget *parent):zTableView(parent)
             .arg(this->objectName())
             .arg(qrand())
             .arg(qrand());
-    coConName = QString("qt_sql_core_drugsTable_%1_%2_%3")
+    coConNameIndex = QString("qt_sql_core_drugsTable_%1_%2_%3%4")
             .arg(this->objectName())
             .arg(qrand())
-            .arg(qrand());
+            .arg(qrand())
+            .arg("index");
+    coConNameEye = QString("qt_sql_core_drugsTable_%1_%2_%3%4")
+            .arg(this->objectName())
+            .arg(qrand())
+            .arg(qrand())
+            .arg("eye");
 
     sqlextra = new sqlExtra(this,exConName,false);
-    sqlcore = new sqlCore(this,coConName);
+    sqlcoreIndex = new sqlCore(DRUGSINDEXPATH,this,coConNameIndex);
+    sqlcoreEye = new sqlCore(DRUGEYEPATH,this,coConNameEye);
     lo_setDose = new QGridLayout(this);
     le_setDose = new genericLineEdit(this);
     le_setDose->setObjectName("le_setDose");
@@ -86,7 +93,9 @@ drugsTable::drugsTable(QWidget *parent):zTableView(parent)
     connect(this,SIGNAL(setFindDrugsLabel(QString)),altDrugs,SLOT(setLabel(QString)));
     connect(altDrugs,SIGNAL(replaceDrug(QString)),this,SLOT(replaceDrug(QString)));
 
-    coreDrugs = sqlcore->getCoreDrugList();
+    coreDrugsIndex = sqlcoreIndex->getCoreDrugList();
+    coreDrugsEye = sqlcoreEye->getCoreDrugList();
+
     viewport()->installEventFilter(this);
 }
 
@@ -174,6 +183,13 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
     newRow.append(fm_item);
     newRow.append(ps_item);
 
+    sqlCore *sqlcore;
+
+    if(!coreDrugsIndex.contains(newDrug))
+        sqlcore = sqlcoreEye;
+    else
+        sqlcore = sqlcoreIndex;
+
     tn_item->setText(newDrug);
     gn_item->setText(sqlcore->getDrugDetail(newDrug,"GENERICNAME"));
     ds_item->setText(sqlextra->getDefaultDrugDose(newDrug));
@@ -184,7 +200,14 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
 
     drugsModel->insertRow(drugsModel->getPrintableDrugsCount(),newRow);
     tweakDrugsTable();
-    sqlextra->addToAutoComplete("drugs",newDrug);
+
+
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    mSettings::Database DrugsAutocompleteMode = (mSettings::Database) reg.value("DrugsAutocompleteMode").toInt();
+    if(DrugsAutocompleteMode == mSettings::Database::Standard)
+        sqlextra->addToAutoComplete("drugs",newDrug);
+    else if(DrugsAutocompleteMode == mSettings::Database::drugEye)
+        sqlextra->addToAutoComplete("drugEye",newDrug);
 
     genDrugTableToolTip();
     emit drugTableItemChanged();
@@ -377,6 +400,13 @@ void drugsTable::replaceDrug(QString newDrug)
     newRow.append(fm_item);
     newRow.append(ps_item);
 
+    sqlCore *sqlcore;
+
+    if(!coreDrugsIndex.contains(newDrug))
+        sqlcore = sqlcoreEye;
+    else
+        sqlcore = sqlcoreIndex;
+
     tn_item->setText(newDrug);
     gn_item->setText(sqlcore->getDrugDetail(newDrug,"GENERICNAME"));
     ds_item->setText(sqlextra->getDefaultDrugDose(newDrug));
@@ -421,12 +451,15 @@ drugsTable::~drugsTable()
     delete worker;
     sqlextra->optimize();
     delete sqlextra;
-    sqlcore->optimize();
-    delete sqlcore;
+    sqlcoreIndex->optimize();
+    sqlcoreEye->optimize();
+    delete sqlcoreIndex;
+    delete sqlcoreEye;
     delete altDrugs;
     delete genericSearch;
     QSqlDatabase::removeDatabase(exConName);
-    QSqlDatabase::removeDatabase(coConName);
+    QSqlDatabase::removeDatabase(coConNameIndex);
+    QSqlDatabase::removeDatabase(coConNameEye);
     delete lo_setDose;
     delete le_setDose;
     delete a_stop;
@@ -648,6 +681,13 @@ void drugsTable::genDrugTableToolTip()
         stopDate = drugsModel->item(t,4)->text();
         current = drugsModel->item(t,5)->text().toInt();
         price = drugsModel->item(t,7)->text();
+        sqlCore *sqlcore;
+
+        if(!coreDrugsIndex.contains(tradeName))
+            sqlcore = sqlcoreEye;
+        else
+            sqlcore = sqlcoreIndex;
+
         category = sqlcore->getDrugDetail(tradeName,"CATEGORY");
         expander = sqlextra->getExpand(tradeName);
 
@@ -755,7 +795,17 @@ bool drugsTable::isThereActiveDrugs()
 
 bool drugsTable::isTradeNameinAutocomplete(QString tradeName)
 {
-    QStringList autoComplete = sqlextra->getAutoCompleteList("drugs");
+    QString tableName;
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    mSettings::Database DrugsAutocompleteMode = (mSettings::Database) reg.value("DrugsAutocompleteMode").toInt();
+    if(DrugsAutocompleteMode == mSettings::Database::Standard)
+        tableName = "drugs";
+    else if(DrugsAutocompleteMode == mSettings::Database::drugEye)
+        tableName = "drugEye";
+    else
+        return true;
+
+    QStringList autoComplete = sqlextra->getAutoCompleteList(tableName);
     if (autoComplete.contains(tradeName,Qt::CaseInsensitive))
         return true;
     else
@@ -764,6 +814,13 @@ bool drugsTable::isTradeNameinAutocomplete(QString tradeName)
 
 bool drugsTable::isPriceEqual(int row,QString tradeName)
 {
+    sqlCore *sqlcore;
+
+    if(!coreDrugsIndex.contains(tradeName))
+        sqlcore = sqlcoreEye;
+    else
+        sqlcore = sqlcoreIndex;
+
     double indexPrice = sqlcore->getDrugDetail(tradeName,"PRICE").toDouble();
     double savedPrice = drugsModel->item(row,7)->text().toDouble();
     return ( dataHelper::doubleEqual(indexPrice,savedPrice));
@@ -892,7 +949,7 @@ void drugsTable::showContextMenu(const QPoint &pos)
 
     cpDrugsMenu->menuAction()->setVisible(!cpDrugsMenu->isEmpty());
 
-    if ( !null_selected && coreDrugs.contains(tradeName))
+    if ( !null_selected && (coreDrugsIndex.contains(tradeName)||(coreDrugsEye.contains(tradeName))))
     {
         a_checkPrice->setVisible(!isReadOnly &&!isPriceEqual(cell.row(),tradeName));
         altDrugsMenu->menuAction()->setVisible(!isReadOnly);
@@ -939,6 +996,13 @@ void drugsTable::checkPrice()
 {
     QModelIndex cell =  this->selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
+    sqlCore *sqlcore;
+
+    if(!coreDrugsIndex.contains(tradeName))
+        sqlcore = sqlcoreEye;
+    else
+        sqlcore = sqlcoreIndex;
+
     double price = sqlcore->getDrugDetail(tradeName,"PRICE").toDouble();
     drugsModel->item(cell.row(),7)->setText(QString::number(price));
     genDrugTableToolTip();
@@ -1106,7 +1170,15 @@ void drugsTable::findSameTradename()
     //    }
 
     QStringList tradeNames = QStringList() << tradeName;
-    findAltDrug("TRADENAME",tradeNames);
+    if ( coreDrugsIndex.contains(tradeName))
+        findAltDrug("TRADENAME",tradeNames,sqlcoreIndex);
+    else if ( coreDrugsEye.contains(tradeName))
+        findAltDrug("TRADENAME",tradeNames,sqlcoreEye);
+    else{
+        popUpMessage("Sorry","No Data found");
+        return;
+    }
+//    findAltDrug("TRADENAME",tradeNames);
     setFindDrugsLabel(QString("Viewing drugs Similar to trade's name : <b>[%1]</b>").arg(tradeName));
     altDrugs->setSelectedDrugName(tradeName);
 }
@@ -1115,18 +1187,34 @@ void drugsTable::findSameGeneric()
 {
     QModelIndex cell = selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
-    QStringList rawGenericNames = drugsModel->item(cell.row(),1)->text().split("+");
-    QStringList genericNames;
 
-    foreach(QString gName,rawGenericNames)
-    {
-        QStringList tempString = gName.simplified().split(" ");
-        tempString.removeLast();
-        genericNames << tempString.join(" ").simplified();
+    QStringList /*raw*/GenericNames = drugsModel->item(cell.row(),1)->text().split("+");
+    //QStringList genericNames;
+
+
+//    foreach(QString gName,rawGenericNames)
+//    {
+//        QStringList tempString = gName.simplified().split(" ");
+//        //tempString.removeLast();
+//        genericNames << tempString.join(" ").simplified();
+//    }
+
+//    mDebug() << rawGenericNames <<genericNames;
+
+    QString searchingin;
+    if ( coreDrugsIndex.contains(tradeName)){
+        searchingin = "EasyDrugs";
+        findAltDrug("GENERICNAME",GenericNames,sqlcoreIndex);
     }
-
-    findAltDrug("GENERICNAME",genericNames);
-    setFindDrugsLabel(QString("Viewing drugs Similar to <b>[%1]</b> generic's name : <b>[%2]</b>").arg(tradeName).arg(genericNames.join(", ")));
+    else if ( coreDrugsEye.contains(tradeName)){
+        searchingin = "DrugEye";
+        findAltDrug("GENERICNAME",GenericNames,sqlcoreEye);
+    }
+    else{
+        popUpMessage("Sorry","No Data found");
+        return;
+    }
+    setFindDrugsLabel(QString("Viewing drugs from %1 Similar to <b>[%2]</b> generic's name : <b>[%3]</b>").arg(searchingin).arg(tradeName).arg(GenericNames.join(", ")));
     altDrugs->setSelectedDrugName(tradeName);
 }
 
@@ -1134,6 +1222,13 @@ void drugsTable::findSameIndication()
 {
     QModelIndex cell = selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
+    sqlCore *sqlcore;
+
+    if(!coreDrugsIndex.contains(tradeName))
+        sqlcore = sqlcoreEye;
+    else
+        sqlcore = sqlcoreIndex;
+
     QString category = sqlcore->getDrugDetail(tradeName,"CATEGORY");
     if ( category.length() < 2)
     {
@@ -1142,7 +1237,15 @@ void drugsTable::findSameIndication()
     }
     QString indication = category.split(":").at(0);
     QStringList indications = QStringList() << indication.simplified();
-    findAltDrug("CATEGORY",indications);
+    if ( coreDrugsIndex.contains(tradeName))
+        findAltDrug("CATEGORY",indications,sqlcoreIndex);
+    else if ( coreDrugsEye.contains(tradeName))
+        findAltDrug("CATEGORY",indications,sqlcoreEye);
+    else{
+        popUpMessage("Sorry","No Data found");
+        return;
+    }
+//    findAltDrug("CATEGORY",indications);
     setFindDrugsLabel(QString("Viewing drugs Similar to <b>[%1]</b> indication : <b>[%2]</b>").arg(tradeName).arg(indications.join(", ")));
     altDrugs->setSelectedDrugName(tradeName);
 }
@@ -1151,15 +1254,37 @@ void drugsTable::findSameGroup()
 {
     QModelIndex cell = selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
+    sqlCore *sqlcore;
+
+    if(!coreDrugsIndex.contains(tradeName))
+        sqlcore = sqlcoreEye;
+    else
+        sqlcore = sqlcoreIndex;
+
+    QString indication;
     QString category = sqlcore->getDrugDetail(tradeName,"CATEGORY");
     if ( category.length() < 2)
     {
         popUpMessage("Error","Item Not Found!");
         return;
     }
-    QString indication = category.split(":").at(1);
+    if(category.contains(":"))
+        indication = category.split(":").at(1);
+    else
+    {
+        popUpMessage("Sorry","No Data found");
+        return;
+    }
     QStringList indications = QStringList() << indication.simplified();
-    findAltDrug("CATEGORY",indications);
+    if ( coreDrugsIndex.contains(tradeName))
+        findAltDrug("CATEGORY",indications,sqlcoreIndex);
+    else if ( coreDrugsEye.contains(tradeName))
+        findAltDrug("CATEGORY",indications,sqlcoreEye);
+    else{
+        popUpMessage("Sorry","No Data found");
+        return;
+    }
+    //findAltDrug("CATEGORY",indications);
     setFindDrugsLabel(QString("Viewing drugs Similar to <b>[%1]</b> drug's group : <b>(%2)</b>").arg(tradeName).arg(indications.join(", ")));
     altDrugs->setSelectedDrugName(tradeName);
 }
@@ -1271,9 +1396,16 @@ QString drugsTable::getSelectedDrugTradeName()
     return drugsModel->item(cell.row(),0)->text();
 }
 
-void drugsTable::findAltDrug(QString col, QStringList filters)
+void drugsTable::findAltDrug(QString col, QStringList filters,sqlCore *sqlcore)
 {
     altDrugs->show();
+//    sqlCore *sqlcore;
+
+//    if(msettings.getDefaultDrugsDatabase() == msettings.Standard)
+//        sqlcore = sqlcoreIndex;
+//    else
+//        sqlcore = sqlcoreEye;
+
     findModel = sqlcore->getFindDrugsModel(findModel,col,filters);
     setFindDrugsModel(findModel);
 }
