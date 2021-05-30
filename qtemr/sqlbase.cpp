@@ -3795,7 +3795,7 @@ QStandardItemModel *sqlBase::getAgendaModel(int julianDate,QStandardItemModel *a
     {
         _id = query->value(0).toInt();
         QStandardItem *idItem = new QStandardItem();
-        idItem->setData(QVariant(_id), Qt::DisplayRole);
+        idItem->setData(QVariant(QString("%1").arg(_id,5,10,QLatin1Char('0'))), Qt::DisplayRole);
         info.Name = getHumanizedName(query->value(1).toString());
 
         QStandardItem *nameItem = new QStandardItem(info.Name);
@@ -3917,7 +3917,7 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
 
 
         QStandardItem *idItem = new QStandardItem;
-        idItem->setData(QVariant(_id), Qt::DisplayRole);
+        idItem->setData(QVariant(QString("%1").arg(_id,5,10,QLatin1Char('0'))), Qt::DisplayRole);
         idItem->setBackground(brushes.at(visitType));
 
         QStandardItem *nameItem = new QStandardItem(info.Name);
