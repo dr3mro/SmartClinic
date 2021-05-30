@@ -90,7 +90,7 @@ void patientTable::setMyModel()
     setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->horizontalHeader()->setStretchLastSection( true );
     this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows );
     proxy_model = new QSortFilterProxyModel(this);
