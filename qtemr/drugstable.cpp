@@ -127,12 +127,14 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
         if ( drug.toUpper().append("*") == newDrug.toUpper() )
         {
             drugsModel->item(i,5)->setText("0");
+            drugsModel->item(i,4)->setText(QString::number(QDate::currentDate().toJulianDay()));
             emit drugTableItemChanged();
             return true;
         }
         else if ( ( drug.toUpper() == newDrug.toUpper() ) && (drugsModel->item(i,5)->text() == "0") )
         {
             drugsModel->item(i,5)->setText("1");
+            drugsModel->item(i,3)->setText(QString::number(QDate::currentDate().toJulianDay()));
             emit drugTableItemChanged();
             return true;
         }
