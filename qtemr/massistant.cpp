@@ -132,7 +132,8 @@ void mAssistant::tweakRegisterTable()
     int servPixelWidth = 50*servCOUNT;
     ui->cashTableView->horizontalHeader()->setDefaultSectionSize(50);
     ui->cashTableView->horizontalHeader()->setStretchLastSection(true);
-    ui->cashTableView->setColumnWidth(0,40);
+    ui->cashTableView->setColumnWidth(0,50);
+    //ui->cashTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->cashTableView->setColumnWidth(1,350-servPixelWidth);
     ui->cashTableView->setColumnWidth(4,80);
 
@@ -297,7 +298,8 @@ void mAssistant::onAgendaModelLoaded()
     agendaModel = agendaModelFuture.result();
     ui->agendaTableView->setModel(agendaModel);
     ui->agendaTableView->resizeColumnToContents(2);
-    ui->agendaTableView->setColumnWidth(0,40);
+    ui->agendaTableView->setColumnWidth(0,50);
+    //ui->agendaTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->agendaTableView->setColumnWidth(1,340);
     ui->agendaTableView->horizontalHeader()->setStretchLastSection(true);
     ui->agendaTableView->clearSelection();

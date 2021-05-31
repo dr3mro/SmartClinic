@@ -88,9 +88,12 @@ void patientTable::setMyModel()
     model = initModelFuture.result();
     model->setHorizontalHeaderLabels( QStringList() << "ID" << "Name " );
     setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     this->horizontalHeader()->setStretchLastSection( true );
-    this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows );
     proxy_model = new QSortFilterProxyModel(this);
