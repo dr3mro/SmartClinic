@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Graphics" lang="english">
+    <qresource lang="english" prefix="/Graphics">
         <file alias="appicon">Graphics/appicon.ico</file>
         <file alias="applogo">Graphics/applogo.png</file>
         <file alias="back">Graphics/chevron-left-8x.png</file>
@@ -73,6 +73,7 @@
         <file alias="redSkull">Graphics/Red-Skull-icon.png</file>
         <file alias="loadanimation">Graphics/loader.gif</file>
         <file alias="partiallycheckedbox">Graphics/task-8xpd.png</file>
+        <file>Graphics/logo.jpg</file>
     </qresource>
     <qresource prefix="/Themes">
         <file>styleSheet.css</file>

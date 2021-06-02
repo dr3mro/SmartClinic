@@ -154,6 +154,7 @@ void settingsClass::setValuesToUI(const mSettings::pSettings &_settings)
     ui->stylerWidget->setSelectedTheme(_settings.selectedTheme);
     ui->appDir->setText(dataIOhelper::getCurrentFolder());
     ui->encryptionSwitch->setChecked(sqlbase->isEncryptionEnabled());
+    ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
 }
 
 void settingsClass::closeEvent(QCloseEvent *event)
@@ -427,4 +428,9 @@ void settingsClass::on_cb_portability_clicked(bool checked)
         portabilityWatcher.addPath(dataIOhelper::PortabilityLockFile());
 
     portabilityChecker();
+}
+
+void settingsClass::on_Header_textChanged()
+{
+    dataIOhelper::saveFile(HEADERFILE,ui->Header->toHtml().toUtf8());
 }

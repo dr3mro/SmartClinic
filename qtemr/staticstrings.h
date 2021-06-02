@@ -60,6 +60,7 @@
 #define _showDrugsTitle "showDrugsTitle"
 #define _setEastArabicNumbers "setEastArabicNumbers"
 #define _remmberLastFollowupDate "remmberLastFollowupDate"
+#define _showHeaderLogo "showPrescriptionHeaderLogo"
 
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"

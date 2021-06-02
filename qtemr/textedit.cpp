@@ -40,8 +40,11 @@ TextEdit::TextEdit(QWidget *parent) :
                            "</table></html>"));
 
     connect(&watcher,SIGNAL(finished()),this,SLOT(completerLoader()));
-    connect(parent->window(),SIGNAL(loadCompleters()),this,SLOT(setCompleter()));
+    if ( WindowName != "Advanced_Tab")
+        connect(parent->window(),SIGNAL(loadCompleters()),this,SLOT(setCompleter()));
+
     connect(this,SIGNAL(selectionChanged()),this,SLOT(isSelectionChanged()));
+
     if ( WindowName == "MainWindow" || WindowName == "visitsBox")
     {
         connect (this,SIGNAL(removeItemFromCompleter(QString,int)),parent->window(),SLOT(removeItemFromDictionary(QString,int)));
@@ -61,7 +64,8 @@ TextEdit::TextEdit(QWidget *parent) :
     }
     if ( WindowName == "printDrugs" ||
          WindowName == "surgicalNoteEditor" ||
-         WindowName == "DietEditor" )
+         WindowName == "DietEditor" ||
+         WindowName == "Advanced_Tab")
         return;
 
     connect(parent->window(),SIGNAL(reloadCompleter()),this,SLOT(updateCompleter()));

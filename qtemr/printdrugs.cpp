@@ -119,6 +119,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->invWidth->setValue(printSettings.investigationsWidth);
     ui->showDrugsTitle->setChecked(printSettings.showDrugsTitle);
     ui->showDoseInEasternArabic->setChecked(printSettings.setEastArabicNumbers);
+    ui->showHeaderLogo->setChecked(printSettings.showPrescriptionHeaderLogo);
     return printSettings;
 }
 
@@ -156,6 +157,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.investigationsWidth = ui->invWidth->value();
     printSettings.showDrugsTitle = ui->showDrugsTitle->isChecked();
     printSettings.setEastArabicNumbers = ui->showDoseInEasternArabic->isChecked();
+    printSettings.showPrescriptionHeaderLogo = ui->showHeaderLogo->isChecked();
     return printSettings;
 }
 
@@ -239,7 +241,6 @@ void printDrugs::setDefaultBold(bool bold)
 void printDrugs::refreshView()
 {
     pSettings = grabPrintSettings();
-
     QString HTML = refreshRoshetta(pSettings,selectedDiet,drugsMode);
 
     ui->Roshetta->setHtml(HTML);

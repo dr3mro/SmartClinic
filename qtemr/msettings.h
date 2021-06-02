@@ -114,6 +114,7 @@ public:
         bool autoSetnewAfterMaxPerProblemIsReached;
         bool remmberLastFollowupDate;
 
+
         bool operator==(const pSettings& psettings) const
         {
             return std::tie(
@@ -247,7 +248,7 @@ public:
         bool showDrugsTitle;
         bool setEastArabicNumbers;
         bool showInvestigations;
-
+        bool showPrescriptionHeaderLogo;
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
             return std::tie(bold,
@@ -280,7 +281,8 @@ public:
                             bannerWidth,
                             investigationsWidth,
                             showDrugsTitle,
-                            setEastArabicNumbers) == std::tie(
+                            setEastArabicNumbers,
+                            showPrescriptionHeaderLogo) == std::tie(
                         prescriptionprintsettings.bold,
                         prescriptionprintsettings.point,
                         prescriptionprintsettings.font,
@@ -311,7 +313,8 @@ public:
                         prescriptionprintsettings.bannerWidth,
                         prescriptionprintsettings.investigationsWidth,
                         prescriptionprintsettings.showDrugsTitle,
-                        prescriptionprintsettings.setEastArabicNumbers); }
+                        prescriptionprintsettings.setEastArabicNumbers,
+                        prescriptionprintsettings.showPrescriptionHeaderLogo); }
     };
     struct lineStyle
     {

@@ -1141,7 +1141,18 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
             .arg(mPrintsettings.point-1)
             .arg(mPrintsettings.bold? "bold":"normal")
             .arg(pageWidth);
-
+    if(mPrintsettings.showPrescriptionHeaderLogo){
+        HTML.append(QString("<table width=\"%1%\">").arg(mPrintsettings.bannerWidth));
+        HTML.append("<tr>");
+        HTML.append("<td width=\"40%\">");
+        HTML.append(QString("<img src=\"%1\" width=96 height=96>").arg(LOGOFILE));
+        HTML.append("</td>");
+        HTML.append("<td width=\"60%\">");
+        HTML.append(dataIOhelper::readFile(HEADERFILE));
+        HTML.append("</td>");
+        HTML.append("</tr>");
+        HTML.append("</table>");
+    }
     QStringList vSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
     if (mPrintsettings.showBanner)
     {
@@ -1346,10 +1357,14 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         HTML.append(QString("<div dir=RTL  align=\"justify\" >%1</div>").arg(sqlextra->getDiet(selectedDiet)));
         HTML.append("</tr></td>");
         HTML.append("</table>");
-
-        HTML.append("</body>");
-        HTML.append("</html>");
     }
+   HTML.append("</body>");
+
+//   if(mPrintsettings.showPrescriptionHeaderFooter)
+//       HTML.append(dataIOhelper::readFile(FOOTERFILE));
+   HTML.append("<br>");
+
+   HTML.append("</html>");
 
     return HTML;
 }

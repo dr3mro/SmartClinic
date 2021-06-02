@@ -30,5 +30,7 @@
 #define conditionsVersion 1.0
 #define drugsDatabaseVer 210129
 #define PORTABILITYLOCK ".portable"
+#define HEADERFILE "header.html"
+#define LOGOFILE "logo.jpg"
 
 #endif // GLOBALVARIABLES

@@ -68,7 +68,19 @@ void createFolders()
         }
     }
 }
+void dumpLogoNotExist(){
+    QFile dest(LOGOFILE);
+    if(dest.exists())
+        return;
 
+    QFile src(":/Graphics/Graphics/logo.jpg");
+    src.open(QIODevice::ReadOnly);
+    dest.open(QIODevice::WriteOnly);
+    QByteArray srcData = src.readAll();
+    dest.write(srcData);
+    src.close();
+    dest.close();
+}
 
 void dumpDrugsDatabase()
 {
@@ -262,6 +274,7 @@ int main(int argc, char *argv[])
     a.setQuitOnLastWindowClosed(false);
     banner->updateprogress(QString("creating folders"));
     createFolders();
+    dumpLogoNotExist();
     banner->updateprogress(QString("drugs local databse"));
     copyDrugsDatabase2LocalDataFolder();
     banner->updateprogress(QString("creating UserInterface"));
