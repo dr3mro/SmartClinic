@@ -1125,9 +1125,18 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
     double pageWidth = (mPrintsettings.pageOrientation == 0)?
                 mPrintsettings.pageWidth * static_cast<double>(logicalDpiX()):mPrintsettings.pageHeight * static_cast<double>(logicalDpiX());
+
+    double pageHeight = (mPrintsettings.pageOrientation == 1)?
+                mPrintsettings.pageWidth * static_cast<double>(logicalDpiX()):mPrintsettings.pageHeight * static_cast<double>(logicalDpiX());
     double widthCorrection = mPrintsettings.leftMargin + mPrintsettings.rightMargin;
 
     pageWidth -= widthCorrection*static_cast<double>(logicalDpiX());
+
+    double heightCorrection = mPrintsettings.topMargin + mPrintsettings.bottomMargin;
+
+    pageHeight -= heightCorrection*static_cast<double>(logicalDpiX());
+
+
 
     double invPad = mPrintsettings.invPad * static_cast<double>(logicalDpiX());
     int drugsWidth = static_cast<int>(pageWidth *  static_cast<double>(mPrintsettings.drugsColPerc/ 100));
@@ -1135,12 +1144,13 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     int dietWidth = static_cast<int>(mPrintsettings.dietWidth * static_cast<double>(logicalDpiX()));
     int invWidth= static_cast<int>((static_cast<double>(mPrintsettings.investigationsWidth) - 0.2 )* logicalDpiX());
 
-    HTML = QString("<!DOCTYPE HTML style=\"width:%1;\"><html><head><meta name=\"qrichtext\" content=\"1\" /></head>").arg(pageWidth);
-    body = QString("<body style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4px;background-color:#FF0000;\">")
+    HTML = QString("<!DOCTYPE HTML><html><head><meta name=\"qrichtext\" content=\"1\" /> </head>");
+    body = QString("<body style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4px;min-height:%5px;background-color:#000000;\">")
             .arg(mPrintsettings.font)
             .arg(mPrintsettings.point-1)
             .arg(mPrintsettings.bold? "bold":"normal")
-            .arg(pageWidth);
+            .arg(pageWidth)
+            .arg(pageHeight);
     if(mPrintsettings.showPrescriptionHeaderLogo){
         HTML.append(QString("<table width=\"%1%\">").arg(mPrintsettings.bannerWidth));
         HTML.append("<tr>");
@@ -1362,6 +1372,14 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
 //   if(mPrintsettings.showPrescriptionHeaderFooter)
 //       HTML.append(dataIOhelper::readFile(FOOTERFILE));
+
+
+//   HTML.append(QString("<table style=\"float:left;margin-bottom:%1px;\">")
+//               .arg(mPrintsettings.bottomMargin*logicalDpiX()));
+//   HTML.append("<tr><td width=\"100%\">");
+//   HTML.append(QString("<div dir=RTL  align=\"justify\" >%1</div>").arg("<hr/>----Footer---"));
+//   HTML.append("</tr></td>");
+//   HTML.append("</table>");
    HTML.append("<br>");
 
    HTML.append("</html>");
