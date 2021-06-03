@@ -9,8 +9,18 @@ printDialogTab::printDialogTab(QWidget *parent) : QWidget(parent)
 
 void printDialogTab::refreshView()
 {
-//    Switch *sw = dynamic_cast<Switch*>(sender());
-//    if(sw->hasFocus())
-//
+    //    Switch *sw = dynamic_cast<Switch*>(sender());
+    //    if(sw->hasFocus())
+    //
+        emit refresh();
+}
+
+void printDialogTab::refreshView(int )
+{
+    emit refresh();
+}
+
+void printDialogTab::refreshView(const QString &)
+{
     emit refresh();
 }

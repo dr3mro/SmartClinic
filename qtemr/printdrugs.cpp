@@ -25,6 +25,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->point,SIGNAL(currentTextChanged(QString)),this,SLOT(setDefaultFontPoint(QString)));
     connect(ui->fontComboBox,SIGNAL(currentTextChanged(QString)),this,SLOT(setDefaultFont(QString)));
     connect(ui->fontComboBox,SIGNAL(highlighted(QString)),this,SLOT(setDefaultFont(QString)));
+    connect(ui->logoSize,SIGNAL(currentTextChanged(QString)),ui->elementsTab,SLOT(refreshView(QString)));
     connect(this,SIGNAL(loadPreview()),this,SLOT(refreshView()));
     connect(ui->bold,SIGNAL(toggled(bool)),this,SLOT(setDefaultBold(bool)),Qt::QueuedConnection);
     connect(ui->elementsTab,SIGNAL(refresh()),this,SLOT(refreshView()));
@@ -120,6 +121,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->showDrugsTitle->setChecked(printSettings.showDrugsTitle);
     ui->showDoseInEasternArabic->setChecked(printSettings.setEastArabicNumbers);
     ui->showHeaderLogo->setChecked(printSettings.showPrescriptionHeaderLogo);
+    ui->logoSize->setCurrentText(QString::number(printSettings.logoSize));
     return printSettings;
 }
 
@@ -158,6 +160,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.showDrugsTitle = ui->showDrugsTitle->isChecked();
     printSettings.setEastArabicNumbers = ui->showDoseInEasternArabic->isChecked();
     printSettings.showPrescriptionHeaderLogo = ui->showHeaderLogo->isChecked();
+    printSettings.logoSize = ui->logoSize->currentText().toInt();
     return printSettings;
 }
 

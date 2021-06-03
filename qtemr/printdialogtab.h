@@ -20,6 +20,8 @@ signals:
 
 public slots:
     void refreshView();
+    void refreshView(int);
+    void refreshView(const QString&);
 };
 
 #endif // PRINTDIALOGTAB_H

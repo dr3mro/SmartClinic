@@ -61,7 +61,7 @@
 #define _setEastArabicNumbers "setEastArabicNumbers"
 #define _remmberLastFollowupDate "remmberLastFollowupDate"
 #define _showHeaderLogo "showPrescriptionHeaderLogo"
-
+#define _logoSize "logoPixelSize"
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"
 #define _defaultFontSize "defaultFontSize"

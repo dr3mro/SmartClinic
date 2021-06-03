@@ -249,6 +249,7 @@ public:
         bool setEastArabicNumbers;
         bool showInvestigations;
         bool showPrescriptionHeaderLogo;
+        int logoSize;
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
             return std::tie(bold,
@@ -282,7 +283,8 @@ public:
                             investigationsWidth,
                             showDrugsTitle,
                             setEastArabicNumbers,
-                            showPrescriptionHeaderLogo) == std::tie(
+                            showPrescriptionHeaderLogo,
+                            logoSize) == std::tie(
                         prescriptionprintsettings.bold,
                         prescriptionprintsettings.point,
                         prescriptionprintsettings.font,
@@ -314,7 +316,8 @@ public:
                         prescriptionprintsettings.investigationsWidth,
                         prescriptionprintsettings.showDrugsTitle,
                         prescriptionprintsettings.setEastArabicNumbers,
-                        prescriptionprintsettings.showPrescriptionHeaderLogo); }
+                        prescriptionprintsettings.showPrescriptionHeaderLogo,
+                        prescriptionprintsettings.logoSize); }
     };
     struct lineStyle
     {

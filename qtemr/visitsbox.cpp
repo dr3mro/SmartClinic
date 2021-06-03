@@ -1145,7 +1145,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         HTML.append(QString("<table width=\"%1%\">").arg(mPrintsettings.bannerWidth));
         HTML.append("<tr>");
         HTML.append("<td width=\"40%\">");
-        HTML.append(QString("<img src=\"%1\" width=96 height=96>").arg(LOGOFILE));
+        HTML.append(QString("<img src=\"%1\" width=%2 height=%2>").arg(LOGOFILE).arg(mPrintsettings.logoSize));
         HTML.append("</td>");
         HTML.append("<td width=\"60%\">");
         HTML.append(dataIOhelper::readFile(HEADERFILE));
