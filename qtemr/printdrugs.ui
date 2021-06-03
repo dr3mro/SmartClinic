@@ -689,12 +689,12 @@
          <item>
           <widget class="QLabel" name="label_32">
            <property name="text">
-            <string>Show Header and Logo</string>
+            <string>Header, Footer and Logo</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="Switch" name="showHeaderLogo">
+          <widget class="Switch" name="showHeaderFooterLogo">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>

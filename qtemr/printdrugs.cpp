@@ -120,7 +120,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->invWidth->setValue(printSettings.investigationsWidth);
     ui->showDrugsTitle->setChecked(printSettings.showDrugsTitle);
     ui->showDoseInEasternArabic->setChecked(printSettings.setEastArabicNumbers);
-    ui->showHeaderLogo->setChecked(printSettings.showPrescriptionHeaderLogo);
+    ui->showHeaderFooterLogo->setChecked(printSettings.showPrescriptionHeaderFooterLogo);
     ui->logoSize->setCurrentText(QString::number(printSettings.logoSize));
     return printSettings;
 }
@@ -159,7 +159,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.investigationsWidth = ui->invWidth->value();
     printSettings.showDrugsTitle = ui->showDrugsTitle->isChecked();
     printSettings.setEastArabicNumbers = ui->showDoseInEasternArabic->isChecked();
-    printSettings.showPrescriptionHeaderLogo = ui->showHeaderLogo->isChecked();
+    printSettings.showPrescriptionHeaderFooterLogo = ui->showHeaderFooterLogo->isChecked();
     printSettings.logoSize = ui->logoSize->currentText().toInt();
     return printSettings;
 }
@@ -247,7 +247,6 @@ void printDrugs::refreshView()
     QString HTML = refreshRoshetta(pSettings,selectedDiet,drugsMode);
 
     ui->Roshetta->setHtml(HTML);
-
     tweakRoshetta();
 
 }

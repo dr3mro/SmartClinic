@@ -60,6 +60,7 @@ private slots:
     void toggleEncryption(bool b);
     void on_cb_portability_clicked(bool checked);
     void on_Header_textChanged();
+    void on_Footer_textChanged();
 
 signals:
     void newMessage(QString,QString);

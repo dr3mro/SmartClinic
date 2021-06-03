@@ -20,7 +20,7 @@ gcc:LIBS += -L$$PWD/zlib/mingw730 -llibz
 #   QMAKE_CXXFLAGS += -Werror
 #}
 win32-msvc*{
-    QMAKE_CXXFLAGS += /WX
+#    QMAKE_CXXFLAGS += /WX
     INCLUDEPATH    += "C:/Program Files (x86)/Visual Leak Detector/include/"
     LIBS           += -L"C:/Program Files (x86)/Visual Leak Detector/lib/Win32"
 }
