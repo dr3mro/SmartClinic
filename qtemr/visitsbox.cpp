@@ -1144,14 +1144,14 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     int dietWidth = static_cast<int>(mPrintsettings.dietWidth * static_cast<double>(logicalDpiX()));
     int invWidth= static_cast<int>((static_cast<double>(mPrintsettings.investigationsWidth) - 0.2 )* logicalDpiX());
 
-    HTML = QString("<!DOCTYPE HTML><html><head><meta name=\"qrichtext\" content=\"1\" /> </head>");
-    body = QString("<body style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4px;min-height:%5px;background-color:#000000;\">")
+    HTML = QString("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>");
+    body = QString("<body bgcolor=\"cyan\" style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4;min-height:%5;background-color:#000000;\">")
             .arg(mPrintsettings.font)
             .arg(mPrintsettings.point-1)
             .arg(mPrintsettings.bold? "bold":"normal")
             .arg(pageWidth)
             .arg(pageHeight);
-    if(mPrintsettings.showPrescriptionHeaderLogo){
+    if(mPrintsettings.showPrescriptionHeaderFooterLogo){
         HTML.append(QString("<table width=\"%1%\">").arg(mPrintsettings.bannerWidth));
         HTML.append("<tr>");
         HTML.append("<td width=\"40%\">");
@@ -1368,19 +1368,28 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         HTML.append("</tr></td>");
         HTML.append("</table>");
     }
-   HTML.append("</body>");
 
-//   if(mPrintsettings.showPrescriptionHeaderFooter)
-//       HTML.append(dataIOhelper::readFile(FOOTERFILE));
-
-
-//   HTML.append(QString("<table style=\"float:left;margin-bottom:%1px;\">")
-//               .arg(mPrintsettings.bottomMargin*logicalDpiX()));
-//   HTML.append("<tr><td width=\"100%\">");
-//   HTML.append(QString("<div dir=RTL  align=\"justify\" >%1</div>").arg("<hr/>----Footer---"));
-//   HTML.append("</tr></td>");
-//   HTML.append("</table>");
    HTML.append("<br>");
+
+
+   if(mPrintsettings.showPrescriptionHeaderFooterLogo){
+       HTML.append(QString("<table width=\"%1%\" style=\"display:inline-block;position:absolute;float:left;bottom:0;margin-bottom:%2px;\">")
+                   .arg(mPrintsettings.bannerWidth)
+                   .arg(mPrintsettings.bottomMargin*logicalDpiX()));
+       HTML.append("<tr>");
+       HTML.append("<td>");
+       HTML.append(QString("<hr>"));
+       HTML.append("</td>");
+       HTML.append("</tr>");
+       HTML.append("<tr>");
+       HTML.append("<td>");
+       HTML.append(QString("%1").arg(QString(dataIOhelper::readFile(FOOTERFILE))));
+       HTML.append("</td>");
+       HTML.append("</tr>");
+       HTML.append("</table>");
+   }
+
+   HTML.append("</body>");
 
    HTML.append("</html>");
 

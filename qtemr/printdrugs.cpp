@@ -313,16 +313,15 @@ void printDrugs::makePrintPreview(QPrinter *preview)
 }
 
 void printDrugs::tweakRoshetta()
-{
-    double pageWidth = (pSettings.pageOrientation == 0)? pSettings.pageWidth :pSettings.pageHeight;
-    int WidthPixels = static_cast<int>(pageWidth) * logicalDpiY();
+{   setupPrinter(printer,pSettings);
+    //double pageWidth = (pSettings.pageOrientation == 0)? pSettings.pageWidth :pSettings.pageHeight;
+    //int WidthPixels = static_cast<int>(pageWidth) * logicalDpiY();
     setInkColor(inkColor);
     setDefaultFont(defaultFont);
-    ui->Roshetta->setLineWrapMode(QTextEdit::FixedPixelWidth);
-    ui->Roshetta->setLineWrapColumnOrWidth(WidthPixels);
-    ui->Roshetta->setReadOnly(pSettings.showInvestigations);
-    setupPrinter(printer,pSettings);
-    ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
+    //ui->Roshetta->setLineWrapMode(QTextEdit::FixedPixelWidth);
+    //ui->Roshetta->setLineWrapColumnOrWidth(WidthPixels);
+    //ui->Roshetta->setReadOnly(pSettings.showInvestigations);
+    //ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
 }
 
 void printDrugs::setMaxValues()
