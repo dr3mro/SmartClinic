@@ -230,16 +230,16 @@ public:
         double invPad;
         double dietWidth;
         int point;
-        int pageOrientation;
+        //int pageOrientation;
         int bannerWidth;
         QString font;
-        QString color;
+        //QString color;
         bool showDrugs;
         bool centerRequests;
         bool centerDrugs;
         bool showBanner;
         bool showDrugsSeparator;
-        bool fullPage;
+        //bool fullPage;
         bool tradeNameinBold;
         bool doseinNewLine;
         bool compactMode;
@@ -255,8 +255,8 @@ public:
             return std::tie(bold,
                             point,
                             font,
-                            color,
-                            pageOrientation,
+                            //color,
+                            //pageOrientation,
                             topMargin,
                             leftMargin,
                             rightMargin,
@@ -278,7 +278,7 @@ public:
                             centerDrugs,
                             showBanner,
                             showDrugsSeparator,
-                            fullPage,
+                            //fullPage,
                             bannerWidth,
                             investigationsWidth,
                             showDrugsTitle,
@@ -288,8 +288,8 @@ public:
                         prescriptionprintsettings.bold,
                         prescriptionprintsettings.point,
                         prescriptionprintsettings.font,
-                        prescriptionprintsettings.color,
-                        prescriptionprintsettings.pageOrientation,
+                        //prescriptionprintsettings.color,
+                        //prescriptionprintsettings.pageOrientation,
                         prescriptionprintsettings.topMargin,
                         prescriptionprintsettings.leftMargin,
                         prescriptionprintsettings.rightMargin,
@@ -311,7 +311,7 @@ public:
                         prescriptionprintsettings.centerDrugs,
                         prescriptionprintsettings.showBanner,
                         prescriptionprintsettings.showDrugsSeparator,
-                        prescriptionprintsettings.fullPage,
+                        //prescriptionprintsettings.fullPage,
                         prescriptionprintsettings.bannerWidth,
                         prescriptionprintsettings.investigationsWidth,
                         prescriptionprintsettings.showDrugsTitle,

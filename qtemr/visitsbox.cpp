@@ -1090,7 +1090,7 @@ int visitsBox::visitDateTime2JulianDate()
     return julianDate;
 }
 
-QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings,QString selectedDiet,int drugsMode )
+QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings,QString selectedDiet,int drugsMode)
 {
     QString t_unit,drug_b,body,unit,drug,dose,HTML,t_oneColumn,t_twoColumn,
             t_nCompact,expandName,banner,drugsSeparator,expandedname,dose_b;
@@ -1123,18 +1123,17 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     //QString visitDate = locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date().toString("dd/MM/yyyy");
     QString visitDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dddd dd/MM/yyyy");
 
-    double pageWidth = (mPrintsettings.pageOrientation == 0)?
-                mPrintsettings.pageWidth * static_cast<double>(logicalDpiX()):mPrintsettings.pageHeight * static_cast<double>(logicalDpiX());
+    double pageWidth = mPrintsettings.pageWidth * static_cast<double>(logicalDpiX());
 
-    double pageHeight = (mPrintsettings.pageOrientation == 1)?
-                mPrintsettings.pageWidth * static_cast<double>(logicalDpiX()):mPrintsettings.pageHeight * static_cast<double>(logicalDpiX());
+    double pageHeight = mPrintsettings.pageHeight * static_cast<double>(logicalDpiY());
+
     double widthCorrection = mPrintsettings.leftMargin + mPrintsettings.rightMargin;
 
     pageWidth -= widthCorrection*static_cast<double>(logicalDpiX());
 
     double heightCorrection = mPrintsettings.topMargin + mPrintsettings.bottomMargin;
 
-    pageHeight -= heightCorrection*static_cast<double>(logicalDpiX());
+    pageHeight -= heightCorrection*static_cast<double>(logicalDpiY());
 
 
 
@@ -1142,26 +1141,29 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     int drugsWidth = static_cast<int>(pageWidth *  static_cast<double>(mPrintsettings.drugsColPerc/ 100));
     //int bannerWidth = static_cast<int>(pageWidth *   static_cast<double>((mPrintsettings.bannerWidth/100)));
     int dietWidth = static_cast<int>(mPrintsettings.dietWidth * static_cast<double>(logicalDpiX()));
-    int invWidth= static_cast<int>((static_cast<double>(mPrintsettings.investigationsWidth) - 0.2 )* logicalDpiX());
+    int invWidth= static_cast<int>((static_cast<double>(mPrintsettings.investigationsWidth))* logicalDpiX());
+
 
     HTML = QString("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>");
-    body = QString("<body bgcolor=\"cyan\" style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4;min-height:%5;background-color:#000000;\">")
+    body = QString("<body  style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4;height:%5;\">")
             .arg(mPrintsettings.font)
             .arg(mPrintsettings.point-1)
             .arg(mPrintsettings.bold? "bold":"normal")
             .arg(pageWidth)
             .arg(pageHeight);
+    //body.append(QString("<table border=\"1\" style=\"-qt-table-type: frame;\" width=\"%1\" height=\"%2\"><tr><td>").arg(pageWidth).arg(pageHeight));
+    //body.append(fragment1);
     if(mPrintsettings.showPrescriptionHeaderFooterLogo){
-        HTML.append(QString("<table width=\"%1%\">").arg(mPrintsettings.bannerWidth));
-        HTML.append("<tr>");
-        HTML.append("<td width=\"40%\">");
-        HTML.append(QString("<img src=\"%1\" width=%2 height=%2>").arg(LOGOFILE).arg(mPrintsettings.logoSize));
-        HTML.append("</td>");
-        HTML.append("<td width=\"60%\">");
-        HTML.append(dataIOhelper::readFile(HEADERFILE));
-        HTML.append("</td>");
-        HTML.append("</tr>");
-        HTML.append("</table>");
+        body.append(QString("<table border=\"1\" width=\"%1%\">").arg(mPrintsettings.bannerWidth));
+        body.append("<tr>");
+        body.append("<td width=\"40%\">");
+        body.append(QString("<img src=\"%1\" width=%2 height=%2>").arg(LOGOFILE).arg(mPrintsettings.logoSize));
+        body.append("</td>");
+        body.append("<td width=\"60%\">");
+        body.append(dataIOhelper::readFile(HEADERFILE));
+        body.append("</td>");
+        body.append("</tr>");
+        body.append("</table>");
     }
     QStringList vSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
     if (mPrintsettings.showBanner)
@@ -1195,7 +1197,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
                 .arg(followDate)
                 .arg(vSymbole.at(ui->comboVisitType->currentIndex()));
 
-        HTML.append(banner);
+        body.append(banner);
 
     }
 
@@ -1216,8 +1218,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         t_twoColumn = "<tr valign=\"top\"><td><div align=\"%4\" >%1&#160;"+t_nCompact+drugsSeparator+"</div></td><td>"
                                                                                                      "<div dir=RTL valign =\"%3\" align=\"%5\" >&#160;%2</div></td></tr>%6";
 
-        HTML.append(QString("<table border=\"0\" width=\"%1\" "
-                            "style=\"display:inline-block;float:left;table-layout:fixed;\">").arg(drugsWidth));
+        HTML.append(QString("<table border=\"1\" width=\"%1\" style=\"float:left;\">").arg(drugsWidth));
 
         t_unit = mPrintsettings.doseinNewLine ? t_oneColumn:t_twoColumn;
 
@@ -1328,7 +1329,6 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
             model_index+=1;
         }
 
-        HTML.append(QString("<tr><b style=\"float:left;\"> Printed on</b>: <i> %1 </i></tr><tr><b style=\"float:right;\"> Physician's Signature</b>:</tr>").arg(visitDate));
         HTML.append("</table>");
 
     }
@@ -1342,7 +1342,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     if ( mPrintsettings.showInvestigations && investigations_count >0 )
     {
 
-        HTML.append(QString("<table bgcolor=\"Aliceblue\" style=\"display:inline-block;float:left;margin-left:%1px;\">")
+        HTML.append(QString("<table border=\"1\" bgcolor=\"Aliceblue\" style=\"float:left;margin-left:%1px;\">")
                     .arg(invPad));
         HTML.append(QString("<tr><th style=\"padding:3px;\" ><div style=\"background-color:LightSteelBlue;font-size:%1pt;\"><b>REQUESTS</b></div></th></tr>").arg(mPrintsettings.point-1));
         foreach (QString inv, investigations)
@@ -1360,7 +1360,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
    if(selectedDiet!="-")
     {
-        HTML.append(QString("<table style=\"display:inline-block;float:left;margin-top:%1px;margin-left:%2px;\">")
+        HTML.append(QString("<table border=\"1\" style=\"float:left;margin-top:%1px;margin-left:%2px;\">")
                     .arg(mPrintsettings.dietTopPadding*logicalDpiX())
                     .arg(mPrintsettings.dietLeftPadding*logicalDpiX()));
         HTML.append(QString("<tr><td width=\"%1\">").arg(dietWidth));
@@ -1369,29 +1369,30 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         HTML.append("</table>");
     }
 
-   HTML.append("<br>");
-
 
    if(mPrintsettings.showPrescriptionHeaderFooterLogo){
-       HTML.append(QString("<table width=\"%1%\" style=\"display:inline-block;position:absolute;float:left;bottom:0;margin-bottom:%2px;\">")
-                   .arg(mPrintsettings.bannerWidth)
-                   .arg(mPrintsettings.bottomMargin*logicalDpiX()));
+       HTML.append(QString("<table width=\"%1%\" border=\"1\" style=\"position:absolute;float:left;bottom:0;\">")
+                   .arg(mPrintsettings.bannerWidth));
+       HTML.append(QString("<tr style=\"font-size:8pt;\"><td><b>Printed on</b>:<i>%1</i></td><td><b>Physician's Signature</b>:</td></tr>").arg(visitDate));
        HTML.append("<tr>");
-       HTML.append("<td>");
+       HTML.append("<td  colspan=\"2\">");
        HTML.append(QString("<hr>"));
        HTML.append("</td>");
        HTML.append("</tr>");
        HTML.append("<tr>");
-       HTML.append("<td>");
+       HTML.append("<td  colspan=\"2\">");
        HTML.append(QString("%1").arg(QString(dataIOhelper::readFile(FOOTERFILE))));
        HTML.append("</td>");
        HTML.append("</tr>");
        HTML.append("</table>");
    }
 
+    //HTML.append("</td></tr></table>");
    HTML.append("</body>");
 
    HTML.append("</html>");
+
+   dataIOhelper::saveFile("roshetta.html",HTML.toUtf8());
 
     return HTML;
 }

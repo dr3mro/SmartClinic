@@ -25,6 +25,7 @@ win32-msvc*{
     LIBS           += -L"C:/Program Files (x86)/Visual Leak Detector/lib/Win32"
 }
 
+INCLUDEPATH += "./3rdparty/pagedTextEdit/"
 CONFIG += -static openssl-linked c++14
 CONFIG += precompile_header
 PRECOMPILED_HEADER = pch.h
@@ -33,6 +34,8 @@ TARGET = smartClinic3
 TEMPLATE = app
 
 SOURCES += main.cpp\
+    3rdparty/pagedTextEdit/PageMetrics.cpp \
+    3rdparty/pagedTextEdit/PagesTextEdit.cpp \
     3rdparty/smtp/smtp.cpp \
     3rdparty/zip/zip.cpp \
     expecteddeliveries.cpp \
@@ -171,6 +174,8 @@ SOURCES += main.cpp\
     mergedlg.cpp
 
 HEADERS  += mainwindow.h \
+    3rdparty/pagedTextEdit/PageMetrics.h \
+    3rdparty/pagedTextEdit/PagesTextEdit.h \
     3rdparty/smtp/smtp.h \
     3rdparty/zip/zconf.h \
     3rdparty/zip/zipreader.h \

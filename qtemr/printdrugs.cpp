@@ -11,15 +11,19 @@ printDrugs::printDrugs(QWidget *parent) :
     dlg ( new QPrintDialog(printer,this)),
     cp ( new colorPicker(this)),
     wm_add2completer(new wm_add2Completer),
-    ui(new Ui::printDrugs)
+    ui(new Ui::printDrugs),
+    m_roshetta(new QTextDocument(this))
 {
     ui->setupUi(this);
+
+    m_roshetta->setPageSize(printer->pageLayout().pageSize().sizePoints());
+    ui->Roshetta->setDocument(m_roshetta);
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
 
     t.setInterval(600);//this timer to set limit to printing per second
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
 
-    connect(ui->setInkColor,SIGNAL(clicked(bool)),cp,SLOT(show()));
+    //connect(ui->setInkColor,SIGNAL(clicked(bool)),cp,SLOT(show()));
     connect(cp,SIGNAL(newColor(QColor)),this,SLOT(setInkColor(QColor)));
     connect(ui->point,SIGNAL(highlighted(QString)),this,SLOT(setDefaultFontPoint(QString)));
     connect(ui->point,SIGNAL(currentTextChanged(QString)),this,SLOT(setDefaultFontPoint(QString)));
@@ -42,6 +46,13 @@ printDrugs::printDrugs(QWidget *parent) :
     lSettings = pSettings =  loadPrintSettings();
     setMinimumSize(800,600);
     this->setModal(true);
+
+    ui->Roshetta->setPageFormat(QPageSize::A5);
+    ui->Roshetta->setPageMargins(QMarginsF(5, 5, 5, 5));
+    ui->Roshetta->setUsePageMode(true);
+    ui->Roshetta->setPageNumbersAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+    ui->Roshetta->setReadOnly(true);
+
 }
 
 printDrugs::~printDrugs()
@@ -51,20 +62,21 @@ printDrugs::~printDrugs()
     delete cp;
     delete ui;
     delete wm_add2completer;
+    delete m_roshetta;
 }
 
 void printDrugs::showPrintDialog()
 {
     setupPrinter(printer,grabPrintSettings());
     if ( dlg->exec() == QDialog::Accepted )
-        printDoc(printer,ui->Roshetta->document());
+        printDoc(printer,m_roshetta);
 }
 
 void printDrugs::showPrintPreviewDialog()
 {
     mPrintPreviewDialog previewDialog(this);
     pSettings = grabPrintSettings();
-    previewDialog.setPageOrientation((pSettings.pageOrientation==0)? QPrinter::Portrait:QPrinter::Landscape);
+    //previewDialog.setPageOrientation(QPrinter::Portrait);
     previewDialog.setWindowState(previewDialog.windowState() | Qt::WindowMaximized);
     connect(&previewDialog,SIGNAL(paintRequested(QPrinter*)),this,SLOT(makePrintPreview(QPrinter*)));
     previewDialog.exec();
@@ -85,11 +97,11 @@ void printDrugs::savePrintSettings()
 mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
 {
     mSettings::prescriptionPrintSettings printSettings = settings.getPrintSettings(selectedPrintingProfile);
-    inkColor = QColor(printSettings.color);
+    //inkColor = QColor(printSettings.color);
     defaultFont = printSettings.font;
     defaultPoint = printSettings.point;
     defaultBold = printSettings.bold;
-    ui->setInkColor->setColor(inkColor);
+    //ui->setInkColor->setColor(inkColor);
     ui->fontComboBox->setCurrentText(defaultFont);
     ui->point->setCurrentText(QString::number(defaultPoint));
     ui->bold->setChecked(printSettings.bold);
@@ -97,7 +109,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->leftMargin->setValue(printSettings.leftMargin);
     ui->bottomMargin->setValue(printSettings.bottomMargin);
     ui->rightMargin->setValue(printSettings.rightMargin);
-    ui->Orientation->setCurrentIndex(printSettings.pageOrientation);
+    //ui->Orientation->setCurrentIndex(printSettings.pageOrientation);
     ui->pageWidth->setValue(printSettings.pageWidth);
     ui->pageHeight->setValue(printSettings.pageHeight);
     ui->tradeNameinBold->setChecked(printSettings.tradeNameinBold);
@@ -115,7 +127,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->centerDrugs->setChecked(printSettings.centerDrugs);
     ui->showBanner->setChecked(printSettings.showBanner);
     ui->showSeparator->setChecked(printSettings.showDrugsSeparator);
-    ui->fullPage->setChecked(printSettings.fullPage);
+    //ui->fullPage->setChecked(printSettings.fullPage);
     ui->bannerWidthPerc->setValue(printSettings.bannerWidth);
     ui->invWidth->setValue(printSettings.investigationsWidth);
     ui->showDrugsTitle->setChecked(printSettings.showDrugsTitle);
@@ -129,10 +141,10 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
 {
     mSettings::prescriptionPrintSettings printSettings;
     printSettings.bold = ui->bold->isChecked();
-    printSettings.color = ui->setInkColor->getColor().name();
+    //printSettings.color = ui->setInkColor->getColor().name();
     printSettings.font = ui->fontComboBox->currentText();
     printSettings.point = ui->point->currentText().toInt();
-    printSettings.pageOrientation =ui->Orientation->currentIndex();
+    //printSettings.pageOrientation =ui->Orientation->currentIndex();
     printSettings.topMargin = ui->topMargin->value();
     printSettings.rightMargin = ui->rightMargin->value();
     printSettings.bottomMargin = ui->bottomMargin->value();
@@ -154,7 +166,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.centerDrugs = ui->centerDrugs->isChecked();
     printSettings.showBanner = ui->showBanner->isChecked();
     printSettings.showDrugsSeparator = ui->showSeparator->isChecked();
-    printSettings.fullPage = ui->fullPage->isChecked();
+    //printSettings.fullPage = ui->fullPage->isChecked();
     printSettings.bannerWidth = ui->bannerWidthPerc->value();
     printSettings.investigationsWidth = ui->invWidth->value();
     printSettings.showDrugsTitle = ui->showDrugsTitle->isChecked();
@@ -176,19 +188,19 @@ void printDrugs::loadDiets(QStringList diets)
     ui->diet->insertItems(0,diets);
 }
 
-void printDrugs::on_Orientation_currentIndexChanged(int)
-{  
-    if(!ui->Orientation->hasFocus())
-        return;
+//void printDrugs::on_Orientation_currentIndexChanged(int)
+//{
+//    if(!ui->Orientation->hasFocus())
+//        return;
 
-    setMaxValues();
-    refreshView();
-}
+//    setMaxValues();
+//    refreshView();
+//}
 
 void printDrugs::setInkColor(QColor c)
 {
     inkColor = c;
-    ui->setInkColor->setColor(c);
+    //ui->setInkColor->setColor(c);
     palette.setColor(QPalette::Text,c);
     ui->Roshetta->setPalette(palette);
 }
@@ -211,7 +223,7 @@ void printDrugs::setDefaultFontPoint(const QString &arg1)
     ui->Roshetta->setFontPointSize(defaultPoint);
     ui->Roshetta->setTextCursor(cursor);
     ui->Roshetta->setPalette(palette);
-    ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
+    m_roshetta->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
     refreshView();
 
 }
@@ -227,7 +239,7 @@ void printDrugs::setDefaultFont(const QString &arg1)
     ui->Roshetta->setTextCursor(cursor);
     ui->Roshetta->setPalette(palette);
     ui->Roshetta->setInkFont(arg1);
-    ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
+    m_roshetta->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
 
 }
 
@@ -244,11 +256,25 @@ void printDrugs::setDefaultBold(bool bold)
 void printDrugs::refreshView()
 {
     pSettings = grabPrintSettings();
-    QString HTML = refreshRoshetta(pSettings,selectedDiet,drugsMode);
+    QString HTML = emit refreshRoshetta(pSettings,selectedDiet,drugsMode);
 
+
+    //QTextCursor cursor(m_roshetta);
+    //QTextFrameFormat fmt;
+    //fmt.setHeight(1000);
+    //fmt.setWidth(1000);
     ui->Roshetta->setHtml(HTML);
+    //cursor.insertFrame(fmt);
+    //cursor.insertHtml(HTML);
+    //cursor.movePosition(QTextCursor::End);
+    //cursor.insertText("FOOTER");
+    //mDebug() << m_roshetta->toHtml();
+    ui->Roshetta->setPageFormat(QPageSize::A5);
+    ui->Roshetta->setPageMargins(QMarginsF(5, 5, 5, 5));
+    ui->Roshetta->setUsePageMode(true);
+    ui->Roshetta->setPageNumbersAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+    m_roshetta->setPageSize(printer->pageLayout().pageSize().sizePoints());
     tweakRoshetta();
-
 }
 
 void printDrugs::reset()
@@ -263,7 +289,7 @@ void printDrugs::reset()
 void printDrugs::on_drugsColPerc_valueChanged(double value)
 {
     double investigationWidth = pSettings.showInvestigations? pSettings.investigationsWidth:0.0;
-    double pageWidth = (pSettings.pageOrientation == 0)? pSettings.pageWidth :pSettings.pageHeight;
+    double pageWidth = pSettings.pageWidth;
     int maxDrugsWidth = static_cast<int> (((pageWidth - investigationWidth)/pageWidth)*100);
 
     if (ui->drugsColPerc->hasFocus())
@@ -312,8 +338,8 @@ void printDrugs::makePrintPreview(QPrinter *preview)
     printDoc(preview,getDoc(),true);
 }
 
-void printDrugs::tweakRoshetta()
-{   setupPrinter(printer,pSettings);
+void printDrugs::tweakRoshetta(){
+    setupPrinter(printer,pSettings);
     //double pageWidth = (pSettings.pageOrientation == 0)? pSettings.pageWidth :pSettings.pageHeight;
     //int WidthPixels = static_cast<int>(pageWidth) * logicalDpiY();
     setInkColor(inkColor);
@@ -321,14 +347,15 @@ void printDrugs::tweakRoshetta()
     //ui->Roshetta->setLineWrapMode(QTextEdit::FixedPixelWidth);
     //ui->Roshetta->setLineWrapColumnOrWidth(WidthPixels);
     //ui->Roshetta->setReadOnly(pSettings.showInvestigations);
-    //ui->Roshetta->document()->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
+
+    //m_roshetta->setPageSize((QSizeF) printer->pageLayout().pageSize().sizePoints());
 }
 
 void printDrugs::setMaxValues()
 {
     pSettings = grabPrintSettings();
-    double pageWidth = (pSettings.pageOrientation == 0)? pSettings.pageWidth :pSettings.pageHeight;
-    double pageHeight = (pSettings.pageOrientation == 0)? pSettings.pageHeight :pSettings.pageWidth;
+    double pageWidth = pSettings.pageWidth;
+    double pageHeight = pSettings.pageHeight;
     double widthCorrection =pSettings.leftMargin + pSettings.rightMargin;
 
     pageWidth -= widthCorrection;
@@ -360,11 +387,14 @@ void printDrugs::setupPrinter(QPrinter *p,const mSettings::prescriptionPrintSett
     double top = _pSettings.topMargin;
     double right = _pSettings.rightMargin;
     double bottom = _pSettings.bottomMargin;
-    p->setPaperSize(QSizeF(_pSettings.pageWidth,_pSettings.pageHeight),QPrinter::Inch);
-    p->setPageMargins(left,top,right,bottom,QPrinter::Inch);
-    p->setFullPage(_pSettings.fullPage);
-    if(!preview)
-        p->setOrientation((_pSettings.pageOrientation==0)? QPrinter::Portrait:QPrinter::Landscape);
+    QPageLayout m_layout;
+    QMarginsF margins(left,top,right,bottom);
+    QPageSize pageSize(QPageSize::A5);
+    m_layout.setPageSize(pageSize,margins);
+    m_layout.setOrientation(QPageLayout::Orientation::Portrait);
+    m_layout.setMode(QPageLayout::Mode::StandardMode);
+    p->setPageLayout(m_layout);
+    //p->setFullPage(_pSettings.fullPage);
 }
 
 void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool preview)
@@ -404,9 +434,7 @@ QTextDocument *printDrugs::getDoc()
 {
 
     refreshView();
-    QTextDocument *_doc = ui->Roshetta->document();
-    //doc->setHtml(refreshRoshetta(pSettings,selectedDiet,drugsMode));
-    return _doc;
+    return m_roshetta;
 }
 
 void printDrugs::closeEvent(QCloseEvent *e)

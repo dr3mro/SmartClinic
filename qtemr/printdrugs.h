@@ -17,7 +17,9 @@
 #include <QSizeF>
 #include "wm_add2completer.h"
 #include <QtConcurrentRun>
-
+#include <QTextDocument>
+#include <QAbstractTextDocumentLayout>
+#include <QPageLayout>
 namespace Ui {
 class printDrugs;
 }
@@ -43,7 +45,7 @@ public slots:
     void refreshView();
 
 private slots:
-    void on_Orientation_currentIndexChanged(int);
+//    void on_Orientation_currentIndexChanged(int);
     void setInkColor(QColor c);
     void on_pageWidth_valueChanged(double);
     void setDefaultFontPoint(const QString &arg1);
@@ -86,6 +88,7 @@ private:
     QString selectedPrintingProfile;
     wm_add2Completer *wm_add2completer;
     Ui::printDrugs *ui;
+    QTextDocument *m_roshetta;
 
 signals:
     void add2AutoComplete(QString w);

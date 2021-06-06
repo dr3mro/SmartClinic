@@ -12,6 +12,8 @@ mPrintPreviewDialog::mPrintPreviewDialog(QWidget *parent):QPrintPreviewDialog(pa
     QAction *print = actionsList.at(21);
     portrait = actionsList.at(7);
     landscape = actionsList.at(8);
+    landscape->setVisible(false);
+    portrait->setVisible(false);
 
     print->setShortcut(QKeySequence("CTRL+P"));
 
@@ -21,14 +23,14 @@ mPrintPreviewDialog::mPrintPreviewDialog(QWidget *parent):QPrintPreviewDialog(pa
     setMinimumSize(800,600);
 }
 
-void mPrintPreviewDialog::setPageOrientation(const QPrinter::Orientation &_orientation)
-{
-    printer()->setOrientation(_orientation);
-    if(_orientation ==  QPrinter::Portrait)
-        portrait->setChecked(true);
-    else if (_orientation ==  QPrinter::Landscape)
-        landscape->setChecked(true);
-}
+//void mPrintPreviewDialog::setPageOrientation(const QPrinter::Orientation &_orientation)
+//{
+//    printer()->setOrientation(_orientation);
+//    if(_orientation ==  QPrinter::Portrait)
+//        portrait->setChecked(true);
+//    else if (_orientation ==  QPrinter::Landscape)
+//        landscape->setChecked(true);
+//}
 
 mPrintPreviewDialog::~mPrintPreviewDialog()
 {

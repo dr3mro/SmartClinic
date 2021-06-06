@@ -177,11 +177,11 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     prescriptionPrintSettings mPageSettings;
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
-    mPageSettings.color = settings.value(_inkColor,QVariant("#000000")).toString();
+    //mPageSettings.color = settings.value(_inkColor,QVariant("#000000")).toString();
     mPageSettings.bold = settings.value(_inkBold,QVariant(false)).toBool();
     mPageSettings.font = settings.value(_inkFont,QVariant("Tahoma")).toString();
     mPageSettings.point = settings.value(_inkPoint,QVariant(8)).toInt();
-    mPageSettings.pageOrientation = settings.value(_printOrientation,QVariant(0)).toInt();
+    //mPageSettings.pageOrientation = settings.value(_printOrientation,QVariant(0)).toInt();
     mPageSettings.topMargin = settings.value(_topMargin,QVariant(0)).toDouble();
     mPageSettings.leftMargin = settings.value(_leftMargin,QVariant(0)).toDouble();
     mPageSettings.rightMargin = settings.value(_rightMargin,QVariant(0)).toDouble();
@@ -203,7 +203,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.centerDrugs = settings.value(_centerDrugs,QVariant(false)).toBool();
     mPageSettings.showBanner = settings.value(_showBanner,QVariant(true)).toBool();
     mPageSettings.showDrugsSeparator = settings.value(_showDrugsSeparator,QVariant(false)).toBool();
-    mPageSettings.fullPage = settings.value(_fullPage,QVariant(false)).toBool();
+    //mPageSettings.fullPage = settings.value(_fullPage,QVariant(false)).toBool();
     mPageSettings.bannerWidth = settings.value(_bannerWidth,QVariant(80)).toInt();
     mPageSettings.investigationsWidth = settings.value(_investigationsWidth,QVariant(1.2)).toDouble();
     mPageSettings.showDrugsTitle = settings.value(_showDrugsTitle,QVariant(false)).toBool();
@@ -218,11 +218,11 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
 {
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
-    settings.setValue(_inkColor,mPageSettings.color);
+    //settings.setValue(_inkColor,mPageSettings.color);
     settings.setValue(_inkBold,mPageSettings.bold);
     settings.setValue(_inkFont,mPageSettings.font);
     settings.setValue(_inkPoint,mPageSettings.point);
-    settings.setValue(_printOrientation,mPageSettings.pageOrientation);
+    //settings.setValue(_printOrientation,mPageSettings.pageOrientation);
     settings.setValue(_leftMargin,mPageSettings.leftMargin);
     settings.setValue(_rightMargin,mPageSettings.rightMargin);
     settings.setValue(_topMargin,mPageSettings.topMargin);
@@ -244,7 +244,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_centerDrugs,mPageSettings.centerDrugs);
     settings.setValue(_showBanner,mPageSettings.showBanner);
     settings.setValue(_showDrugsSeparator,mPageSettings.showDrugsSeparator);
-    settings.setValue(_fullPage,mPageSettings.fullPage);
+    //settings.setValue(_fullPage,mPageSettings.fullPage);
     settings.setValue(_bannerWidth,mPageSettings.bannerWidth);
     settings.setValue(_investigationsWidth,mPageSettings.investigationsWidth);
     settings.setValue(_showDrugsTitle,mPageSettings.showDrugsTitle);

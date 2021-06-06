@@ -18,7 +18,7 @@ class mPrintPreviewDialog : public QPrintPreviewDialog
     Q_OBJECT
 public:
     explicit mPrintPreviewDialog(QWidget *parent=nullptr);
-    void setPageOrientation(const QPrinter::Orientation &_orientation);
+//    void setPageOrientation(const QPrinter::Orientation &_orientation);
     ~mPrintPreviewDialog();
 private:
     QShortcut *printShortcut;

@@ -287,9 +287,9 @@ background-color:input_color_focus;
 color:inputText_color_focus;
 }
 
-TextEdit#Roshetta
+PagesTextEdit#Roshetta
 {
-background-color:#ffffff;
+background-color:white;
 }
 
 QListWidget
