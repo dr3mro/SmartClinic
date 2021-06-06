@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>784</width>
-    <height>806</height>
+    <width>808</width>
+    <height>856</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -323,22 +323,7 @@
      <property name="flat">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout" name="gridLayout_6">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
+     <layout class="QGridLayout" name="gridLayout_9">
       <item row="0" column="0" rowspan="2">
        <widget class="QFrame" name="frame">
         <property name="sizePolicy">
@@ -983,6 +968,340 @@
         </layout>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QWidget" name="widgetVitals" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0">
+          <widget class="QWidget" name="widgetBaby" native="true">
+           <layout class="QGridLayout" name="gridLayout_4">
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="rightMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
+            <property name="spacing">
+             <number>1</number>
+            </property>
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_baby">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="labelWeight">
+                <property name="text">
+                 <string>Weight</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="xLineEdit" name="lineEditWeight"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelLength">
+                <property name="text">
+                 <string>Length</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="xLineEdit" name="lineEditLength"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelHead">
+                <property name="text">
+                 <string>Head Cir.</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="xLineEdit" name="lineEditHead"/>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QWidget" name="ObstWidget" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>3</number>
+            </property>
+            <property name="topMargin">
+             <number>3</number>
+            </property>
+            <property name="rightMargin">
+             <number>3</number>
+            </property>
+            <property name="bottomMargin">
+             <number>3</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>LMP</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="lmpDate">
+              <property name="minimumDate">
+               <date>
+                <year>2010</year>
+                <month>1</month>
+                <day>1</day>
+               </date>
+              </property>
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
+              <property name="date">
+               <date>
+                <year>2010</year>
+                <month>1</month>
+                <day>1</day>
+               </date>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelEDD">
+              <property name="text">
+               <string>EDD</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="eddDate">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="minimumDate">
+               <date>
+                <year>2010</year>
+                <month>1</month>
+                <day>1</day>
+               </date>
+              </property>
+              <property name="displayFormat">
+               <string>dd/MM/yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
+              <property name="date">
+               <date>
+                <year>2015</year>
+                <month>1</month>
+                <day>1</day>
+               </date>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_9">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="xCheckBox" name="checkBoxAntenatal">
+              <property name="text">
+               <string>Antenatal</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0">
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_spo2">
+             <property name="text">
+              <string>sPo2</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="8">
+            <widget class="vitalBox" name="RBS">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="6">
+            <widget class="QLabel" name="labelTemp">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string> T </string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QLabel" name="label_rbs">
+             <property name="text">
+              <string>RBS</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QLabel" name="labelBP">
+             <property name="text">
+              <string>BP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_h">
+             <property name="text">
+              <string>H</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="vitalBox" name="pPulse">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+5&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhNone</set>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_w">
+             <property name="text">
+              <string>W</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="vitalBox" name="pBP">
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+7&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhDigitsOnly</set>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="vitalBox" name="sPo2">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="vitalBox" name="height">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="labelPulse">
+             <property name="text">
+              <string> P </string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="8">
+            <widget class="vitalBox" name="pTemp">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="labelRR">
+             <property name="text">
+              <string>RR</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="vitalBox" name="pRR">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+6&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhNone</set>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="vitalBox" name="weight">
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QWidget" name="widget2" native="true">
         <property name="sizePolicy">
@@ -1021,97 +1340,6 @@
            <property name="spacing">
             <number>3</number>
            </property>
-           <item row="9" column="1">
-            <widget class="QLabel" name="labelAbdomenBack">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Abdomen And Back</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1">
-            <widget class="QLabel" name="LabelLL">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Upper &amp; Lower Limbs</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QLabel" name="labelGeneral">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>General Examination</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLabel" name="labelHeartnLungs">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Heart And Lungs</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="labelObstUS">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Obstetric U/S</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="fpalLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;FPAL:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="1">
-            <widget class="QLabel" name="notesLabel">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Notes</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="3">
             <widget class="QLabel" name="fpal">
              <property name="sizePolicy">
@@ -1128,22 +1356,34 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="1" colspan="3">
-            <widget class="TextEdit" name="patientGeneralEx">
-             <property name="tabChangesFocus">
-              <bool>true</bool>
+           <item row="7" column="1">
+            <widget class="QLabel" name="labelHeartnLungs">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Heart And Lungs</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="fpalLabel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;FPAL:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1" colspan="3">
             <widget class="TextEdit" name="patientObstUS"/>
-           </item>
-           <item row="12" column="1" colspan="3">
-            <widget class="TextEdit" name="patientLL">
-             <property name="tabChangesFocus">
-              <bool>true</bool>
-             </property>
-            </widget>
            </item>
            <item row="8" column="1" colspan="3">
             <widget class="TextEdit" name="patientHeartLungEx">
@@ -1152,8 +1392,34 @@
              </property>
             </widget>
            </item>
-           <item row="10" column="1" colspan="3">
-            <widget class="TextEdit" name="patientAbdomentBack">
+           <item row="11" column="1">
+            <widget class="QLabel" name="LabelLL">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Upper &amp; Lower Limbs</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="1">
+            <widget class="QLabel" name="notesLabel">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Notes</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="1" colspan="3">
+            <widget class="TextEdit" name="patientLL">
              <property name="tabChangesFocus">
               <bool>true</bool>
              </property>
@@ -1172,6 +1438,26 @@
              </property>
             </widget>
            </item>
+           <item row="6" column="1" colspan="3">
+            <widget class="TextEdit" name="patientGeneralEx">
+             <property name="tabChangesFocus">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="labelGeneral">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>General Examination</string>
+             </property>
+            </widget>
+           </item>
            <item row="3" column="1">
             <widget class="QLabel" name="labelPelvic">
              <property name="font">
@@ -1185,342 +1471,43 @@
              </property>
             </widget>
            </item>
+           <item row="9" column="1">
+            <widget class="QLabel" name="labelAbdomenBack">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Abdomen And Back</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="1" colspan="3">
+            <widget class="TextEdit" name="patientAbdomentBack">
+             <property name="tabChangesFocus">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="1" colspan="3">
             <widget class="TextEdit" name="patientPelvicExam"/>
            </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="labelObstUS">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Obstetric U/S</string>
+             </property>
+            </widget>
+           </item>
           </layout>
-         </item>
-         <item row="0" column="0">
-          <widget class="QWidget" name="widgetVitals" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_9">
-            <property name="leftMargin">
-             <number>3</number>
-            </property>
-            <property name="topMargin">
-             <number>3</number>
-            </property>
-            <property name="rightMargin">
-             <number>3</number>
-            </property>
-            <property name="bottomMargin">
-             <number>3</number>
-            </property>
-            <property name="spacing">
-             <number>3</number>
-            </property>
-            <item row="3" column="0">
-             <layout class="QGridLayout" name="gridLayout_2" rowstretch="0">
-              <item row="0" column="0">
-               <widget class="QLabel" name="labelPulse">
-                <property name="text">
-                 <string> P </string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="labelRR">
-                <property name="text">
-                 <string>RR</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="vitalBox" name="pRR">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+6&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="inputMethodHints">
-                 <set>Qt::ImhNone</set>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QLabel" name="labelBP">
-                <property name="text">
-                 <string>BP</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="vitalBox" name="pPulse">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+5&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="inputMethodHints">
-                 <set>Qt::ImhNone</set>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="5">
-               <widget class="vitalBox" name="pBP">
-                <property name="minimumSize">
-                 <size>
-                  <width>75</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+7&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="inputMethodHints">
-                 <set>Qt::ImhDigitsOnly</set>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="8">
-               <widget class="vitalBox" name="pTemp">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL+8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="6">
-               <widget class="QLabel" name="labelTemp">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string> T </string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="0">
-             <widget class="QWidget" name="widgetBaby" native="true">
-              <layout class="QGridLayout" name="gridLayout_4">
-               <property name="leftMargin">
-                <number>1</number>
-               </property>
-               <property name="topMargin">
-                <number>1</number>
-               </property>
-               <property name="rightMargin">
-                <number>1</number>
-               </property>
-               <property name="bottomMargin">
-                <number>1</number>
-               </property>
-               <property name="spacing">
-                <number>1</number>
-               </property>
-               <item row="0" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout_baby">
-                 <property name="spacing">
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="labelWeight">
-                   <property name="text">
-                    <string>Weight</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="xLineEdit" name="lineEditWeight"/>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="labelLength">
-                   <property name="text">
-                    <string>Length</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="xLineEdit" name="lineEditLength"/>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="labelHead">
-                   <property name="text">
-                    <string>Head Cir.</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="xLineEdit" name="lineEditHead"/>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QWidget" name="ObstWidget" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_10">
-               <property name="spacing">
-                <number>3</number>
-               </property>
-               <property name="leftMargin">
-                <number>3</number>
-               </property>
-               <property name="topMargin">
-                <number>3</number>
-               </property>
-               <property name="rightMargin">
-                <number>3</number>
-               </property>
-               <property name="bottomMargin">
-                <number>3</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>Wt</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="xLineEdit" name="obstWeight">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>41</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>41</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>LMP</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDateEdit" name="lmpDate">
-                 <property name="minimumDate">
-                  <date>
-                   <year>2010</year>
-                   <month>1</month>
-                   <day>1</day>
-                  </date>
-                 </property>
-                 <property name="displayFormat">
-                  <string>dd/MM/yyyy</string>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                 <property name="date">
-                  <date>
-                   <year>2010</year>
-                   <month>1</month>
-                   <day>1</day>
-                  </date>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QFrame" name="frame_2">
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="labelEDD">
-                 <property name="text">
-                  <string>EDD</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDateEdit" name="eddDate">
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                 <property name="minimumDate">
-                  <date>
-                   <year>2010</year>
-                   <month>1</month>
-                   <day>1</day>
-                  </date>
-                 </property>
-                 <property name="displayFormat">
-                  <string>dd/MM/yyyy</string>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                 <property name="date">
-                  <date>
-                   <year>2015</year>
-                   <month>1</month>
-                   <day>1</day>
-                  </date>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_9">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="xCheckBox" name="checkBoxAntenatal">
-                 <property name="text">
-                  <string>Antenatal</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
          </item>
         </layout>
        </widget>
@@ -1623,7 +1610,6 @@
   <tabstop>lineEditWeight</tabstop>
   <tabstop>lineEditLength</tabstop>
   <tabstop>lineEditHead</tabstop>
-  <tabstop>obstWeight</tabstop>
   <tabstop>lmpDate</tabstop>
   <tabstop>eddDate</tabstop>
   <tabstop>checkBoxAntenatal</tabstop>

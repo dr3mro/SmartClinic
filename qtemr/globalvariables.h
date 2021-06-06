@@ -25,7 +25,7 @@
 #define selfEmail "smartclinic22@gmail.com"
 #define devEmail "dr3mro@gmail.com"
 #define exeBackUp "backup/~smartClinic3.exe"
-#define dbVersion 2.87
+#define dbVersion 2.88
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
 #define drugsDatabaseVer 210129

@@ -17,6 +17,74 @@ class mSettings : public QObject
 {
     Q_OBJECT
 public:
+    // this is data structure to hold the vitals for printing
+    struct vitals{
+        int pulse;
+        QString BP;
+        int RR;
+        double T;
+        double weight;
+        double height;
+        int sPo2;
+        int RBS;
+
+        void clear(){
+            pulse=-1;
+            BP="-1";
+            RR=-1;
+            T=-1;;
+            weight=-1;
+            height=-1;
+            sPo2=-1;
+            RBS=-1;
+        }
+
+        bool operator==(const vitals& vitals) const
+        {
+            return std::tie(
+                        pulse,
+                        BP,
+                        RR,
+                        T,
+                        weight,
+                        height,
+                        sPo2,
+                        RBS
+                        ) ==
+                    std::tie(
+                        vitals.pulse,
+                        vitals.BP,
+                        vitals.RR,
+                        vitals.T,
+                        vitals.weight,
+                        vitals.height,
+                        vitals.sPo2,
+                        vitals.RBS
+                        );
+        }
+    };
+    // this is data structure to hold the drug for printing
+    struct drug{
+        QString TradeName;
+        QString Dose;
+        QString StartDate;
+    };
+
+    // this is data structure to hold the roshetta for printing
+    struct Roshetta
+    {
+        QString name;
+        int Age;
+        QString Diagnosis;
+        vitals vital;
+        int visitDate;
+        int printedinDate;
+        int nextDate;
+        QList<drug> currentDrugsList;
+        QList<drug> baseDrugsList;
+        QStringList requests;
+    };
+
     struct dbOptions
     {
         QString autovacuum="NONE";

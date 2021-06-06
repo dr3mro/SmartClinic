@@ -1,4 +1,4 @@
-#include "PagesTextEdit.h"
+﻿#include "PagesTextEdit.h"
 
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
@@ -26,6 +26,7 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
 	//
 	connect(verticalScrollBar(), SIGNAL(rangeChanged(int,int)),
 		this, SLOT(aboutVerticalScrollRangeChanged(int,int)));
+    this->setAttribute(Qt::WA_TranslucentBackground, false);
 
 }
 
@@ -105,13 +106,17 @@ void PagesTextEdit::setPageNumbersAlignment(Qt::Alignment _align)
 
 void PagesTextEdit::paintEvent(QPaintEvent* _event)
 {
+
     updateVerticalScrollRange();
 
-	paintPagesView();
+    drawBackground();
 
-	paintPageNumbers();
+    paintPagesView();
+
+    paintPageNumbers();
 
     TextEdit::paintEvent(_event);
+
 
 }
 
@@ -190,7 +195,7 @@ void PagesTextEdit::updateViewportMargins()
 
 void PagesTextEdit::updateVerticalScrollRange()
 {
-	//
+    //
 	// В постраничном режиме показываем страницу целиком
 	//
 	if (m_usePageMode) {
@@ -218,9 +223,10 @@ void PagesTextEdit::updateVerticalScrollRange()
 
 void PagesTextEdit::paintPagesView()
 {
-	//
+    //
 	// Оформление рисуется только тогда, когда редактор находится в постраничном режиме
 	//
+
 
 	if (m_usePageMode) {
 		//
@@ -231,16 +237,12 @@ void PagesTextEdit::paintPagesView()
 		qreal pageHeight = m_pageMetrics.pxPageSize().height();
 
 
-        QPainter bgPainter(viewport());
-        QPen whitePen(Qt::white);
-
-        bgPainter.setPen(whitePen);
-        bgPainter.drawRect(rect());
-
 		QPainter p(viewport());
 
         QPen spacePen(Qt::lightGray, 10);
         QPen borderPen(Qt::darkGray, 3);
+
+
 
 
 		qreal curHeight = pageHeight - (verticalScrollBar()->value() % (int)pageHeight);
@@ -266,7 +268,9 @@ void PagesTextEdit::paintPagesView()
 			//
 			// Фон разрыва страниц
 			//
-			p.setPen(spacePen);
+            p.setPen(spacePen);
+
+
 			p.drawLine(0, curHeight-4, width(), curHeight-4);
 
 			//
@@ -299,12 +303,11 @@ void PagesTextEdit::paintPagesView()
 			p.drawLine(x - horizontalDelta, curHeight-pageHeight, x - horizontalDelta, height());
 		}
 	}
-
 }
 
 void PagesTextEdit::paintPageNumbers()
 {
-	//
+    //
     // Page numbers are drawn only when the editor is in pagination mode,
     // if fields are set and the option to display numbers is enabled
 	//
@@ -476,6 +479,17 @@ void PagesTextEdit::aboutUpdateDocumentGeometry()
 		rootFrameFormat.setRightMargin(rootFrameMargins.right());
 		rootFrameFormat.setBottomMargin(rootFrameMargins.bottom());
 		document()->rootFrame()->setFrameFormat(rootFrameFormat);
-	}
+    }
+}
+
+void PagesTextEdit::drawBackground()
+{
+    QPainter painter(viewport());
+    QPen pen;
+    pen.setColor(Qt::blue);
+    pen.setWidth(2);
+    painter.setPen(pen);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.fillRect(viewport()->rect(),QBrush(Qt::white));
 }
 

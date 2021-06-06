@@ -63,6 +63,14 @@ void visitsBox::tweakui()
             ( speciality == dataHelper::Speciality::Paediatrics || speciality == dataHelper::Speciality::FamilyMedicine );
 
     ui->widgetBaby->setVisible(isTreatingMinors);
+    ui->weight->setHidden(isTreatingMinors);
+    ui->height->setHidden(isTreatingMinors);
+    ui->sPo2->setHidden(isTreatingMinors);
+    ui->RBS->setHidden(isTreatingMinors);
+    ui->label_w->setHidden(isTreatingMinors);
+    ui->label_h->setHidden(isTreatingMinors);
+    ui->label_spo2->setHidden(isTreatingMinors);
+    ui->label_rbs->setHidden(isTreatingMinors);
 
     if ( speciality == dataHelper::Speciality::ObGyn )
     {
@@ -230,12 +238,14 @@ sqlBase::Visit visitsBox::grabVisit()
     visit.presentation  = ui->presentation->text().simplified();
     visit.presentationAnalysis = ui->presentationAnalysis->toHtml();
     visit.diagnosis = ui->Diagnosis->text().simplified();
-    visit.pulse = ui->pPulse->text();
-    visit.rr = ui->pRR->text();
-    visit.temp = ui->pTemp->text();
-    visit.bp = ui->pBP->text();
-    visit.weight = ui->lineEditWeight->text();
-    visit.length = ui->lineEditLength->text();
+    visit.vitals.pulse = ui->pPulse->text().toInt() <=0 ? -1:ui->pPulse->text().toInt();
+    visit.vitals.RR = ui->pRR->text().toInt() <=0 ? -1:ui->pRR->text().toInt();
+    visit.vitals.T = ui->pTemp->text().toDouble() <=0 ? -1:ui->pTemp->text().toDouble();
+    visit.vitals.BP = ui->pBP->text() == "" ? "-1":ui->pBP->text();
+    visit.vitals.weight = ui->weight->text().toDouble() <=0 ? -1:ui->weight->text().toDouble();
+    visit.vitals.height = ui->height->text().toDouble() <=0 ? -1:ui->height->text().toDouble();
+    visit.vitals.RBS = ui->RBS->text().toInt() <=0 ? -1:ui->RBS->text().toInt();
+    visit.vitals.sPo2 = ui->sPo2->text().toInt() <=0 ? -1:ui->sPo2->text().toInt();
     visit.headCir = ui->lineEditHead->text();
     visit.exGeneral = ui->patientGeneralEx->toHtml();
     visit.exChestHeart = ui->patientHeartLungEx->toHtml();
@@ -259,12 +269,14 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
     ui->presentation->setText(visit.presentation);
     ui->presentationAnalysis->setHtml(visit.presentationAnalysis);
     ui->Diagnosis->setText(visit.diagnosis);
-    ui->pPulse->setText(visit.pulse);
-    ui->pRR->setText(visit.rr);
-    ui->pTemp->setText(visit.temp);
-    ui->pBP->setText(visit.bp);
-    ui->lineEditWeight->setText(visit.weight);
-    ui->lineEditLength->setText(visit.length);
+    ui->pPulse->setText(visit.vitals.pulse <= 0 ? QString():QString::number(visit.vitals.pulse));
+    ui->pRR->setText(visit.vitals.RR <= 0 ? QString():QString::number(visit.vitals.RR));
+    ui->pTemp->setText(visit.vitals.T <= 0 ? QString():QString::number(visit.vitals.T));
+    ui->pBP->setText(visit.vitals.BP == "-1" ? QString():visit.vitals.BP);
+    ui->weight->setText(visit.vitals.weight <= 0 ? QString():QString::number(visit.vitals.weight));
+    ui->height->setText(visit.vitals.height <= 0 ? QString():QString::number(visit.vitals.height));
+    ui->RBS->setText(visit.vitals.RBS <= 0 ? QString():QString::number(visit.vitals.RBS));
+    ui->sPo2->setText(visit.vitals.sPo2 <= 0 ? QString():QString::number(visit.vitals.sPo2));
     ui->lineEditHead->setText(visit.headCir);
     ui->patientGeneralEx->setHtml(visit.exGeneral);
     ui->patientHeartLungEx->setHtml(visit.exChestHeart);
@@ -1154,7 +1166,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     //body.append(QString("<table border=\"1\" style=\"-qt-table-type: frame;\" width=\"%1\" height=\"%2\"><tr><td>").arg(pageWidth).arg(pageHeight));
     //body.append(fragment1);
     if(mPrintsettings.showPrescriptionHeaderFooterLogo){
-        body.append(QString("<table border=\"1\" width=\"%1%\">").arg(mPrintsettings.bannerWidth));
+        body.append(QString("<table border=\"0\" width=\"%1%\">").arg(mPrintsettings.bannerWidth));
         body.append("<tr>");
         body.append("<td width=\"40%\">");
         body.append(QString("<img src=\"%1\" width=%2 height=%2>").arg(LOGOFILE).arg(mPrintsettings.logoSize));
@@ -1218,7 +1230,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
         t_twoColumn = "<tr valign=\"top\"><td><div align=\"%4\" >%1&#160;"+t_nCompact+drugsSeparator+"</div></td><td>"
                                                                                                      "<div dir=RTL valign =\"%3\" align=\"%5\" >&#160;%2</div></td></tr>%6";
 
-        HTML.append(QString("<table border=\"1\" width=\"%1\" style=\"float:left;\">").arg(drugsWidth));
+        HTML.append(QString("<table border=\"0\" width=\"%1\" style=\"float:left;\">").arg(drugsWidth));
 
         t_unit = mPrintsettings.doseinNewLine ? t_oneColumn:t_twoColumn;
 
@@ -1342,7 +1354,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
     if ( mPrintsettings.showInvestigations && investigations_count >0 )
     {
 
-        HTML.append(QString("<table border=\"1\" bgcolor=\"Aliceblue\" style=\"float:left;margin-left:%1px;\">")
+        HTML.append(QString("<table border=\"0\" bgcolor=\"Aliceblue\" style=\"float:left;margin-left:%1px;\">")
                     .arg(invPad));
         HTML.append(QString("<tr><th style=\"padding:3px;\" ><div style=\"background-color:LightSteelBlue;font-size:%1pt;\"><b>REQUESTS</b></div></th></tr>").arg(mPrintsettings.point-1));
         foreach (QString inv, investigations)
@@ -1360,7 +1372,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
    if(selectedDiet!="-")
     {
-        HTML.append(QString("<table border=\"1\" style=\"float:left;margin-top:%1px;margin-left:%2px;\">")
+        HTML.append(QString("<table border=\"0\" style=\"float:left;margin-top:%1px;margin-left:%2px;\">")
                     .arg(mPrintsettings.dietTopPadding*logicalDpiX())
                     .arg(mPrintsettings.dietLeftPadding*logicalDpiX()));
         HTML.append(QString("<tr><td width=\"%1\">").arg(dietWidth));
@@ -1371,7 +1383,7 @@ QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintse
 
 
    if(mPrintsettings.showPrescriptionHeaderFooterLogo){
-       HTML.append(QString("<table width=\"%1%\" border=\"1\" style=\"position:absolute;float:left;bottom:0;\">")
+       HTML.append(QString("<table width=\"%1%\" border=\"0\" style=\"position:absolute;float:left;bottom:0;\">")
                    .arg(mPrintsettings.bannerWidth));
        HTML.append(QString("<tr style=\"font-size:8pt;\"><td><b>Printed on</b>:<i>%1</i></td><td><b>Physician's Signature</b>:</td></tr>").arg(visitDate));
        HTML.append("<tr>");
@@ -1763,10 +1775,10 @@ void visitsBox::on_lmpDate_userDateChanged(const QDate &date)
 
 void visitsBox::on_lineEditWeight_textChanged(const QString &arg1)
 {
-    ui->obstWeight->setText(arg1);
+    ui->weight->setText(arg1);
 }
 
-void visitsBox::on_obstWeight_textChanged(const QString &arg1)
+void visitsBox::on_weight_textChanged(const QString &arg1)
 {
     ui->lineEditWeight->setText(arg1);
 }
@@ -1791,3 +1803,15 @@ void visitsBox::toggleContollers()
     ui->nexVisit->setEnabled(nextVisitFound);
     ui->preVisit->setEnabled(previusVisitFound);
 }
+
+void visitsBox::on_lineEditLength_textChanged(const QString &arg1)
+{
+    ui->height->setText(arg1);
+}
+
+
+void visitsBox::on_height_textChanged(const QString &arg1)
+{
+    ui->lineEditLength->setText(arg1);
+}
+

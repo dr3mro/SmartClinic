@@ -109,7 +109,7 @@ private slots:
     void toggleSyncPrintButtons();
     void on_lmpDate_userDateChanged(const QDate &date);
     void on_lineEditWeight_textChanged(const QString &arg1);
-    void on_obstWeight_textChanged(const QString &arg1);
+    void on_weight_textChanged(const QString &arg1);
     void on_checkBoxAntenatal_clicked(bool checked);
     void toggleContollers();
     QString genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings, QString selectedDiet, int drugsMode);
@@ -124,6 +124,10 @@ private slots:
     bool doesHaveDrugsInLastVisit();
     bool doeshaveDrugsInPatient();
     void toggleDateFollowup();
+
+    void on_lineEditLength_textChanged(const QString &arg1);
+
+    void on_height_textChanged(const QString &arg1);
 
 signals:
     void newMessage(QString,QString);

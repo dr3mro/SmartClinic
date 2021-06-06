@@ -248,15 +248,15 @@ public:
         QString presentation;
         QString presentationAnalysis;
         QString diagnosis;
-        QString investigations;
+        //QString investigations;
         QString invResults;
-        QString drugList;
-        QString pulse;
-        QString rr;
-        QString temp;
-        QString bp;
-        QString weight;
-        QString length;
+        //QString drugList;
+        //QString pulse;
+        //QString rr;
+        //QString temp;
+        //QString bp;
+        //QString weight;
+        //QString length;
         QString headCir;
         QString exGeneral;
         QString exChestHeart;
@@ -271,16 +271,18 @@ public:
         QString ObstUS;
         QString Antenatal;
         QString pelvicExam;
+        mSettings::vitals vitals;
 
         void clear()
         {
             ID = 0;
             visitAge = presentation = presentationAnalysis = diagnosis = "";
-            investigations = invResults = drugList = pulse = rr = temp = bp = "";
-            weight = length = headCir = exGeneral = exChestHeart = exAbdback = "";
+            /*investigations = drugList = pulse = rr = temp = bp = */invResults = "";
+            /*weight = length = */headCir = exGeneral = exChestHeart = exAbdback = "";
             exLL = visitNotes = visitDateTime = followDate = visitType = checkButtonCaseClose = "";
             ObstUS = Antenatal = pelvicExam="";
             LMPDATE = static_cast<int>(QDate::currentDate().toJulianDay());
+            vitals.clear();
         }
 
         bool operator!=(const Visit& visit) const
@@ -291,15 +293,15 @@ public:
                         presentation,
                         presentationAnalysis,
                         diagnosis,
-                        investigations,
+                        //investigations,
                         invResults,
-                        drugList,
-                        pulse,
-                        rr,
-                        temp,
-                        bp,
-                        weight,
-                        length,
+                        //drugList,
+                        //pulse,
+                        //rr,
+                        //temp,
+                        //bp,
+                        //weight,
+                        //length,
                         headCir,
                         exGeneral,
                         exChestHeart,
@@ -313,7 +315,8 @@ public:
                         LMPDATE,
                         ObstUS,
                         Antenatal,
-                        pelvicExam
+                        pelvicExam,
+                        vitals
                         ) !=
                     std::tie(
                         visit.ID,
@@ -321,15 +324,15 @@ public:
                         visit.presentation,
                         visit.presentationAnalysis,
                         visit.diagnosis,
-                        visit.investigations,
+                        //visit.investigations,
                         visit.invResults,
-                        visit.drugList,
-                        visit.pulse,
-                        visit.rr,
-                        visit.temp,
-                        visit.bp,
-                        visit.weight,
-                        visit.length,
+                        //visit.drugList,
+                        //visit.pulse,
+                        //visit.rr,
+                        //visit.temp,
+                        //visit.bp,
+                        //visit.weight,
+                        //visit.length,
                         visit.headCir,
                         visit.exGeneral,
                         visit.exChestHeart,
@@ -343,7 +346,8 @@ public:
                         visit.LMPDATE,
                         visit.ObstUS,
                         visit.Antenatal,
-                        visit.pelvicExam
+                        visit.pelvicExam,
+                        visit.vitals
                         );
         }
     };
@@ -630,7 +634,9 @@ public:
     QStandardItemModel *getPatientsTableModel();
     sqlBase::Patient getPatientData(int ID);
     sqlBase::mPatient getmPatientData(int ID);
-    Visit getPatientVisitData(int ID , QString dateTimeString);
+    Visit getPatientVisitDataPre287(int ID , QString dateTimeString);
+    Visit getPatientVisitData(const int & ID, const QString &dateTimeString);
+    mSettings::vitals getPatientVisitVitals(const int & ID, const QString &dateTimeString);
     bool addPatient2myDataBase(Patient patient);
     bool addVisit2myDataBase(Visit visit);
     bool addSurgicalNote(int ID, QString surgeryID, int julianDate, QString opName, QString opReport);
@@ -661,12 +667,15 @@ public:
     bool deleteSugicalNote(int ID,QString surgeryID);
     QString createPatientUpdatePreparePhrase(int ID);
     QString createVisitUpdatePreparePhrase(int ID,QString visitDateTime);
+    QString createVisitVitalsUpdatePreparePhrase(int ID,QString visitDateTime);
     QString createSurgicalNotesPrepareUpdatePhrase(int ID , QString surgeryID );
     QString createPatientInsertPreparePhrase();
     QString createVisitInsertPreparePhrase();
+    QString createVisitVitalsInsertPreparePhrase();
     QString createSurgicalNotesPrepareInsertPhrase();
     bool bindAndExecPatientSqlQuery(QString queryPhrase, Patient patient);
     bool bindAndExecVisitSqlQuery(QString queryPhrase , Visit visit);
+    bool bindAndExecVisitVitalsSqlQuery(const QString &queryPhrase , const Visit &_visit, const int &ID);
     bool bindAndExecSurgicalNoteQuery(QString queryPhrase, int ID, QString surgeryID, int julianDate, QString opName, QString opReport);
     bool createPatientItemModel();
     bool queryExec(QString sqlPhrase);
@@ -746,6 +755,7 @@ private:
     bool createSurgeryTable();
     bool createDeceasedTable();
     bool createVisitsPriceTable();
+    bool createVisitsVitalsTable();
     bool createConditionsTable();
     bool createConditionsPatientTable();
     bool createPerinatalTable();
@@ -769,6 +779,7 @@ private:
     bool migratePerinatal();
     bool migrateDevelopment();
     bool migrateObGyn();
+    void updateVisitsTable288();
     bool removePerinatalDevelopmentfromPatientsTable();
     bool removeObgynfromPatientsTable();
     QString getDecryptedName(QString rawName);

@@ -34,6 +34,7 @@ sqlBase::sqlBase(QObject *parent, QString connectionName, bool createTables) : m
         createPerinatalTable();
         createDevelopmentTable();
         createObGynTable();
+        createVisitsVitalsTable();
         createIndexes();
         db.commit();
     }
@@ -109,8 +110,11 @@ bool sqlBase::addPatient2myDataBase(Patient _patient)
 
 bool sqlBase::addVisit2myDataBase(Visit _visit)
 {
-    QString sqlPhrase = createVisitInsertPreparePhrase();
-    return bindAndExecVisitSqlQuery(sqlPhrase,_visit);
+    QString sqlPhraseVisit = createVisitInsertPreparePhrase();
+    QString sqlPhraseVitals = createVisitVitalsInsertPreparePhrase();
+    bool b = bindAndExecVisitSqlQuery(sqlPhraseVisit,_visit);
+    bool c = bindAndExecVisitVitalsSqlQuery(sqlPhraseVitals,_visit,visit.ID);
+    return (b&&c);
 }
 
 bool sqlBase::addSurgicalNote(int ID,QString surgeryID ,int julianDate, QString opName, QString opReport)
@@ -273,9 +277,11 @@ bool sqlBase::updatePatient(int ID, Patient patient)
 
 bool sqlBase::updateVisit(int ID, QString visitDateTime, Visit visit)
 {
-    QString sqlPhrase = createVisitUpdatePreparePhrase(ID,visitDateTime);
-    bool b = bindAndExecVisitSqlQuery(sqlPhrase,visit);
-    return b;
+    QString sqlPhraseVisit = createVisitUpdatePreparePhrase(ID,visitDateTime);
+    QString sqlPhraseVitals = createVisitVitalsUpdatePreparePhrase(ID,visitDateTime);
+    bool b = bindAndExecVisitSqlQuery(sqlPhraseVisit,visit);
+    bool c = bindAndExecVisitVitalsSqlQuery(sqlPhraseVitals,visit,ID);
+    return (b&&c);
 }
 
 bool sqlBase::savePatient(int ID, Patient patient)
@@ -740,7 +746,53 @@ sqlBase::mPatient sqlBase::getmPatientData(int ID)
     return mpatient;
 }
 
-sqlBase::Visit sqlBase::getPatientVisitData(int ID, QString dateTimeString)
+sqlBase::Visit sqlBase::getPatientVisitDataPre287(int ID, QString dateTimeString)
+{
+    query->clear();
+    bool q = query->exec(QString("SELECT * FROM visits_old WHERE ID=%1 AND visitDateTime='%2'").arg(ID).arg(dateTimeString));
+
+    if( !q )
+    {
+        mDebug() << query->lastError().text();
+    }
+
+    visit.clear();
+
+    while (query->next())
+    {
+        visit.ID = query->value(0).toInt();
+        visit.visitAge = query->value(1).toString();
+        visit.presentation = query->value(2).toString();
+        visit.presentationAnalysis = query->value(3).toString();
+        visit.diagnosis = query->value(4).toString();
+        visit.invResults = query->value(6).toString();
+        visit.vitals.pulse = query->value(8).toInt();
+        visit.vitals.RR = query->value(9).toInt();
+        visit.vitals.T = query->value(10).toDouble();
+        visit.vitals.BP = query->value(11).toString();
+        visit.vitals.weight = query->value(12).toDouble();
+        visit.vitals.height = query->value(13).toDouble();
+        visit.headCir = query->value(14).toString();
+        visit.exGeneral = query->value(15).toString();
+        visit.exChestHeart = query->value(16).toString();
+        visit.exAbdback = query->value(17).toString();
+        visit.exLL = query->value(18).toString();
+        visit.visitNotes = query->value(19).toString();
+        visit.visitDateTime = query->value(20).toString();
+        visit.followDate = query->value(21).toString();
+        visit.visitType = query->value(22).toString();
+        visit.checkButtonCaseClose = query->value(23).toString();
+        visit.LMPDATE = query->value(26).toInt();
+        visit.ObstUS = query->value(27).toString();
+        visit.Antenatal = query->value(28).toString();
+        visit.pelvicExam = query->value(29).toString();
+    }
+    query->finish();
+    return visit;
+
+}
+
+sqlBase::Visit sqlBase::getPatientVisitData(const int &ID, const QString &dateTimeString)
 {
     query->clear();
     bool q = query->exec(QString("SELECT * FROM visits WHERE ID=%1 AND visitDateTime='%2'").arg(ID).arg(dateTimeString));
@@ -759,34 +811,58 @@ sqlBase::Visit sqlBase::getPatientVisitData(int ID, QString dateTimeString)
         visit.presentation = query->value(2).toString();
         visit.presentationAnalysis = query->value(3).toString();
         visit.diagnosis = query->value(4).toString();
-        visit.investigations = query->value(5).toString();
-        visit.invResults = query->value(6).toString();
-        visit.drugList = query->value(7).toString();
-        visit.pulse = query->value(8).toString();
-        visit.rr = query->value(9).toString();
-        visit.temp = query->value(10).toString();
-        visit.bp = query->value(11).toString();
-        visit.weight = query->value(12).toString();
-        visit.length = query->value(13).toString();
-        visit.headCir = query->value(14).toString();
-        visit.exGeneral = query->value(15).toString();
-        visit.exChestHeart = query->value(16).toString();
-        visit.exAbdback = query->value(17).toString();
-        visit.exLL = query->value(18).toString();
-        visit.visitNotes = query->value(19).toString();
-        visit.visitDateTime = query->value(20).toString();
-        visit.followDate = query->value(21).toString();
-        visit.visitType = query->value(22).toString();
-        visit.checkButtonCaseClose = query->value(23).toString();
-        visit.LMPDATE = query->value(26).toInt();
-        visit.ObstUS = query->value(27).toString();
-        visit.Antenatal = query->value(28).toString();
-        visit.pelvicExam = query->value(29).toString();
-
+        visit.invResults = query->value(5).toString();
+        visit.headCir = query->value(6).toString();
+        visit.exGeneral = query->value(7).toString();
+        visit.exChestHeart = query->value(8).toString();
+        visit.exAbdback = query->value(9).toString();
+        visit.exLL = query->value(10).toString();
+        visit.visitNotes = query->value(11).toString();
+        visit.visitDateTime = query->value(12).toString();
+        visit.followDate = query->value(13).toString();
+        visit.visitType = query->value(14).toString();
+        visit.checkButtonCaseClose = query->value(15).toString();
+        visit.LMPDATE = query->value(18).toInt();
+        visit.ObstUS = query->value(19).toString();
+        visit.Antenatal = query->value(20).toString();
+        visit.pelvicExam = query->value(21).toString();
     }
-    query->finish();
-    return visit;
 
+    query->finish();
+    visit.vitals = getPatientVisitVitals(ID,dateTimeString);
+    return visit;
+}
+
+mSettings::vitals sqlBase::getPatientVisitVitals(const int &ID, const QString &dateTimeString)
+{
+    query->clear();
+    mSettings::vitals mVitals;
+    QLocale locale(QLocale::English , QLocale::UnitedStates );
+    QDateTime mDate = locale.toDateTime(dateTimeString,"dd/MM/yyyy hh:mm AP ddd");
+    int mVisitDate = mDate.date().toJulianDay();
+    int mVisitTime = mDate.time().msecsSinceStartOfDay()/1000;
+
+    bool q = query->exec(QString("SELECT * FROM visitVitals WHERE ID=%1 AND visitDate='%2' AND visitTime='%3'").arg(ID).arg(mVisitDate).arg(mVisitTime));
+
+    if( !q )
+    {
+        mDebug() << query->lastError().text();
+    }
+
+    while (query->next())
+    {
+        mVitals.pulse = query->value(3).toInt();
+        mVitals.BP = query->value(4).toString();
+        mVitals.RR = query->value(5).toInt();
+        mVitals.T = query->value(6).toDouble();
+        mVitals.weight = query->value(7).toDouble();
+        mVitals.height = query->value(8).toDouble();
+        mVitals.sPo2 = query->value(9).toInt();
+        mVitals.RBS = query->value(10).toInt();
+    }
+   // mDebug() << query->lastQuery();
+    query->finish();
+    return mVitals;
 }
 
 int sqlBase::getPatientIndexLength()
@@ -938,13 +1014,13 @@ bool sqlBase::copyVisit2ID(int fID, int tID, QStringList visitList)
     foreach (QString visit, visitList)
     {
         int julianDate = static_cast<int>(locale.toDateTime(visit,"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
-
+        int visitTime = static_cast<int>(locale.toDateTime(visit,"dd/MM/yyyy hh:mm AP ddd").time().msecsSinceStartOfDay()/1000);
         bool v1 = query->exec(QString("UPDATE visits SET ID=%1 WHERE ID=%2 AND visitJulianDate=%3").arg(tID).arg(fID).arg(julianDate));
         bool v2 = query->exec(QString("UPDATE investigations SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
         bool v3 = query->exec(QString("UPDATE drugs SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
         bool v4 = query->exec(QString("UPDATE visitPrices SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
-
-        b=(v1 && v2 && v3 && v4);
+        bool v5 = query->exec(QString("UPDATE visitVitals SET ID=%1 WHERE ID=%2 AND VISITDATE=%3 AND visitTime='%4'").arg(tID).arg(fID).arg(julianDate).arg(visitTime));
+        b=(v1 && v2 && v3 && v4 && v5);
 
         if (!b)
         {
@@ -1041,15 +1117,7 @@ QString sqlBase::createVisitUpdatePreparePhrase(int ID, QString visitDateTime)
                 "presentation=:presentation,"
                 "presentationAnalysis=:presentationAnalysis,"
                 "diagnosis=:diagnosis,"
-                "investigations=:investigations,"
                 "invResults=:invResults,"
-                "drugList=:drugList,"
-                "pulse=:pulse,"
-                "rr=:rr,"
-                "temp=:temp,"
-                "bp=:bp,"
-                "weight=:weight,"
-                "length=:length,"
                 "headCir=:headCir,"
                 "LMPDATE=:LMPDATE,"
                 "ObstUS=:ObstUS,"
@@ -1064,6 +1132,26 @@ QString sqlBase::createVisitUpdatePreparePhrase(int ID, QString visitDateTime)
                 "Antenatal=:Antenatal,"
                 "pelvicExam=:pelvicExam "
                 "WHERE ID=%1 AND visitDateTime='%2'").arg(ID).arg(visitDateTime);
+    return visitUpdatePreparePhrase;
+}
+
+QString sqlBase::createVisitVitalsUpdatePreparePhrase(int ID, QString visitDateTime)
+{
+    QLocale locale(QLocale::English , QLocale::UnitedStates );
+    QDateTime mDate = locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
+    int mVisitDate = mDate.date().toJulianDay();
+    int mVisitTime = mDate.time().msecsSinceStartOfDay()/1000;
+    QString visitUpdatePreparePhrase = QString(
+                "UPDATE visitVitals SET "
+                "pulse=:pulse,"
+                "RR=:RR,"
+                "T=:T,"
+                "BP=:BP,"
+                "weight=:weight,"
+                "height=:height,"
+                "sPo2=:sPo2,"
+                "RBS=:RBS "
+                "WHERE ID=%1 AND visitDate='%2' AND visitTime='%3'").arg(ID).arg(mVisitDate).arg(mVisitTime);
     return visitUpdatePreparePhrase;
 }
 
@@ -1138,15 +1226,7 @@ QString sqlBase::createVisitInsertPreparePhrase()
                 "presentation,"
                 "presentationAnalysis,"
                 "diagnosis,"
-                "investigations,"
                 "invResults,"
-                "drugList,"
-                "pulse,"
-                "rr,"
-                "temp,"
-                "bp,"
-                "weight,"
-                "length,"
                 "headCir,"
                 "exGeneral,"
                 "exChestHeart,"
@@ -1170,15 +1250,7 @@ QString sqlBase::createVisitInsertPreparePhrase()
                 ":presentation,"
                 ":presentationAnalysis,"
                 ":diagnosis,"
-                ":investigations,"
                 ":invResults,"
-                ":drugList,"
-                ":pulse,"
-                ":rr,"
-                ":temp,"
-                ":bp,"
-                ":weight,"
-                ":length,"
                 ":headCir,"
                 ":exGeneral,"
                 ":exChestHeart,"
@@ -1195,6 +1267,40 @@ QString sqlBase::createVisitInsertPreparePhrase()
                 ":ObstUS,"
                 ":Antenatal,"
                 ":pelvicExam)");
+
+    return visitInsertPreparePhrase;
+}
+
+QString sqlBase::createVisitVitalsInsertPreparePhrase()
+{
+    QString visitInsertPreparePhrase =
+            QString(
+                "INSERT INTO visitVitals"
+                "("
+                "ID,"
+                "visitDate,"
+                "visitTime,"
+                "pulse,"
+                "BP,"
+                "RR,"
+                "T,"
+                "weight,"
+                "height,"
+                "sPo2,"
+                "RBS)"
+                "VALUES"
+                "("
+                ":ID,"
+                ":visitDate,"
+                ":visitTime,"
+                ":pulse,"
+                ":BP,"
+                ":RR,"
+                ":T,"
+                ":weight,"
+                ":height,"
+                ":sPo2,"
+                ":RBS)");
 
     return visitInsertPreparePhrase;
 }
@@ -1274,15 +1380,7 @@ bool sqlBase::bindAndExecVisitSqlQuery(QString queryPhrase, Visit visit)
     query->bindValue(":presentation",visit.presentation);
     query->bindValue(":presentationAnalysis",visit.presentationAnalysis);
     query->bindValue(":diagnosis",visit.diagnosis);
-    query->bindValue(":investigations",visit.investigations);
     query->bindValue(":invResults",visit.invResults);
-    query->bindValue(":drugList",visit.drugList);
-    query->bindValue(":pulse",visit.pulse);
-    query->bindValue(":rr",visit.rr);
-    query->bindValue(":temp",visit.temp);
-    query->bindValue(":bp",visit.bp);
-    query->bindValue(":weight",visit.weight);
-    query->bindValue(":length",visit.length);
     query->bindValue(":headCir",visit.headCir);
     query->bindValue(":exGeneral",visit.exGeneral);
     query->bindValue(":exChestHeart",visit.exChestHeart);
@@ -1307,6 +1405,41 @@ bool sqlBase::bindAndExecVisitSqlQuery(QString queryPhrase, Visit visit)
         mDebug() << "exec" << query->lastError().text();
     }
     //db.commit();
+    return b;
+}
+
+bool sqlBase::bindAndExecVisitVitalsSqlQuery(const QString & queryPhrase,const Visit & _visit ,const int &ID)
+{
+    QLocale locale(QLocale::English , QLocale::UnitedStates );
+    QDateTime dt = locale.toDateTime(visit.visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
+    int mVisitDate = static_cast<int>(dt.date().toJulianDay());
+    int mVisitTime = dt.time().msecsSinceStartOfDay()/1000;
+    query->clear();
+
+    bool p = query->prepare(queryPhrase);
+
+    if(!p)
+    {
+        mDebug() << "Prepare" << query->lastError().text();
+    }
+    query->bindValue(":ID", ID);
+    query->bindValue(":visitDate",mVisitDate);
+    query->bindValue(":visitTime",mVisitTime);
+    query->bindValue(":pulse",_visit.vitals.pulse);
+    query->bindValue(":BP",_visit.vitals.BP);
+    query->bindValue(":RR",_visit.vitals.RR);
+    query->bindValue(":T",_visit.vitals.T);
+    query->bindValue(":weight",_visit.vitals.weight);
+    query->bindValue(":height",_visit.vitals.height);
+    query->bindValue(":sPo2",_visit.vitals.sPo2);
+    query->bindValue(":RBS",_visit.vitals.RBS);
+
+    bool b = query->exec();
+    query->finish();
+    if ( !b )
+    {
+        mDebug() << "exec" << query->lastError().text();
+    }
     return b;
 }
 
@@ -1437,15 +1570,7 @@ bool sqlBase::createVisitsTable()
                           "presentation   varchar,"
                           "presentationAnalysis   varchar,"
                           "diagnosis   varchar,"
-                          "investigations   varchar,"
                           "invResults   varchar,"
-                          "drugList   varchar,"
-                          "pulse   varchar,"
-                          "rr   varchar,"
-                          "temp   varchar,"
-                          "bp   varchar,"
-                          "weight   varchar,"
-                          "length   varchar,"
                           "headCir   varchar,"
                           "exGeneral   varchar,"
                           "exChestHeart   varchar,"
@@ -1631,6 +1756,33 @@ bool sqlBase::createVisitsPriceTable()
     if (!b)
     {
         mDebug() << "ERROR CREATING VISIT PRICE TABLE" << query->lastError().text();
+    }
+
+    query->finish();
+    return b;
+}
+
+bool sqlBase::createVisitsVitalsTable()
+{
+    query->clear();
+
+    bool b = query->exec
+           ("CREATE TABLE IF NOT EXISTS visitVitals("
+            "ID int,"
+            "visitDate int,"
+            "visitTime int,"
+            "pulse int,"
+            "BP varchar,"
+            "RR int,"
+            "T  real,"
+            "weight real,"
+            "height real,"
+            "sPo2 int,"
+            "RBS int)");
+
+    if (!b)
+    {
+        mDebug() << "ERROR CREATING VISIT Vitals TABLE" << query->lastError().text();
     }
 
     query->finish();
@@ -2098,6 +2250,7 @@ void sqlBase::createIndexes()
     queryExec("CREATE INDEX if not exists index_surgicalNotes ON surgicalNotes (ID)");
     queryExec("CREATE INDEX if not exists index_development ON development (ID)");
     queryExec("CREATE INDEX if not exists index_perinatal ON perinatal (ID)");
+    queryExec("CREATE INDEX if not exists index_visitVitals ON visitVitals (ID,visitDate,visitTime)");
 }
 
 void sqlBase::upgradeDatabase()
@@ -2137,6 +2290,13 @@ void sqlBase::upgradeDatabase()
         dropAllViews();
         createAllViews();
         setDatabaseVersion(2.87);
+    }
+    if ( dataHelper::doubleEqual(getDatabaseVersion(),double(2.87)) )
+    {
+        updateVisitsTable288();
+        dropAllViews();
+        createAllViews();
+        setDatabaseVersion(2.88);
     }
 
 }
@@ -2738,6 +2898,24 @@ bool sqlBase::migrateObGyn()
     return queryExec("INSERT INTO obgyn SELECT ID,husband,GPA,menarche,menoPause,lastFor,every,cycle,LMP,FPAL,cyclePain from patients");
 }
 
+void sqlBase::updateVisitsTable288()
+{
+    int maxID = getPatientIndexLength();
+
+    sqlExec("ALTER TABLE `visits` RENAME TO `visits_old`;");
+    createVisitsTable();
+
+    for(int _id=1 ; _id <= maxID ;_id++)
+    {
+        QStringList mVisitsDatesForID = sqlExecList(QString("SELECT visitDateTime FROM visits_old WHERE ID='%1'").arg(_id));
+        foreach (const QString & mVisitDate, mVisitsDatesForID) {
+           addVisit2myDataBase((getPatientVisitDataPre287(_id,mVisitDate)));
+        }
+    }
+    sqlExec("DROP TABLE `visits_old`;");
+    mDebug() << "Database updated to V 2.88";
+}
+
 bool sqlBase::removePerinatalDevelopmentfromPatientsTable()
 {
     db.transaction();
@@ -3265,13 +3443,15 @@ void sqlBase::createNewVisit(int ID,
         drugsModel->blockSignals(false);
         investModel->blockSignals(false);
 
-        visit.bp.clear();
-        visit.pulse.clear();
-        visit.temp.clear();
-        visit.rr.clear();
+//        visit.bp.clear();
+//        visit.pulse.clear();
+//        visit.temp.clear();
+//        visit.rr.clear();
+//        visit.weight.clear();
+//        visit.length.clear();
+        visit.vitals.clear();
+
         visit.headCir.clear();
-        visit.weight.clear();
-        visit.length.clear();
 
         int rows = investModel->rowCount();
         QStringList paidServices = sqlextra->getPaidServicesList();

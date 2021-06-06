@@ -106,6 +106,9 @@ private slots:
 	 */
 	void aboutUpdateDocumentGeometry();
 
+
+    void drawBackground();
+
 private:
 	/**
 	 * @brief Ссылка на текущий документ
