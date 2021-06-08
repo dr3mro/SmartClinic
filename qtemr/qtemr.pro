@@ -44,6 +44,7 @@ SOURCES += main.cpp\
     mcashtableview.cpp \
     netserver.cpp \
     remoteassist.cpp \
+    roshetta.cpp \
     squeeze.cpp \
     settingsclass.cpp \
     emptyprofiles.cpp \
@@ -188,6 +189,7 @@ HEADERS  += mainwindow.h \
     netserver.h \
     pch.h \
     remoteassist.h \
+    roshetta.h \
     squeeze.h \
     settingsclass.h \
     emptyprofiles.h \

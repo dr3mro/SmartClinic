@@ -69,7 +69,7 @@ void printDrugs::showPrintDialog()
 {
     setupPrinter(printer,grabPrintSettings());
     if ( dlg->exec() == QDialog::Accepted )
-        printDoc(printer,m_roshetta);
+        printDoc(printer,roshettaDoc);
 }
 
 void printDrugs::showPrintPreviewDialog()
@@ -85,7 +85,7 @@ void printDrugs::showPrintPreviewDialog()
 void printDrugs::mPrint()
 {
     setupPrinter(printer,grabPrintSettings());
-    printDoc(printer,getDoc());
+    printDoc(printer,roshettaDoc);
 }
 
 void printDrugs::savePrintSettings()
@@ -256,25 +256,28 @@ void printDrugs::setDefaultBold(bool bold)
 void printDrugs::refreshView()
 {
     pSettings = grabPrintSettings();
-    QString HTML = emit refreshRoshetta(pSettings,selectedDiet,drugsMode);
+
+    roshettaDoc = roshettaMaker.createRoshetta(roshettaData,pSettings);
+    ui->Roshetta->setDocument(roshettaDoc);
+    //QString HTML = emit refreshRoshetta(pSettings,selectedDiet,drugsMode);
 
 
     //QTextCursor cursor(m_roshetta);
     //QTextFrameFormat fmt;
     //fmt.setHeight(1000);
     //fmt.setWidth(1000);
-    ui->Roshetta->setHtml(HTML);
+    //ui->Roshetta->setHtml(HTML);
     //cursor.insertFrame(fmt);
     //cursor.insertHtml(HTML);
     //cursor.movePosition(QTextCursor::End);
     //cursor.insertText("FOOTER");
     //mDebug() << m_roshetta->toHtml();
-    ui->Roshetta->setPageFormat(QPageSize::A5);
-    ui->Roshetta->setPageMargins(QMarginsF(5, 5, 5, 5));
-    ui->Roshetta->setUsePageMode(true);
-    ui->Roshetta->setPageNumbersAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-    m_roshetta->setPageSize(printer->pageLayout().pageSize().sizePoints());
-    tweakRoshetta();
+    //ui->Roshetta->setPageFormat(QPageSize::A5);
+    //ui->Roshetta->setPageMargins(QMarginsF(5, 5, 5, 5));
+    //ui->Roshetta->setUsePageMode(true);
+    //ui->Roshetta->setPageNumbersAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+    //m_roshetta->setPageSize(printer->pageLayout().pageSize().sizePoints());
+    //tweakRoshetta();
 }
 
 void printDrugs::reset()
@@ -283,6 +286,11 @@ void printDrugs::reset()
     ui->diet->setCurrentIndex(0);
     drugsMode=0;
     selectedDiet="-";
+}
+
+void printDrugs::setRoshettaData(const mSettings::Roshetta &_roshetta)
+{
+    roshettaData = _roshetta;
 }
 
 
@@ -335,7 +343,7 @@ void printDrugs::showEvent(QShowEvent *e)
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
     setupPrinter(preview,grabPrintSettings(),true);
-    printDoc(preview,getDoc(),true);
+    printDoc(preview,roshettaDoc,true);
 }
 
 void printDrugs::tweakRoshetta(){

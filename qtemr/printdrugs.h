@@ -13,6 +13,7 @@
 #include <QTimer>
 #include "mprintpreviewdialog.h"
 #include "msettings.h"
+#include "roshetta.h"
 #include "colorpicker.h"
 #include <QSizeF>
 #include "wm_add2completer.h"
@@ -36,6 +37,7 @@ public:
     void saveRoshettaAutoComplete();
     void loadDiets(QStringList diets);
     void reset();
+    void setRoshettaData(const mSettings::Roshetta & _roshetta);
     ~printDrugs();
 
 public slots:
@@ -89,6 +91,10 @@ private:
     wm_add2Completer *wm_add2completer;
     Ui::printDrugs *ui;
     QTextDocument *m_roshetta;
+    //neo code
+    Roshetta roshettaMaker;
+    QTextDocument *roshettaDoc;
+    mSettings::Roshetta roshettaData;
 
 signals:
     void add2AutoComplete(QString w);

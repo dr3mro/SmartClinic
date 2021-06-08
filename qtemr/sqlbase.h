@@ -663,7 +663,7 @@ public:
     bool deleteVisitPrice(int ID,int visitDate,int visitTime);
     bool deletePatientRecord(int ID);
     bool copyVisit2ID(int fID,int tID,QStringList visitList);
-    bool deletePatientVisit(int ID, int julianDate);
+    bool deletePatientVisit(int ID, int julianDate,int mVisitTime);
     bool deleteSugicalNote(int ID,QString surgeryID);
     QString createPatientUpdatePreparePhrase(int ID);
     QString createVisitUpdatePreparePhrase(int ID,QString visitDateTime);

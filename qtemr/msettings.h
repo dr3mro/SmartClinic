@@ -18,6 +18,7 @@ class mSettings : public QObject
     Q_OBJECT
 public:
     // this is data structure to hold the vitals for printing
+
     struct vitals{
         int pulse;
         QString BP;
@@ -73,13 +74,20 @@ public:
     // this is data structure to hold the roshetta for printing
     struct Roshetta
     {
+        QString getVisitSymbole(const int & _i){
+            QStringList visitSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
+            return visitSymbole.at(_i);
+        }
+
+        QString ID;
         QString name;
-        int Age;
+        QString printableAge;
         QString Diagnosis;
         vitals vital;
-        int visitDate;
-        int printedinDate;
-        int nextDate;
+        QString visitDate;
+        QString printedinDate;
+        QString nextDate;
+        QString visitSymbole;
         QList<drug> currentDrugsList;
         QList<drug> baseDrugsList;
         QStringList requests;

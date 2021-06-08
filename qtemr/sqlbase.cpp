@@ -1019,7 +1019,7 @@ bool sqlBase::copyVisit2ID(int fID, int tID, QStringList visitList)
         bool v2 = query->exec(QString("UPDATE investigations SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
         bool v3 = query->exec(QString("UPDATE drugs SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
         bool v4 = query->exec(QString("UPDATE visitPrices SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
-        bool v5 = query->exec(QString("UPDATE visitVitals SET ID=%1 WHERE ID=%2 AND VISITDATE=%3 AND visitTime='%4'").arg(tID).arg(fID).arg(julianDate).arg(visitTime));
+        bool v5 = query->exec(QString("UPDATE visitVitals SET ID=%1 WHERE ID=%2 AND VISITDATE=%3 AND VISITTIME='%4'").arg(tID).arg(fID).arg(julianDate).arg(visitTime));
         b=(v1 && v2 && v3 && v4 && v5);
 
         if (!b)
@@ -1037,18 +1037,30 @@ bool sqlBase::copyVisit2ID(int fID, int tID, QStringList visitList)
 
 }
 
-bool sqlBase::deletePatientVisit(int ID, int julianDate)
+bool sqlBase::deletePatientVisit(int ID, int julianDate, int mVisitTime)
 {
     query->clear();
     QStringList pathList =investigationsPathListForVisit(ID,julianDate);
     bool v1 = query->exec(QString("DELETE FROM visits WHERE ID=%1 AND visitJulianDate=%2").arg(ID).arg(julianDate));
+    if (!v1)
+        mDebug() << query->lastError().text();
     bool v2 = query->exec(QString("DELETE FROM investigations WHERE ID=%1 AND VISITDATE=%2").arg(ID).arg(julianDate));
+    if (!v2)
+        mDebug() << query->lastError().text();
     bool v3 = query->exec(QString("DELETE FROM drugs WHERE ID=%1 AND VISITDATE=%2").arg(ID).arg(julianDate));
+    if (!v3)
+        mDebug() << query->lastError().text();
     bool v4 = query->exec(QString("DELETE FROM visitPrices WHERE ID=%1 AND VISITDATE=%2").arg(ID).arg(julianDate));
+    if (!v4)
+        mDebug() << query->lastError().text();
+    bool v5 = query->exec(QString("DELETE FROM visitVitals WHERE ID=%1 AND VISITDATE=%2 AND VISITTIME=%3").arg(ID).arg(julianDate).arg(mVisitTime));
+    if (!v5)
+        mDebug() << query->lastError().text();
+
     bool b=true;
-    if (!v1 || !v2 || !v3 || !v4)
+    if (!v1 || !v2 || !v3 || !v4 || !v5)
     {
-        mDebug() << "ERROR DELETE VISIT: ? : " << query->lastError().text();
+        mDebug() << QString("ERROR DELETE VISIT: %1:%2:%3 : ").arg(ID).arg(julianDate).arg(mVisitTime) << query->lastError().text();
         b = false;
     }
     QString qCountPathCMD;

@@ -408,8 +408,8 @@ void visitsBox::on_ButtonDel_clicked()
 
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     int julianDate = static_cast<int>(locale.toDateTime(ComboCurrentVisit,"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
-
-    if(sqlbase->deletePatientVisit(ID,julianDate))
+    int mVisitTime = static_cast<int>(locale.toDateTime(ComboCurrentVisit,"dd/MM/yyyy hh:mm AP ddd").time().msecsSinceStartOfDay())/1000;
+    if(sqlbase->deletePatientVisit(ID,julianDate,mVisitTime))
     {
         ui->visitLists->populateWithVisitList(ID);
         emit newMessage("Information","Visit deletion success.");
@@ -1660,6 +1660,19 @@ int visitsBox::followNotify(const QDate &date)
     return  selectedDateFollowUps;
 }
 
+mSettings::Roshetta visitsBox::getRoshetta()
+{
+    mSettings::Roshetta roshetta;
+    roshetta.ID = QStringLiteral("%1").arg(loadedVisit.ID, 5, 10, QLatin1Char('0'));
+    roshetta.name = pName;
+    roshetta.printableAge = printableAge;
+    roshetta.Diagnosis = ui->Diagnosis->text().simplified();
+    roshetta.visitDate = ui->visitLists->getParentVisitDate(ui->visitLists->currentIndex());
+    roshetta.nextDate = QDate::fromJulianDay(ui->dateFollowUp->date().toJulianDay()).toString("dd/MM/yyyy");
+    roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex());
+    return roshetta;
+}
+
 bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
 {
     saving = true;
@@ -1739,6 +1752,7 @@ void visitsBox::on_fastPrint_leftButtonClicked()
     if (!drugLoadCompleted)
         return;
     print->loadDiets(sqlextra->getDietList());
+    print->setRoshettaData(getRoshetta());
     print->show();
 }
 
