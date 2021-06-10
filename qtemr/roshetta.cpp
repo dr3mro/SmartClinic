@@ -79,9 +79,16 @@ void Roshetta::stackFrames()
     cursor.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
 
     cursor.movePosition(QTextCursor::NextBlock);
+
+    QVector<QTextLength> ttl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,60)
+                                                      << QTextLength(QTextLength::PercentageLength,20)
+                                                      << QTextLength(QTextLength::PercentageLength,20);
+
     cursor.insertFrame(bannerFrameFormat);
-    bannerTable = cursor.insertTable(2,6,bannerFormat);
+    bannerFormat.setColumnWidthConstraints(ttl);
+    bannerTable = cursor.insertTable(2,3,bannerFormat);
     fillBanner(cursor);
+
     cursor.movePosition(QTextCursor::NextBlock);
     cursor.insertTable(1,1,bodyFormat);
     cursor.movePosition(QTextCursor::NextBlock);
@@ -108,6 +115,8 @@ void Roshetta::makeBanner()
     bannerFormat.setBorder(0);
     bannerFormat.setMargin(0);
     bannerFormat.setPadding(0);
+    bannerFormat.setCellPadding(0);
+    bannerFormat.setBorderCollapse(true);
 }
 
 void Roshetta::makeBody()
@@ -132,31 +141,17 @@ void Roshetta::makeFooter()
 
 void Roshetta::fillBanner(QTextCursor &c)
 {
-    c.insertHtml("<b>NAME:</b>");
+    c.insertHtml(QString("<b>NAME:</b>%1").arg(roshettaData.name));
     c.movePosition(QTextCursor::NextCell);
-    c.insertText(roshettaData.name);
+    c.insertHtml(QString("<b>Age:</b>%1").arg(roshettaData.printableAge));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml("<b>AGE:</b>");
+    c.insertHtml(QString("<b>Code:</b>%1%2%3").arg(roshettaData.ID).arg("▶").arg(roshettaData.visitSymbole));
     c.movePosition(QTextCursor::NextCell);
-    c.insertText(roshettaData.printableAge);
+    c.insertHtml(QString("<b>Diagnosis:</b>%1").arg(roshettaData.Diagnosis));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml("<b>CODE:</b>");
+    c.insertHtml(QString("<b>Date:</b>%1").arg(roshettaData.visitDate));
     c.movePosition(QTextCursor::NextCell);
-    c.insertText(roshettaData.ID);
-    c.insertText("▶");
-    c.insertText(roshettaData.visitSymbole);
-    c.movePosition(QTextCursor::NextCell);
-    c.insertHtml("<b>DIAGNOSIS:</b>");
-    c.movePosition(QTextCursor::NextCell);
-    c.insertText(roshettaData.Diagnosis);
-    c.movePosition(QTextCursor::NextCell);
-    c.insertHtml("<b>DATE:</b>");
-    c.movePosition(QTextCursor::NextCell);
-    c.insertText(roshettaData.visitDate);
-    c.movePosition(QTextCursor::NextCell);
-    c.insertHtml("<b>NEXT:</b>");
-    c.movePosition(QTextCursor::NextCell);
-    c.insertText(roshettaData.nextDate);
+    c.insertHtml(QString("<b>Next:</b>%1").arg(roshettaData.nextDate));
     c.movePosition(QTextCursor::NextBlock);
 }
 

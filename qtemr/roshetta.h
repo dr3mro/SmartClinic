@@ -6,7 +6,7 @@
 #include <QTextCursor>
 #include <QTextFrameFormat>
 #include <QTextFrame>
-
+#include <QTextTable>
 #include "staticstrings.h"
 #include "dataiohelper.h"
 #include "msettings.h"
