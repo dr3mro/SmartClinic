@@ -7,7 +7,7 @@
 
 printDrugs::printDrugs(QWidget *parent) :
     QDialog(parent),
-    printer ( new QPrinter(QPrinter::ScreenResolution)),
+    printer ( new QPrinter(QPrinter::HighResolution)),
     dlg ( new QPrintDialog(printer,this)),
     cp ( new colorPicker(this)),
     wm_add2completer(new wm_add2Completer),
