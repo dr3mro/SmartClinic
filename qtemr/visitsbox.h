@@ -215,6 +215,8 @@ private:
     QDate lastSelectedFollowupDate=QDate::currentDate();
     int suggestedVisitType=0;//for remote assistant created patient to modify this
     mSettings::Roshetta getRoshetta();
+    void roshettaDrugsfiller(QList<mSettings::drug> &drugs, DrugsItemModel *drugsModel);
+
 protected:
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *e);

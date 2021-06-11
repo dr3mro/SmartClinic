@@ -1668,9 +1668,41 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshetta.printableAge = printableAge;
     roshetta.Diagnosis = ui->Diagnosis->text().simplified();
     roshetta.visitDate = ui->visitLists->getParentVisitDate(ui->visitLists->currentIndex());
-    roshetta.nextDate = QDate::fromJulianDay(ui->dateFollowUp->date().toJulianDay()).toString("dd/MM/yyyy");
+    roshetta.nextDate = QDate::fromJulianDay(ui->dateFollowUp->date().toJulianDay()).toString("ddd dd/MM/yyyy");
     roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex());
+
+    roshettaDrugsfiller(roshetta.baseDrugsList,getDrugsModel());
+    roshettaDrugsfiller(roshetta.currentDrugsList,ui->vDrugsTable->getDrugsModel());
     return roshetta;
+}
+
+void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel *drugsModel)
+{
+    for(int i=0; i< drugsModel->rowCount();i++) {
+        if(!drugsModel->item(i,5)->text().toInt())
+            continue;
+
+        mSettings::drug drug;
+        drug.TradeName = drugsModel->item(i,0)->text();
+
+        if (sqlextra->isExpandExists(drug.TradeName)){
+            drug.TradeName = sqlextra->getExpand(drug.TradeName);
+            drug.TradeName.remove(QRegExp("color:#[A-Fa-f0-9]{6};"));
+            drug.TradeName.remove(QRegExp("font-size:[0-9]{0,2}pt;"));
+            drug.TradeName.remove(QRegExp("font-weight:\\d+;"));
+            drug.TradeName.remove(QRegExp("font-family:'\\w+';"));
+            drug.TradeName.remove(QRegExp("font-style:'\\w+';"));
+
+        }else{
+            drug.TradeName.remove("(IMP)");
+            drug.TradeName.remove("e/n");
+            drug.TradeName.remove("e/e");
+            drug.TradeName.remove(QRegExp("\\d+[(A|ST.|T|C|BX|S|V|CT|NV|P|D|F|L]+\\W+"));
+        }
+        drug.Dose = dataHelper::switchToEasternArabic(drugsModel->item(i,2)->text());
+        drug.StartDate = QDate::fromJulianDay(drugsModel->item(i,3)->text().toInt()).toString("dd/MM/yyyy");
+        drugs<< drug;
+    }
 }
 
 bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)

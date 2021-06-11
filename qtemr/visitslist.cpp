@@ -49,11 +49,11 @@ QString visitsList::getParentVisitDate(int index)
     for(int x = index; x< list.length();x++)
     {
         if ( (list.at(x).visitType == 0) || (list.at(x).visitType == 5) ){
-            return QDate::fromJulianDay(list.at(x).julianDay).toString("dd/MM/yyyy");
+            return QDate::fromJulianDay(list.at(x).julianDay).toString("ddd dd/MM/yyyy");
         }
     }
 
-    return QString(QDate::fromJulianDay(list.at(index).julianDay).toString("dd/MM/yyyy"));
+    return QString(QDate::fromJulianDay(list.at(index).julianDay).toString("ddd dd/MM/yyyy"));
 }
 
 void visitsList::setVisitIcon(int type, QIcon icon)

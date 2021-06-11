@@ -80,17 +80,26 @@ void Roshetta::stackFrames()
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-    QVector<QTextLength> ttl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,60)
-                                                      << QTextLength(QTextLength::PercentageLength,20)
-                                                      << QTextLength(QTextLength::PercentageLength,20);
+//    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,44)
+//                                                           << QTextLength(QTextLength::PercentageLength,28)
+//                                                           << QTextLength(QTextLength::PercentageLength,28);
 
     cursor.insertFrame(bannerFrameFormat);
-    bannerFormat.setColumnWidthConstraints(ttl);
+
+    //bannerFormat.setColumnWidthConstraints(bannertl);
     bannerTable = cursor.insertTable(2,3,bannerFormat);
     fillBanner(cursor);
 
     cursor.movePosition(QTextCursor::NextBlock);
-    cursor.insertTable(1,1,bodyFormat);
+
+
+    QVector<QTextLength> bodytl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,75)
+                                                         << QTextLength(QTextLength::PercentageLength,25);
+    bodyFormat.setColumnWidthConstraints(bodytl);
+    cursor.insertTable(1,2,bodyFormat);
+    fillBody(cursor);
+
+
     cursor.movePosition(QTextCursor::NextBlock);
     cursor.insertFrame(footerFormat);
     cursor.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
@@ -110,13 +119,15 @@ void Roshetta::makeBanner()
     bannerFrameFormat.setBorderBrush(QBrush(Qt::black));
     bannerFrameFormat.setHeight(42);
 
+
+    bannerFormat.setAlignment(Qt::AlignHCenter);
     bannerFormat.setWidth(mWidth);
     bannerFormat.setHeight(44);
-    bannerFormat.setBorder(0);
-    bannerFormat.setMargin(0);
-    bannerFormat.setPadding(0);
-    bannerFormat.setCellPadding(0);
-    bannerFormat.setBorderCollapse(true);
+//    bannerFormat.setBorder(0);
+//    bannerFormat.setMargin(0);
+//    bannerFormat.setPadding(0);
+//    bannerFormat.setCellPadding(0);
+//    bannerFormat.setBorderCollapse(true);
 }
 
 void Roshetta::makeBody()
@@ -124,7 +135,7 @@ void Roshetta::makeBody()
     double bodyHeight = mHeight -( 50 + 50 + 42 + 30);
     bodyFormat.setWidth(mWidth);
     bodyFormat.setHeight(bodyHeight);
-    bodyFormat.setBorder(0);
+    bodyFormat.setBorder(1);
     bodyFormat.setMargin(0);
 }
 
@@ -141,18 +152,48 @@ void Roshetta::makeFooter()
 
 void Roshetta::fillBanner(QTextCursor &c)
 {
-    c.insertHtml(QString("<b>NAME:</b>%1").arg(roshettaData.name));
+    c.insertHtml(QString("<b>NAME: </b>%1").arg(roshettaData.name));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<b>Age:</b>%1").arg(roshettaData.printableAge));
+    c.insertHtml(QString("<b>Age: </b>%1").arg(roshettaData.printableAge));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<b>Code:</b>%1%2%3").arg(roshettaData.ID).arg("▶").arg(roshettaData.visitSymbole));
+    c.insertHtml(QString("<b>Code: </b>%1%2%3").arg(roshettaData.ID , " ▶ " , roshettaData.visitSymbole));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<b>Diagnosis:</b>%1").arg(roshettaData.Diagnosis));
+    c.insertHtml(QString("<b>Diagnosis: </b>%1").arg(roshettaData.Diagnosis));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<b>Date:</b>%1").arg(roshettaData.visitDate));
+    c.insertHtml(QString("<b>Date: </b>%1").arg(roshettaData.visitDate));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<b>Next:</b>%1").arg(roshettaData.nextDate));
+    c.insertHtml(QString("<b>Next: </b>%1").arg(roshettaData.nextDate));
     c.movePosition(QTextCursor::NextBlock);
+}
+
+void Roshetta::fillBody(QTextCursor &c)
+{
+    fillCurrentDrugs(c,"[PRESCRIPTION]");
+    fillBaseDrugs(c,"[CHRONIC DRUGS]");
+    c.movePosition(QTextCursor::NextBlock);
+}
+
+void Roshetta::fillCurrentDrugs(QTextCursor &c, const QString &title)
+{
+    fillDrugs(c,roshettaData.currentDrugsList,title);
+}
+
+void Roshetta::fillBaseDrugs(QTextCursor &c, const QString &title)
+{
+    fillDrugs(c,roshettaData.baseDrugsList,title);
+}
+
+void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QString &title)
+{
+    c.insertHtml(QString("<h2 style=\"text-align: center;\"><span style=\"background-color: #808080; color: #ffffff;\"><strong>%1</strong></span></h2>").arg(title));
+    c.insertHtml("<br>");
+    foreach (const mSettings::drug & d, drugs) {
+        c.insertHtml(QString("<div align=left dir=LTR >℞  <b>%1</b> %2 <i style=\"font-size:7px\"> %3 </i></div>").arg(d.TradeName," ▶ " ,d.StartDate));
+        c.insertHtml("<br>");
+        c.insertHtml(QString("<div align=left dir=RTL>%1</div>").arg(d.Dose));
+        c.insertHtml("<br>");
+
+    }
 }
 
 double Roshetta::inch2px(const qreal &x)
