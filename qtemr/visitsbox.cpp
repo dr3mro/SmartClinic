@@ -1673,6 +1673,17 @@ mSettings::Roshetta visitsBox::getRoshetta()
 
     roshettaDrugsfiller(roshetta.baseDrugsList,getDrugsModel());
     roshettaDrugsfiller(roshetta.currentDrugsList,ui->vDrugsTable->getDrugsModel());
+
+
+    foreach (QString inv, ui->InvestigationsTable->getInvestigationsList())
+            roshetta.requests << inv;
+
+    roshettaVitalsFiller(roshetta.vitals);
+
+
+    QLocale locale(QLocale::English, QLocale::UnitedStates);
+    roshetta.printedinDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dddd dd/MM/yyyy");
+
     return roshetta;
 }
 
@@ -1703,6 +1714,18 @@ void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel
         drug.StartDate = QDate::fromJulianDay(drugsModel->item(i,3)->text().toInt()).toString("dd/MM/yyyy");
         drugs<< drug;
     }
+}
+
+void visitsBox::roshettaVitalsFiller(mSettings::Vitals &vitals)
+{
+    vitals.weight = ui->weight->text().toDouble();
+    vitals.height = ui->height->text().toInt();
+    vitals.sPo2 = ui->sPo2->text().toInt();
+    vitals.RBS = ui->RBS->text().toInt();
+    vitals.pulse = ui->pPulse->text().toInt();
+    vitals.RR = ui->pRR->text().toInt();
+    vitals.BP = ui->pBP->text();
+    vitals.T = ui->pTemp->text().toDouble();
 }
 
 bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)

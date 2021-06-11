@@ -19,7 +19,7 @@ class mSettings : public QObject
 public:
     // this is data structure to hold the vitals for printing
 
-    struct vitals{
+    struct Vitals{
         int pulse;
         QString BP;
         int RR;
@@ -39,8 +39,30 @@ public:
             sPo2=-1;
             RBS=-1;
         }
+        int getRows()
+        {
+            int rows = 0;
+            if(weight != 0)
+                rows++;
+            if(height != 0)
+                rows++;
+            if(sPo2 != 0)
+                rows++;
+            if(RBS != 0)
+                rows++;
+            if(pulse != 0)
+                rows++;
+            if(RR != 0)
+                rows++;
+            if(BP != "")
+                rows++;
+            if(T != 0)
+                rows++;
 
-        bool operator==(const vitals& vitals) const
+            return rows;
+        }
+
+        bool operator==(const Vitals& vitals) const
         {
             return std::tie(
                         pulse,
@@ -83,7 +105,7 @@ public:
         QString name;
         QString printableAge;
         QString Diagnosis;
-        vitals vital;
+        Vitals vitals;
         QString visitDate;
         QString printedinDate;
         QString nextDate;

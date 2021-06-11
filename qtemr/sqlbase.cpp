@@ -833,10 +833,10 @@ sqlBase::Visit sqlBase::getPatientVisitData(const int &ID, const QString &dateTi
     return visit;
 }
 
-mSettings::vitals sqlBase::getPatientVisitVitals(const int &ID, const QString &dateTimeString)
+mSettings::Vitals sqlBase::getPatientVisitVitals(const int &ID, const QString &dateTimeString)
 {
     query->clear();
-    mSettings::vitals mVitals;
+    mSettings::Vitals mVitals;
     QLocale locale(QLocale::English , QLocale::UnitedStates );
     QDateTime mDate = locale.toDateTime(dateTimeString,"dd/MM/yyyy hh:mm AP ddd");
     int mVisitDate = mDate.date().toJulianDay();

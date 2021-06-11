@@ -216,6 +216,7 @@ private:
     int suggestedVisitType=0;//for remote assistant created patient to modify this
     mSettings::Roshetta getRoshetta();
     void roshettaDrugsfiller(QList<mSettings::drug> &drugs, DrugsItemModel *drugsModel);
+    void roshettaVitalsFiller(mSettings::Vitals &vitals);
 
 protected:
     void closeEvent(QCloseEvent *event);

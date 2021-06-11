@@ -271,7 +271,7 @@ public:
         QString ObstUS;
         QString Antenatal;
         QString pelvicExam;
-        mSettings::vitals vitals;
+        mSettings::Vitals vitals;
 
         void clear()
         {
@@ -636,7 +636,7 @@ public:
     sqlBase::mPatient getmPatientData(int ID);
     Visit getPatientVisitDataPre287(int ID , QString dateTimeString);
     Visit getPatientVisitData(const int & ID, const QString &dateTimeString);
-    mSettings::vitals getPatientVisitVitals(const int & ID, const QString &dateTimeString);
+    mSettings::Vitals getPatientVisitVitals(const int & ID, const QString &dateTimeString);
     bool addPatient2myDataBase(Patient patient);
     bool addVisit2myDataBase(Visit visit);
     bool addSurgicalNote(int ID, QString surgeryID, int julianDate, QString opName, QString opReport);

@@ -7,6 +7,7 @@
 #include <QTextFrameFormat>
 #include <QTextFrame>
 #include <QTextTable>
+#include <QTextListFormat>
 #include "staticstrings.h"
 #include "dataiohelper.h"
 #include "msettings.h"
@@ -33,6 +34,8 @@ private:
     void fillCurrentDrugs(QTextCursor &c, const QString &title);
     void fillBaseDrugs(QTextCursor &c, const QString &title);
     void fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs, const QString &title);
+    void fillRequests(QTextCursor &c);
+    void fillVitals(QTextCursor &c);
     double inch2px(const qreal & x );
     double mWidth;
     double mHeight;
@@ -48,8 +51,9 @@ private:
     QTextFrameFormat footerFormat;
     QTextTableFormat headerTableFormat;
     QTextTableFormat bodyTableFormat;
-
+    QTextTableFormat requestsTableFormat;
     QTextTable *bannerTable;
+    int CurrentDrugRow=0;
 
 };
 
