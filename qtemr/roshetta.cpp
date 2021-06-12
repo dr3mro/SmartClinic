@@ -9,6 +9,8 @@ Roshetta::Roshetta(QObject *parent) : QObject(parent),
 
 QTextDocument * Roshetta::createRoshetta(const mSettings::Roshetta &_Roshetta, const mSettings::prescriptionPrintSettings &_pSettings)
 {
+    // set roshetta settings
+    roshettaSettings = _pSettings;
 
     //set global var Roshetta data for global use
     roshettaData = _Roshetta;
@@ -62,7 +64,7 @@ void Roshetta::setRootFrame()
     QTextFrame* root = mRoshetta->rootFrame();
     rootFrameFormat = root->frameFormat();
     rootFrameFormat.setWidth(mWidth);
-    rootFrameFormat.setHeight(mHeight);
+    rootFrameFormat.setHeight(mHeight*2);
     rootFrameFormat.setBorder(0);
     rootFrameFormat.setPadding(0);
     rootFrameFormat.setMargin(0);
@@ -74,24 +76,32 @@ void Roshetta::stackFrames()
     QTextCursor cursor(mRoshetta);
     cursor.movePosition(QTextCursor::Start);
     cursor.insertTable(1,2,headerFormat);
-    cursor.insertHtml("<img src=\"logo.jpg\" width=72 alt=\"logo\" >");
-    cursor.movePosition(QTextCursor::NextCell);
-    cursor.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
+    if(roshettaSettings.showPrescriptionHeaderFooterLogo){
+        cursor.insertHtml("<img src=\"logo.jpg\" width=72 alt=\"logo\" >");
+        cursor.movePosition(QTextCursor::NextCell);
+        cursor.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
+    }
+    else{
+        cursor.movePosition(QTextCursor::NextCell);
+    }
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-//    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,44)
-//                                                           << QTextLength(QTextLength::PercentageLength,28)
-//                                                           << QTextLength(QTextLength::PercentageLength,28);
+    //    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,44)
+    //                                                           << QTextLength(QTextLength::PercentageLength,28)
+    //                                                           << QTextLength(QTextLength::PercentageLength,28);
 
     cursor.insertFrame(bannerFrameFormat);
 
     //bannerFormat.setColumnWidthConstraints(bannertl);
     bannerTable = cursor.insertTable(2,3,bannerFormat);
+    if(roshettaSettings.showBanner)
+        fillBanner(cursor);
+    else{
+        cursor.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,5);
+    }
 
-    fillBanner(cursor);
-
-    cursor.movePosition(QTextCursor::NextBlock);
+    cursor.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
 
 
     QVector<QTextLength> bodytl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,70)
@@ -115,13 +125,15 @@ void Roshetta::stackFrames()
     cursor.insertHtml(QString("<b>printed on:</b> %1").arg(roshettaData.printedinDate));
     cursor.movePosition(QTextCursor::NextBlock);
 
-    cursor.insertFrame(footerFormat);
-    QTextBlockFormat footerBlockFormat = cursor.blockFormat();
-    footerBlockFormat.setAlignment(Qt::AlignCenter);
-    cursor.select(QTextCursor::BlockUnderCursor);
-    cursor.setBlockFormat(footerBlockFormat);
+    if(roshettaSettings.showPrescriptionHeaderFooterLogo){
+        cursor.insertFrame(footerFormat);
+        QTextBlockFormat footerBlockFormat = cursor.blockFormat();
+        footerBlockFormat.setAlignment(Qt::AlignCenter);
+        cursor.select(QTextCursor::BlockUnderCursor);
+        cursor.setBlockFormat(footerBlockFormat);
 
-    cursor.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
+        cursor.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
+    }
 }
 
 void Roshetta::makeHeader(const mSettings::prescriptionPrintSettings &_pSettings)
@@ -134,8 +146,14 @@ void Roshetta::makeHeader(const mSettings::prescriptionPrintSettings &_pSettings
 
 void Roshetta::makeBanner()
 {
-    bannerFrameFormat.setBorder(1);
-    bannerFrameFormat.setBorderBrush(QBrush(Qt::black));
+    if(roshettaSettings.showBanner){
+        bannerFrameFormat.setBorder(1);
+        bannerFrameFormat.setBorderBrush(QBrush(Qt::black));
+    }
+    else{
+        bannerFrameFormat.setBorder(0);
+        bannerFrameFormat.setBorderBrush(QBrush(Qt::white));
+    }
     bannerFrameFormat.setHeight(42);
 
 
@@ -181,22 +199,52 @@ void Roshetta::fillBanner(QTextCursor &c)
     c.insertHtml(QString("<b>Date: </b>%1").arg(roshettaData.visitDate));
     c.movePosition(QTextCursor::NextCell);
     c.insertHtml(QString("<b>Next: </b>%1").arg(roshettaData.nextDate));
-    c.movePosition(QTextCursor::NextBlock);
 }
 
 void Roshetta::fillBody(QTextCursor &c)
 {
     QTextTableFormat drugsTableFormat;
     drugsTableFormat.setBorder(0);
-    int rows = 2 + roshettaData.currentDrugsList.count() + roshettaData.baseDrugsList.count();
+    int rows = roshettaData.currentDrugsList.count() + roshettaData.baseDrugsList.count();
+
+    rows+= roshettaSettings.showDrugsTitle? 2:0;
 
     CurrentDrugRow =0; // to follow filling of table current row
 
     c.insertTable(rows,1,drugsTableFormat);
-    fillCurrentDrugs(c,"PRESCRIPTION");
-    fillBaseDrugs(c,"CHRONIC DRUGS");
-    c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
-    fillRequests(c);
+
+    if(roshettaSettings.showDrugs){
+        if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
+            fillCurrentDrugs(c,"PRESCRIPTION");
+            fillBaseDrugs(c,"CHRONIC DRUGS");
+            c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
+        }
+        else {
+            if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
+                fillCurrentDrugs(c,"PRESCRIPTION");
+                c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,3);
+            }
+
+            if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
+                fillBaseDrugs(c,"CHRONIC DRUGS");
+                c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,5);
+            }
+            if(roshettaSettings.showDrugsTitle){
+                c.movePosition(QTextCursor::NextCell);
+            }
+
+        }
+    }
+    else{
+        c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,7);
+        if(roshettaSettings.showDrugsTitle){
+            c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
+        }
+    }
+
+    if(roshettaSettings.showInvestigations)
+        fillRequests(c);
+
     fillVitals(c);
 
 }
@@ -214,30 +262,33 @@ void Roshetta::fillBaseDrugs(QTextCursor &c, const QString &title)
 void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QString &title)
 {
     QTextTableCellFormat drugsHeaderFormat;
-    drugsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
-    drugsHeaderFormat.setTopPadding(3);
-
     QTextBlockFormat drugsHeaderBlockFormat;
-    drugsHeaderBlockFormat.setAlignment(Qt::AlignCenter);
+
+    if(roshettaSettings.showDrugsTitle){
+        drugsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
+        drugsHeaderFormat.setTopPadding(3);
+        drugsHeaderBlockFormat.setAlignment(Qt::AlignCenter);
+        c.insertHtml(QString("<h2><b>%1</b></h2>").arg(title));
+        c.currentTable()->cellAt(CurrentDrugRow,0).setFormat(drugsHeaderFormat);
+        c.currentTable()->cellAt(CurrentDrugRow,0).firstCursorPosition().setBlockFormat(drugsHeaderBlockFormat);
+        c.movePosition(QTextCursor::NextCell);
+    }
+
 
 
     QTextBlockFormat requestsBlockFormat;
     requestsBlockFormat.setNonBreakableLines(true);
 
-    c.insertHtml(QString("<h2><b>%1</b></h2>").arg(title));
 
-
-    c.currentTable()->cellAt(CurrentDrugRow,0).setFormat(drugsHeaderFormat);
-    c.currentTable()->cellAt(CurrentDrugRow,0).firstCursorPosition().setBlockFormat(drugsHeaderBlockFormat);
-
-
-    c.movePosition(QTextCursor::NextCell);
     CurrentDrugRow++;
     foreach (const mSettings::drug & d, drugs) {
         c.insertHtml(QString("<div align=left dir=LTR >℞  <b>%1</b> %2 <i style=\"font-size:7px\"> %3 </i></div>").arg(d.TradeName," ▶ " ,d.StartDate));
         c.insertHtml("<br>");
         c.insertHtml(QString("<div align=left dir=RTL>%1</div>").arg(d.Dose));
-        c.insertHtml("<hr>");
+
+        if(roshettaSettings.showDrugsSeparator)
+            c.insertHtml("<hr>");
+
         c.movePosition(QTextCursor::NextCell);
         CurrentDrugRow++;
     }

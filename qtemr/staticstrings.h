@@ -62,6 +62,7 @@
 #define _remmberLastFollowupDate "remmberLastFollowupDate"
 #define _showHeaderFooterLogo "showPrescriptionHeaderFooterLogo"
 #define _logoSize "logoPixelSize"
+#define _drugsPrintMode "drugsPrintMode"
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"
 #define _defaultFontSize "defaultFontSize"

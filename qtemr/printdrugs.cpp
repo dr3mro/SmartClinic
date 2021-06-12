@@ -134,6 +134,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->showDoseInEasternArabic->setChecked(printSettings.setEastArabicNumbers);
     ui->showHeaderFooterLogo->setChecked(printSettings.showPrescriptionHeaderFooterLogo);
     ui->logoSize->setCurrentText(QString::number(printSettings.logoSize));
+    ui->drugsMode->setCurrentIndex(printSettings.drugsPrintMode);
     return printSettings;
 }
 
@@ -173,6 +174,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.setEastArabicNumbers = ui->showDoseInEasternArabic->isChecked();
     printSettings.showPrescriptionHeaderFooterLogo = ui->showHeaderFooterLogo->isChecked();
     printSettings.logoSize = ui->logoSize->currentText().toInt();
+    printSettings.drugsPrintMode = ui->drugsMode->currentIndex();
     return printSettings;
 }
 
@@ -284,7 +286,6 @@ void printDrugs::reset()
 {
     ui->drugsMode->setCurrentIndex(0);
     ui->diet->setCurrentIndex(0);
-    drugsMode=0;
     selectedDiet="-";
 }
 
@@ -467,7 +468,9 @@ void printDrugs::on_diet_activated(const QString &arg1)
 
 void printDrugs::on_drugsMode_activated(int index)
 {
-    drugsMode = index;
+    Q_UNUSED(index)
+//    pSettings.drugsPrintMode = index;
+//    savePrintSettings();
     refreshView();
 }
 

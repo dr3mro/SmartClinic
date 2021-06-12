@@ -210,6 +210,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.setEastArabicNumbers = settings.value(_setEastArabicNumbers,QVariant(false)).toBool();
     mPageSettings.showPrescriptionHeaderFooterLogo = settings.value(_showHeaderFooterLogo,QVariant(false)).toBool();
     mPageSettings.logoSize = settings.value(_logoSize,QVariant(64)).toInt();
+    mPageSettings.drugsPrintMode = settings.value(_drugsPrintMode,QVariant(0)).toInt();
     settings.endGroup();
     return mPageSettings;
 }
@@ -251,6 +252,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_setEastArabicNumbers,mPageSettings.setEastArabicNumbers);
     settings.setValue(_showHeaderFooterLogo,mPageSettings.showPrescriptionHeaderFooterLogo);
     settings.setValue(_logoSize,mPageSettings.logoSize);
+    settings.setValue(_drugsPrintMode,mPageSettings.drugsPrintMode);
     settings.endGroup();
 }
 

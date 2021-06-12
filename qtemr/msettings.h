@@ -313,6 +313,10 @@ public:
         QString fontName;
         bool fontBold;
     };
+
+    enum drugsPrintMode{
+        visitOnly=0,baseOnly=1,both=2
+    };
     struct prescriptionPrintSettings
     {
         double investigationsWidth;
@@ -348,6 +352,7 @@ public:
         bool showInvestigations;
         bool showPrescriptionHeaderFooterLogo;
         int logoSize;
+        int drugsPrintMode;
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
             return std::tie(bold,
@@ -382,7 +387,8 @@ public:
                             showDrugsTitle,
                             setEastArabicNumbers,
                             showPrescriptionHeaderFooterLogo,
-                            logoSize) == std::tie(
+                            logoSize,
+                            drugsPrintMode) == std::tie(
                         prescriptionprintsettings.bold,
                         prescriptionprintsettings.point,
                         prescriptionprintsettings.font,
@@ -415,7 +421,8 @@ public:
                         prescriptionprintsettings.showDrugsTitle,
                         prescriptionprintsettings.setEastArabicNumbers,
                         prescriptionprintsettings.showPrescriptionHeaderFooterLogo,
-                        prescriptionprintsettings.logoSize); }
+                        prescriptionprintsettings.logoSize,
+                        prescriptionprintsettings.drugsPrintMode); }
     };
     struct lineStyle
     {

@@ -9,7 +9,7 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
     TextEdit(parent),
 	m_document(0),
     m_usePageMode(true),
-    m_addBottomSpace(false),
+    m_addBottomSpace(true),
     m_showPageNumbers(false),
 	m_pageNumbersAlignment(Qt::AlignTop | Qt::AlignRight)
 {

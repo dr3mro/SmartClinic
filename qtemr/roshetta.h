@@ -54,6 +54,7 @@ private:
     QTextTableFormat requestsTableFormat;
     QTextTable *bannerTable;
     int CurrentDrugRow=0;
+    mSettings::prescriptionPrintSettings roshettaSettings;
 
 };
 

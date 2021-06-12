@@ -85,7 +85,6 @@ private:
     mSettings::prescriptionPrintSettings pSettings;
     mSettings::prescriptionPrintSettings lSettings;
     QString selectedDiet="-";
-    int drugsMode=0;
     QTimer t;
     QString selectedPrintingProfile;
     wm_add2Completer *wm_add2completer;
