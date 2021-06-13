@@ -32,7 +32,7 @@
 #define _inkBold "inkBold"
 #define _inkFont "inkFont"
 #define _inkPoint "inkPoint"
-//#define _printOrientation "printOrientation"
+#define _paperSizeId "paperSizeId"
 #define _leftMargin "leftMargin"
 #define _topMargin "topMargin"
 #define _rightMargin "rightMargin"

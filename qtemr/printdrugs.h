@@ -65,6 +65,8 @@ private slots:
     void on_invWidth_editingFinished();
     void on_showInvs_toggled(bool checked);
 
+    void on_paperSizeId_currentIndexChanged(const QString &arg1);
+
 private:
     void tweakRoshetta();
     void setMaxValues();
@@ -94,6 +96,7 @@ private:
     Roshetta roshettaMaker;
     QTextDocument *roshettaDoc;
     mSettings::Roshetta roshettaData;
+
 
 signals:
     void add2AutoComplete(QString w);

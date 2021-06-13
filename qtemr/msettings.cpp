@@ -181,7 +181,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.bold = settings.value(_inkBold,QVariant(false)).toBool();
     mPageSettings.font = settings.value(_inkFont,QVariant("Tahoma")).toString();
     mPageSettings.point = settings.value(_inkPoint,QVariant(8)).toInt();
-    //mPageSettings.pageOrientation = settings.value(_printOrientation,QVariant(0)).toInt();
+    mPageSettings.paperSizeId = settings.value(_paperSizeId,QVariant("A5")).toString();
     mPageSettings.topMargin = settings.value(_topMargin,QVariant(0)).toDouble();
     mPageSettings.leftMargin = settings.value(_leftMargin,QVariant(0)).toDouble();
     mPageSettings.rightMargin = settings.value(_rightMargin,QVariant(0)).toDouble();
@@ -223,7 +223,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_inkBold,mPageSettings.bold);
     settings.setValue(_inkFont,mPageSettings.font);
     settings.setValue(_inkPoint,mPageSettings.point);
-    //settings.setValue(_printOrientation,mPageSettings.pageOrientation);
+    settings.setValue(_paperSizeId,mPageSettings.paperSizeId);
     settings.setValue(_leftMargin,mPageSettings.leftMargin);
     settings.setValue(_rightMargin,mPageSettings.rightMargin);
     settings.setValue(_topMargin,mPageSettings.topMargin);

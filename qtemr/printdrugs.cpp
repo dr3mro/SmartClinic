@@ -16,8 +16,7 @@ printDrugs::printDrugs(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    m_roshetta->setPageSize(printer->pageLayout().pageSize().sizePoints());
-    ui->Roshetta->setDocument(m_roshetta);
+
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
 
     t.setInterval(600);//this timer to set limit to printing per second
@@ -44,14 +43,17 @@ printDrugs::printDrugs(QWidget *parent) :
     ui->printerProfile->setCurrentIndex(reg.value("selectedPrintingProfile").toInt());
     selectedPrintingProfile = ui->printerProfile->currentText();
     lSettings = pSettings =  loadPrintSettings();
+//    m_roshetta->setPageSize(printer->pageLayout().pageSize().sizePoints());
+//    ui->Roshetta->setDocument(m_roshetta);
     setMinimumSize(800,600);
     this->setModal(true);
 
-    ui->Roshetta->setPageFormat(QPageSize::A5);
+    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
     ui->Roshetta->setPageMargins(QMarginsF(5, 5, 5, 5));
     ui->Roshetta->setUsePageMode(true);
     ui->Roshetta->setPageNumbersAlignment(Qt::AlignBottom | Qt::AlignHCenter);
     ui->Roshetta->setReadOnly(true);
+    ui->Roshetta->setDocument(m_roshetta);
 
 }
 
@@ -109,7 +111,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->leftMargin->setValue(printSettings.leftMargin);
     ui->bottomMargin->setValue(printSettings.bottomMargin);
     ui->rightMargin->setValue(printSettings.rightMargin);
-    //ui->Orientation->setCurrentIndex(printSettings.pageOrientation);
+    ui->paperSizeId->setCurrentText(printSettings.paperSizeId);
     ui->pageWidth->setValue(printSettings.pageWidth);
     ui->pageHeight->setValue(printSettings.pageHeight);
     ui->tradeNameinBold->setChecked(printSettings.tradeNameinBold);
@@ -145,7 +147,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     //printSettings.color = ui->setInkColor->getColor().name();
     printSettings.font = ui->fontComboBox->currentText();
     printSettings.point = ui->point->currentText().toInt();
-    //printSettings.pageOrientation =ui->Orientation->currentIndex();
+    printSettings.paperSizeId =ui->paperSizeId->currentText();
     printSettings.topMargin = ui->topMargin->value();
     printSettings.rightMargin = ui->rightMargin->value();
     printSettings.bottomMargin = ui->bottomMargin->value();
@@ -446,6 +448,7 @@ QTextDocument *printDrugs::getDoc()
     return m_roshetta;
 }
 
+
 void printDrugs::closeEvent(QCloseEvent *e)
 {
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
@@ -517,3 +520,12 @@ void printDrugs::on_showInvs_toggled(bool checked)
     ui->drugsColPerc->setMaximum(max);
     refreshView();
 }
+
+void printDrugs::on_paperSizeId_currentIndexChanged(const QString &arg1)
+{
+    pSettings.paperSizeId = arg1;
+    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
+    ui->Roshetta->setPageMargins(QMarginsF(5, 5, 5, 5));
+    refreshView();
+}
+

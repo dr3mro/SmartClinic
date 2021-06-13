@@ -52,10 +52,9 @@ void Roshetta::setRoshettaSize()
 {
     double xMargins = inch2px(0.20) *2 ;
     double yMargins = inch2px(0.20) *2 ;
-    QPageSize pageSize(QPageSize::A5);
+    QPageSize pageSize = QPageSize(PageMetrics::pageSizeIdFromString(roshettaSettings.paperSizeId));
     mWidth = pageSize.sizePixels(qApp->desktop()->logicalDpiX()).width() - xMargins;
     mHeight = pageSize.sizePixels(qApp->desktop()->logicalDpiX()).height() - yMargins;
-
     mRoshetta->setPageSize(QSize(mWidth,mHeight));// QPageSize::A5
 }
 

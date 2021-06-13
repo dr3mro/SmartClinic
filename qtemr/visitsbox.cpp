@@ -1682,7 +1682,7 @@ mSettings::Roshetta visitsBox::getRoshetta()
 
 
     QLocale locale(QLocale::English, QLocale::UnitedStates);
-    roshetta.printedinDate = locale.toString(QDate::currentDate(),"dddd dd/MM/yyyy");
+    roshetta.printedinDate = locale.toString(QDateTime::currentDateTime(),"dddd dd/MM/yyyy hh:mm AP");
 
     return roshetta;
 }

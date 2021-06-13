@@ -314,7 +314,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideLeft</enum>
@@ -1153,12 +1153,7 @@
            <string>Paper Size</string>
           </property>
          </widget>
-         <widget class="QComboBox" name="comboBox">
-          <item>
-           <property name="text">
-            <string>custom</string>
-           </property>
-          </item>
+         <widget class="QComboBox" name="paperSizeId">
           <item>
            <property name="text">
             <string>A4</string>
@@ -1413,14 +1408,13 @@
         </spacer>
        </item>
       </layout>
+      <zorder>splitter</zorder>
       <zorder>splitter_2</zorder>
       <zorder>splitter_3</zorder>
       <zorder>splitter_17</zorder>
       <zorder>splitter_16</zorder>
       <zorder>splitter_4</zorder>
       <zorder>splitter_15</zorder>
-      <zorder>comboBox</zorder>
-      <zorder>label_3</zorder>
      </widget>
     </widget>
    </item>

@@ -332,7 +332,7 @@ public:
         double invPad;
         double dietWidth;
         int point;
-        //int pageOrientation;
+        QString paperSizeId;
         int bannerWidth;
         QString font;
         //QString color;
@@ -359,7 +359,7 @@ public:
                             point,
                             font,
                             //color,
-                            //pageOrientation,
+                            paperSizeId,
                             topMargin,
                             leftMargin,
                             rightMargin,
@@ -393,7 +393,7 @@ public:
                         prescriptionprintsettings.point,
                         prescriptionprintsettings.font,
                         //prescriptionprintsettings.color,
-                        //prescriptionprintsettings.pageOrientation,
+                        prescriptionprintsettings.paperSizeId,
                         prescriptionprintsettings.topMargin,
                         prescriptionprintsettings.leftMargin,
                         prescriptionprintsettings.rightMargin,

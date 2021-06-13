@@ -15,7 +15,7 @@ qreal PageMetrics::mmToPx(qreal _mm, bool _x)
 
 QPageSize::PageSizeId PageMetrics::pageSizeIdFromString(const QString& _from)
 {
-	QPageSize::PageSizeId result = QPageSize::A4;
+    QPageSize::PageSizeId result = QPageSize::A5;
 
 	if (_from == "A0") result = QPageSize::A0;
 	else if (_from == "A1") result = QPageSize::A1;
@@ -23,7 +23,7 @@ QPageSize::PageSizeId PageMetrics::pageSizeIdFromString(const QString& _from)
 	else if (_from == "A3") result = QPageSize::A3;
 	else if (_from == "A4") result = QPageSize::A4;
 	else if (_from == "A5") result = QPageSize::A5;
-	else if (_from == "A6") result = QPageSize::A6;
+    else if (_from == "A6") result = QPageSize::A6;
 	else
 		Q_ASSERT_X(0, Q_FUNC_INFO, qPrintable("Undefined page size: " + _from));
 
