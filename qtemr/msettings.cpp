@@ -177,40 +177,36 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     prescriptionPrintSettings mPageSettings;
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
-    //mPageSettings.color = settings.value(_inkColor,QVariant("#000000")).toString();
-    mPageSettings.bold = settings.value(_inkBold,QVariant(false)).toBool();
-    mPageSettings.font = settings.value(_inkFont,QVariant("Tahoma")).toString();
-    mPageSettings.point = settings.value(_inkPoint,QVariant(8)).toInt();
     mPageSettings.paperSizeId = settings.value(_paperSizeId,QVariant("A5")).toString();
     mPageSettings.topMargin = settings.value(_topMargin,QVariant(0)).toDouble();
     mPageSettings.leftMargin = settings.value(_leftMargin,QVariant(0)).toDouble();
     mPageSettings.rightMargin = settings.value(_rightMargin,QVariant(0)).toDouble();
     mPageSettings.bottomMargin = settings.value(_bottomMargin,QVariant(0)).toDouble();
-    mPageSettings.pageWidth = settings.value(_pageWidth,QVariant(7)).toDouble();
-    mPageSettings.pageHeight = settings.value(_pageHeight,QVariant(9)).toDouble();
-    mPageSettings.tradeNameinBold = settings.value(_tradeNameinBold,QVariant(false)).toBool();
-    mPageSettings.doseinNewLine = settings.value(_doseinNewLine,QVariant(true)).toBool();
-    mPageSettings.compactMode = settings.value(_compactMode,QVariant(false)).toBool();
-    mPageSettings.noQty = settings.value(_noQty,QVariant(true)).toBool();
-    mPageSettings.dietLeftPadding = settings.value(_dietLeftPadding,QVariant(0)).toDouble();
-    mPageSettings.dietTopPadding = settings.value(_dietTopPadding,QVariant(0)).toDouble();
-    mPageSettings.drugsColPerc = settings.value(_drugsColPerc,QVariant(30)).toDouble();
-    mPageSettings.invPad = settings.value(_invPad,QVariant(0)).toDouble();
-    mPageSettings.showInvestigations = settings.value(_showInvs,QVariant(true)).toBool();
-    mPageSettings.dietWidth = settings.value(_dietWidth,QVariant(1)).toDouble();
-    mPageSettings.showDrugs = settings.value(_showDrugs,QVariant(true)).toBool();
-    mPageSettings.centerRequests = settings.value(_centerRequests,QVariant(false)).toBool();
-    mPageSettings.centerDrugs = settings.value(_centerDrugs,QVariant(false)).toBool();
     mPageSettings.showBanner = settings.value(_showBanner,QVariant(true)).toBool();
+    mPageSettings.showDrugs = settings.value(_showDrugs,QVariant(true)).toBool();
+    mPageSettings.showInvestigations = settings.value(_showInvsestigations,QVariant(true)).toBool();
+    mPageSettings.showMeasurments = settings.value(_showMeasurments,QVariant(true)).toBool();
     mPageSettings.showDrugsSeparator = settings.value(_showDrugsSeparator,QVariant(false)).toBool();
-    //mPageSettings.fullPage = settings.value(_fullPage,QVariant(false)).toBool();
-    mPageSettings.bannerWidth = settings.value(_bannerWidth,QVariant(80)).toInt();
-    mPageSettings.investigationsWidth = settings.value(_investigationsWidth,QVariant(1.2)).toDouble();
+    mPageSettings.drugsPrintMode = (mSettings::drugsPrintMode) settings.value(_drugsPrintMode,QVariant(0)).toInt();
     mPageSettings.showDrugsTitle = settings.value(_showDrugsTitle,QVariant(false)).toBool();
-    mPageSettings.setEastArabicNumbers = settings.value(_setEastArabicNumbers,QVariant(false)).toBool();
     mPageSettings.showPrescriptionHeaderFooterLogo = settings.value(_showHeaderFooterLogo,QVariant(false)).toBool();
     mPageSettings.logoSize = settings.value(_logoSize,QVariant(64)).toInt();
-    mPageSettings.drugsPrintMode = settings.value(_drugsPrintMode,QVariant(0)).toInt();
+
+    mPageSettings.headerHeightPercent = settings.value(_headerHeightPercent,QVariant(64)).toInt();
+    mPageSettings.footerHeightPercent = settings.value(_footerHeightPercent,QVariant(64)).toInt();
+    mPageSettings.bannerHeightPercent = settings.value(_bannerHeightPercent,QVariant(64)).toInt();
+
+    mPageSettings.bannerFont.fontName = settings.value(_bannerFont,QVariant("Tahoma")).toString();
+    mPageSettings.bannerFont.fontSize = settings.value(_bannerFontSize,QVariant(8)).toInt();
+    mPageSettings.bannerFont.fontBold = settings.value(_bannerFontBold,QVariant(false)).toBool();
+
+    mPageSettings.roshettaFont.fontName = settings.value(_roshettaFont,QVariant("Tahoma")).toString();
+    mPageSettings.roshettaFont.fontSize = settings.value(_roshettaFontSize,QVariant(8)).toInt();
+    mPageSettings.roshettaFont.fontBold = settings.value(_roshettaFontBold,QVariant(false)).toBool();
+
+    mPageSettings.showDrugsInitDate = settings.value(_showDrugsInitDate,QVariant(true)).toBool();
+    mPageSettings.showSignaturePrintedOn = settings.value(_showSignaturePrintedOn,QVariant(true)).toBool();
+
     settings.endGroup();
     return mPageSettings;
 }
@@ -219,40 +215,36 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
 {
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
-    //settings.setValue(_inkColor,mPageSettings.color);
-    settings.setValue(_inkBold,mPageSettings.bold);
-    settings.setValue(_inkFont,mPageSettings.font);
-    settings.setValue(_inkPoint,mPageSettings.point);
     settings.setValue(_paperSizeId,mPageSettings.paperSizeId);
+    settings.setValue(_topMargin,mPageSettings.topMargin);
     settings.setValue(_leftMargin,mPageSettings.leftMargin);
     settings.setValue(_rightMargin,mPageSettings.rightMargin);
-    settings.setValue(_topMargin,mPageSettings.topMargin);
     settings.setValue(_bottomMargin,mPageSettings.bottomMargin);
-    settings.setValue(_pageWidth,mPageSettings.pageWidth);
-    settings.setValue(_pageHeight,mPageSettings.pageHeight);
-    settings.setValue(_tradeNameinBold,mPageSettings.tradeNameinBold);
-    settings.setValue(_doseinNewLine,mPageSettings.doseinNewLine);
-    settings.setValue(_compactMode,mPageSettings.compactMode);
-    settings.setValue(_noQty,mPageSettings.noQty);
-    settings.setValue(_dietLeftPadding,mPageSettings.dietLeftPadding);
-    settings.setValue(_dietTopPadding,mPageSettings.dietTopPadding);
-    settings.setValue(_drugsColPerc,mPageSettings.drugsColPerc);
-    settings.setValue(_invPad,mPageSettings.invPad);
-    settings.setValue(_showInvs,mPageSettings.showInvestigations);
-    settings.setValue(_dietWidth,mPageSettings.dietWidth);
-    settings.setValue(_showDrugs,mPageSettings.showDrugs);
-    settings.setValue(_centerRequests,mPageSettings.centerRequests);
-    settings.setValue(_centerDrugs,mPageSettings.centerDrugs);
     settings.setValue(_showBanner,mPageSettings.showBanner);
+    settings.setValue(_showDrugs,mPageSettings.showDrugs);
+    settings.setValue(_showInvsestigations,mPageSettings.showInvestigations);
+    settings.setValue(_showMeasurments,mPageSettings.showMeasurments);
     settings.setValue(_showDrugsSeparator,mPageSettings.showDrugsSeparator);
-    //settings.setValue(_fullPage,mPageSettings.fullPage);
-    settings.setValue(_bannerWidth,mPageSettings.bannerWidth);
-    settings.setValue(_investigationsWidth,mPageSettings.investigationsWidth);
+    settings.setValue(_drugsPrintMode,mPageSettings.drugsPrintMode);
     settings.setValue(_showDrugsTitle,mPageSettings.showDrugsTitle);
-    settings.setValue(_setEastArabicNumbers,mPageSettings.setEastArabicNumbers);
     settings.setValue(_showHeaderFooterLogo,mPageSettings.showPrescriptionHeaderFooterLogo);
     settings.setValue(_logoSize,mPageSettings.logoSize);
-    settings.setValue(_drugsPrintMode,mPageSettings.drugsPrintMode);
+
+    settings.setValue(_headerHeightPercent,mPageSettings.headerHeightPercent);
+    settings.setValue(_footerHeightPercent,mPageSettings.footerHeightPercent);
+    settings.setValue(_bannerHeightPercent,mPageSettings.bannerHeightPercent);
+
+    settings.setValue(_bannerFont,mPageSettings.bannerFont.fontName);
+    settings.setValue(_bannerFontSize,mPageSettings.bannerFont.fontSize);
+    settings.setValue(_bannerFontBold,mPageSettings.bannerFont.fontBold);
+
+    settings.setValue(_roshettaFont,mPageSettings.roshettaFont.fontName);
+    settings.setValue(_roshettaFontSize,mPageSettings.roshettaFont.fontSize);
+    settings.setValue(_roshettaFontBold,mPageSettings.roshettaFont.fontBold);
+
+    settings.setValue(_showDrugsInitDate,mPageSettings.showDrugsInitDate);
+    settings.setValue(_showSignaturePrintedOn,mPageSettings.showSignaturePrintedOn);
+
     settings.endGroup();
 }
 

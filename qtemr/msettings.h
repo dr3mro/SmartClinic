@@ -301,17 +301,67 @@ public:
         int MaxfollowUps;
         bool autoNewVisit;
     };
-    struct textboxFont
+    struct textboxFont // why is twice ?
     {
         double fontSize;
         QString fontName;
         bool fontBold;
+
+        bool operator==(const textboxFont& _font) const
+        {
+            return std::tie(
+                        fontSize,
+                        fontName,
+                        fontBold
+                        ) == std::tie(
+                        _font.fontSize,
+                        _font.fontName,
+                        _font.fontBold);
+
+        };
     };
-    struct defaultFont
+
+    struct defaultFont // why is twice ?
     {
         double fontSize;
         QString fontName;
         bool fontBold;
+
+        bool operator==(const defaultFont& _font) const
+        {
+            return std::tie(
+                        fontSize,
+                        fontName,
+                        fontBold
+                        ) == std::tie(
+                        _font.fontSize,
+                        _font.fontName,
+                        _font.fontBold);
+
+        };
+    };
+
+
+    struct roshettaFont
+    {
+        int fontSize;
+        QString fontName;
+        bool fontBold;
+        bool italic;
+        bool operator==(const roshettaFont& _font) const
+        {
+            return std::tie(
+                        fontSize,
+                        fontName,
+                        fontBold,
+                        italic
+                        ) == std::tie(
+                        _font.fontSize,
+                        _font.fontName,
+                        _font.fontBold,
+                        _font.italic);
+
+        };
     };
 
     enum drugsPrintMode{
@@ -319,110 +369,74 @@ public:
     };
     struct prescriptionPrintSettings
     {
-        double investigationsWidth;
+        QString paperSizeId;
         double leftMargin;
         double topMargin;
         double rightMargin;
         double bottomMargin;
-        double pageWidth;
-        double pageHeight;
-        double dietLeftPadding;
-        double dietTopPadding;
-        double drugsColPerc;
-        double invPad;
-        double dietWidth;
-        int point;
-        QString paperSizeId;
-        int bannerWidth;
-        QString font;
-        //QString color;
-        bool showDrugs;
-        bool centerRequests;
-        bool centerDrugs;
         bool showBanner;
-        bool showDrugsSeparator;
-        //bool fullPage;
-        bool tradeNameinBold;
-        bool doseinNewLine;
-        bool compactMode;
-        bool bold;
-        bool noQty;
-        bool showDrugsTitle;
-        bool setEastArabicNumbers;
+        bool showDrugs;
         bool showInvestigations;
+        bool showMeasurments;
+        bool showDrugsSeparator;
+        drugsPrintMode drugsPrintMode;
+        bool showDrugsTitle;
         bool showPrescriptionHeaderFooterLogo;
         int logoSize;
-        int drugsPrintMode;
+
+        int headerHeightPercent;
+        int footerHeightPercent;
+        int bannerHeightPercent;
+        roshettaFont bannerFont;
+        roshettaFont roshettaFont;
+        bool showDrugsInitDate;
+        bool showSignaturePrintedOn;
+
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
-            return std::tie(bold,
-                            point,
-                            font,
-                            //color,
-                            paperSizeId,
-                            topMargin,
+            return std::tie(paperSizeId,
                             leftMargin,
+                            topMargin,
                             rightMargin,
                             bottomMargin,
-                            pageWidth,
-                            pageHeight,
-                            tradeNameinBold,
-                            doseinNewLine,
-                            compactMode,
-                            noQty,
-                            dietLeftPadding,
-                            dietTopPadding,
-                            drugsColPerc,
-                            invPad,
-                            showInvestigations,
-                            dietWidth,
-                            showDrugs,
-                            centerRequests,
-                            centerDrugs,
                             showBanner,
+                            showDrugs,
+                            showInvestigations,
+                            showMeasurments,
                             showDrugsSeparator,
-                            //fullPage,
-                            bannerWidth,
-                            investigationsWidth,
+                            drugsPrintMode,
                             showDrugsTitle,
-                            setEastArabicNumbers,
                             showPrescriptionHeaderFooterLogo,
                             logoSize,
-                            drugsPrintMode) == std::tie(
-                        prescriptionprintsettings.bold,
-                        prescriptionprintsettings.point,
-                        prescriptionprintsettings.font,
-                        //prescriptionprintsettings.color,
+                            headerHeightPercent,
+                            footerHeightPercent,
+                            bannerHeightPercent,
+                            bannerFont,
+                            roshettaFont,
+                            showDrugsInitDate,
+                            showSignaturePrintedOn
+                            ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
-                        prescriptionprintsettings.topMargin,
                         prescriptionprintsettings.leftMargin,
+                        prescriptionprintsettings.topMargin,
                         prescriptionprintsettings.rightMargin,
                         prescriptionprintsettings.bottomMargin,
-                        prescriptionprintsettings.pageWidth,
-                        prescriptionprintsettings.pageHeight,
-                        prescriptionprintsettings.tradeNameinBold,
-                        prescriptionprintsettings.doseinNewLine,
-                        prescriptionprintsettings.compactMode,
-                        prescriptionprintsettings.noQty,
-                        prescriptionprintsettings.dietLeftPadding,
-                        prescriptionprintsettings.dietTopPadding,
-                        prescriptionprintsettings.drugsColPerc,
-                        prescriptionprintsettings.invPad,
-                        prescriptionprintsettings.showInvestigations,
-                        prescriptionprintsettings.dietWidth,
-                        prescriptionprintsettings.showDrugs,
-                        prescriptionprintsettings.centerRequests,
-                        prescriptionprintsettings.centerDrugs,
                         prescriptionprintsettings.showBanner,
+                        prescriptionprintsettings.showDrugs,
+                        prescriptionprintsettings.showInvestigations,
+                        prescriptionprintsettings.showMeasurments,
                         prescriptionprintsettings.showDrugsSeparator,
-                        //prescriptionprintsettings.fullPage,
-                        prescriptionprintsettings.bannerWidth,
-                        prescriptionprintsettings.investigationsWidth,
+                        prescriptionprintsettings.drugsPrintMode,
                         prescriptionprintsettings.showDrugsTitle,
-                        prescriptionprintsettings.setEastArabicNumbers,
                         prescriptionprintsettings.showPrescriptionHeaderFooterLogo,
                         prescriptionprintsettings.logoSize,
-                        prescriptionprintsettings.drugsPrintMode); }
+                        prescriptionprintsettings.headerHeightPercent,
+                        prescriptionprintsettings.footerHeightPercent,
+                        prescriptionprintsettings.bannerHeightPercent,
+                        prescriptionprintsettings.bannerFont,
+                        prescriptionprintsettings.roshettaFont,
+                        prescriptionprintsettings.showDrugsInitDate,
+                        prescriptionprintsettings.showSignaturePrintedOn); }
     };
     struct lineStyle
     {

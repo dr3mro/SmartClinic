@@ -35,7 +35,6 @@ public:
     mSettings::prescriptionPrintSettings loadPrintSettings();
     mSettings::prescriptionPrintSettings grabPrintSettings();
     void saveRoshettaAutoComplete();
-    void loadDiets(QStringList diets);
     void reset();
     void setRoshettaData(const mSettings::Roshetta & _roshetta);
     ~printDrugs();
@@ -47,52 +46,53 @@ public slots:
     void refreshView();
 
 private slots:
-//    void on_Orientation_currentIndexChanged(int);
-    void setInkColor(QColor c);
-    void on_pageWidth_valueChanged(double);
-    void setDefaultFontPoint(const QString &arg1);
-    void setDefaultFont(const QString &arg1);
-    void setDefaultBold(bool bold);
-    void on_drugsColPerc_valueChanged(double value);
     void showEvent(QShowEvent *e);
     void makePrintPreview(QPrinter *preview);
-    void on_diet_activated(const QString &arg1);
-    void on_drugsMode_activated(int index);
-    void on_bannerWidthPerc_valueChanged(int);
-    void on_pageHeight_valueChanged(double);
     void on_printerProfile_activated(const QString &arg1);
-    void on_invPad_editingFinished();
-    void on_invWidth_editingFinished();
     void on_showInvs_toggled(bool checked);
-
     void on_paperSizeId_currentIndexChanged(const QString &arg1);
+    void on_drugsMode_activated(int index);
+    void on_bannerFont_currentIndexChanged(const QString &arg1);
+
+
+    void on_bannerFontSize_currentIndexChanged(const QString &arg1);
+
+    void on_bannerFontBold_toggled(bool checked);
+
+    void on_bannerFont_highlighted(const QString &arg1);
+
+    void on_roshettaFont_currentIndexChanged(const QString &arg1);
+
+    void on_roshettaFont_highlighted(const QString &arg1);
+
+    void on_roshettaFontSize_currentIndexChanged(const QString &arg1);
+
+    void on_roshettaFontBold_toggled(bool checked);
+
+    void on_headerHeightPercent_valueChanged(int arg1);
+
+    void on_bannerHeightPercent_valueChanged(int arg1);
+
+    void on_footerHeightPercent_valueChanged(int arg1);
 
 private:
     void tweakRoshetta();
-    void setMaxValues();
-    void resetMaxValues();
     void setupPrinter(QPrinter *p,const mSettings::prescriptionPrintSettings &pSettings, bool preview=false);
     void printDoc(QPrinter *p, QTextDocument *doc, bool preview=false);
     QTextDocument *getDoc();
     QPrinter *printer;
     QPrintDialog *dlg;
     QTextDocument *doc;
-    colorPicker *cp;
+    //colorPicker *cp;
     mSettings& settings = mSettings::instance();
-    QColor inkColor;
-    QString defaultFont;
-    int defaultPoint;
-    bool defaultBold;
-    QPalette palette;
     mSettings::prescriptionPrintSettings pSettings;
     mSettings::prescriptionPrintSettings lSettings;
-    QString selectedDiet="-";
     QTimer t;
     QString selectedPrintingProfile;
     wm_add2Completer *wm_add2completer;
     Ui::printDrugs *ui;
     QTextDocument *m_roshetta;
-    //neo code
+
     Roshetta roshettaMaker;
     QTextDocument *roshettaDoc;
     mSettings::Roshetta roshettaData;

@@ -5,7 +5,7 @@
 
 
 namespace {
-	static qreal mmToInches(qreal mm) { return mm * 0.039370147; }
+    static qreal mmToInches(qreal mm) { return mm * 0.039370147; }
 }
 
 qreal PageMetrics::mmToPx(qreal _mm, bool _x)

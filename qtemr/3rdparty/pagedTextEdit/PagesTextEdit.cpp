@@ -9,7 +9,7 @@ PagesTextEdit::PagesTextEdit(QWidget *parent) :
     TextEdit(parent),
 	m_document(0),
     m_usePageMode(true),
-    m_addBottomSpace(true),
+    m_addBottomSpace(false),
     m_showPageNumbers(false),
 	m_pageNumbersAlignment(Qt::AlignTop | Qt::AlignRight)
 {
@@ -147,8 +147,8 @@ void PagesTextEdit::updateViewportMargins()
 		//
 		// Рассчитываем отступы для viewport
 		//
-		const int DEFAULT_TOP_MARGIN = 20;
-		const int DEFAULT_BOTTOM_MARGIN = 20;
+        const int DEFAULT_TOP_MARGIN = 20;
+        const int DEFAULT_BOTTOM_MARGIN = 20;
 		{
 			int leftMargin = 0;
 			int rightMargin = 0;

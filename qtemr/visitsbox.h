@@ -112,7 +112,7 @@ private slots:
     void on_weight_textChanged(const QString &arg1);
     void on_checkBoxAntenatal_clicked(bool checked);
     void toggleContollers();
-    QString genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings, QString selectedDiet, int drugsMode);
+    //QString genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings, QString selectedDiet, int drugsMode);
     void followUpDateChanged(const QDate &date);
     void onShift_pageUp();
     void onShift_pageDown();

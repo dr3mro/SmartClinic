@@ -1102,312 +1102,312 @@ int visitsBox::visitDateTime2JulianDate()
     return julianDate;
 }
 
-QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings,QString selectedDiet,int drugsMode)
-{
-    QString t_unit,drug_b,body,unit,drug,dose,HTML,t_oneColumn,t_twoColumn,
-            t_nCompact,expandName,banner,drugsSeparator,expandedname,dose_b;
-    QString align = (mPrintsettings.centerRequests)? "style=\"text-align: center;\"":"style=\"text-align: left;\"";
+//QString visitsBox::genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings,QString selectedDiet,int drugsMode)
+//{
+//    QString t_unit,drug_b,body,unit,drug,dose,HTML,t_oneColumn,t_twoColumn,
+//            t_nCompact,expandName,banner,drugsSeparator,expandedname,dose_b;
+//    QString align = (mPrintsettings.centerRequests)? "style=\"text-align: center;\"":"style=\"text-align: left;\"";
 
 
-    //int drugsNumber=0;
-    QList<DrugsItemModel*> drugsModelList;
+//    //int drugsNumber=0;
+//    QList<DrugsItemModel*> drugsModelList;
 
-    switch (drugsMode) {
-    case 0:
-        drugsModelList << ui->vDrugsTable->getDrugsModel();
-        //drugsNumber = ui->vDrugsTable->getDrugsModel()->rowCount();
-        break;
-    case 1:
-        drugsModelList << getDrugsModel();
-        //drugsNumber = getDrugsModel()->rowCount();
-        break;
-    case 2:
-        drugsModelList << ui->vDrugsTable->getDrugsModel();
-        drugsModelList << getDrugsModel();
-        //drugsNumber = ui->vDrugsTable->getDrugsModel()->rowCount() + getDrugsModel()->rowCount();
-        break;
-    default:
-        return QString();
-        //break;
-    }
-    QLocale locale(QLocale::English, QLocale::UnitedStates);
+//    switch (drugsMode) {
+//    case 0:
+//        drugsModelList << ui->vDrugsTable->getDrugsModel();
+//        //drugsNumber = ui->vDrugsTable->getDrugsModel()->rowCount();
+//        break;
+//    case 1:
+//        drugsModelList << getDrugsModel();
+//        //drugsNumber = getDrugsModel()->rowCount();
+//        break;
+//    case 2:
+//        drugsModelList << ui->vDrugsTable->getDrugsModel();
+//        drugsModelList << getDrugsModel();
+//        //drugsNumber = ui->vDrugsTable->getDrugsModel()->rowCount() + getDrugsModel()->rowCount();
+//        break;
+//    default:
+//        return QString();
+//        //break;
+//    }
+//    QLocale locale(QLocale::English, QLocale::UnitedStates);
 
-    //QString visitDate = locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date().toString("dd/MM/yyyy");
-    QString visitDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dddd dd/MM/yyyy");
+//    //QString visitDate = locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date().toString("dd/MM/yyyy");
+//    QString visitDate = locale.toString(locale.toDateTime(comboSelectedDataTime,"dd/MM/yyyy hh:mm AP ddd").date(),"dddd dd/MM/yyyy");
 
-    double pageWidth = mPrintsettings.pageWidth * static_cast<double>(logicalDpiX());
+//    double pageWidth = mPrintsettings.pageWidth * static_cast<double>(logicalDpiX());
 
-    double pageHeight = mPrintsettings.pageHeight * static_cast<double>(logicalDpiY());
+//    double pageHeight = mPrintsettings.pageHeight * static_cast<double>(logicalDpiY());
 
-    double widthCorrection = mPrintsettings.leftMargin + mPrintsettings.rightMargin;
+//    double widthCorrection = mPrintsettings.leftMargin + mPrintsettings.rightMargin;
 
-    pageWidth -= widthCorrection*static_cast<double>(logicalDpiX());
+//    pageWidth -= widthCorrection*static_cast<double>(logicalDpiX());
 
-    double heightCorrection = mPrintsettings.topMargin + mPrintsettings.bottomMargin;
+//    double heightCorrection = mPrintsettings.topMargin + mPrintsettings.bottomMargin;
 
-    pageHeight -= heightCorrection*static_cast<double>(logicalDpiY());
-
-
-
-    double invPad = mPrintsettings.invPad * static_cast<double>(logicalDpiX());
-    int drugsWidth = static_cast<int>(pageWidth *  static_cast<double>(mPrintsettings.drugsColPerc/ 100));
-    //int bannerWidth = static_cast<int>(pageWidth *   static_cast<double>((mPrintsettings.bannerWidth/100)));
-    int dietWidth = static_cast<int>(mPrintsettings.dietWidth * static_cast<double>(logicalDpiX()));
-    int invWidth= static_cast<int>((static_cast<double>(mPrintsettings.investigationsWidth))* logicalDpiX());
+//    pageHeight -= heightCorrection*static_cast<double>(logicalDpiY());
 
 
-    HTML = QString("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>");
-    body = QString("<body  style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4;height:%5;\">")
-            .arg(mPrintsettings.font)
-            .arg(mPrintsettings.point-1)
-            .arg(mPrintsettings.bold? "bold":"normal")
-            .arg(pageWidth)
-            .arg(pageHeight);
-    //body.append(QString("<table border=\"1\" style=\"-qt-table-type: frame;\" width=\"%1\" height=\"%2\"><tr><td>").arg(pageWidth).arg(pageHeight));
-    //body.append(fragment1);
-    if(mPrintsettings.showPrescriptionHeaderFooterLogo){
-        body.append(QString("<table border=\"0\" width=\"%1%\">").arg(mPrintsettings.bannerWidth));
-        body.append("<tr>");
-        body.append("<td width=\"40%\">");
-        body.append(QString("<img src=\"%1\" width=%2 height=%2>").arg(LOGOFILE).arg(mPrintsettings.logoSize));
-        body.append("</td>");
-        body.append("<td width=\"60%\">");
-        body.append(dataIOhelper::readFile(HEADERFILE));
-        body.append("</td>");
-        body.append("</tr>");
-        body.append("</table>");
-    }
-    QStringList vSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
-    if (mPrintsettings.showBanner)
-    {
+
+//    double invPad = mPrintsettings.invPad * static_cast<double>(logicalDpiX());
+//    int drugsWidth = static_cast<int>(pageWidth *  static_cast<double>(mPrintsettings.drugsColPerc/ 100));
+//    //int bannerWidth = static_cast<int>(pageWidth *   static_cast<double>((mPrintsettings.bannerWidth/100)));
+//    int dietWidth = static_cast<int>(mPrintsettings.dietWidth * static_cast<double>(logicalDpiX()));
+//    int invWidth= static_cast<int>((static_cast<double>(mPrintsettings.investigationsWidth))* logicalDpiX());
 
 
-        QString followDate = /*(visitDate==ui->dateFollowUp->text())? QString():*/ui->dateFollowUp->text();
-
-        banner = QString(
-                    "<table width=\"%1%\">"
-                    "<tr><td colspan=\"3\"><hr/></td></tr>"
-                    "<tr>"
-                    "<td width=\"50%\"><b>Name:</b> %2 </td>"
-                    "<td><b>Age:</b>%3 </td>"
-                    "<td><b>Code:</b>%4 ▶ %8</td>"
-                    "</tr>"
-                    "<tr>"
-                    "<td width=\"50%\"><b>Diagnosis:</b> %5 </td>"
-                    "<td><b>Date:</b>%6</td>"
-                    "<td><b>Next:</b>%7</td>"
-                    "</tr>"
-                    "<tr><td colspan=\"3\"><hr/></td></tr>"
-                    "</table>"
-                    )
-                .arg(mPrintsettings.bannerWidth)
-                .arg(pName)
-                .arg(printableAge)
-                .arg(QStringLiteral("%1").arg(ID, 5, 10, QLatin1Char('0')))
-                .arg(ui->Diagnosis->text().simplified())
-                .arg(ui->visitLists->getParentVisitDate(ui->visitLists->currentIndex()))
-                .arg(followDate)
-                .arg(vSymbole.at(ui->comboVisitType->currentIndex()));
-
-        body.append(banner);
-
-    }
-
-    bool isActiveHeaderPrinted=false;
-    bool isPrescriptionHeaderPrinted=false;
-    bool DrugsFound = false;
-
-    HTML.append(body);
-    if (mPrintsettings.showDrugs )
-    {
-        drug_b = "<b>%1</b>";
-        dose_b = "<b>%1</b>";
-        t_nCompact = mPrintsettings.compactMode ? "":"<br/>";
-        drugsSeparator = mPrintsettings.showDrugsSeparator ? "<hr/>":"";
-
-        t_oneColumn = "<tr valign=\"top\"><td><div align=\"%4\">%1 ▶<i style=\"font-size:6px\">%6</i></div>  <div dir=RTL "
-                      "valign =\"%3\" align=\"%5\" >%2</div></td></tr>";
-        t_twoColumn = "<tr valign=\"top\"><td><div align=\"%4\" >%1&#160;"+t_nCompact+drugsSeparator+"</div></td><td>"
-                                                                                                     "<div dir=RTL valign =\"%3\" align=\"%5\" >&#160;%2</div></td></tr>%6";
-
-        HTML.append(QString("<table border=\"0\" width=\"%1\" style=\"float:left;\">").arg(drugsWidth));
-
-        t_unit = mPrintsettings.doseinNewLine ? t_oneColumn:t_twoColumn;
+//    HTML = QString("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>");
+//    body = QString("<body  style=\"font-family:\"%1\"; font-size:%2pt; font-weight:%3;width:%4;height:%5;\">")
+//            .arg(mPrintsettings.font)
+//            .arg(mPrintsettings.point-1)
+//            .arg(mPrintsettings.bold? "bold":"normal")
+//            .arg(pageWidth)
+//            .arg(pageHeight);
+//    //body.append(QString("<table border=\"1\" style=\"-qt-table-type: frame;\" width=\"%1\" height=\"%2\"><tr><td>").arg(pageWidth).arg(pageHeight));
+//    //body.append(fragment1);
+//    if(mPrintsettings.showPrescriptionHeaderFooterLogo){
+//        body.append(QString("<table border=\"0\" width=\"%1%\">").arg(mPrintsettings.bannerWidth));
+//        body.append("<tr>");
+//        body.append("<td width=\"40%\">");
+//        body.append(QString("<img src=\"%1\" width=%2 height=%2>").arg(LOGOFILE).arg(mPrintsettings.logoSize));
+//        body.append("</td>");
+//        body.append("<td width=\"60%\">");
+//        body.append(dataIOhelper::readFile(HEADERFILE));
+//        body.append("</td>");
+//        body.append("</tr>");
+//        body.append("</table>");
+//    }
+//    QStringList vSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
+//    if (mPrintsettings.showBanner)
+//    {
 
 
-        QString doseAlign,drugAlign;
-        if ( mPrintsettings.doseinNewLine)
-        {
-            if( mPrintsettings.centerDrugs)
-                doseAlign = drugAlign = "center";
-            else
-            {
-                doseAlign = "left";
-                drugAlign = "left";
-            }
+//        QString followDate = /*(visitDate==ui->dateFollowUp->text())? QString():*/ui->dateFollowUp->text();
 
-        }
-        else
-        {
-            if( mPrintsettings.centerDrugs)
-            {
-                doseAlign = "left";
-                drugAlign = "right";
-            }
-            else
-            {
-                doseAlign = "right";
-                drugAlign = "left";
-            }
-        }
+//        banner = QString(
+//                    "<table width=\"%1%\">"
+//                    "<tr><td colspan=\"3\"><hr/></td></tr>"
+//                    "<tr>"
+//                    "<td width=\"50%\"><b>Name:</b> %2 </td>"
+//                    "<td><b>Age:</b>%3 </td>"
+//                    "<td><b>Code:</b>%4 ▶ %8</td>"
+//                    "</tr>"
+//                    "<tr>"
+//                    "<td width=\"50%\"><b>Diagnosis:</b> %5 </td>"
+//                    "<td><b>Date:</b>%6</td>"
+//                    "<td><b>Next:</b>%7</td>"
+//                    "</tr>"
+//                    "<tr><td colspan=\"3\"><hr/></td></tr>"
+//                    "</table>"
+//                    )
+//                .arg(mPrintsettings.bannerWidth)
+//                .arg(pName)
+//                .arg(printableAge)
+//                .arg(QStringLiteral("%1").arg(ID, 5, 10, QLatin1Char('0')))
+//                .arg(ui->Diagnosis->text().simplified())
+//                .arg(ui->visitLists->getParentVisitDate(ui->visitLists->currentIndex()))
+//                .arg(followDate)
+//                .arg(vSymbole.at(ui->comboVisitType->currentIndex()));
 
-        QString drugsHeader = "<tr><th style=\"padding:8px;\"%1>"
-                              "<div style=\"background-color:LightSteelBlue;\">"
-                              "<b>%2</b></div></th></tr>";
+//        body.append(banner);
 
-        int model_index = 0;
-        foreach (DrugsItemModel *drugsModel, drugsModelList)
-        {
-            for ( int d = 0 ; d < drugsModel->rowCount() ; d++ )
-            {
-                if ( drugsModel->item(d,5)->text().toInt() == 1)
-                {
-                    if(!isPrescriptionHeaderPrinted && (drugsMode == 0 || drugsMode == 2 ) && model_index == 0 )
-                    {
-                        if(mPrintsettings.showDrugsTitle)
-                            HTML.append(QString(drugsHeader)
-                                        .arg(mPrintsettings.doseinNewLine? "":"colspan=\"2\"")
-                                        .arg("PRESCRIPTION"));
-                        isPrescriptionHeaderPrinted=true;
-                    }
-                    else if(!isActiveHeaderPrinted && ( ( drugsMode == 1 && model_index == 0 ) || ( drugsMode == 2 && model_index == 1 ) ) )
-                    {
-                        if(mPrintsettings.showDrugsTitle)
-                            HTML.append(QString(drugsHeader)
-                                        .arg(mPrintsettings.doseinNewLine? "":"colspan=\"2\"")
-                                        .arg("CURRENT ACTIVE DRUGS"));
-                        isActiveHeaderPrinted=true;
-                    }
-                    QString drugStartDate = drugsModel->item(d,3)->text();
-                    expandName = drugsModel->item(d,0)->text();
-                    if (sqlextra->isExpandExists(expandName))
-                    {
-                        dose = mPrintsettings.setEastArabicNumbers ? dataHelper::switchToEasternArabic(drugsModel->item(d,2)->text()):drugsModel->item(d,2)->text();
-                        dose.append(t_nCompact+drugsSeparator);
-                        expandedname = sqlextra->getExpand(expandName);
+//    }
 
-                        expandedname.remove(QRegExp("color:#[A-Fa-f0-9]{6};"));
-                        expandedname.remove(QRegExp("font-size:[0-9]{0,2}pt;"));
-                        expandedname.remove(QRegExp("font-weight:\\d+;"));
-                        expandedname.remove(QRegExp("font-family:'\\w+';"));
-                        expandedname.remove(QRegExp("font-style:'\\w+';"));
+//    bool isActiveHeaderPrinted=false;
+//    bool isPrescriptionHeaderPrinted=false;
+//    bool DrugsFound = false;
 
-                        unit = QString(t_unit)
-                                .arg((mPrintsettings.tradeNameinBold || mPrintsettings.bold )?
-                                         QString(drug_b).arg(expandedname):expandedname)
-                                .arg(mPrintsettings.bold? QString(dose_b).arg(dose):dose)
-                                .arg("bottom")
-                                .arg(drugAlign)
-                                .arg(doseAlign)
-                                .arg(mPrintsettings.doseinNewLine ? QDate::fromJulianDay(drugStartDate.toInt()).toString("dd/MM/yyyy"):"");
-                        HTML.append(unit);
-                        DrugsFound = true;
-                        continue;
-                    }
-                    drug = drugsModel->item(d,0)->text();
+//    HTML.append(body);
+//    if (mPrintsettings.showDrugs )
+//    {
+//        drug_b = "<b>%1</b>";
+//        dose_b = "<b>%1</b>";
+//        t_nCompact = mPrintsettings.compactMode ? "":"<br/>";
+//        drugsSeparator = mPrintsettings.showDrugsSeparator ? "<hr/>":"";
 
-                    if ( mPrintsettings.noQty )
-                    {
-                        drug.remove("(IMP)");
-                        drug.remove("e/n");
-                        drug.remove("e/e");
-                        drug.remove(QRegExp("\\d+[(A|ST.|T|C|BX|S|V|CT|NV|P|D|F|L]+\\W+"));
-                    }
-                    dose = mPrintsettings.setEastArabicNumbers ? dataHelper::switchToEasternArabic(drugsModel->item(d,2)->text()):drugsModel->item(d,2)->text();
-                    dose.append(t_nCompact+drugsSeparator);
+//        t_oneColumn = "<tr valign=\"top\"><td><div align=\"%4\">%1 ▶<i style=\"font-size:6px\">%6</i></div>  <div dir=RTL "
+//                      "valign =\"%3\" align=\"%5\" >%2</div></td></tr>";
+//        t_twoColumn = "<tr valign=\"top\"><td><div align=\"%4\" >%1&#160;"+t_nCompact+drugsSeparator+"</div></td><td>"
+//                                                                                                     "<div dir=RTL valign =\"%3\" align=\"%5\" >&#160;%2</div></td></tr>%6";
 
-                    unit = QString(t_unit)
-                            .arg((mPrintsettings.tradeNameinBold || mPrintsettings.bold )? QString(drug_b).arg(drug):drug)
-                            .arg(mPrintsettings.bold? QString(dose_b).arg(dose):dose)
-                            .arg("top")
-                            .arg(drugAlign)
-                            .arg(doseAlign)
-                            .arg(mPrintsettings.doseinNewLine ? QDate::fromJulianDay(drugStartDate.toInt()).toString("dd/MM/yyyy"):"");
+//        HTML.append(QString("<table border=\"0\" width=\"%1\" style=\"float:left;\">").arg(drugsWidth));
 
-                    DrugsFound = true;
-                    HTML.append(unit);
-                }
-            }
-            model_index+=1;
-        }
-
-        HTML.append("</table>");
-
-    }
-    QStringList investigations = ui->InvestigationsTable->getInvestigationsList();
-
-    int investigations_count = investigations.count();
-
-    if ( !DrugsFound || !mPrintsettings.showDrugs  )
-        invPad += drugsWidth;
-
-    if ( mPrintsettings.showInvestigations && investigations_count >0 )
-    {
-
-        HTML.append(QString("<table border=\"0\" bgcolor=\"Aliceblue\" style=\"float:left;margin-left:%1px;\">")
-                    .arg(invPad));
-        HTML.append(QString("<tr><th style=\"padding:3px;\" ><div style=\"background-color:LightSteelBlue;font-size:%1pt;\"><b>REQUESTS</b></div></th></tr>").arg(mPrintsettings.point-1));
-        foreach (QString inv, investigations)
-        {
-            HTML.append(QString("<tr><td  width=\"%4\" ><div style=\"%3font-size:%5pt;\" %1>&#9679; %2</div></td></tr>")
-                        .arg(align)
-                        .arg(inv)
-                        .arg(mPrintsettings.bold? "font-weight:bold;":"")
-                        .arg(invWidth)
-                        .arg(mPrintsettings.point-1));
-        }
-
-        HTML.append("</table>");
-    }
-
-   if(selectedDiet!="-")
-    {
-        HTML.append(QString("<table border=\"0\" style=\"float:left;margin-top:%1px;margin-left:%2px;\">")
-                    .arg(mPrintsettings.dietTopPadding*logicalDpiX())
-                    .arg(mPrintsettings.dietLeftPadding*logicalDpiX()));
-        HTML.append(QString("<tr><td width=\"%1\">").arg(dietWidth));
-        HTML.append(QString("<div dir=RTL  align=\"justify\" >%1</div>").arg(sqlextra->getDiet(selectedDiet)));
-        HTML.append("</tr></td>");
-        HTML.append("</table>");
-    }
+//        t_unit = mPrintsettings.doseinNewLine ? t_oneColumn:t_twoColumn;
 
 
-   if(mPrintsettings.showPrescriptionHeaderFooterLogo){
-       HTML.append(QString("<table width=\"%1%\" border=\"0\" style=\"position:absolute;float:left;bottom:0;\">")
-                   .arg(mPrintsettings.bannerWidth));
-       HTML.append(QString("<tr style=\"font-size:8pt;\"><td><b>Printed on</b>:<i>%1</i></td><td><b>Physician's Signature</b>:</td></tr>").arg(visitDate));
-       HTML.append("<tr>");
-       HTML.append("<td  colspan=\"2\">");
-       HTML.append(QString("<hr>"));
-       HTML.append("</td>");
-       HTML.append("</tr>");
-       HTML.append("<tr>");
-       HTML.append("<td  colspan=\"2\">");
-       HTML.append(QString("%1").arg(QString(dataIOhelper::readFile(FOOTERFILE))));
-       HTML.append("</td>");
-       HTML.append("</tr>");
-       HTML.append("</table>");
-   }
+//        QString doseAlign,drugAlign;
+//        if ( mPrintsettings.doseinNewLine)
+//        {
+//            if( mPrintsettings.centerDrugs)
+//                doseAlign = drugAlign = "center";
+//            else
+//            {
+//                doseAlign = "left";
+//                drugAlign = "left";
+//            }
 
-    //HTML.append("</td></tr></table>");
-   HTML.append("</body>");
+//        }
+//        else
+//        {
+//            if( mPrintsettings.centerDrugs)
+//            {
+//                doseAlign = "left";
+//                drugAlign = "right";
+//            }
+//            else
+//            {
+//                doseAlign = "right";
+//                drugAlign = "left";
+//            }
+//        }
 
-   HTML.append("</html>");
+//        QString drugsHeader = "<tr><th style=\"padding:8px;\"%1>"
+//                              "<div style=\"background-color:LightSteelBlue;\">"
+//                              "<b>%2</b></div></th></tr>";
 
-   dataIOhelper::saveFile("roshetta.html",HTML.toUtf8());
+//        int model_index = 0;
+//        foreach (DrugsItemModel *drugsModel, drugsModelList)
+//        {
+//            for ( int d = 0 ; d < drugsModel->rowCount() ; d++ )
+//            {
+//                if ( drugsModel->item(d,5)->text().toInt() == 1)
+//                {
+//                    if(!isPrescriptionHeaderPrinted && (drugsMode == 0 || drugsMode == 2 ) && model_index == 0 )
+//                    {
+//                        if(mPrintsettings.showDrugsTitle)
+//                            HTML.append(QString(drugsHeader)
+//                                        .arg(mPrintsettings.doseinNewLine? "":"colspan=\"2\"")
+//                                        .arg("PRESCRIPTION"));
+//                        isPrescriptionHeaderPrinted=true;
+//                    }
+//                    else if(!isActiveHeaderPrinted && ( ( drugsMode == 1 && model_index == 0 ) || ( drugsMode == 2 && model_index == 1 ) ) )
+//                    {
+//                        if(mPrintsettings.showDrugsTitle)
+//                            HTML.append(QString(drugsHeader)
+//                                        .arg(mPrintsettings.doseinNewLine? "":"colspan=\"2\"")
+//                                        .arg("CURRENT ACTIVE DRUGS"));
+//                        isActiveHeaderPrinted=true;
+//                    }
+//                    QString drugStartDate = drugsModel->item(d,3)->text();
+//                    expandName = drugsModel->item(d,0)->text();
+//                    if (sqlextra->isExpandExists(expandName))
+//                    {
+//                        dose = mPrintsettings.setEastArabicNumbers ? dataHelper::switchToEasternArabic(drugsModel->item(d,2)->text()):drugsModel->item(d,2)->text();
+//                        dose.append(t_nCompact+drugsSeparator);
+//                        expandedname = sqlextra->getExpand(expandName);
 
-    return HTML;
-}
+//                        expandedname.remove(QRegExp("color:#[A-Fa-f0-9]{6};"));
+//                        expandedname.remove(QRegExp("font-size:[0-9]{0,2}pt;"));
+//                        expandedname.remove(QRegExp("font-weight:\\d+;"));
+//                        expandedname.remove(QRegExp("font-family:'\\w+';"));
+//                        expandedname.remove(QRegExp("font-style:'\\w+';"));
+
+//                        unit = QString(t_unit)
+//                                .arg((mPrintsettings.tradeNameinBold || mPrintsettings.bold )?
+//                                         QString(drug_b).arg(expandedname):expandedname)
+//                                .arg(mPrintsettings.bold? QString(dose_b).arg(dose):dose)
+//                                .arg("bottom")
+//                                .arg(drugAlign)
+//                                .arg(doseAlign)
+//                                .arg(mPrintsettings.doseinNewLine ? QDate::fromJulianDay(drugStartDate.toInt()).toString("dd/MM/yyyy"):"");
+//                        HTML.append(unit);
+//                        DrugsFound = true;
+//                        continue;
+//                    }
+//                    drug = drugsModel->item(d,0)->text();
+
+//                    if ( mPrintsettings.noQty )
+//                    {
+//                        drug.remove("(IMP)");
+//                        drug.remove("e/n");
+//                        drug.remove("e/e");
+//                        drug.remove(QRegExp("\\d+[(A|ST.|T|C|BX|S|V|CT|NV|P|D|F|L]+\\W+"));
+//                    }
+//                    dose = mPrintsettings.setEastArabicNumbers ? dataHelper::switchToEasternArabic(drugsModel->item(d,2)->text()):drugsModel->item(d,2)->text();
+//                    dose.append(t_nCompact+drugsSeparator);
+
+//                    unit = QString(t_unit)
+//                            .arg((mPrintsettings.tradeNameinBold || mPrintsettings.bold )? QString(drug_b).arg(drug):drug)
+//                            .arg(mPrintsettings.bold? QString(dose_b).arg(dose):dose)
+//                            .arg("top")
+//                            .arg(drugAlign)
+//                            .arg(doseAlign)
+//                            .arg(mPrintsettings.doseinNewLine ? QDate::fromJulianDay(drugStartDate.toInt()).toString("dd/MM/yyyy"):"");
+
+//                    DrugsFound = true;
+//                    HTML.append(unit);
+//                }
+//            }
+//            model_index+=1;
+//        }
+
+//        HTML.append("</table>");
+
+//    }
+//    QStringList investigations = ui->InvestigationsTable->getInvestigationsList();
+
+//    int investigations_count = investigations.count();
+
+//    if ( !DrugsFound || !mPrintsettings.showDrugs  )
+//        invPad += drugsWidth;
+
+//    if ( mPrintsettings.showInvestigations && investigations_count >0 )
+//    {
+
+//        HTML.append(QString("<table border=\"0\" bgcolor=\"Aliceblue\" style=\"float:left;margin-left:%1px;\">")
+//                    .arg(invPad));
+//        HTML.append(QString("<tr><th style=\"padding:3px;\" ><div style=\"background-color:LightSteelBlue;font-size:%1pt;\"><b>REQUESTS</b></div></th></tr>").arg(mPrintsettings.point-1));
+//        foreach (QString inv, investigations)
+//        {
+//            HTML.append(QString("<tr><td  width=\"%4\" ><div style=\"%3font-size:%5pt;\" %1>&#9679; %2</div></td></tr>")
+//                        .arg(align)
+//                        .arg(inv)
+//                        .arg(mPrintsettings.bold? "font-weight:bold;":"")
+//                        .arg(invWidth)
+//                        .arg(mPrintsettings.point-1));
+//        }
+
+//        HTML.append("</table>");
+//    }
+
+//   if(selectedDiet!="-")
+//    {
+//        HTML.append(QString("<table border=\"0\" style=\"float:left;margin-top:%1px;margin-left:%2px;\">")
+//                    .arg(mPrintsettings.dietTopPadding*logicalDpiX())
+//                    .arg(mPrintsettings.dietLeftPadding*logicalDpiX()));
+//        HTML.append(QString("<tr><td width=\"%1\">").arg(dietWidth));
+//        HTML.append(QString("<div dir=RTL  align=\"justify\" >%1</div>").arg(sqlextra->getDiet(selectedDiet)));
+//        HTML.append("</tr></td>");
+//        HTML.append("</table>");
+//    }
+
+
+//   if(mPrintsettings.showPrescriptionHeaderFooterLogo){
+//       HTML.append(QString("<table width=\"%1%\" border=\"0\" style=\"position:absolute;float:left;bottom:0;\">")
+//                   .arg(mPrintsettings.bannerWidth));
+//       HTML.append(QString("<tr style=\"font-size:8pt;\"><td><b>Printed on</b>:<i>%1</i></td><td><b>Physician's Signature</b>:</td></tr>").arg(visitDate));
+//       HTML.append("<tr>");
+//       HTML.append("<td  colspan=\"2\">");
+//       HTML.append(QString("<hr>"));
+//       HTML.append("</td>");
+//       HTML.append("</tr>");
+//       HTML.append("<tr>");
+//       HTML.append("<td  colspan=\"2\">");
+//       HTML.append(QString("%1").arg(QString(dataIOhelper::readFile(FOOTERFILE))));
+//       HTML.append("</td>");
+//       HTML.append("</tr>");
+//       HTML.append("</table>");
+//   }
+
+//    //HTML.append("</td></tr></table>");
+//   HTML.append("</body>");
+
+//   HTML.append("</html>");
+
+//   dataIOhelper::saveFile("roshetta.html",HTML.toUtf8());
+
+//    return HTML;
+//}
 
 void visitsBox::followUpDateChanged(const QDate &date)
 {
@@ -1524,7 +1524,7 @@ void visitsBox::connectSignals(QWidget *parent)
     connect ( ui->InvestigationsTable,SIGNAL(selectLastInvRow()),this,SLOT(selectLastInvRow()) );
     connect ( ui->vDrugsTable,SIGNAL(showRxCost(double,bool)),this,SLOT(showCosts(double,bool)));
     connect ( print,SIGNAL(add2AutoComplete(QString)),this,SLOT(add2RoshettaAutoComplete(QString)));
-    connect ( print,SIGNAL(refreshRoshetta(mSettings::prescriptionPrintSettings,QString,int)),this,SLOT(genRoshettaHTML(mSettings::prescriptionPrintSettings,QString,int)));
+    //connect ( print,SIGNAL(refreshRoshetta(mSettings::prescriptionPrintSettings,QString,int)),this,SLOT(genRoshettaHTML(mSettings::prescriptionPrintSettings,QString,int)));
     connect ( print,SIGNAL(message(QString,QString)),this,SIGNAL(newMessage(QString,QString)));
     connect ( ui->lockUnlockButton,SIGNAL(clicked()),this,SLOT(toggleEditMode()));
     connect ( ui->InvestigationsTable,SIGNAL(toggleRemoveInvButton(bool)),ui->buttonRemoveInvestigations,SLOT(setEnabled(bool)));
@@ -1806,7 +1806,7 @@ void visitsBox::on_fastPrint_leftButtonClicked()
 {
     if (!drugLoadCompleted)
         return;
-    print->loadDiets(sqlextra->getDietList());
+    //print->loadDiets(sqlextra->getDietList());
     print->setRoshettaData(getRoshetta());
     print->show();
 }

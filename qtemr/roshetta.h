@@ -25,7 +25,7 @@ private:
     void setRoshettaSize();
     void setRootFrame();
     void stackFrames();
-    void makeHeader(const mSettings::prescriptionPrintSettings & _pSettings);
+    void makeHeader();
     void makeBanner();
     void makeBody();
     void makeFooter();
@@ -36,7 +36,6 @@ private:
     void fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs, const QString &title);
     void fillRequests(QTextCursor &c);
     void fillVitals(QTextCursor &c);
-    double inch2px(const qreal & x );
     double mWidth;
     double mHeight;
 
