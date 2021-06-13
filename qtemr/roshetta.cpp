@@ -119,7 +119,7 @@ void Roshetta::stackFrames()
 
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.roshettaFont.fontName,
-                 QString::number(roshettaSettings.roshettaFont.fontSize),
+                 QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
                  roshettaSettings.roshettaFont.fontBold? "bold":"normal");
 
     QTextTableFormat prefooterFormat;
@@ -130,9 +130,9 @@ void Roshetta::stackFrames()
     cursor.insertTable(1,2,prefooterFormat);
 
     if (roshettaSettings.showSignaturePrintedOn){
-        cursor.insertHtml(QString("<div %1><b>Physician's Signature:</b></div>").arg(style));
-        cursor.movePosition(QTextCursor::NextCell);
         cursor.insertHtml(QString("<div %2><b>printed on:</b> %1</div>").arg(roshettaData.printedinDate,style));
+        cursor.movePosition(QTextCursor::NextCell);
+        cursor.insertHtml(QString("<div %1><b>Physician's Signature:</b></div>").arg(style));
     }else{
         cursor.movePosition(QTextCursor::NextCell);
     }
@@ -323,7 +323,7 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
             c.insertHtml(QString("<div align=left dir=LTR %4>℞  %1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
                          .arg(d.TradeName," ▶ ",d.StartDate,style));
         }else{
-            c.insertHtml(QString("<div align=left dir=LTR %2>℞  %1></div>")
+            c.insertHtml(QString("<div align=left dir=LTR %2>℞  %1</div>")
                          .arg(d.TradeName,style));
         }
 
