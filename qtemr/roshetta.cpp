@@ -186,7 +186,7 @@ void Roshetta::makeBanner()
 void Roshetta::makeBody()
 {
 
-    double bodyHeight = mHeight - (( 7 + roshettaSettings.headerHeightPercent + roshettaSettings.footerHeightPercent + roshettaSettings.bannerHeightPercent)*mHeight)/100;
+    double bodyHeight = mHeight - ((roshettaSettings.headerHeightPercent + roshettaSettings.footerHeightPercent + roshettaSettings.bannerHeightPercent)*mHeight)/100;
     //mDebug() << "body" << bodyHeight;
     bodyFormat.setWidth(mWidth);
     bodyFormat.setHeight(bodyHeight);
@@ -302,7 +302,7 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
 
     if(roshettaSettings.showDrugsTitle){
         drugsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
-        drugsHeaderFormat.setTopPadding(3);
+        //drugsHeaderFormat.setTopPadding(3);
         drugsHeaderBlockFormat.setAlignment(Qt::AlignCenter);
         c.insertHtml(QString("<div %1><b>%2</b></div>").arg(style,title));
         c.currentTable()->cellAt(CurrentDrugRow,0).setFormat(drugsHeaderFormat);
@@ -320,10 +320,10 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     CurrentDrugRow++;
     foreach (const mSettings::drug & d, drugs) {
         if(roshettaSettings.showDrugsInitDate){
-            c.insertHtml(QString("<div align=left dir=LTR %4>℞  <b>%1</b> %2 <i style=\"font-size:7px\"> %3 </i></div>")
+            c.insertHtml(QString("<div align=left dir=LTR %4>℞  %1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
                          .arg(d.TradeName," ▶ ",d.StartDate,style));
         }else{
-            c.insertHtml(QString("<div align=left dir=LTR %2>℞  <b>%1</b></div>")
+            c.insertHtml(QString("<div align=left dir=LTR %2>℞  %1></div>")
                          .arg(d.TradeName,style));
         }
 
@@ -357,7 +357,7 @@ void Roshetta::fillRequests(QTextCursor &c)
 
     QTextTableCellFormat requestsHeaderFormat;
     requestsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
-    requestsHeaderFormat.setTopPadding(3);
+    //requestsHeaderFormat.setTopPadding(3);
 
     QTextBlockFormat requestsHeaderBlockFormat;
     requestsHeaderBlockFormat.setAlignment(Qt::AlignCenter);
@@ -396,7 +396,7 @@ void Roshetta::fillVitals(QTextCursor &c)
 
     QTextTableCellFormat headerCellFormat;
     headerCellFormat.setBackground(QBrush(QColor(176, 196, 222)));
-    headerCellFormat.setTopPadding(3);
+    //headerCellFormat.setTopPadding(3);
 
     QTextBlockFormat headerBlockFormat;
     headerBlockFormat.setAlignment(Qt::AlignCenter);
@@ -406,7 +406,7 @@ void Roshetta::fillVitals(QTextCursor &c)
 
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.roshettaFont.fontName,
-                 QString::number(roshettaSettings.roshettaFont.fontSize -1),
+                 QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
                  roshettaSettings.roshettaFont.fontBold? "bold":"normal");
 
     c.insertHtml(QString("<div %1><b>MEASUREMENTS</b></div>").arg(style));
