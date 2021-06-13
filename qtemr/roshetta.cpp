@@ -65,7 +65,7 @@ void Roshetta::setRootFrame()
     rootFrameFormat = root->frameFormat();
     rootFrameFormat.setWidth(mWidth);
     rootFrameFormat.setHeight(mHeight);
-    rootFrameFormat.setBorder(1);
+    rootFrameFormat.setBorder(0);
     rootFrameFormat.setPadding(0);
     //rootFrameFormat.setMargin(0);
     rootFrameFormat.setLeftMargin(PageMetrics::mmToPx(roshettaSettings.leftMargin));
@@ -111,7 +111,7 @@ void Roshetta::stackFrames()
     QVector<QTextLength> bodytl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,70)
                                                          << QTextLength(QTextLength::PercentageLength,30);
     bodyFormat.setColumnWidthConstraints(bodytl);
-    cursor.insertTable(2,2,bodyFormat);
+    cursor.insertTable(1,2,bodyFormat);
 
     fillBody(cursor);
 
@@ -229,41 +229,45 @@ void Roshetta::fillBody(QTextCursor &c)
 {
     QTextTableFormat drugsTableFormat;
     drugsTableFormat.setBorder(0);
-    int rows = roshettaData.currentDrugsList.count() + roshettaData.baseDrugsList.count();
-
-    rows+= roshettaSettings.showDrugsTitle? 2:0;
-
     CurrentDrugRow =0; // to follow filling of table current row
 
-    c.insertTable(rows,1,drugsTableFormat);
-
     if(roshettaSettings.showDrugs){
+        int rows=0;
+
+        if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
+            rows+= roshettaData.currentDrugsList.count()+roshettaData.baseDrugsList.count();
+            rows+= roshettaSettings.showDrugsTitle? 2:0;
+        }
+        else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
+            rows+= roshettaData.currentDrugsList.count();
+            rows+= roshettaSettings.showDrugsTitle? 1:0;
+        }
+        else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
+            rows+= roshettaData.baseDrugsList.count();
+            rows+= roshettaSettings.showDrugsTitle? 1:0;
+        }
+
+        c.insertTable(rows,1,drugsTableFormat);
+
         if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
             fillCurrentDrugs(c,"PRESCRIPTION");
             fillBaseDrugs(c,"CHRONIC DRUGS");
-            c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
+             c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
         }
         else {
             if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
                 fillCurrentDrugs(c,"PRESCRIPTION");
-                c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,3);
+                c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
             }
 
             if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
                 fillBaseDrugs(c,"CHRONIC DRUGS");
-                c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,5);
+                c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
             }
-            if(roshettaSettings.showDrugsTitle){
-                c.movePosition(QTextCursor::NextCell);
-            }
-
         }
     }
     else{
-        c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,7);
-        if(roshettaSettings.showDrugsTitle){
-            c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
-        }
+        c.movePosition(QTextCursor::NextBlock);
     }
 
     if(roshettaSettings.showInvestigations)
