@@ -29,13 +29,16 @@ private:
     void makeBanner();
     void makeBody();
     void makeFooter();
+    void fillHeader(QTextCursor &c);
     void fillBanner(QTextCursor &c);
     void fillBody(QTextCursor &c);
     void fillCurrentDrugs(QTextCursor &c, const QString &title);
     void fillBaseDrugs(QTextCursor &c, const QString &title);
     void fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs, const QString &title);
     void fillRequests(QTextCursor &c);
+    void fillSignaturePrintedOn(QTextCursor &c);
     void fillVitals(QTextCursor &c);
+    void fillFooter(QTextCursor &c);
     double mWidth;
     double mHeight;
 

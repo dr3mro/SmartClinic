@@ -80,81 +80,44 @@ void Roshetta::stackFrames()
     QTextCursor cursor(mRoshetta);
     cursor.movePosition(QTextCursor::Start);
     cursor.insertTable(1,2,headerFormat);
-    if(roshettaSettings.showPrescriptionHeaderFooterLogo){
-        cursor.insertHtml(QString("<img src=\"logo.jpg\" width=%1 alt=\"logo\" >").arg(roshettaSettings.logoSize));
+    if(roshettaSettings.showPrescriptionHeaderFooterLogo)
+        fillHeader(cursor);
+    else
         cursor.movePosition(QTextCursor::NextCell);
-        cursor.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
-    }
-    else{
-        cursor.movePosition(QTextCursor::NextCell);
-    }
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-    //    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,44)
-    //                                                           << QTextLength(QTextLength::PercentageLength,28)
-    //                                                           << QTextLength(QTextLength::PercentageLength,28);
-
     cursor.insertFrame(bannerFrameFormat);
 
-    //bannerFormat.setColumnWidthConstraints(bannertl);
-    bannerTable = cursor.insertTable(2,3,bannerFormat);
+
     if(roshettaSettings.showBanner)
         fillBanner(cursor);
     else{
-        cursor.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,5);
+        cursor.movePosition(QTextCursor::NextBlock);
     }
 
     cursor.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
-
-
-    QVector<QTextLength> bodytl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,70)
-                                                         << QTextLength(QTextLength::PercentageLength,30);
-    bodyFormat.setColumnWidthConstraints(bodytl);
-    cursor.insertTable(1,2,bodyFormat);
 
     fillBody(cursor);
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-    QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
-            .arg(roshettaSettings.roshettaFont.fontName,
-                 QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
-                 roshettaSettings.roshettaFont.fontBold? "bold":"normal");
 
-    QTextTableFormat prefooterFormat;
-    prefooterFormat.setBorder(0);
-    prefooterFormat.setMargin(0);
-    prefooterFormat.setWidth(mWidth);
-    prefooterFormat.setHeight(20);
-    cursor.insertTable(1,2,prefooterFormat);
+    if (roshettaSettings.showSignaturePrintedOn)
+        fillSignaturePrintedOn(cursor);
 
-    if (roshettaSettings.showSignaturePrintedOn){
-        cursor.insertHtml(QString("<div %2><b>printed on:</b> %1</div>").arg(roshettaData.printedinDate,style));
-        cursor.movePosition(QTextCursor::NextCell);
-        cursor.insertHtml(QString("<div %1><b>Physician's Signature:</b></div>").arg(style));
-    }else{
-        cursor.movePosition(QTextCursor::NextCell);
-    }
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-    if(roshettaSettings.showPrescriptionHeaderFooterLogo){
-        cursor.insertFrame(footerFormat);
-        QTextBlockFormat footerBlockFormat = cursor.blockFormat();
-        footerBlockFormat.setAlignment(Qt::AlignCenter);
-        cursor.select(QTextCursor::BlockUnderCursor);
-        cursor.setBlockFormat(footerBlockFormat);
 
-        cursor.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
-    }
+    if(roshettaSettings.showPrescriptionHeaderFooterLogo)
+        fillFooter(cursor);
 }
 
 void Roshetta::makeHeader()
 {
     headerFormat.setWidth(mWidth);
     headerFormat.setHeight((mHeight*roshettaSettings.headerHeightPercent)/100);
-    //mDebug() << "header" <<(mHeight*roshettaSettings.headerHeightPercent)/100;
     headerFormat.setBorder(0);
     headerFormat.setMargin(0);
 }
@@ -170,7 +133,6 @@ void Roshetta::makeBanner()
         bannerFrameFormat.setBorderBrush(QBrush(Qt::white));
     }
     bannerFrameFormat.setHeight((mHeight*roshettaSettings.bannerHeightPercent)/100);
-    //mDebug() << "height" << (mHeight*roshettaSettings.bannerHeightPercent)/100;
 
 
     bannerFormat.setAlignment(Qt::AlignCenter);
@@ -205,8 +167,16 @@ void Roshetta::makeFooter()
     footerFormat.setBorderBrush(QBrush(Qt::black));
 }
 
+void Roshetta::fillHeader(QTextCursor &c)
+{
+    c.insertHtml(QString("<img src=\"logo.jpg\" width=%1 alt=\"logo\" >").arg(roshettaSettings.logoSize));
+    c.movePosition(QTextCursor::NextCell);
+    c.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
+}
+
 void Roshetta::fillBanner(QTextCursor &c)
 {
+    bannerTable = c.insertTable(2,3,bannerFormat);
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.bannerFont.fontName,
                  QString::number(roshettaSettings.bannerFont.fontSize),
@@ -227,6 +197,11 @@ void Roshetta::fillBanner(QTextCursor &c)
 
 void Roshetta::fillBody(QTextCursor &c)
 {
+    QVector<QTextLength> bodytl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,70)
+                                                         << QTextLength(QTextLength::PercentageLength,30);
+    bodyFormat.setColumnWidthConstraints(bodytl);
+    c.insertTable(1,2,bodyFormat);
+
     QTextTableFormat drugsTableFormat;
     drugsTableFormat.setBorder(0);
     CurrentDrugRow =0; // to follow filling of table current row
@@ -380,6 +355,30 @@ void Roshetta::fillRequests(QTextCursor &c)
     c.movePosition(QTextCursor::NextBlock);
 }
 
+void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
+{
+    QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
+            .arg(roshettaSettings.roshettaFont.fontName,
+                 QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
+                 roshettaSettings.roshettaFont.fontBold? "bold":"normal");
+
+    QTextTableFormat prefooterFormat;
+    prefooterFormat.setBorder(0);
+    prefooterFormat.setMargin(0);
+    prefooterFormat.setWidth(mWidth);
+    prefooterFormat.setHeight(20);
+    c.insertTable(1,2,prefooterFormat);
+
+    if (roshettaSettings.showSignaturePrintedOn){
+        c.insertHtml(QString("<div %2><b>printed on:</b> %1</div>").arg(roshettaData.printedinDate,style));
+        c.movePosition(QTextCursor::NextCell);
+        c.insertHtml(QString("<div %1><b>Physician's Signature:</b></div>").arg(style));
+    }else{
+        c.movePosition(QTextCursor::NextCell);
+    }
+
+}
+
 void Roshetta::fillVitals(QTextCursor &c)
 {
     int rows = roshettaData.vitals.getRows();
@@ -468,4 +467,14 @@ void Roshetta::fillVitals(QTextCursor &c)
     }
     c.currentTable()->mergeCells(0,0,1,2);
     c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,3);
+}
+
+void Roshetta::fillFooter(QTextCursor &c)
+{
+    c.insertFrame(footerFormat);
+    QTextBlockFormat footerBlockFormat = c.blockFormat();
+    footerBlockFormat.setAlignment(Qt::AlignCenter);
+    c.select(QTextCursor::BlockUnderCursor);
+    c.setBlockFormat(footerBlockFormat);
+    c.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
 }
