@@ -1158,6 +1158,9 @@
            </item>
            <item row="0" column="8">
             <widget class="vitalBox" name="RBS">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL_SHIFT+8&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
@@ -1241,6 +1244,9 @@
            </item>
            <item row="0" column="5">
             <widget class="vitalBox" name="sPo2">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL_SHIFT+7&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
@@ -1248,6 +1254,9 @@
            </item>
            <item row="0" column="3">
             <widget class="vitalBox" name="height">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL_SHIFT+6&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
@@ -1292,6 +1301,9 @@
            </item>
            <item row="0" column="1">
             <widget class="vitalBox" name="weight">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL_SHIFT+5&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>

@@ -687,29 +687,17 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
     }else if ( e->modifiers() == Qt::ControlModifier + Qt::ShiftModifier)
     {
         switch(e->key()){
-        case Qt::Key_Exclam:
+        case Qt::Key_Percent:
             ui->weight->setFocus(Qt::OtherFocusReason);
             break;
-        case Qt::Key_At:
+        case Qt::Key_AsciiCircum:
             ui->height->setFocus(Qt::OtherFocusReason);
             break;
-        case Qt::Key_NumberSign:
+        case Qt::Key_Ampersand:
             ui->sPo2->setFocus(Qt::OtherFocusReason);
             break;
-        case Qt::Key_Dollar:
-            ui->RBS->setFocus(Qt::OtherFocusReason);
-            break;
-        case Qt::Key_Percent:
-            ui->pPulse->setFocus(Qt::OtherFocusReason);
-            break;
-        case Qt::Key_AsciiCircum:
-            ui->pRR->setFocus(Qt::OtherFocusReason);
-            break;
-        case Qt::Key_Ampersand:
-            ui->pBP->setFocus(Qt::OtherFocusReason);
-            break;
         case Qt::Key_Asterisk:
-            ui->pTemp->setFocus(Qt::OtherFocusReason);
+            ui->RBS->setFocus(Qt::OtherFocusReason);
             break;
         }
     }
