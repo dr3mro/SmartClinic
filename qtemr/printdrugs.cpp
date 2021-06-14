@@ -56,8 +56,7 @@ void printDrugs::showPrintPreviewDialog()
 void printDrugs::mPrint()
 {
     pSettings = grabPrintSettings();
-    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+    applyPageSizeParamaters();
     refreshView();
     setupPrinter(printer);
     printDoc(printer,m_roshetta);
@@ -155,8 +154,7 @@ void printDrugs::setRoshettaData(const mSettings::Roshetta &_roshetta)
 void printDrugs::showEvent(QShowEvent *e)
 {
     pSettings = grabPrintSettings();
-    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+    applyPageSizeParamaters();
     refreshView();
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     restoreGeometry(reg.value("printWindowGeometry").toByteArray());
@@ -167,8 +165,7 @@ void printDrugs::showEvent(QShowEvent *e)
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
     pSettings = grabPrintSettings();
-    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+    applyPageSizeParamaters();
     refreshView();
     setupPrinter(preview);
     printDoc(preview,m_roshetta,true);
@@ -217,6 +214,12 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool preview)
     }
 }
 
+void printDrugs::applyPageSizeParamaters()
+{
+    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
+    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+}
+
 void printDrugs::closeEvent(QCloseEvent *e)
 {
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
@@ -251,15 +254,6 @@ void printDrugs::on_showInvs_clicked(bool checked)
     pSettings.showInvestigations = checked;
     refreshView();
 }
-
-//void printDrugs::on_paperSizeId_currentIndexChanged(const QString &arg1)
-//{
-//    pSettings.paperSizeId = arg1;
-//    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-//    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
-//    refreshView();
-//}
-
 
 void printDrugs::on_bannerFont_activated(const QString &arg1)
 {
@@ -419,8 +413,7 @@ void printDrugs::on_pageMargin_valueChanged(int arg1)
     if(!ui->pageMargin->hasFocus())
         return;
     pSettings.pageMargin = arg1;
-    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+    applyPageSizeParamaters();
     refreshView();
 }
 
@@ -434,8 +427,7 @@ void printDrugs::on_logoSize_activated(const QString &arg1)
 void printDrugs::on_paperSizeId_activated(const QString &arg1)
 {
     pSettings.paperSizeId = arg1;
-    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+    applyPageSizeParamaters();
     refreshView();
 }
 

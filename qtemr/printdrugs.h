@@ -74,12 +74,12 @@ private slots:
     void on_showBanner_clicked(bool checked);
     void on_pageMargin_valueChanged(int arg1);
     void on_logoSize_activated(const QString &arg1);
-
     void on_paperSizeId_activated(const QString &arg1);
 
 private:
     void setupPrinter(QPrinter *p);
     void printDoc(QPrinter *p, QTextDocument *doc, bool preview=false);
+    void applyPageSizeParamaters();
     QPrinter *printer;
     QPrintDialog *dlg;
     mSettings& settings = mSettings::instance();
@@ -92,7 +92,6 @@ private:
     QTextDocument *m_roshetta;
     Roshetta roshettaMaker;
     mSettings::Roshetta roshettaData;
-    //bool printScreenInitialized=false;
 
 
 signals:
@@ -105,5 +104,6 @@ protected:
     void closeEvent(QCloseEvent *e);
 
 };
+
 
 #endif // PRINTDRUGS_H
