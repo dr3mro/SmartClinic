@@ -1815,6 +1815,7 @@ void visitsBox::on_fastPrint_rightButtonClicked()
 {
     if (!drugLoadCompleted)
         return;
+    print->setRoshettaData(getRoshetta());
     print->showPrintPreviewDialog();
 }
 
@@ -1822,6 +1823,7 @@ void visitsBox::on_fastPrint_middleButtonClicked()
 {
     if (!drugLoadCompleted)
         return;
+    print->setRoshettaData(getRoshetta());
     print->mPrint();
 }
 

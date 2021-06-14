@@ -369,25 +369,25 @@ public:
     };
     struct prescriptionPrintSettings
     {
-        QString paperSizeId;
-        double pageMargin;
-        bool showBanner;
-        bool showDrugs;
-        bool showInvestigations;
-        bool showMeasurments;
-        bool showDrugsSeparator;
-        drugsPrintMode drugsPrintMode;
-        bool showDrugsTitle;
-        bool showPrescriptionHeaderFooterLogo;
-        int logoSize;
+        QString paperSizeId="A5";
+        int pageMargin=5;
+        bool showBanner=true;
+        bool showDrugs=true;
+        bool showInvestigations=true;
+        bool showMeasurments=true;
+        bool showDrugsSeparator=true;
+        drugsPrintMode drugsPrintMode=drugsPrintMode::visitOnly;
+        bool showDrugsTitle=true;
+        bool showPrescriptionHeaderFooterLogo=true;
+        int logoSize=72;
 
-        int headerHeightPercent;
-        int footerHeightPercent;
-        int bannerHeightPercent;
-        roshettaFont bannerFont;
-        roshettaFont roshettaFont;
-        bool showDrugsInitDate;
-        bool showSignaturePrintedOn;
+        int headerHeightPercent=10;
+        int footerHeightPercent=10;
+        int bannerHeightPercent=10;
+        roshettaFont bannerFont={10,"Tahoma",false,false};
+        roshettaFont roshettaFont={10,"Tahoma",false,false};
+        bool showDrugsInitDate=true;
+        bool showSignaturePrintedOn=true;
 
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {

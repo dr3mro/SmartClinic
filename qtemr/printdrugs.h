@@ -49,32 +49,33 @@ private slots:
     void showEvent(QShowEvent *e);
     void makePrintPreview(QPrinter *preview);
     void on_printerProfile_activated(const QString &arg1);
-    void on_showInvs_toggled(bool checked);
-    void on_paperSizeId_currentIndexChanged(const QString &arg1);
+    void on_showInvs_clicked(bool checked);
     void on_drugsMode_activated(int index);
-    void on_bannerFont_currentIndexChanged(const QString &arg1);
-    void on_bannerFontSize_currentIndexChanged(const QString &arg1);
-    void on_bannerFontBold_toggled(bool checked);
+    void on_bannerFont_activated(const QString &arg1);
+    void on_bannerFontSize_activated(const QString &arg1);
+    void on_bannerFontBold_clicked(bool checked);
     void on_bannerFont_highlighted(const QString &arg1);
-    void on_roshettaFont_currentIndexChanged(const QString &arg1);
+    void on_roshettaFont_activated(const QString &arg1);
     void on_roshettaFont_highlighted(const QString &arg1);
-    void on_roshettaFontSize_currentIndexChanged(const QString &arg1);
-    void on_roshettaFontBold_toggled(bool checked);
+    void on_roshettaFontSize_activated(const QString &arg1);
+    void on_roshettaFontBold_clicked(bool checked);
     void on_headerHeightPercent_valueChanged(int arg1);
     void on_bannerHeightPercent_valueChanged(int arg1);
     void on_footerHeightPercent_valueChanged(int arg1);
     void on_Header_textChanged();
     void on_Footer_textChanged();
-    void on_SignaturePrintedOn_toggled(bool checked);
-    void on_drugsInitDate_toggled(bool checked);
-    void on_showHeaderFooterLogo_toggled(bool checked);
-    void on_showDrugs_toggled(bool checked);
-    void on_showMesurements_toggled(bool checked);
-    void on_showSeparator_toggled(bool checked);
-    void on_showDrugsTitle_toggled(bool checked);
-    void on_showBanner_toggled(bool checked);
+    void on_SignaturePrintedOn_clicked(bool checked);
+    void on_drugsInitDate_clicked(bool checked);
+    void on_showHeaderFooterLogo_clicked(bool checked);
+    void on_showDrugs_clicked(bool checked);
+    void on_showMesurements_clicked(bool checked);
+    void on_showSeparator_clicked(bool checked);
+    void on_showDrugsTitle_clicked(bool checked);
+    void on_showBanner_clicked(bool checked);
     void on_pageMargin_valueChanged(int arg1);
     void on_logoSize_activated(const QString &arg1);
+
+    void on_paperSizeId_activated(const QString &arg1);
 
 private:
     void setupPrinter(QPrinter *p);
@@ -91,6 +92,7 @@ private:
     QTextDocument *m_roshetta;
     Roshetta roshettaMaker;
     mSettings::Roshetta roshettaData;
+    //bool printScreenInitialized=false;
 
 
 signals:

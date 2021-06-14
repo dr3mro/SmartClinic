@@ -55,6 +55,10 @@ void printDrugs::showPrintPreviewDialog()
 
 void printDrugs::mPrint()
 {
+    pSettings = grabPrintSettings();
+    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
+    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+    refreshView();
     setupPrinter(printer);
     printDoc(printer,m_roshetta);
 }
@@ -153,7 +157,6 @@ void printDrugs::showEvent(QShowEvent *e)
     pSettings = grabPrintSettings();
     ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
     ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
-
     refreshView();
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     restoreGeometry(reg.value("printWindowGeometry").toByteArray());
@@ -164,14 +167,15 @@ void printDrugs::showEvent(QShowEvent *e)
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
     pSettings = grabPrintSettings();
+    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
+    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+    refreshView();
     setupPrinter(preview);
-    m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
     printDoc(preview,m_roshetta,true);
 }
 
 void printDrugs::setupPrinter(QPrinter *p)
 {
-    pSettings = grabPrintSettings();
     QPageLayout m_layout;
     QPageSize pageSize(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
     m_layout.setPageSize(pageSize,QMarginsF(pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin));
@@ -242,35 +246,35 @@ void printDrugs::on_printerProfile_activated(const QString &arg1)
     ui->printerProfile->setEnabled(true);
 }
 
-void printDrugs::on_showInvs_toggled(bool checked)
+void printDrugs::on_showInvs_clicked(bool checked)
 {
     pSettings.showInvestigations = checked;
     refreshView();
 }
 
-void printDrugs::on_paperSizeId_currentIndexChanged(const QString &arg1)
-{
-    pSettings.paperSizeId = arg1;
-    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
-    refreshView();
-}
+//void printDrugs::on_paperSizeId_currentIndexChanged(const QString &arg1)
+//{
+//    pSettings.paperSizeId = arg1;
+//    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
+//    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+//    refreshView();
+//}
 
 
-void printDrugs::on_bannerFont_currentIndexChanged(const QString &arg1)
+void printDrugs::on_bannerFont_activated(const QString &arg1)
 {
     pSettings.bannerFont.fontName =arg1;
     refreshView();
 }
 
-void printDrugs::on_bannerFontSize_currentIndexChanged(const QString &arg1)
+void printDrugs::on_bannerFontSize_activated(const QString &arg1)
 {
     pSettings.bannerFont.fontSize =arg1.toInt();
     refreshView();
 }
 
 
-void printDrugs::on_bannerFontBold_toggled(bool checked)
+void printDrugs::on_bannerFontBold_clicked(bool checked)
 {
     pSettings.bannerFont.fontBold =checked;
     refreshView();
@@ -284,7 +288,7 @@ void printDrugs::on_bannerFont_highlighted(const QString &arg1)
 }
 
 
-void printDrugs::on_roshettaFont_currentIndexChanged(const QString &arg1)
+void printDrugs::on_roshettaFont_activated(const QString &arg1)
 {
     pSettings.roshettaFont.fontName =arg1;
     refreshView();
@@ -298,14 +302,14 @@ void printDrugs::on_roshettaFont_highlighted(const QString &arg1)
 }
 
 
-void printDrugs::on_roshettaFontSize_currentIndexChanged(const QString &arg1)
+void printDrugs::on_roshettaFontSize_activated(const QString &arg1)
 {
     pSettings.roshettaFont.fontSize =arg1.toInt();
     refreshView();
 }
 
 
-void printDrugs::on_roshettaFontBold_toggled(bool checked)
+void printDrugs::on_roshettaFontBold_clicked(bool checked)
 {
     pSettings.roshettaFont.fontBold =checked;
     refreshView();
@@ -314,6 +318,8 @@ void printDrugs::on_roshettaFontBold_toggled(bool checked)
 
 void printDrugs::on_headerHeightPercent_valueChanged(int arg1)
 {
+    if(!ui->headerHeightPercent->hasFocus())
+        return;
     pSettings.headerHeightPercent = arg1;
     refreshView();
 }
@@ -321,6 +327,8 @@ void printDrugs::on_headerHeightPercent_valueChanged(int arg1)
 
 void printDrugs::on_bannerHeightPercent_valueChanged(int arg1)
 {
+    if(!ui->bannerHeightPercent->hasFocus())
+        return;
     pSettings.bannerHeightPercent = arg1;
     refreshView();
 }
@@ -328,72 +336,78 @@ void printDrugs::on_bannerHeightPercent_valueChanged(int arg1)
 
 void printDrugs::on_footerHeightPercent_valueChanged(int arg1)
 {
+    if(!ui->footerHeightPercent->hasFocus())
+        return;
     pSettings.footerHeightPercent = arg1;
     refreshView();
 }
 
 void printDrugs::on_Header_textChanged()
 {
+    if(!ui->Header->hasFocus())
+        return;
     dataIOhelper::saveFile(HEADERFILE,ui->Header->toHtml().toUtf8());
     refreshView();
 }
 
 void printDrugs::on_Footer_textChanged()
 {
+    if(!ui->Footer->hasFocus())
+        return;
     dataIOhelper::saveFile(FOOTERFILE,ui->Footer->toHtml().toUtf8());
     refreshView();
 }
 
-void printDrugs::on_SignaturePrintedOn_toggled(bool checked)
+void printDrugs::on_SignaturePrintedOn_clicked(bool checked)
 {
     pSettings.showSignaturePrintedOn = checked;
     refreshView();
 }
 
 
-void printDrugs::on_drugsInitDate_toggled(bool checked)
+void printDrugs::on_drugsInitDate_clicked(bool checked)
 {
     pSettings.showDrugsInitDate = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showHeaderFooterLogo_toggled(bool checked)
+void printDrugs::on_showHeaderFooterLogo_clicked(bool checked)
 {
     pSettings.showPrescriptionHeaderFooterLogo = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showDrugs_toggled(bool checked)
+void printDrugs::on_showDrugs_clicked(bool checked)
 {
     pSettings.showDrugs = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showMesurements_toggled(bool checked)
+void printDrugs::on_showMesurements_clicked(bool checked)
 {
     pSettings.showMeasurments = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showSeparator_toggled(bool checked)
+void printDrugs::on_showSeparator_clicked(bool checked)
 {
     pSettings.showDrugsSeparator = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showDrugsTitle_toggled(bool checked)
+void printDrugs::on_showDrugsTitle_clicked(bool checked)
 {
     pSettings.showDrugsTitle = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showBanner_toggled(bool checked)
+void printDrugs::on_showBanner_clicked(bool checked)
 {
     pSettings.showBanner = checked;
     refreshView();
@@ -402,6 +416,8 @@ void printDrugs::on_showBanner_toggled(bool checked)
 
 void printDrugs::on_pageMargin_valueChanged(int arg1)
 {
+    if(!ui->pageMargin->hasFocus())
+        return;
     pSettings.pageMargin = arg1;
     ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
     ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
@@ -411,6 +427,15 @@ void printDrugs::on_pageMargin_valueChanged(int arg1)
 void printDrugs::on_logoSize_activated(const QString &arg1)
 {
     pSettings.logoSize = arg1.toInt();
+    refreshView();
+}
+
+
+void printDrugs::on_paperSizeId_activated(const QString &arg1)
+{
+    pSettings.paperSizeId = arg1;
+    ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
+    ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
     refreshView();
 }
 
