@@ -684,8 +684,37 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
             ui->dateFollowUp->setFocus(Qt::OtherFocusReason);
             break;
         }
+    }else if ( e->modifiers() == Qt::ControlModifier + Qt::ShiftModifier)
+    {
+        switch(e->key()){
+        case Qt::Key_Exclam:
+            ui->weight->setFocus(Qt::OtherFocusReason);
+            break;
+        case Qt::Key_At:
+            ui->height->setFocus(Qt::OtherFocusReason);
+            break;
+        case Qt::Key_NumberSign:
+            ui->sPo2->setFocus(Qt::OtherFocusReason);
+            break;
+        case Qt::Key_Dollar:
+            ui->RBS->setFocus(Qt::OtherFocusReason);
+            break;
+        case Qt::Key_Percent:
+            ui->pPulse->setFocus(Qt::OtherFocusReason);
+            break;
+        case Qt::Key_AsciiCircum:
+            ui->pRR->setFocus(Qt::OtherFocusReason);
+            break;
+        case Qt::Key_Ampersand:
+            ui->pBP->setFocus(Qt::OtherFocusReason);
+            break;
+        case Qt::Key_Asterisk:
+            ui->pTemp->setFocus(Qt::OtherFocusReason);
+            break;
+        }
     }
 
+//    mDebug() << e->key();
     mDialog::keyPressEvent(e);
 }
 

@@ -1587,17 +1587,17 @@
  <tabstops>
   <tabstop>presentation</tabstop>
   <tabstop>presentationAnalysis</tabstop>
+  <tabstop>investigationsLine</tabstop>
   <tabstop>Diagnosis</tabstop>
+  <tabstop>drugLine</tabstop>
+  <tabstop>weight</tabstop>
+  <tabstop>height</tabstop>
+  <tabstop>sPo2</tabstop>
+  <tabstop>RBS</tabstop>
   <tabstop>pPulse</tabstop>
   <tabstop>pRR</tabstop>
   <tabstop>pBP</tabstop>
   <tabstop>pTemp</tabstop>
-  <tabstop>fastPrint</tabstop>
-  <tabstop>comboVisitType</tabstop>
-  <tabstop>ButtonNew</tabstop>
-  <tabstop>ButtonVisit</tabstop>
-  <tabstop>ButtonDel</tabstop>
-  <tabstop>toolButtonRefresh</tabstop>
   <tabstop>buttonInvest</tabstop>
   <tabstop>ButtonSave</tabstop>
   <tabstop>patientObstUS</tabstop>
@@ -1620,6 +1620,19 @@
   <tabstop>dateFollowUp</tabstop>
   <tabstop>CheckButtonCaseClose</tabstop>
   <tabstop>closeButton</tabstop>
+  <tabstop>lockUnlockButton</tabstop>
+  <tabstop>InvestigationsTable</tabstop>
+  <tabstop>buttonAddInvestigations</tabstop>
+  <tabstop>buttonRemoveInvestigations</tabstop>
+  <tabstop>ButtonNew</tabstop>
+  <tabstop>vDrugsTable</tabstop>
+  <tabstop>buttonAddDrug</tabstop>
+  <tabstop>buttonRemoveDrug</tabstop>
+  <tabstop>ButtonVisit</tabstop>
+  <tabstop>comboVisitType</tabstop>
+  <tabstop>fastPrint</tabstop>
+  <tabstop>toolButtonRefresh</tabstop>
+  <tabstop>ButtonDel</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>
