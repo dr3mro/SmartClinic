@@ -122,7 +122,8 @@ void Roshetta::makeBanner()
 {
     if(roshettaSettings.showBanner){
         bannerFrameFormat.setBorder(1);
-        bannerFrameFormat.setBorderBrush(QBrush(Qt::black));
+        bannerFrameFormat.setBorderBrush(QBrush(Qt::darkGray));
+        bannerFrameFormat.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
     }
     else{
         bannerFrameFormat.setBorder(0);
@@ -160,7 +161,8 @@ void Roshetta::makeFooter()
     //mDebug() << "footer" << (mHeight*roshettaSettings.footerHeightPercent)/100;
     footerFormat.setBorder(1);
     footerFormat.setMargin(0);
-    footerFormat.setBorderBrush(QBrush(Qt::black));
+    footerFormat.setBorderBrush(QBrush(Qt::darkGray));
+    footerFormat.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
 }
 
 void Roshetta::fillHeader(QTextCursor &c)
