@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
     initializeSettings();
     banner->updateprogress(QString("initializing settings"));
     QSharedMemory sharedMemory;
-    sharedMemory.setKey("com.smartSoft.smartClinic3");
+    sharedMemory.setKey(singleInstance);
     banner->updateprogress(QString("initializing single Instance"));
     isSharedMemoryCreated = sharedMemory.create(1);
     banner->updateprogress(QString("initializing logger"));

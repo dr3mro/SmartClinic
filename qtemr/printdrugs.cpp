@@ -48,7 +48,6 @@ void printDrugs::showPrintDialog()
 void printDrugs::showPrintPreviewDialog()
 {
     mPrintPreviewDialog previewDialog(this);
-    pSettings = grabPrintSettings();
     previewDialog.setWindowState(previewDialog.windowState() | Qt::WindowMaximized);
     connect(&previewDialog,SIGNAL(paintRequested(QPrinter*)),this,SLOT(makePrintPreview(QPrinter*)));
     previewDialog.exec();
@@ -166,6 +165,7 @@ void printDrugs::makePrintPreview(QPrinter *preview)
 {
     pSettings = grabPrintSettings();
     setupPrinter(preview);
+    m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
     printDoc(preview,m_roshetta,true);
 }
 

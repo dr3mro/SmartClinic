@@ -11,7 +11,7 @@
 #define APPVERSION "3.8.12"
 #define APPNAME "Smart Clinic"
 #define APPNAMEVER "Smart Clinic 3.8.12"
-#define singleInstance "com.smartSoft.smartClinic3"
+#define singleInstance "com.smartSoft.smartClinic39"
 #define DEVELOPER "AMR OSMAN"
 #define APPYEAR "2021"
 #define COMMENTS ""
