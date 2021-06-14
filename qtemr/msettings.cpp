@@ -178,10 +178,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
     mPageSettings.paperSizeId = settings.value(_paperSizeId,QVariant("A5")).toString();
-    mPageSettings.topMargin = settings.value(_topMargin,QVariant(0)).toDouble();
-    mPageSettings.leftMargin = settings.value(_leftMargin,QVariant(0)).toDouble();
-    mPageSettings.rightMargin = settings.value(_rightMargin,QVariant(0)).toDouble();
-    mPageSettings.bottomMargin = settings.value(_bottomMargin,QVariant(0)).toDouble();
+    mPageSettings.pageMargin = settings.value(_pageMargin,QVariant(0)).toDouble();
     mPageSettings.showBanner = settings.value(_showBanner,QVariant(true)).toBool();
     mPageSettings.showDrugs = settings.value(_showDrugs,QVariant(true)).toBool();
     mPageSettings.showInvestigations = settings.value(_showInvsestigations,QVariant(true)).toBool();
@@ -216,10 +213,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
     settings.setValue(_paperSizeId,mPageSettings.paperSizeId);
-    settings.setValue(_topMargin,mPageSettings.topMargin);
-    settings.setValue(_leftMargin,mPageSettings.leftMargin);
-    settings.setValue(_rightMargin,mPageSettings.rightMargin);
-    settings.setValue(_bottomMargin,mPageSettings.bottomMargin);
+    settings.setValue(_pageMargin,mPageSettings.pageMargin);
     settings.setValue(_showBanner,mPageSettings.showBanner);
     settings.setValue(_showDrugs,mPageSettings.showDrugs);
     settings.setValue(_showInvsestigations,mPageSettings.showInvestigations);

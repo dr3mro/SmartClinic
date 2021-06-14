@@ -140,9 +140,7 @@ SOURCES += main.cpp\
     w_development.cpp \
     w_perinatal.cpp \
     w_obgyn.cpp \
-    psdoublespinbox.cpp \
     switch.cpp \
-    printdialogtab.cpp \
     mprintpreviewdialog.cpp \
     psspinbox.cpp \
     vprintbutton.cpp \
@@ -288,9 +286,7 @@ HEADERS  += mainwindow.h \
     w_development.h \
     w_perinatal.h \
     w_obgyn.h \
-    psdoublespinbox.h \
     switch.h \
-    printdialogtab.h \
     mprintpreviewdialog.h \
     psspinbox.h \
     vprintbutton.h \

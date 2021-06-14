@@ -53,37 +53,34 @@ private slots:
     void on_paperSizeId_currentIndexChanged(const QString &arg1);
     void on_drugsMode_activated(int index);
     void on_bannerFont_currentIndexChanged(const QString &arg1);
-
-
     void on_bannerFontSize_currentIndexChanged(const QString &arg1);
-
     void on_bannerFontBold_toggled(bool checked);
-
     void on_bannerFont_highlighted(const QString &arg1);
-
     void on_roshettaFont_currentIndexChanged(const QString &arg1);
-
     void on_roshettaFont_highlighted(const QString &arg1);
-
     void on_roshettaFontSize_currentIndexChanged(const QString &arg1);
-
     void on_roshettaFontBold_toggled(bool checked);
-
     void on_headerHeightPercent_valueChanged(int arg1);
-
     void on_bannerHeightPercent_valueChanged(int arg1);
-
     void on_footerHeightPercent_valueChanged(int arg1);
+    void on_Header_textChanged();
+    void on_Footer_textChanged();
+    void on_SignaturePrintedOn_toggled(bool checked);
+    void on_drugsInitDate_toggled(bool checked);
+    void on_showHeaderFooterLogo_toggled(bool checked);
+    void on_showDrugs_toggled(bool checked);
+    void on_showMesurements_toggled(bool checked);
+    void on_showSeparator_toggled(bool checked);
+    void on_showDrugsTitle_toggled(bool checked);
+    void on_showBanner_toggled(bool checked);
+    void on_pageMargin_valueChanged(int arg1);
+    void on_logoSize_activated(const QString &arg1);
 
 private:
-    void tweakRoshetta();
-    void setupPrinter(QPrinter *p,const mSettings::prescriptionPrintSettings &pSettings, bool preview=false);
+    void setupPrinter(QPrinter *p);
     void printDoc(QPrinter *p, QTextDocument *doc, bool preview=false);
-    QTextDocument *getDoc();
     QPrinter *printer;
     QPrintDialog *dlg;
-    QTextDocument *doc;
-    //colorPicker *cp;
     mSettings& settings = mSettings::instance();
     mSettings::prescriptionPrintSettings pSettings;
     mSettings::prescriptionPrintSettings lSettings;
@@ -92,9 +89,7 @@ private:
     wm_add2Completer *wm_add2completer;
     Ui::printDrugs *ui;
     QTextDocument *m_roshetta;
-
     Roshetta roshettaMaker;
-    QTextDocument *roshettaDoc;
     mSettings::Roshetta roshettaData;
 
 
@@ -103,7 +98,6 @@ signals:
     QString refreshRoshetta(mSettings::prescriptionPrintSettings,QString,int);
     void loadCompleters();
     void message(QString title,QString message);
-    void loadPreview();
 
 protected:
     void closeEvent(QCloseEvent *e);

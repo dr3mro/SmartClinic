@@ -31,10 +31,7 @@
 
 //print settings
 #define _paperSizeId "paperSizeId"
-#define _leftMargin "leftMargin"
-#define _topMargin "topMargin"
-#define _rightMargin "rightMargin"
-#define _bottomMargin "bottomMargin"
+#define _pageMargin "pageMargin"
 #define _showBanner "showBanner"
 #define _showDrugs "showDrugs"
 #define _showInvsestigations "showInvestigations"

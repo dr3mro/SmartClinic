@@ -18,9 +18,9 @@ _margin(3)//,
     setCheckable(true);
     setFocusPolicy(Qt::StrongFocus);
     setCursor(Qt::PointingHandCursor);
-    QString parentObjName = parent->window()->objectName();
-    if ( parentObjName == "optionsTab" )
-        connect(this,SIGNAL(clicked()),parent->window(),SLOT(refreshView()),Qt::QueuedConnection);
+//    QString parentObjName = parent->window()->objectName();
+//    if ( parentObjName == "printDrugsGeneralTab" )
+//        connect(this,SIGNAL(clicked()),parent->window(),SLOT(refreshView()),Qt::QueuedConnection);
 }
 
 Switch::Switch(const QBrush &brush, QWidget *parent) : QAbstractButton(parent),
@@ -37,9 +37,9 @@ _margin(3)//,
     setCheckable(true);
     setFocusPolicy(Qt::StrongFocus);
     setCursor(Qt::PointingHandCursor);
-    QString parentObjName = parent->window()->objectName();
-    if ( parentObjName == "optionsTab" )
-        connect(this,SIGNAL(clicked()),parent->window(),SLOT(refreshView()),Qt::QueuedConnection);
+//    QString parentObjName = parent->window()->objectName();
+//    if ( parentObjName == "printDrugsGeneralTab" )
+//        connect(this,SIGNAL(clicked()),parent->window(),SLOT(refreshView()),Qt::QueuedConnection);
 
 }
 

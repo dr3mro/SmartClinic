@@ -50,8 +50,8 @@ Roshetta::~Roshetta()
 
 void Roshetta::setRoshettaSize()
 {
-    double xMargins = PageMetrics::mmToPx(roshettaSettings.leftMargin + roshettaSettings.rightMargin) ;
-    double yMargins = PageMetrics::mmToPx(roshettaSettings.topMargin + roshettaSettings.bottomMargin);
+    double xMargins = PageMetrics::mmToPx(roshettaSettings.pageMargin*2) ;
+    double yMargins = PageMetrics::mmToPx(roshettaSettings.pageMargin*2);
     QPageSize pageSize = QPageSize(PageMetrics::pageSizeIdFromString(roshettaSettings.paperSizeId));
     mWidth = pageSize.sizePixels(qApp->desktop()->logicalDpiX()).width() - xMargins;
     mHeight = pageSize.sizePixels(qApp->desktop()->logicalDpiX()).height() -yMargins;
@@ -67,11 +67,7 @@ void Roshetta::setRootFrame()
     rootFrameFormat.setHeight(mHeight);
     rootFrameFormat.setBorder(0);
     rootFrameFormat.setPadding(0);
-    //rootFrameFormat.setMargin(0);
-    rootFrameFormat.setLeftMargin(PageMetrics::mmToPx(roshettaSettings.leftMargin));
-    rootFrameFormat.setTopMargin(PageMetrics::mmToPx(roshettaSettings.topMargin));
-    rootFrameFormat.setRightMargin(PageMetrics::mmToPx(roshettaSettings.rightMargin));
-    rootFrameFormat.setBottomMargin(PageMetrics::mmToPx(roshettaSettings.bottomMargin));
+    rootFrameFormat.setMargin(PageMetrics::mmToPx(roshettaSettings.pageMargin));
     root->setFrameFormat(rootFrameFormat);
 }
 
