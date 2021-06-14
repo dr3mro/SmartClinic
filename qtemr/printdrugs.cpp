@@ -131,8 +131,8 @@ void printDrugs::saveRoshettaAutoComplete()
 
 void printDrugs::refreshView()
 {
-    //pSettings =  grabPrintSettings();
-    ui->Roshetta->setDocument(roshettaMaker.createRoshetta(roshettaData,pSettings));
+    m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
+    ui->Roshetta->setDocument(m_roshetta);
 }
 
 void printDrugs::reset()
