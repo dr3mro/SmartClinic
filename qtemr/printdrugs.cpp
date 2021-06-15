@@ -31,41 +31,53 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->printerProfile,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::printerProfile_activated);
     connect(ui->showInvs,&Switch::clicked,this,&printDrugs::showInvs_clicked);
     connect(ui->drugsMode,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::drugsMode_activated);
+    connect(ui->drugsMode,QOverload<int>::of(&QComboBox::highlighted),this,&printDrugs::drugsMode_activated);
+    connect(ui->bannerFontName,&QFontComboBox::textActivated,this,&printDrugs::bannerFontName_activated);
+    connect(ui->bannerFontName,&QFontComboBox::textHighlighted,this,&printDrugs::bannerFontName_activated);
+    connect(ui->bannerFontSize,&QComboBox::textActivated,this,&printDrugs::bannerFontSize_activated);
+    connect(ui->bannerFontSize,&QComboBox::textHighlighted,this,&printDrugs::bannerFontSize_activated);
+    connect(ui->bannerFontBold,&QToolButton::clicked,this,&printDrugs::bannerFontBold_clicked);
 
-//    void on_bannerFontName_activated(const QString &arg1);
-//    void on_bannerFontSize_activated(const QString &arg1);
-//    void on_bannerFontBold_clicked(bool checked);
-//    void on_bannerFontName_highlighted(const QString &arg1);
-//    void on_roshettaFontName_activated(const QString &arg1);
-//    void on_roshettaFontName_highlighted(const QString &arg1);
-//    void on_roshettaFontSize_activated(const QString &arg1);
-//    void on_roshettaFontBold_clicked(bool checked);
-//    void on_headerHeightPercent_valueChanged(int arg1);
-//    void on_bannerHeightPercent_valueChanged(int arg1);
-//    void on_footerHeightPercent_valueChanged(int arg1);
-//    void on_Header_textChanged();
-//    void on_Footer_textChanged();
-//    void on_SignaturePrintedOn_clicked(bool checked);
-//    void on_drugsInitDate_clicked(bool checked);
-//    void on_showHeaderFooterLogo_clicked(bool checked);
-//    void on_showDrugs_clicked(bool checked);
-//    void on_showMesurements_clicked(bool checked);
-//    void on_showDrugsTableOutline_clicked(bool checked);
-//    void on_showDrugsTitle_clicked(bool checked);
-//    void on_showBanner_clicked(bool checked);
-//    void on_pageMargin_valueChanged(int arg1);
-//    void on_logoSize_activated(const QString &arg1);
-//    void on_paperSizeId_activated(const QString &arg1);
-//    void on_showOnlyNewlyModifiedAddedDrugs_clicked(bool checked);
-//    void on_showTradeNamesBold_clicked(bool checked);
-//    void on_showDoseNewLine_clicked(bool checked);
-//    void on_doseFontName_activated(const QString &arg1);
-//    void on_doseFontSize_activated(const QString &arg1);
-//    void on_doseFontBold_clicked(bool checked);
-//    void on_lockUnlockButton_toggled(bool checked);
-//    void on_ButtonRefresh_clicked();
+    connect(ui->roshettaFontName,&QFontComboBox::textActivated,this,&printDrugs::roshettaFontName_activated);
+    connect(ui->roshettaFontName,&QFontComboBox::textHighlighted,this,&printDrugs::roshettaFontName_activated);
+    connect(ui->roshettaFontSize,&QComboBox::textActivated,this,&printDrugs::roshettaFontSize_activated);
+    connect(ui->roshettaFontSize,&QComboBox::textHighlighted,this,&printDrugs::roshettaFontSize_activated);
+    connect(ui->roshettaFontBold,&QToolButton::clicked,this,&printDrugs::roshettaFontBold_clicked);
 
+    connect(ui->doseFontName,&QFontComboBox::textActivated,this,&printDrugs::doseFontName_activated);
+    connect(ui->doseFontName,&QFontComboBox::textHighlighted,this,&printDrugs::doseFontName_activated);
+    connect(ui->doseFontSize,&QComboBox::textActivated,this,&printDrugs::doseFontSize_activated);
+    connect(ui->doseFontSize,&QComboBox::textHighlighted,this,&printDrugs::doseFontSize_activated);
+    connect(ui->doseFontBold,&QToolButton::clicked,this,&printDrugs::doseFontBold_clicked);
 
+    connect(ui->headerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::headerHeightPercent_valueChanged);
+    connect(ui->bannerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::bannerHeightPercent_valueChanged);
+    connect(ui->footerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::footerHeightPercent_valueChanged);
+
+    connect(ui->Header,&PagesTextEdit::textChanged,this,&printDrugs::header_textChanged);
+    connect(ui->Footer,&PagesTextEdit::textChanged,this,&printDrugs::footer_textChanged);
+
+    connect(ui->paperSizeId,&QComboBox::textActivated,this,&printDrugs::paperSizeId_activated);
+    connect(ui->paperSizeId,&QComboBox::textHighlighted,this,&printDrugs::paperSizeId_activated);
+
+    connect(ui->SignaturePrintedOn,&Switch::clicked,this,&printDrugs::SignaturePrintedOn_clicked);
+    connect(ui->drugsInitDate,&Switch::clicked,this,&printDrugs::drugsInitDate_clicked);
+    connect(ui->showHeaderFooterLogo,&Switch::clicked,this,&printDrugs::showHeaderFooterLogo_clicked);
+    connect(ui->showDrugs,&Switch::clicked,this,&printDrugs::showDrugs_clicked);
+    connect(ui->showMesurements,&Switch::clicked,this,&printDrugs::showMesurements_clicked);
+    connect(ui->showDrugsTableOutline,&Switch::clicked,this,&printDrugs::showDrugsTableOutline_clicked);
+    connect(ui->showDrugsTitle,&Switch::clicked,this,&printDrugs::showDrugsTitle_clicked);
+    connect(ui->showBanner,&Switch::clicked,this,&printDrugs::showBanner_clicked);
+    connect(ui->showOnlyNewlyModifiedAddedDrugs,&Switch::clicked,this,&printDrugs::showOnlyNewlyModifiedAddedDrugs_clicked);
+    connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked);
+    connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked);
+
+    connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged);
+    connect(ui->logoSize,&QComboBox::textActivated,this,&printDrugs::logoSize_activated);
+    connect(ui->logoSize,&QComboBox::textHighlighted,this,&printDrugs::logoSize_activated);
+
+    connect(ui->ButtonRefresh,&QToolButton::clicked,this,&printDrugs::ButtonRefresh_clicked);
+    connect(ui->lockUnlockButton,&QToolButton::toggled,this,&printDrugs::lockUnlockButton_toggled);
 
     this->setModal(true);
 }
@@ -286,13 +298,8 @@ void printDrugs::closeEvent(QCloseEvent *e)
     QDialog::closeEvent(e);
 }
 
-void printDrugs::drugsMode_activated(int index)
-{
-    pSettings.drugsPrintMode = (mSettings::drugsPrintMode) index;
-    refreshView();
-}
 
-
+///////////////////////////////////////////////// Slots //////////////////////////////////////////////
 void printDrugs::printerProfile_activated(int index)
 {
     ui->printerProfile->setEnabled(false);
@@ -309,62 +316,73 @@ void printDrugs::showInvs_clicked(bool checked)
     refreshView();
 }
 
-void printDrugs::on_bannerFontName_activated(const QString &arg1)
+void printDrugs::drugsMode_activated(int index)
+{
+    pSettings.drugsPrintMode = (mSettings::drugsPrintMode) index;
+    refreshView();
+}
+
+void printDrugs::bannerFontName_activated(const QString &arg1)
 {
     pSettings.bannerFont.fontName =arg1;
     refreshView();
 }
 
-void printDrugs::on_bannerFontSize_activated(const QString &arg1)
+void printDrugs::bannerFontSize_activated(const QString &arg1)
 {
     pSettings.bannerFont.fontSize =arg1.toInt();
     refreshView();
 }
 
 
-void printDrugs::on_bannerFontBold_clicked(bool checked)
+void printDrugs::bannerFontBold_clicked(bool checked)
 {
     pSettings.bannerFont.fontBold =checked;
     refreshView();
 }
 
-
-void printDrugs::on_bannerFontName_highlighted(const QString &arg1)
-{
-    pSettings.bannerFont.fontName =arg1;
-    refreshView();
-}
-
-
-void printDrugs::on_roshettaFontName_activated(const QString &arg1)
+void printDrugs::roshettaFontName_activated(const QString &arg1)
 {
     pSettings.roshettaFont.fontName =arg1;
     refreshView();
 }
 
 
-void printDrugs::on_roshettaFontName_highlighted(const QString &arg1)
-{
-    pSettings.roshettaFont.fontName =arg1;
-    refreshView();
-}
-
-
-void printDrugs::on_roshettaFontSize_activated(const QString &arg1)
+void printDrugs::roshettaFontSize_activated(const QString &arg1)
 {
     pSettings.roshettaFont.fontSize =arg1.toInt();
     refreshView();
 }
 
 
-void printDrugs::on_roshettaFontBold_clicked(bool checked)
+void printDrugs::roshettaFontBold_clicked(bool checked)
 {
     pSettings.roshettaFont.fontBold =checked;
     refreshView();
 }
 
 
-void printDrugs::on_headerHeightPercent_valueChanged(int arg1)
+void printDrugs::doseFontName_activated(const QString &arg1)
+{
+    pSettings.doseFont.fontName =arg1;
+    refreshView();
+}
+
+
+void printDrugs::doseFontSize_activated(const QString &arg1)
+{
+    pSettings.doseFont.fontSize =arg1.toInt();
+    refreshView();
+}
+
+
+void printDrugs::doseFontBold_clicked(bool checked)
+{
+    pSettings.doseFont.fontBold =checked;
+    refreshView();
+}
+
+void printDrugs::headerHeightPercent_valueChanged(int arg1)
 {
     if(!ui->headerHeightPercent->hasFocus())
         return;
@@ -373,7 +391,7 @@ void printDrugs::on_headerHeightPercent_valueChanged(int arg1)
 }
 
 
-void printDrugs::on_bannerHeightPercent_valueChanged(int arg1)
+void printDrugs::bannerHeightPercent_valueChanged(int arg1)
 {
     if(!ui->bannerHeightPercent->hasFocus())
         return;
@@ -382,7 +400,7 @@ void printDrugs::on_bannerHeightPercent_valueChanged(int arg1)
 }
 
 
-void printDrugs::on_footerHeightPercent_valueChanged(int arg1)
+void printDrugs::footerHeightPercent_valueChanged(int arg1)
 {
     if(!ui->footerHeightPercent->hasFocus())
         return;
@@ -390,7 +408,7 @@ void printDrugs::on_footerHeightPercent_valueChanged(int arg1)
     refreshView();
 }
 
-void printDrugs::on_Header_textChanged()
+void printDrugs::header_textChanged()
 {
     if(!ui->Header->hasFocus())
         return;
@@ -398,7 +416,7 @@ void printDrugs::on_Header_textChanged()
     refreshView();
 }
 
-void printDrugs::on_Footer_textChanged()
+void printDrugs::footer_textChanged()
 {
     if(!ui->Footer->hasFocus())
         return;
@@ -406,63 +424,90 @@ void printDrugs::on_Footer_textChanged()
     refreshView();
 }
 
-void printDrugs::on_SignaturePrintedOn_clicked(bool checked)
+void printDrugs::paperSizeId_activated(const QString &arg1)
+{
+    pSettings.paperSizeId = arg1;
+    applyPageSizeParamaters();
+    refreshView();
+}
+
+void printDrugs::SignaturePrintedOn_clicked(bool checked)
 {
     pSettings.showSignaturePrintedOn = checked;
     refreshView();
 }
 
 
-void printDrugs::on_drugsInitDate_clicked(bool checked)
+
+void printDrugs::drugsInitDate_clicked(bool checked)
 {
     pSettings.showDrugsInitDate = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showHeaderFooterLogo_clicked(bool checked)
+void printDrugs::showHeaderFooterLogo_clicked(bool checked)
 {
     pSettings.showPrescriptionHeaderFooterLogo = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showDrugs_clicked(bool checked)
+void printDrugs::showDrugs_clicked(bool checked)
 {
     pSettings.showDrugs = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showMesurements_clicked(bool checked)
+void printDrugs::showMesurements_clicked(bool checked)
 {
     pSettings.showMeasurments = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showDrugsTableOutline_clicked(bool checked)
+void printDrugs::showDrugsTableOutline_clicked(bool checked)
 {
     pSettings.showDrugsTableOutline = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showDrugsTitle_clicked(bool checked)
+void printDrugs::showDrugsTitle_clicked(bool checked)
 {
     pSettings.showDrugsTitle = checked;
     refreshView();
 }
 
 
-void printDrugs::on_showBanner_clicked(bool checked)
+void printDrugs::showBanner_clicked(bool checked)
 {
     pSettings.showBanner = checked;
     refreshView();
 }
 
+void printDrugs::showOnlyNewlyModifiedAddedDrugs_clicked(bool checked)
+{
+    pSettings.showOnlyNewlyModifiedAddedDrugs = checked;
+    refreshView();
+}
 
-void printDrugs::on_pageMargin_valueChanged(int arg1)
+
+void printDrugs::showTradeNamesBold_clicked(bool checked)
+{
+    pSettings.showTradeNamesBold = checked;
+    refreshView();
+}
+
+
+void printDrugs::showDoseNewLine_clicked(bool checked)
+{
+    pSettings.showDoseNewLine = checked;
+    refreshView();
+}
+
+void printDrugs::pageMargin_valueChanged(int arg1)
 {
     if(!ui->pageMargin->hasFocus())
         return;
@@ -471,71 +516,20 @@ void printDrugs::on_pageMargin_valueChanged(int arg1)
     refreshView();
 }
 
-void printDrugs::on_logoSize_activated(const QString &arg1)
+void printDrugs::logoSize_activated(const QString &arg1)
 {
     pSettings.logoSize = arg1.toInt();
     refreshView();
 }
 
-
-void printDrugs::on_paperSizeId_activated(const QString &arg1)
-{
-    pSettings.paperSizeId = arg1;
-    applyPageSizeParamaters();
-    refreshView();
-}
-
-
-void printDrugs::on_showOnlyNewlyModifiedAddedDrugs_clicked(bool checked)
-{
-    pSettings.showOnlyNewlyModifiedAddedDrugs = checked;
-    refreshView();
-}
-
-
-void printDrugs::on_showTradeNamesBold_clicked(bool checked)
-{
-    pSettings.showTradeNamesBold = checked;
-    refreshView();
-}
-
-
-void printDrugs::on_showDoseNewLine_clicked(bool checked)
-{
-    pSettings.showDoseNewLine = checked;
-    refreshView();
-}
-
-
-void printDrugs::on_doseFontName_activated(const QString &arg1)
-{
-    pSettings.doseFont.fontName =arg1;
-    refreshView();
-}
-
-
-void printDrugs::on_doseFontSize_activated(const QString &arg1)
-{
-    pSettings.doseFont.fontSize =arg1.toInt();
-    refreshView();
-}
-
-
-void printDrugs::on_doseFontBold_clicked(bool checked)
-{
-    pSettings.doseFont.fontBold =checked;
-    refreshView();
-}
-
-
-void printDrugs::on_lockUnlockButton_toggled(bool checked)
+void printDrugs::lockUnlockButton_toggled(bool checked)
 {
     ui->Roshetta->setReadOnly(checked);
     ui->lockUnlockButton->setIcon(QIcon(checked? ":/Graphics/lock":":/Graphics/unlock"));
 }
 
 
-void printDrugs::on_ButtonRefresh_clicked()
+void printDrugs::ButtonRefresh_clicked()
 {
     pSettings = grabPrintSettings();
     applyPageSizeParamaters();
@@ -543,4 +537,3 @@ void printDrugs::on_ButtonRefresh_clicked()
     ui->Roshetta->setDocument(m_roshetta);
     ui->lockUnlockButton->setChecked(true);
 }
-
