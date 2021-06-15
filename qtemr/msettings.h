@@ -375,7 +375,7 @@ public:
         bool showDrugs=true;
         bool showInvestigations=true;
         bool showMeasurments=true;
-        bool showDrugsSeparator=true;
+        bool showDrugsTableOutline=true;
         drugsPrintMode drugsPrintMode=drugsPrintMode::visitOnly;
         bool showDrugsTitle=true;
         bool showPrescriptionHeaderFooterLogo=true;
@@ -384,10 +384,17 @@ public:
         int headerHeightPercent=10;
         int footerHeightPercent=10;
         int bannerHeightPercent=10;
+
+        roshettaFont doseFont{10,"Tahoma",false,false};
         roshettaFont bannerFont={10,"Tahoma",false,false};
         roshettaFont roshettaFont={10,"Tahoma",false,false};
+
         bool showDrugsInitDate=true;
         bool showSignaturePrintedOn=true;
+
+        bool showOnlyNewlyModifiedAddedDrugs=false;
+        bool showTradeNamesBold=false;
+        bool showDoseNewLine=true;
 
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
@@ -397,7 +404,7 @@ public:
                             showDrugs,
                             showInvestigations,
                             showMeasurments,
-                            showDrugsSeparator,
+                            showDrugsTableOutline,
                             drugsPrintMode,
                             showDrugsTitle,
                             showPrescriptionHeaderFooterLogo,
@@ -407,8 +414,12 @@ public:
                             bannerHeightPercent,
                             bannerFont,
                             roshettaFont,
+                            doseFont,
                             showDrugsInitDate,
-                            showSignaturePrintedOn
+                            showSignaturePrintedOn,
+                            showOnlyNewlyModifiedAddedDrugs,
+                            showTradeNamesBold,
+                            showDoseNewLine
                             ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
                         prescriptionprintsettings.pageMargin,
@@ -416,7 +427,7 @@ public:
                         prescriptionprintsettings.showDrugs,
                         prescriptionprintsettings.showInvestigations,
                         prescriptionprintsettings.showMeasurments,
-                        prescriptionprintsettings.showDrugsSeparator,
+                        prescriptionprintsettings.showDrugsTableOutline,
                         prescriptionprintsettings.drugsPrintMode,
                         prescriptionprintsettings.showDrugsTitle,
                         prescriptionprintsettings.showPrescriptionHeaderFooterLogo,
@@ -426,8 +437,12 @@ public:
                         prescriptionprintsettings.bannerHeightPercent,
                         prescriptionprintsettings.bannerFont,
                         prescriptionprintsettings.roshettaFont,
+                        prescriptionprintsettings.doseFont,
                         prescriptionprintsettings.showDrugsInitDate,
-                        prescriptionprintsettings.showSignaturePrintedOn); }
+                        prescriptionprintsettings.showSignaturePrintedOn,
+                        prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
+                        prescriptionprintsettings.showTradeNamesBold,
+                        prescriptionprintsettings.showDoseNewLine); }
     };
     struct lineStyle
     {

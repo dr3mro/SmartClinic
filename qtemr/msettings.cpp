@@ -183,7 +183,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.showDrugs = settings.value(_showDrugs,QVariant(true)).toBool();
     mPageSettings.showInvestigations = settings.value(_showInvsestigations,QVariant(true)).toBool();
     mPageSettings.showMeasurments = settings.value(_showMeasurments,QVariant(true)).toBool();
-    mPageSettings.showDrugsSeparator = settings.value(_showDrugsSeparator,QVariant(false)).toBool();
+    mPageSettings.showDrugsTableOutline = settings.value(_showDrugsTableOutline,QVariant(false)).toBool();
     mPageSettings.drugsPrintMode = (mSettings::drugsPrintMode) settings.value(_drugsPrintMode,QVariant(0)).toInt();
     mPageSettings.showDrugsTitle = settings.value(_showDrugsTitle,QVariant(false)).toBool();
     mPageSettings.showPrescriptionHeaderFooterLogo = settings.value(_showHeaderFooterLogo,QVariant(false)).toBool();
@@ -201,8 +201,16 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.roshettaFont.fontSize = settings.value(_roshettaFontSize,QVariant(8)).toInt();
     mPageSettings.roshettaFont.fontBold = settings.value(_roshettaFontBold,QVariant(false)).toBool();
 
+    mPageSettings.doseFont.fontName = settings.value(_doseFont,QVariant("Tahoma")).toString();
+    mPageSettings.doseFont.fontSize = settings.value(_doseFontSize,QVariant(8)).toInt();
+    mPageSettings.doseFont.fontBold = settings.value(_doseFontBold,QVariant(false)).toBool();
+
     mPageSettings.showDrugsInitDate = settings.value(_showDrugsInitDate,QVariant(true)).toBool();
     mPageSettings.showSignaturePrintedOn = settings.value(_showSignaturePrintedOn,QVariant(true)).toBool();
+
+    mPageSettings.showOnlyNewlyModifiedAddedDrugs = settings.value(_showOnlyNewlyModifiedAddedDrugs,QVariant(false)).toBool();
+    mPageSettings.showTradeNamesBold = settings.value(_showTradeNamesBold,QVariant(false)).toBool();
+    mPageSettings.showDoseNewLine = settings.value(_showDoseNewLine,QVariant(false)).toBool();
 
     settings.endGroup();
     return mPageSettings;
@@ -218,7 +226,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_showDrugs,mPageSettings.showDrugs);
     settings.setValue(_showInvsestigations,mPageSettings.showInvestigations);
     settings.setValue(_showMeasurments,mPageSettings.showMeasurments);
-    settings.setValue(_showDrugsSeparator,mPageSettings.showDrugsSeparator);
+    settings.setValue(_showDrugsTableOutline,mPageSettings.showDrugsTableOutline);
     settings.setValue(_drugsPrintMode,mPageSettings.drugsPrintMode);
     settings.setValue(_showDrugsTitle,mPageSettings.showDrugsTitle);
     settings.setValue(_showHeaderFooterLogo,mPageSettings.showPrescriptionHeaderFooterLogo);
@@ -236,8 +244,16 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_roshettaFontSize,mPageSettings.roshettaFont.fontSize);
     settings.setValue(_roshettaFontBold,mPageSettings.roshettaFont.fontBold);
 
+    settings.setValue(_doseFont,mPageSettings.doseFont.fontName);
+    settings.setValue(_doseFontSize,mPageSettings.doseFont.fontSize);
+    settings.setValue(_doseFontBold,mPageSettings.doseFont.fontBold);
+
     settings.setValue(_showDrugsInitDate,mPageSettings.showDrugsInitDate);
     settings.setValue(_showSignaturePrintedOn,mPageSettings.showSignaturePrintedOn);
+
+    settings.setValue(_showOnlyNewlyModifiedAddedDrugs,mPageSettings.showOnlyNewlyModifiedAddedDrugs);
+    settings.setValue(_showTradeNamesBold,mPageSettings.showTradeNamesBold);
+    settings.setValue(_showDoseNewLine,mPageSettings.showDoseNewLine);
 
     settings.endGroup();
 }

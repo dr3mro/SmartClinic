@@ -201,7 +201,10 @@ void Roshetta::fillBody(QTextCursor &c)
     c.insertTable(1,2,bodyFormat);
 
     QTextTableFormat drugsTableFormat;
-    drugsTableFormat.setBorder(0);
+    drugsTableFormat.setBorder(roshettaSettings.showDrugsTableOutline);
+    drugsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_Inset);
+    drugsTableFormat.setBorderBrush(QBrush(Qt::lightGray));
+    drugsTableFormat.setWidth(QTextLength(QTextLength::PercentageLength, 70));
     CurrentDrugRow =0; // to follow filling of table current row
 
     if(roshettaSettings.showDrugs){
@@ -220,7 +223,11 @@ void Roshetta::fillBody(QTextCursor &c)
             rows+= roshettaSettings.showDrugsTitle? 1:0;
         }
 
-        c.insertTable(rows,1,drugsTableFormat);
+
+        if(roshettaSettings.showDoseNewLine)
+            c.insertTable(rows,1,drugsTableFormat);
+        else
+            c.insertTable(rows,2,drugsTableFormat);
 
         if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
             fillCurrentDrugs(c,"PRESCRIPTION");
@@ -268,44 +275,49 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     QTextTableCellFormat drugsHeaderFormat;
     QTextBlockFormat drugsHeaderBlockFormat;
 
-    QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
+    QString roshettaStyle = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.roshettaFont.fontName,
                  QString::number(roshettaSettings.roshettaFont.fontSize),
                  roshettaSettings.roshettaFont.fontBold? "bold":"normal");
+
+    QString tradeNameStyle = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
+            .arg(roshettaSettings.roshettaFont.fontName,
+                 QString::number(roshettaSettings.roshettaFont.fontSize),
+                 (roshettaSettings.roshettaFont.fontBold|roshettaSettings.showTradeNamesBold)? "bold":"normal");
+
+    QString doseStyle = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
+            .arg(roshettaSettings.doseFont.fontName,
+                 QString::number(roshettaSettings.doseFont.fontSize),
+                 (roshettaSettings.doseFont.fontBold | (roshettaSettings.doseFont.fontBold && roshettaSettings.roshettaFont.fontBold))? "bold":"normal");
 
     if(roshettaSettings.showDrugsTitle){
         drugsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
         //drugsHeaderFormat.setTopPadding(3);
         drugsHeaderBlockFormat.setAlignment(Qt::AlignCenter);
-        c.insertHtml(QString("<div %1><b>%2</b></div>").arg(style,title));
+        c.insertHtml(QString("<div %1><b>%2</b></div>").arg(roshettaStyle,title));
         c.currentTable()->cellAt(CurrentDrugRow,0).setFormat(drugsHeaderFormat);
         c.currentTable()->cellAt(CurrentDrugRow,0).firstCursorPosition().setBlockFormat(drugsHeaderBlockFormat);
+        c.currentTable()->mergeCells(CurrentDrugRow,0,1,2);
         c.movePosition(QTextCursor::NextCell);
     }
 
-
-
-
-    QTextBlockFormat requestsBlockFormat;
-    requestsBlockFormat.setNonBreakableLines(true);
-
-
     CurrentDrugRow++;
     foreach (const mSettings::drug & d, drugs) {
-        if(roshettaSettings.showDrugsInitDate){
+        if(roshettaSettings.showDrugsInitDate && roshettaSettings.showDoseNewLine){
             c.insertHtml(QString("<div align=left dir=LTR %4>℞  %1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
-                         .arg(d.TradeName," ▶ ",d.StartDate,style));
+                         .arg(d.TradeName," ▶ ",d.StartDate,tradeNameStyle));
         }else{
             c.insertHtml(QString("<div align=left dir=LTR %2>℞  %1</div>")
-                         .arg(d.TradeName,style));
+                         .arg(d.TradeName,tradeNameStyle));
         }
 
-
-        c.insertHtml("<br>");
-        c.insertHtml(QString("<div align=left dir=RTL %2>%1</div>").arg(d.Dose,style));
-
-        if(roshettaSettings.showDrugsSeparator)
-            c.insertHtml("<hr>");
+        if(roshettaSettings.showDoseNewLine){
+            c.insertHtml("<br>");
+            c.insertHtml(QString("<div align=left dir=RTL %2>%1</div>").arg(d.Dose,doseStyle));
+        }else{
+            c.movePosition(QTextCursor::NextCell);
+            c.insertHtml(QString("<div align=right dir=RTL %2>%1</div>").arg(d.Dose,doseStyle));
+        }
 
         c.movePosition(QTextCursor::NextCell);
         CurrentDrugRow++;
