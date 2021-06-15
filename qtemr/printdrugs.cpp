@@ -221,7 +221,7 @@ void printDrugs::setRoshettaData(const mSettings::Roshetta &_roshetta)
 void printDrugs::showEvent(QShowEvent *e)
 {
     QPixmap logo(LOGOFILE);
-    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
+    ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));
     ui->lockUnlockButton->setChecked(true);
     ui->Roshetta->setReadOnly(true);
     pSettings = grabPrintSettings();
@@ -542,7 +542,7 @@ void printDrugs::ButtonRefresh_clicked()
     ui->Roshetta->setDocument(m_roshetta);
     ui->lockUnlockButton->setChecked(true);
     QPixmap logo(LOGOFILE);
-    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
+    ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));
 }
 
 void printDrugs::setLogo()
@@ -561,7 +561,7 @@ void printDrugs::setLogo()
     src.close();
     dest.close();
     QPixmap logo(LOGOFILE);
-    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
+    ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));
     refreshView();
 }
 
@@ -576,6 +576,6 @@ void printDrugs::resetLogo()
         return;
     dataIOhelper::dumpLogoNotExists(true);
     QPixmap logo(LOGOFILE);
-    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
+    ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));
     refreshView();
 }

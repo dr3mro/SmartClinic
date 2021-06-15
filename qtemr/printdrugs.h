@@ -28,7 +28,7 @@ class printDrugs;
 class printDrugs : public QDialog
 {
     Q_OBJECT
-
+#define logoPreviewSizePx 72
 public:
     explicit printDrugs(QWidget *parent = nullptr);
     void savePrintSettings();
