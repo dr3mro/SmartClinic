@@ -1097,6 +1097,44 @@
               </widget>
              </item>
              <item>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QPushButton" name="setLogo">
+                 <property name="text">
+                  <string>Select logo</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" rowspan="2">
+                <widget class="QLabel" name="logoPreview">
+                 <property name="maximumSize">
+                  <size>
+                   <width>48</width>
+                   <height>48</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QPushButton" name="resetLogo">
+                 <property name="text">
+                  <string>Reset Logo</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Prescription Header</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <spacer name="verticalSpacer_3">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -1108,13 +1146,6 @@
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>Prescription Header</string>
-               </property>
-              </widget>
              </item>
              <item>
               <widget class="TextEdit" name="Header"/>

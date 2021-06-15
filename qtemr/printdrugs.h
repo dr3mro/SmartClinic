@@ -82,6 +82,8 @@ private slots:
     void logoSize_activated(const QString &arg1);
     void lockUnlockButton_toggled(bool checked);
     void ButtonRefresh_clicked();
+    void setLogo();
+    void resetLogo();
 
 private:
     void setupPrinter(QPrinter *p);

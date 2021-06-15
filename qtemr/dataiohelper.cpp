@@ -299,3 +299,20 @@ QString dataIOhelper::PortabilityLockFile()
     QString PortabilityLock = QString("%1/%2").arg(QCoreApplication::applicationDirPath()).arg(PORTABILITYLOCK).replace('/','\\');
     return PortabilityLock;
 }
+
+void dataIOhelper::dumpLogoNotExists(bool force){
+    QFile dest(LOGOFILE);
+    if(force)
+        dest.remove();
+
+    if(dest.exists())
+        return;
+
+    QFile src(":/Graphics/Graphics/logo.jpg");
+    src.open(QIODevice::ReadOnly);
+    dest.open(QIODevice::WriteOnly);
+    QByteArray srcData = src.readAll();
+    dest.write(srcData);
+    src.close();
+    dest.close();
+}

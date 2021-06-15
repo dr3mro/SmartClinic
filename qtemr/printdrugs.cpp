@@ -79,6 +79,9 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->ButtonRefresh,&QToolButton::clicked,this,&printDrugs::ButtonRefresh_clicked);
     connect(ui->lockUnlockButton,&QToolButton::toggled,this,&printDrugs::lockUnlockButton_toggled);
 
+    connect(ui->resetLogo,&QPushButton::clicked,this,&printDrugs::resetLogo);
+    connect(ui->setLogo,&QPushButton::clicked,this,&printDrugs::setLogo);
+
     this->setModal(true);
 }
 
@@ -217,6 +220,8 @@ void printDrugs::setRoshettaData(const mSettings::Roshetta &_roshetta)
 
 void printDrugs::showEvent(QShowEvent *e)
 {
+    QPixmap logo(LOGOFILE);
+    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
     ui->lockUnlockButton->setChecked(true);
     ui->Roshetta->setReadOnly(true);
     pSettings = grabPrintSettings();
@@ -536,4 +541,41 @@ void printDrugs::ButtonRefresh_clicked()
     m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
     ui->Roshetta->setDocument(m_roshetta);
     ui->lockUnlockButton->setChecked(true);
+    QPixmap logo(LOGOFILE);
+    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
+}
+
+void printDrugs::setLogo()
+{
+    QString newlogo = QFileDialog::getOpenFileName(this,tr("Open Image"), QStandardPaths::writableLocation(QStandardPaths::DesktopLocation), tr("Image Files (*.png *.jpg *.bmp)"));
+    if(newlogo == "")
+        return;
+
+    QFile dest(LOGOFILE);
+    dest.remove();
+    QFile src(newlogo);
+    src.open(QIODevice::ReadOnly);
+    dest.open(QIODevice::WriteOnly);
+    QByteArray srcData = src.readAll();
+    dest.write(srcData);
+    src.close();
+    dest.close();
+    QPixmap logo(LOGOFILE);
+    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
+    refreshView();
+}
+
+void printDrugs::resetLogo()
+{
+    QMessageBox msgbox;
+    int reply = msgbox.question(nullptr,"Message",
+                                "Do you want to reset Roshetta Logo to default?",
+                                QMessageBox::Yes,QMessageBox::No);
+
+    if (reply == QMessageBox::No)
+        return;
+    dataIOhelper::dumpLogoNotExists(true);
+    QPixmap logo(LOGOFILE);
+    ui->logoPreview->setPixmap(logo.scaledToHeight(48));
+    refreshView();
 }
