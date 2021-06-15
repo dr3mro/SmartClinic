@@ -211,16 +211,31 @@ void Roshetta::fillBody(QTextCursor &c)
         int rows=0;
 
         if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
-            rows+= roshettaData.currentDrugsList.count()+roshettaData.baseDrugsList.count();
-            rows+= roshettaSettings.showDrugsTitle? 2:0;
+            if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
+                rows+= roshettaData.currentAlteredDrugsList.count()+roshettaData.baseAlteredDrugsList.count();
+                rows+= roshettaSettings.showDrugsTitle? 2:0;
+            }else{
+                rows+= roshettaData.currentDrugsList.count()+roshettaData.baseDrugsList.count();
+                rows+= roshettaSettings.showDrugsTitle? 2:0;
+            }
         }
         else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
-            rows+= roshettaData.currentDrugsList.count();
-            rows+= roshettaSettings.showDrugsTitle? 1:0;
+            if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
+                rows+= roshettaData.currentAlteredDrugsList.count();
+                rows+= roshettaSettings.showDrugsTitle? 1:0;
+            }else{
+                rows+= roshettaData.currentDrugsList.count();
+                rows+= roshettaSettings.showDrugsTitle? 1:0;
+            }
         }
         else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
-            rows+= roshettaData.baseDrugsList.count();
-            rows+= roshettaSettings.showDrugsTitle? 1:0;
+            if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
+                rows+= roshettaData.baseAlteredDrugsList.count();
+                rows+= roshettaSettings.showDrugsTitle? 1:0;
+            }else{
+                rows+= roshettaData.baseDrugsList.count();
+                rows+= roshettaSettings.showDrugsTitle? 1:0;
+            }
         }
 
 
@@ -262,12 +277,18 @@ void Roshetta::fillBody(QTextCursor &c)
 
 void Roshetta::fillCurrentDrugs(QTextCursor &c, const QString &title)
 {
-    fillDrugs(c,roshettaData.currentDrugsList,title);
+    if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs)
+        fillDrugs(c,roshettaData.currentAlteredDrugsList,title);
+    else
+        fillDrugs(c,roshettaData.currentDrugsList,title);
 }
 
 void Roshetta::fillBaseDrugs(QTextCursor &c, const QString &title)
 {
-    fillDrugs(c,roshettaData.baseDrugsList,title);
+    if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs)
+        fillDrugs(c,roshettaData.baseAlteredDrugsList,title);
+    else
+        fillDrugs(c,roshettaData.baseDrugsList,title);
 }
 
 void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QString &title)

@@ -112,6 +112,8 @@ public:
         QString visitSymbole;
         QList<drug> currentDrugsList;
         QList<drug> baseDrugsList;
+        QList<drug> currentAlteredDrugsList;
+        QList<drug> baseAlteredDrugsList;
         QStringList requests;
     };
 

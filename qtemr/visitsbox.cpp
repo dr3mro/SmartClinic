@@ -1688,9 +1688,10 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshetta.nextDate = QDate::fromJulianDay(ui->dateFollowUp->date().toJulianDay()).toString("ddd dd/MM/yyyy");
     roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex());
 
-    roshettaDrugsfiller(roshetta.baseDrugsList,getDrugsModel());
-    roshettaDrugsfiller(roshetta.currentDrugsList,ui->vDrugsTable->getDrugsModel());
-
+    roshettaDrugsfiller(roshetta.baseDrugsList,getDrugsModel(),false);
+    roshettaDrugsfiller(roshetta.currentDrugsList,ui->vDrugsTable->getDrugsModel(),false);
+    roshettaDrugsfiller(roshetta.baseAlteredDrugsList,getDrugsModel(),true);
+    roshettaDrugsfiller(roshetta.currentAlteredDrugsList,ui->vDrugsTable->getDrugsModel(),true);
 
     foreach (QString inv, ui->InvestigationsTable->getInvestigationsList())
             roshetta.requests << inv;
@@ -1704,10 +1705,13 @@ mSettings::Roshetta visitsBox::getRoshetta()
     return roshetta;
 }
 
-void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel *drugsModel)
+void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel *drugsModel,bool alteredDrugsOnly)
 {
     for(int i=0; i< drugsModel->rowCount();i++) {
         if(!drugsModel->item(i,5)->text().toInt())
+            continue;
+
+        if(alteredDrugsOnly && drugsModel->item(i,4)->text().toInt() != QDate::currentDate().toJulianDay())
             continue;
 
         mSettings::drug drug;
