@@ -164,54 +164,6 @@
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_18">
-               <item>
-                <widget class="QLabel" name="label_35">
-                 <property name="text">
-                  <string>Show Signature &amp; Printed On date at bottom of Roshetta</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="Switch" name="SignaturePrintedOn">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_17">
-               <item>
-                <widget class="QLabel" name="label_34">
-                 <property name="text">
-                  <string>Show drugs start date after trade name in a smaller font .</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="Switch" name="drugsInitDate">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_16">
                <item>
                 <widget class="QLabel" name="label_32">
@@ -236,16 +188,16 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
                <item>
-                <widget class="QLabel" name="label_17">
+                <widget class="QLabel" name="label_19">
                  <property name="text">
-                  <string>Show Current visit requests [investigations].</string>
+                  <string>Show prescription banner contains details about patient.</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="Switch" name="showInvs">
+                <widget class="Switch" name="showBanner">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -284,6 +236,30 @@
               </layout>
              </item>
              <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item>
+                <widget class="QLabel" name="label_17">
+                 <property name="text">
+                  <string>Show Current visit requests [investigations].</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Switch" name="showInvs">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_7">
                <item>
                 <widget class="QLabel" name="label_18">
@@ -308,16 +284,16 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <layout class="QHBoxLayout" name="horizontalLayout_18">
                <item>
-                <widget class="QLabel" name="label_24">
+                <widget class="QLabel" name="label_35">
                  <property name="text">
-                  <string>Show drugs borders</string>
+                  <string>Show Signature &amp; Printed On date at bottom of Roshetta</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="Switch" name="showDrugsTableOutline">
+                <widget class="Switch" name="SignaturePrintedOn">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -362,16 +338,40 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <layout class="QHBoxLayout" name="horizontalLayout_17">
                <item>
-                <widget class="QLabel" name="label_19">
+                <widget class="QLabel" name="label_34">
                  <property name="text">
-                  <string>Show prescription banner contains details about patient.</string>
+                  <string>Show drugs start date after trade name in a smaller font .</string>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="Switch" name="showBanner">
+                <widget class="Switch" name="drugsInitDate">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <item>
+                <widget class="QLabel" name="label_24">
+                 <property name="text">
+                  <string>Show drugs borders</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Switch" name="showDrugsTableOutline">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -438,7 +438,7 @@
                <item>
                 <widget class="QLabel" name="label_22">
                  <property name="text">
-                  <string>show drugs doose in new line below tradename;</string>
+                  <string>show drugs dose in new line below tradename</string>
                  </property>
                 </widget>
                </item>
