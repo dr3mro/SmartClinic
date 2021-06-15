@@ -987,9 +987,15 @@ void drugsTable::setDose()
 {
     QString newDose = le_setDose->text().simplified();
     QModelIndex cell =  this->selectionModel()->currentIndex();
-    drugsModel->item(cell.row(),2)->setText(newDose);
+    bool drugDoseAltered=false;
+    if(newDose != drugsModel->item(cell.row(),2).text()){
+        drugsModel->item(cell.row(),2)->setText(newDose);
+        drugsModel->item(i,4)->setText(QString::number(QDate::currentDate().toJulianDay()));
+        genDrugTableToolTip();
+        drugDoseAltered=true;
+    }
+
     QString tradeName = drugsModel->item(cell.row(),0)->text();
-    genDrugTableToolTip();
 
     if ( !sqlextra->isDefaultDoseExists(tradeName))
         sqlextra->addDefaultDrugDose(tradeName,newDose);
@@ -1000,7 +1006,7 @@ void drugsTable::setDose()
 
     le_setDose->clear();
     w_setDose.hide();
-    emit drugsHasBeenAltered(true);
+    emit drugsHasBeenAltered(drugDoseAltered);
 }
 
 
