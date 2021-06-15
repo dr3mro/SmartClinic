@@ -379,7 +379,7 @@ void Roshetta::fillRequests(QTextCursor &c)
 
     foreach (const QString & req, roshettaData.requests) {
         c.setBlockFormat(requestsBlockFormat);
-        c.insertText("★ ");
+        c.insertText("✻ ");
         c.insertHtml(QString("<div %1>%2</div>").arg(style,req));
         c.movePosition(QTextCursor::NextCell);
     }
