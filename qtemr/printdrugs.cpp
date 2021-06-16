@@ -29,62 +29,76 @@ printDrugs::printDrugs(QWidget *parent) :
     selectedPrintingProfile = ui->printerProfile->currentText();
     lSettings = pSettings =  loadPrintSettings();
 
-    connect(ui->printerProfile,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::printerProfile_activated);
-    connect(ui->showInvs,&Switch::clicked,this,&printDrugs::showInvs_clicked);
-    connect(ui->drugsMode,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::drugsMode_activated);
-    connect(ui->drugsMode,QOverload<int>::of(&QComboBox::highlighted),this,&printDrugs::drugsMode_activated);
-    connect(ui->bannerFontName,&QFontComboBox::textActivated,this,&printDrugs::bannerFontName_activated);
-    connect(ui->bannerFontName,&QFontComboBox::textHighlighted,this,&printDrugs::bannerFontName_activated);
-    connect(ui->bannerFontSize,&QComboBox::textActivated,this,&printDrugs::bannerFontSize_activated);
-    connect(ui->bannerFontSize,&QComboBox::textHighlighted,this,&printDrugs::bannerFontSize_activated);
-    connect(ui->bannerFontBold,&QToolButton::clicked,this,&printDrugs::bannerFontBold_clicked);
+    connect(ui->printerProfile,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::printerProfile_activated,Qt::QueuedConnection);
+    connect(ui->showInvs,&Switch::clicked,this,&printDrugs::showInvs_clicked,Qt::QueuedConnection);
+    connect(ui->drugsMode,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::drugsMode_activated,Qt::QueuedConnection);
+    connect(ui->drugsMode,QOverload<int>::of(&QComboBox::highlighted),this,&printDrugs::drugsMode_activated,Qt::QueuedConnection);
+    connect(ui->bannerFontName,&QFontComboBox::textActivated,this,&printDrugs::bannerFontName_activated,Qt::QueuedConnection);
+    connect(ui->bannerFontName,&QFontComboBox::textHighlighted,this,&printDrugs::bannerFontName_activated,Qt::QueuedConnection);
+    connect(ui->bannerFontSize,&QComboBox::textActivated,this,&printDrugs::bannerFontSize_activated,Qt::QueuedConnection);
+    connect(ui->bannerFontSize,&QComboBox::textHighlighted,this,&printDrugs::bannerFontSize_activated,Qt::QueuedConnection);
+    connect(ui->bannerFontBold,&QToolButton::clicked,this,&printDrugs::bannerFontBold_clicked,Qt::QueuedConnection);
 
-    connect(ui->roshettaFontName,&QFontComboBox::textActivated,this,&printDrugs::roshettaFontName_activated);
-    connect(ui->roshettaFontName,&QFontComboBox::textHighlighted,this,&printDrugs::roshettaFontName_activated);
-    connect(ui->roshettaFontSize,&QComboBox::textActivated,this,&printDrugs::roshettaFontSize_activated);
-    connect(ui->roshettaFontSize,&QComboBox::textHighlighted,this,&printDrugs::roshettaFontSize_activated);
-    connect(ui->roshettaFontBold,&QToolButton::clicked,this,&printDrugs::roshettaFontBold_clicked);
+    connect(ui->roshettaFontName,&QFontComboBox::textActivated,this,&printDrugs::roshettaFontName_activated,Qt::QueuedConnection);
+    connect(ui->roshettaFontName,&QFontComboBox::textHighlighted,this,&printDrugs::roshettaFontName_activated,Qt::QueuedConnection);
+    connect(ui->roshettaFontSize,&QComboBox::textActivated,this,&printDrugs::roshettaFontSize_activated,Qt::QueuedConnection);
+    connect(ui->roshettaFontSize,&QComboBox::textHighlighted,this,&printDrugs::roshettaFontSize_activated,Qt::QueuedConnection);
+    connect(ui->roshettaFontBold,&QToolButton::clicked,this,&printDrugs::roshettaFontBold_clicked,Qt::QueuedConnection);
 
-    connect(ui->doseFontName,&QFontComboBox::textActivated,this,&printDrugs::doseFontName_activated);
-    connect(ui->doseFontName,&QFontComboBox::textHighlighted,this,&printDrugs::doseFontName_activated);
-    connect(ui->doseFontSize,&QComboBox::textActivated,this,&printDrugs::doseFontSize_activated);
-    connect(ui->doseFontSize,&QComboBox::textHighlighted,this,&printDrugs::doseFontSize_activated);
-    connect(ui->doseFontBold,&QToolButton::clicked,this,&printDrugs::doseFontBold_clicked);
+    connect(ui->doseFontName,&QFontComboBox::textActivated,this,&printDrugs::doseFontName_activated,Qt::QueuedConnection);
+    connect(ui->doseFontName,&QFontComboBox::textHighlighted,this,&printDrugs::doseFontName_activated,Qt::QueuedConnection);
+    connect(ui->doseFontSize,&QComboBox::textActivated,this,&printDrugs::doseFontSize_activated,Qt::QueuedConnection);
+    connect(ui->doseFontSize,&QComboBox::textHighlighted,this,&printDrugs::doseFontSize_activated,Qt::QueuedConnection);
+    connect(ui->doseFontBold,&QToolButton::clicked,this,&printDrugs::doseFontBold_clicked,Qt::QueuedConnection);
 
-    connect(ui->headerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::headerHeightPercent_valueChanged);
-    connect(ui->bannerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::bannerHeightPercent_valueChanged);
-    connect(ui->footerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::footerHeightPercent_valueChanged);
+    connect(ui->requestsFontName,&QFontComboBox::textActivated,this,&printDrugs::requestsFontName_activated,Qt::QueuedConnection);
+    connect(ui->requestsFontName,&QFontComboBox::textHighlighted,this,&printDrugs::requestsFontName_activated,Qt::QueuedConnection);
+    connect(ui->requestsFontSize,&QComboBox::textActivated,this,&printDrugs::requestsFontSize_activated,Qt::QueuedConnection);
+    connect(ui->requestsFontSize,&QComboBox::textHighlighted,this,&printDrugs::requestsFontSize_activated,Qt::QueuedConnection);
+    connect(ui->requestsFontBold,&QToolButton::clicked,this,&printDrugs::requestsFontBold_clicked,Qt::QueuedConnection);
 
-    connect(ui->Header,&PagesTextEdit::textChanged,this,&printDrugs::header_textChanged);
-    connect(ui->Footer,&PagesTextEdit::textChanged,this,&printDrugs::footer_textChanged);
+    connect(ui->measurementsFontName,&QFontComboBox::textActivated,this,&printDrugs::measurementsFontName_activated,Qt::QueuedConnection);
+    connect(ui->measurementsFontName,&QFontComboBox::textHighlighted,this,&printDrugs::measurementsFontName_activated,Qt::QueuedConnection);
+    connect(ui->measurementsFontSize,&QComboBox::textActivated,this,&printDrugs::measurementsFontSize_activated,Qt::QueuedConnection);
+    connect(ui->measurementsFontSize,&QComboBox::textHighlighted,this,&printDrugs::measurementsFontSize_activated,Qt::QueuedConnection);
+    connect(ui->measurementsFontBold,&QToolButton::clicked,this,&printDrugs::measurementsFontBold_clicked,Qt::QueuedConnection);
 
-    connect(ui->paperSizeId,&QComboBox::textActivated,this,&printDrugs::paperSizeId_activated);
-    connect(ui->paperSizeId,&QComboBox::textHighlighted,this,&printDrugs::paperSizeId_activated);
 
-    connect(ui->SignaturePrintedOn,&Switch::clicked,this,&printDrugs::SignaturePrintedOn_clicked);
-    connect(ui->drugsInitDate,&Switch::clicked,this,&printDrugs::drugsInitDate_clicked);
-    connect(ui->showHeaderFooterLogo,&Switch::clicked,this,&printDrugs::showHeaderFooterLogo_clicked);
-    connect(ui->showDrugs,&Switch::clicked,this,&printDrugs::showDrugs_clicked);
-    connect(ui->showMesurements,&Switch::clicked,this,&printDrugs::showMesurements_clicked);
-    connect(ui->showDrugsTableOutline,&Switch::clicked,this,&printDrugs::showDrugsTableOutline_clicked);
-    connect(ui->showDrugsTitle,&Switch::clicked,this,&printDrugs::showDrugsTitle_clicked);
-    connect(ui->showBanner,&Switch::clicked,this,&printDrugs::showBanner_clicked);
-    connect(ui->showOnlyNewlyModifiedAddedDrugs,&Switch::clicked,this,&printDrugs::showOnlyNewlyModifiedAddedDrugs_clicked);
-    connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked);
-    connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked);
 
-    connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged);
-    connect(ui->logoSize,&QComboBox::textActivated,this,&printDrugs::logoSize_activated);
-    connect(ui->logoSize,&QComboBox::textHighlighted,this,&printDrugs::logoSize_activated);
+    connect(ui->headerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::headerHeightPercent_valueChanged,Qt::QueuedConnection);
+    connect(ui->bannerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::bannerHeightPercent_valueChanged,Qt::QueuedConnection);
+    connect(ui->footerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::footerHeightPercent_valueChanged,Qt::QueuedConnection);
 
-    connect(ui->ButtonRefresh,&QToolButton::clicked,this,&printDrugs::ButtonRefresh_clicked);
-    connect(ui->lockUnlockButton,&QToolButton::toggled,this,&printDrugs::lockUnlockButton_toggled);
+    connect(ui->Header,&PagesTextEdit::textChanged,this,&printDrugs::header_textChanged,Qt::QueuedConnection);
+    connect(ui->Footer,&PagesTextEdit::textChanged,this,&printDrugs::footer_textChanged,Qt::QueuedConnection);
 
-    connect(ui->resetLogo,&QPushButton::clicked,this,&printDrugs::resetLogo);
-    connect(ui->setLogo,&QPushButton::clicked,this,&printDrugs::setLogo);
+    connect(ui->paperSizeId,&QComboBox::textActivated,this,&printDrugs::paperSizeId_activated,Qt::QueuedConnection);
+    connect(ui->paperSizeId,&QComboBox::textHighlighted,this,&printDrugs::paperSizeId_activated,Qt::QueuedConnection);
 
-    connect(ui->diet,&QComboBox::textActivated,this,&printDrugs::dietSelected);
-    connect(ui->diet,&QComboBox::textHighlighted,this,&printDrugs::dietSelected);
+    connect(ui->SignaturePrintedOn,&Switch::clicked,this,&printDrugs::SignaturePrintedOn_clicked,Qt::QueuedConnection);
+    connect(ui->drugsInitDate,&Switch::clicked,this,&printDrugs::drugsInitDate_clicked,Qt::QueuedConnection);
+    connect(ui->showHeaderFooterLogo,&Switch::clicked,this,&printDrugs::showHeaderFooterLogo_clicked,Qt::QueuedConnection);
+    connect(ui->showDrugs,&Switch::clicked,this,&printDrugs::showDrugs_clicked,Qt::QueuedConnection);
+    connect(ui->showMesurements,&Switch::clicked,this,&printDrugs::showMesurements_clicked,Qt::QueuedConnection);
+    connect(ui->showDrugsTableOutline,&Switch::clicked,this,&printDrugs::showDrugsTableOutline_clicked,Qt::QueuedConnection);
+    connect(ui->showDrugsTitle,&Switch::clicked,this,&printDrugs::showDrugsTitle_clicked,Qt::QueuedConnection);
+    connect(ui->showBanner,&Switch::clicked,this,&printDrugs::showBanner_clicked,Qt::QueuedConnection);
+    connect(ui->showOnlyNewlyModifiedAddedDrugs,&Switch::clicked,this,&printDrugs::showOnlyNewlyModifiedAddedDrugs_clicked,Qt::QueuedConnection);
+    connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked,Qt::QueuedConnection);
+    connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked,Qt::QueuedConnection);
+
+    connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged,Qt::QueuedConnection);
+    connect(ui->logoSize,&QComboBox::textActivated,this,&printDrugs::logoSize_activated,Qt::QueuedConnection);
+    connect(ui->logoSize,&QComboBox::textHighlighted,this,&printDrugs::logoSize_activated,Qt::QueuedConnection);
+
+    connect(ui->ButtonRefresh,&QToolButton::clicked,this,&printDrugs::ButtonRefresh_clicked,Qt::QueuedConnection);
+    connect(ui->lockUnlockButton,&QToolButton::toggled,this,&printDrugs::lockUnlockButton_toggled,Qt::QueuedConnection);
+
+    connect(ui->resetLogo,&QPushButton::clicked,this,&printDrugs::resetLogo,Qt::QueuedConnection);
+    connect(ui->setLogo,&QPushButton::clicked,this,&printDrugs::setLogo,Qt::QueuedConnection);
+
+    connect(ui->diet,&QComboBox::textActivated,this,&printDrugs::dietSelected,Qt::QueuedConnection);
+    connect(ui->diet,&QComboBox::textHighlighted,this,&printDrugs::dietSelected,Qt::QueuedConnection);
 
     this->setModal(true);
 }
@@ -155,6 +169,15 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->doseFontName->setCurrentFont(QFont(printSettings.doseFont.fontName));
     ui->doseFontSize->setCurrentText(QString::number(printSettings.doseFont.fontSize));
     ui->doseFontBold->setChecked(printSettings.doseFont.fontBold);
+
+    ui->requestsFontName->setCurrentFont(QFont(printSettings.requestsFont.fontName));
+    ui->requestsFontSize->setCurrentText(QString::number(printSettings.requestsFont.fontSize));
+    ui->requestsFontBold->setChecked(printSettings.requestsFont.fontBold);
+
+    ui->measurementsFontName->setCurrentFont(QFont(printSettings.measurementsFont.fontName));
+    ui->measurementsFontSize->setCurrentText(QString::number(printSettings.measurementsFont.fontSize));
+    ui->measurementsFontBold->setChecked(printSettings.measurementsFont.fontBold);
+
     ui->drugsInitDate->setChecked(printSettings.showDrugsInitDate);
     ui->SignaturePrintedOn->setChecked(printSettings.showSignaturePrintedOn);
     ui->showOnlyNewlyModifiedAddedDrugs->setChecked(printSettings.showOnlyNewlyModifiedAddedDrugs);
@@ -191,6 +214,15 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.doseFont.fontName = ui->doseFontName->currentText();;
     printSettings.doseFont.fontSize = ui->doseFontSize->currentText().toInt();
     printSettings.doseFont.fontBold = ui->doseFontBold->isChecked();
+
+    printSettings.requestsFont.fontName = ui->requestsFontName->currentText();;
+    printSettings.requestsFont.fontSize = ui->requestsFontSize->currentText().toInt();
+    printSettings.requestsFont.fontBold = ui->requestsFontBold->isChecked();
+
+    printSettings.measurementsFont.fontName = ui->measurementsFontName->currentText();;
+    printSettings.measurementsFont.fontSize = ui->measurementsFontSize->currentText().toInt();
+    printSettings.measurementsFont.fontBold = ui->measurementsFontBold->isChecked();
+
     printSettings.showDrugsInitDate = ui->drugsInitDate->isChecked();
     printSettings.showSignaturePrintedOn = ui->SignaturePrintedOn->isChecked();
     printSettings.showOnlyNewlyModifiedAddedDrugs = ui->showOnlyNewlyModifiedAddedDrugs->isChecked();
@@ -411,6 +443,42 @@ void printDrugs::doseFontSize_activated(const QString &arg1)
 void printDrugs::doseFontBold_clicked(bool checked)
 {
     pSettings.doseFont.fontBold =checked;
+    refreshView();
+}
+
+void printDrugs::requestsFontName_activated(const QString &arg1)
+{
+    pSettings.requestsFont.fontName =arg1;
+    refreshView();
+}
+
+void printDrugs::requestsFontSize_activated(const QString &arg1)
+{
+    pSettings.requestsFont.fontSize =arg1.toInt();
+    refreshView();
+}
+
+void printDrugs::requestsFontBold_clicked(bool checked)
+{
+    pSettings.requestsFont.fontBold =checked;
+    refreshView();
+}
+
+void printDrugs::measurementsFontName_activated(const QString &arg1)
+{
+    pSettings.measurementsFont.fontName =arg1;
+    refreshView();
+}
+
+void printDrugs::measurementsFontSize_activated(const QString &arg1)
+{
+    pSettings.measurementsFont.fontSize =arg1.toInt();
+    refreshView();
+}
+
+void printDrugs::measurementsFontBold_clicked(bool checked)
+{
+    pSettings.measurementsFont.fontBold =checked;
     refreshView();
 }
 

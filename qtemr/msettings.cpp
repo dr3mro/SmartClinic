@@ -205,6 +205,14 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.doseFont.fontSize = settings.value(_doseFontSize,QVariant(8)).toInt();
     mPageSettings.doseFont.fontBold = settings.value(_doseFontBold,QVariant(false)).toBool();
 
+    mPageSettings.requestsFont.fontName = settings.value(_requestsFont,QVariant("Tahoma")).toString();
+    mPageSettings.requestsFont.fontSize = settings.value(_requestsFontSize,QVariant(8)).toInt();
+    mPageSettings.requestsFont.fontBold = settings.value(_requestsFontBold,QVariant(false)).toBool();
+
+    mPageSettings.measurementsFont.fontName = settings.value(_measurementsFont,QVariant("Tahoma")).toString();
+    mPageSettings.measurementsFont.fontSize = settings.value(_measurementsFontSize,QVariant(8)).toInt();
+    mPageSettings.measurementsFont.fontBold = settings.value(_measurementsFontBold,QVariant(false)).toBool();
+
     mPageSettings.showDrugsInitDate = settings.value(_showDrugsInitDate,QVariant(true)).toBool();
     mPageSettings.showSignaturePrintedOn = settings.value(_showSignaturePrintedOn,QVariant(true)).toBool();
 
@@ -247,6 +255,14 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_doseFont,mPageSettings.doseFont.fontName);
     settings.setValue(_doseFontSize,mPageSettings.doseFont.fontSize);
     settings.setValue(_doseFontBold,mPageSettings.doseFont.fontBold);
+
+    settings.setValue(_requestsFont,mPageSettings.requestsFont.fontName);
+    settings.setValue(_requestsFontSize,mPageSettings.requestsFont.fontSize);
+    settings.setValue(_requestsFontBold,mPageSettings.requestsFont.fontBold);
+
+    settings.setValue(_measurementsFont,mPageSettings.measurementsFont.fontName);
+    settings.setValue(_measurementsFontSize,mPageSettings.measurementsFont.fontSize);
+    settings.setValue(_measurementsFontBold,mPageSettings.measurementsFont.fontBold);
 
     settings.setValue(_showDrugsInitDate,mPageSettings.showDrugsInitDate);
     settings.setValue(_showSignaturePrintedOn,mPageSettings.showSignaturePrintedOn);

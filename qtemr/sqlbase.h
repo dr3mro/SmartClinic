@@ -674,7 +674,7 @@ public:
     QString createVisitVitalsInsertPreparePhrase();
     QString createSurgicalNotesPrepareInsertPhrase();
     bool bindAndExecPatientSqlQuery(QString queryPhrase, Patient patient);
-    bool bindAndExecVisitSqlQuery(QString queryPhrase , Visit visit);
+    bool bindAndExecVisitSqlQuery(QString queryPhrase , Visit _visit);
     bool bindAndExecVisitVitalsSqlQuery(const QString &queryPhrase , const Visit &_visit, const int &ID);
     bool bindAndExecSurgicalNoteQuery(QString queryPhrase, int ID, QString surgeryID, int julianDate, QString opName, QString opReport);
     bool createPatientItemModel();

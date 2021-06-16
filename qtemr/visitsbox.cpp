@@ -244,7 +244,7 @@ sqlBase::Visit visitsBox::grabVisit()
     visit.vitals.BP = ui->pBP->text() == "" ? "-1":ui->pBP->text();
     visit.vitals.weight = ui->weight->text().toDouble() <=0 ? -1:ui->weight->text().toDouble();
     visit.vitals.height = ui->height->text().toDouble() <=0 ? -1:ui->height->text().toDouble();
-    visit.vitals.RBS = ui->RBS->text().toInt() <=0 ? -1:ui->RBS->text().toInt();
+    visit.vitals.RBS = ui->RBS->text() == ""? "-1":ui->RBS->text();
     visit.vitals.sPo2 = ui->sPo2->text().toInt() <=0 ? -1:ui->sPo2->text().toInt();
     visit.headCir = ui->lineEditHead->text();
     visit.exGeneral = ui->patientGeneralEx->toHtml();
@@ -275,7 +275,7 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
     ui->pBP->setText(visit.vitals.BP == "-1" ? QString():visit.vitals.BP);
     ui->weight->setText(visit.vitals.weight <= 0 ? QString():QString::number(visit.vitals.weight));
     ui->height->setText(visit.vitals.height <= 0 ? QString():QString::number(visit.vitals.height));
-    ui->RBS->setText(visit.vitals.RBS <= 0 ? QString():QString::number(visit.vitals.RBS));
+    ui->RBS->setText(visit.vitals.RBS == "-1" ? QString():visit.vitals.RBS);
     ui->sPo2->setText(visit.vitals.sPo2 <= 0 ? QString():QString::number(visit.vitals.sPo2));
     ui->lineEditHead->setText(visit.headCir);
     ui->patientGeneralEx->setHtml(visit.exGeneral);
@@ -330,6 +330,12 @@ void visitsBox::clearVisit()
     ui->pRR->clear();
     ui->pTemp->clear();
     ui->pBP->clear();
+    ui->RBS->clear();
+    ui->sPo2->clear();
+    ui->height->clear();
+    ui->weight->clear();
+    ui->lineEditLength->clear();
+    ui->lineEditWeight->clear();
     ui->patientGeneralEx->clear();
     ui->patientHeartLungEx->clear();
     ui->patientAbdomentBack->clear();
@@ -361,9 +367,7 @@ void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
     {
         loadedVisit = sqlbase->getPatientVisitData(ID,comboSelectedDataTime);
         fillVisit(loadedVisit);
-    }
-    else
-    {
+    }else{
         ui->presentation->setFocus();
         QString visitDateString = comboSelectedDataTime.left(10);
         ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::fromString(visitDateString,"dd/MM/yyyy")); //.addDays(7));
@@ -537,9 +541,7 @@ void visitsBox::save(sqlBase::Visit visit,bool threading)
 
 
     visit.visitDateTime = QString ( ui->visitLists->currentText() );
-
     updateVisitAge();
-
     if ( visit.visitDateTime.isEmpty())
     {
         QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
@@ -1742,7 +1744,7 @@ void visitsBox::roshettaVitalsFiller(mSettings::Vitals &vitals)
     vitals.weight = ui->weight->text().toDouble();
     vitals.height = ui->height->text().toInt();
     vitals.sPo2 = ui->sPo2->text().toInt();
-    vitals.RBS = ui->RBS->text().toInt();
+    vitals.RBS = ui->RBS->text();
     vitals.pulse = ui->pPulse->text().toInt();
     vitals.RR = ui->pRR->text().toInt();
     vitals.BP = ui->pBP->text();

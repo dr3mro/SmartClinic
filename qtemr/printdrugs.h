@@ -64,6 +64,15 @@ private slots:
     void doseFontName_activated(const QString &arg1);
     void doseFontSize_activated(const QString &arg1);
     void doseFontBold_clicked(bool checked);
+
+    void requestsFontName_activated(const QString &arg1);
+    void requestsFontSize_activated(const QString &arg1);
+    void requestsFontBold_clicked(bool checked);
+
+    void measurementsFontName_activated(const QString &arg1);
+    void measurementsFontSize_activated(const QString &arg1);
+    void measurementsFontBold_clicked(bool checked);
+
     void headerHeightPercent_valueChanged(int arg1);
     void bannerHeightPercent_valueChanged(int arg1);
     void footerHeightPercent_valueChanged(int arg1);

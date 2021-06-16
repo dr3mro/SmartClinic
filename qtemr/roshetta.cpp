@@ -130,7 +130,7 @@ void Roshetta::makeBanner()
 {
     if(roshettaSettings.showBanner){
         bannerFrameFormat.setBorder(1);
-        bannerFrameFormat.setBorderBrush(QBrush(Qt::darkGray));
+        bannerFrameFormat.setBorderBrush(QBrush(Qt::lightGray));
         bannerFrameFormat.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
     }
     else{
@@ -246,27 +246,31 @@ void Roshetta::fillBody(QTextCursor &c)
             }
         }
 
+        if(rows > 0 ){
+            if(roshettaSettings.showDoseNewLine)
+                c.insertTable(rows,1,drugsTableFormat);
+            else
+                c.insertTable(rows,2,drugsTableFormat);
 
-        if(roshettaSettings.showDoseNewLine)
-            c.insertTable(rows,1,drugsTableFormat);
-        else
-            c.insertTable(rows,2,drugsTableFormat);
-
-        if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
-            fillCurrentDrugs(c,"PRESCRIPTION");
-            fillBaseDrugs(c,"CHRONIC DRUGS");
-             c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
-        }
-        else {
-            if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
+            if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
                 fillCurrentDrugs(c,"PRESCRIPTION");
-                c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
-            }
-
-            if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
                 fillBaseDrugs(c,"CHRONIC DRUGS");
                 c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
             }
+            else {
+                if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
+                    fillCurrentDrugs(c,"PRESCRIPTION");
+                    c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
+                }
+
+                if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
+                    fillBaseDrugs(c,"CHRONIC DRUGS");
+                    c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
+                }
+            }
+        }
+        else{
+            c.movePosition(QTextCursor::NextCell);
         }
     }
     else{
@@ -360,13 +364,14 @@ void Roshetta::fillRequests(QTextCursor &c)
 
 
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
-            .arg(roshettaSettings.roshettaFont.fontName,
-                 QString::number(roshettaSettings.roshettaFont.fontSize -1),
-                 roshettaSettings.roshettaFont.fontBold? "bold":"normal");
+            .arg(roshettaSettings.requestsFont.fontName,
+                 QString::number(roshettaSettings.requestsFont.fontSize),
+                 roshettaSettings.requestsFont.fontBold? "bold":"normal");
 
     requestsTableFormat.setBorder(0);
     requestsTableFormat.setMargin(10);
     requestsTableFormat.setBackground(QBrush(QColor(240, 248, 255)));
+    requestsTableFormat.setWidth(mWidth*0.3);
     c.insertTable(roshettaData.requests.count()+1,1,requestsTableFormat);
 
     QTextTableCellFormat requestsHeaderFormat;
@@ -426,10 +431,16 @@ void Roshetta::fillVitals(QTextCursor &c)
         return;
     }
 
+    QVector<QTextLength> vitalstl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,30)
+                                                         << QTextLength(QTextLength::PercentageLength,70);
 
     QTextTableFormat vitalsTableFormat;
-    vitalsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_None);
-    vitalsTableFormat.setMargin(10);
+    vitalsTableFormat.setBorder(1);
+    vitalsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_Inset);
+    vitalsTableFormat.setBorderBrush(QBrush(Qt::lightGray));
+    vitalsTableFormat.setMargin(5);
+    vitalsTableFormat.setColumnWidthConstraints(vitalstl);
+    //vitalsTableFormat.setBackground(QBrush(QColor(240, 248, 255)));
 
 
     QTextTableCellFormat headerCellFormat;
@@ -443,9 +454,9 @@ void Roshetta::fillVitals(QTextCursor &c)
     c.insertTable(rows+1,2,vitalsTableFormat);
 
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
-            .arg(roshettaSettings.roshettaFont.fontName,
-                 QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
-                 roshettaSettings.roshettaFont.fontBold? "bold":"normal");
+            .arg(roshettaSettings.measurementsFont.fontName,
+                 QString::number(roshettaSettings.measurementsFont.fontSize),
+                 roshettaSettings.measurementsFont.fontBold? "bold":"normal");
 
     c.insertHtml(QString("<div %1><b>MEASUREMENTS</b></div>").arg(style));
     c.currentTable()->cellAt(0,0).setFormat(headerCellFormat);
@@ -463,7 +474,7 @@ void Roshetta::fillVitals(QTextCursor &c)
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.height != 0){
-        c.insertHtml(QString("<div %1>Height</div>").arg(style));
+        c.insertHtml(QString("<div %1>H</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
         c.insertHtml(QString("<div %2>: %1 CM</div>").arg(QString::number(roshettaData.vitals.height),style));
         c.movePosition(QTextCursor::NextCell);
@@ -474,14 +485,14 @@ void Roshetta::fillVitals(QTextCursor &c)
         c.insertHtml(QString("<div %2>: %1 %</div>").arg(QString::number(roshettaData.vitals.sPo2),style));
         c.movePosition(QTextCursor::NextCell);
     }
-    if(roshettaData.vitals.RBS != 0){
+    if(roshettaData.vitals.RBS != ""){
         c.insertHtml(QString("<div %1>RBS</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 mg/dl</div>").arg(QString::number(roshettaData.vitals.RBS),style));
+        c.insertHtml(QString("<div %2>: %1 mg/dl</div>").arg(roshettaData.vitals.RBS,style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.pulse != 0){
-        c.insertHtml(QString("<div %1>Pulse</div>").arg(style));
+        c.insertHtml(QString("<div %1>PR</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
         c.insertHtml(QString("<div %2>: %1 bpm</div>").arg(QString::number(roshettaData.vitals.pulse),style));
         c.movePosition(QTextCursor::NextCell);

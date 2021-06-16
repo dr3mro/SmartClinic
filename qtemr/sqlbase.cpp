@@ -113,7 +113,7 @@ bool sqlBase::addVisit2myDataBase(Visit _visit)
     QString sqlPhraseVisit = createVisitInsertPreparePhrase();
     QString sqlPhraseVitals = createVisitVitalsInsertPreparePhrase();
     bool b = bindAndExecVisitSqlQuery(sqlPhraseVisit,_visit);
-    bool c = bindAndExecVisitVitalsSqlQuery(sqlPhraseVitals,_visit,visit.ID);
+    bool c = bindAndExecVisitVitalsSqlQuery(sqlPhraseVitals,_visit,_visit.ID);
     return (b&&c);
 }
 
@@ -858,7 +858,7 @@ mSettings::Vitals sqlBase::getPatientVisitVitals(const int &ID, const QString &d
         mVitals.weight = query->value(7).toDouble();
         mVitals.height = query->value(8).toDouble();
         mVitals.sPo2 = query->value(9).toInt();
-        mVitals.RBS = query->value(10).toInt();
+        mVitals.RBS = query->value(10).toString();
     }
    // mDebug() << query->lastQuery();
     query->finish();
@@ -1370,11 +1370,11 @@ bool sqlBase::bindAndExecPatientSqlQuery(QString queryPhrase, Patient patient)
     return b;
 }
 
-bool sqlBase::bindAndExecVisitSqlQuery(QString queryPhrase, Visit visit)
+bool sqlBase::bindAndExecVisitSqlQuery(QString queryPhrase, Visit _visit)
 {
-    int ID = visit.ID;
+    int ID = _visit.ID;
     QLocale locale(QLocale::English , QLocale::UnitedStates );
-    QDateTime dt = locale.toDateTime(visit.visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
+    QDateTime dt = locale.toDateTime(_visit.visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
     int visitJulianDate = static_cast<int>(dt.date().toJulianDay());
     int visitTime = dt.time().msecsSinceStartOfDay()/1000;
     query->clear();
@@ -1388,27 +1388,27 @@ bool sqlBase::bindAndExecVisitSqlQuery(QString queryPhrase, Visit visit)
     }
 
     query->bindValue(":ID", ID);
-    query->bindValue(":visitAge",visit.visitAge);
-    query->bindValue(":presentation",visit.presentation);
-    query->bindValue(":presentationAnalysis",visit.presentationAnalysis);
-    query->bindValue(":diagnosis",visit.diagnosis);
-    query->bindValue(":invResults",visit.invResults);
-    query->bindValue(":headCir",visit.headCir);
-    query->bindValue(":exGeneral",visit.exGeneral);
-    query->bindValue(":exChestHeart",visit.exChestHeart);
-    query->bindValue(":exAbdback",visit.exAbdback);
-    query->bindValue(":exLL",visit.exLL);
-    query->bindValue(":visitNotes",visit.visitNotes);
-    query->bindValue(":visitDateTime",visit.visitDateTime);
-    query->bindValue(":followDate",visit.followDate.toInt());
-    query->bindValue(":visitType",visit.visitType);
-    query->bindValue(":checkButtonCaseClose",visit.checkButtonCaseClose );
+    query->bindValue(":visitAge",_visit.visitAge);
+    query->bindValue(":presentation",_visit.presentation);
+    query->bindValue(":presentationAnalysis",_visit.presentationAnalysis);
+    query->bindValue(":diagnosis",_visit.diagnosis);
+    query->bindValue(":invResults",_visit.invResults);
+    query->bindValue(":headCir",_visit.headCir);
+    query->bindValue(":exGeneral",_visit.exGeneral);
+    query->bindValue(":exChestHeart",_visit.exChestHeart);
+    query->bindValue(":exAbdback",_visit.exAbdback);
+    query->bindValue(":exLL",_visit.exLL);
+    query->bindValue(":visitNotes",_visit.visitNotes);
+    query->bindValue(":visitDateTime",_visit.visitDateTime);
+    query->bindValue(":followDate",_visit.followDate.toInt());
+    query->bindValue(":visitType",_visit.visitType);
+    query->bindValue(":checkButtonCaseClose",_visit.checkButtonCaseClose );
     query->bindValue(":visitJulianDate",visitJulianDate);
     query->bindValue(":visitTime",visitTime);
-    query->bindValue(":LMPDATE",visit.LMPDATE);
-    query->bindValue(":ObstUS",visit.ObstUS);
-    query->bindValue(":Antenatal",visit.Antenatal);
-    query->bindValue(":pelvicExam",visit.pelvicExam);
+    query->bindValue(":LMPDATE",_visit.LMPDATE);
+    query->bindValue(":ObstUS",_visit.ObstUS);
+    query->bindValue(":Antenatal",_visit.Antenatal);
+    query->bindValue(":pelvicExam",_visit.pelvicExam);
 
     bool b = query->exec();
     query->finish();
@@ -1423,7 +1423,7 @@ bool sqlBase::bindAndExecVisitSqlQuery(QString queryPhrase, Visit visit)
 bool sqlBase::bindAndExecVisitVitalsSqlQuery(const QString & queryPhrase,const Visit & _visit ,const int &ID)
 {
     QLocale locale(QLocale::English , QLocale::UnitedStates );
-    QDateTime dt = locale.toDateTime(visit.visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
+    QDateTime dt = locale.toDateTime(_visit.visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
     int mVisitDate = static_cast<int>(dt.date().toJulianDay());
     int mVisitTime = dt.time().msecsSinceStartOfDay()/1000;
     query->clear();
@@ -1790,7 +1790,7 @@ bool sqlBase::createVisitsVitalsTable()
             "weight real,"
             "height real,"
             "sPo2 int,"
-            "RBS int)");
+            "RBS varchar)");
 
     if (!b)
     {

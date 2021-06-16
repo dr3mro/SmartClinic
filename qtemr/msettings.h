@@ -20,14 +20,14 @@ public:
     // this is data structure to hold the vitals for printing
 
     struct Vitals{
-        int pulse;
-        QString BP;
-        int RR;
-        double T;
-        double weight;
-        double height;
-        int sPo2;
-        int RBS;
+        int pulse=-1;
+        QString BP="";
+        int RR=-1;
+        double T=-1.0;
+        double weight=-1.0;
+        double height=-1.0;
+        int sPo2=-1;
+        QString RBS="-1";
 
         void clear(){
             pulse=-1;
@@ -37,7 +37,7 @@ public:
             weight=-1;
             height=-1;
             sPo2=-1;
-            RBS=-1;
+            RBS="-1";
         }
         int getRows()
         {
@@ -48,7 +48,7 @@ public:
                 rows++;
             if(sPo2 != 0)
                 rows++;
-            if(RBS != 0)
+            if(RBS != "")
                 rows++;
             if(pulse != 0)
                 rows++;
@@ -352,10 +352,10 @@ public:
 
     struct roshettaFont
     {
-        int fontSize;
-        QString fontName;
-        bool fontBold;
-        bool italic;
+        int fontSize=10;
+        QString fontName="tahoma";
+        bool fontBold=false;
+        bool italic=false;
         bool operator==(const roshettaFont& _font) const
         {
             return std::tie(
@@ -393,9 +393,12 @@ public:
         int footerHeightPercent=10;
         int bannerHeightPercent=10;
 
-        roshettaFont doseFont{10,"Tahoma",false,false};
-        roshettaFont bannerFont={10,"Tahoma",false,false};
-        roshettaFont roshettaFont={10,"Tahoma",false,false};
+        struct roshettaFont doseFont{10,"Tahoma",false,false};
+        struct roshettaFont bannerFont{10,"Tahoma",false,false};
+        struct roshettaFont roshettaFont{10,"Tahoma",false,false};
+        struct roshettaFont requestsFont{10,"Tahoma",false,false};
+        struct roshettaFont measurementsFont{10,"Tahoma",false,false};
+
 
         bool showDrugsInitDate=true;
         bool showSignaturePrintedOn=true;
@@ -423,6 +426,8 @@ public:
                             bannerFont,
                             roshettaFont,
                             doseFont,
+                            requestsFont,
+                            measurementsFont,
                             showDrugsInitDate,
                             showSignaturePrintedOn,
                             showOnlyNewlyModifiedAddedDrugs,
@@ -446,6 +451,8 @@ public:
                         prescriptionprintsettings.bannerFont,
                         prescriptionprintsettings.roshettaFont,
                         prescriptionprintsettings.doseFont,
+                        prescriptionprintsettings.requestsFont,
+                        prescriptionprintsettings.measurementsFont,
                         prescriptionprintsettings.showDrugsInitDate,
                         prescriptionprintsettings.showSignaturePrintedOn,
                         prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
