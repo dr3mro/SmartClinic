@@ -263,36 +263,52 @@ void printDrugs::setupPrinter(QPrinter *p)
     p->setPageLayout(m_layout);
 }
 
-void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool preview)
+void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
 {
+    if(t.isActive())
+        return;
+
+    if(isPreview)
+    {
+        _doc->print(p);
+        return;
+    }else{
+        t.start();
+    }
+
+
     int reply=0;
-    _doc->setPageSize((QSizeF) p->pageLayout().pageSize().sizePoints());
-    if (_doc->pageCount() > 1 && !preview)
+
+    if (_doc->pageCount() > 1 && !roshettaData.diet.printRequired){
         reply = QMessageBox::question(nullptr,"Warning","Your print might be splitted over more than one page."
                                                   " please recheck your print preview. Are you sure?",
                                       QMessageBox::Yes,
                                       QMessageBox::No);
+    }
 
     if (reply ==  QMessageBox::No)
         return;
 
-    bool isPrinting=false;
 
-    if(!t.isActive())
-    {
-        _doc->print(p);
-        isPrinting=true;
-    }
+    if(_doc->pageCount() > 1 && roshettaData.diet.printRequired){
+            printer->setFromTo(1,1);
+            _doc->print(p);
+            reply = QMessageBox::question(nullptr,"Attention","Now we will print diet on page to please flip the page and press Ok.",
+                                                  QMessageBox::Ok,
+                                                  QMessageBox::Cancel);
+            if (reply ==  QMessageBox::Cancel)
+                    return;
 
-    if(!preview)
-        t.start();
-
-    if (!preview && isPrinting)
-    {
-        emit message("Message","Print job is being sent to your Default Printer.");
-
-        if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
-            this->close();
+            printer->setFromTo(2,2);
+            _doc->print(p);
+            emit message("Message","Print job is being sent to your Default Printer.");
+            if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
+                this->close();
+    }else{
+            _doc->print(p);
+            emit message("Message","Print job is being sent to your Default Printer.");
+            if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
+                this->close();
     }
 }
 

@@ -91,7 +91,7 @@ private slots:
 
 private:
     void setupPrinter(QPrinter *p);
-    void printDoc(QPrinter *p, QTextDocument *doc, bool preview=false);
+    void printDoc(QPrinter *p, QTextDocument *doc, bool isPreview=false);
     void applyPageSizeParamaters();
     QPrinter *printer;
     QPrintDialog *dlg;
