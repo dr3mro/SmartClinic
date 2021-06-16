@@ -1711,7 +1711,7 @@ void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel
         if(!drugsModel->item(i,5)->text().toInt())
             continue;
 
-        if(alteredDrugsOnly && drugsModel->item(i,4)->text().toInt() != QDate::currentDate().toJulianDay())
+        if(alteredDrugsOnly && drugsModel->item(i,3)->text().toInt() != QDate::currentDate().toJulianDay())
             continue;
 
         mSettings::drug drug;

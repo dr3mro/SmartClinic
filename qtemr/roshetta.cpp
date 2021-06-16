@@ -68,7 +68,7 @@ void Roshetta::setRootFrame()
         rootFrameFormat.setHeight( PageMetrics::mmToPx(roshettaSettings.pageMargin*2)*2 + mHeight*2 );
     else
         rootFrameFormat.setHeight(mHeight);
-    rootFrameFormat.setBorder(1);
+    rootFrameFormat.setBorder(0);
     rootFrameFormat.setPadding(0);
     rootFrameFormat.setMargin(PageMetrics::mmToPx(roshettaSettings.pageMargin));
     root->setFrameFormat(rootFrameFormat);

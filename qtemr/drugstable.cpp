@@ -990,7 +990,7 @@ void drugsTable::setDose()
     bool drugDoseAltered=false;
     if(newDose != drugsModel->item(cell.row(),2)->text()){
         drugsModel->item(cell.row(),2)->setText(newDose);
-        drugsModel->item(cell.row(),4)->setText(QString::number(QDate::currentDate().toJulianDay()));
+        drugsModel->item(cell.row(),3)->setText(QString::number(QDate::currentDate().toJulianDay()));
         genDrugTableToolTip();
         drugDoseAltered=true;
     }
