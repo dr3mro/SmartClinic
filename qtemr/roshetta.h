@@ -39,9 +39,9 @@ private:
     void fillSignaturePrintedOn(QTextCursor &c);
     void fillVitals(QTextCursor &c);
     void fillFooter(QTextCursor &c);
+    void fillDiet(QTextCursor &c);
     double mWidth;
     double mHeight;
-
 
     mSettings::Roshetta roshettaData;
     QTextDocument *mRoshetta;

@@ -56,7 +56,6 @@ void Roshetta::setRoshettaSize()
     mWidth = pageSize.sizePixels(qApp->desktop()->logicalDpiX()).width() - xMargins;
     mHeight = pageSize.sizePixels(qApp->desktop()->logicalDpiX()).height() -yMargins;
     mRoshetta->setPageSize(QSizeF(mWidth,mHeight));// QPageSize::A5
-
 }
 
 void Roshetta::setRootFrame()
@@ -64,8 +63,12 @@ void Roshetta::setRootFrame()
     QTextFrame* root = mRoshetta->rootFrame();
     rootFrameFormat = root->frameFormat();
     rootFrameFormat.setWidth(mWidth);
-    rootFrameFormat.setHeight(mHeight);
-    rootFrameFormat.setBorder(0);
+
+    if(roshettaData.diet.printRequired)
+        rootFrameFormat.setHeight( PageMetrics::mmToPx(roshettaSettings.pageMargin*2)*2 + mHeight*2 );
+    else
+        rootFrameFormat.setHeight(mHeight);
+    rootFrameFormat.setBorder(1);
     rootFrameFormat.setPadding(0);
     rootFrameFormat.setMargin(PageMetrics::mmToPx(roshettaSettings.pageMargin));
     root->setFrameFormat(rootFrameFormat);
@@ -108,6 +111,11 @@ void Roshetta::stackFrames()
 
     if(roshettaSettings.showPrescriptionHeaderFooterLogo)
         fillFooter(cursor);
+
+    cursor.movePosition(QTextCursor::NextBlock);
+
+    if(roshettaData.diet.printRequired)
+        fillDiet(cursor);
 }
 
 void Roshetta::makeHeader()
@@ -508,4 +516,13 @@ void Roshetta::fillFooter(QTextCursor &c)
     c.select(QTextCursor::BlockUnderCursor);
     c.setBlockFormat(footerBlockFormat);
     c.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
+}
+
+void Roshetta::fillDiet(QTextCursor &c)
+{
+    QTextTableFormat dietTableFormat;
+    dietTableFormat.setWidth(mWidth);
+    dietTableFormat.setBorder(0);
+    c.insertTable(1,1,dietTableFormat);
+    c.insertHtml(roshettaData.diet.contents);
 }

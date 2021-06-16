@@ -10,6 +10,7 @@ printDrugs::printDrugs(QWidget *parent) :
     printer ( new QPrinter(QPrinter::HighResolution)),
     dlg ( new QPrintDialog(printer,this)),
     wm_add2completer(new wm_add2Completer),
+    sqlextra(new sqlExtra(this,printDrugsDatabaseConnectionName,false)),
     ui(new Ui::printDrugs)
 {
     ui->setupUi(this);
@@ -82,6 +83,9 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->resetLogo,&QPushButton::clicked,this,&printDrugs::resetLogo);
     connect(ui->setLogo,&QPushButton::clicked,this,&printDrugs::setLogo);
 
+    connect(ui->diet,&QComboBox::textActivated,this,&printDrugs::dietSelected);
+    connect(ui->diet,&QComboBox::textHighlighted,this,&printDrugs::dietSelected);
+
     this->setModal(true);
 }
 
@@ -89,6 +93,8 @@ printDrugs::~printDrugs()
 {
     delete printer;
     delete dlg;
+    delete sqlextra;
+    QSqlDatabase::removeDatabase(printDrugsDatabaseConnectionName);
     delete ui;
     delete wm_add2completer;
 }
@@ -207,15 +213,20 @@ void printDrugs::refreshView()
 
 void printDrugs::reset()
 {
-
     ui->drugsMode->setCurrentIndex(0);
-//    ui->diet->setCurrentIndex(0);
-//    selectedDiet="-";
+    ui->diet->setCurrentIndex(0);
+    selectedDiet="-";
 }
 
 void printDrugs::setRoshettaData(const mSettings::Roshetta &_roshetta)
 {
     roshettaData = _roshetta;
+}
+
+void printDrugs::loadDiets(const QStringList &dietList)
+{
+    ui->diet->clear();
+    ui->diet->addItems(dietList);
 }
 
 void printDrugs::showEvent(QShowEvent *e)
@@ -577,5 +588,20 @@ void printDrugs::resetLogo()
     dataIOhelper::dumpLogoNotExists(true);
     QPixmap logo(LOGOFILE);
     ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));
+    refreshView();
+}
+
+void printDrugs::dietSelected(const QString & _selectedDiet)
+{
+    selectedDiet = _selectedDiet;
+
+    if(selectedDiet == QString("-")){
+        roshettaData.diet.contents = "";
+        roshettaData.diet.printRequired=false;
+    }else{
+        roshettaData.diet.contents = sqlextra->getDiet(selectedDiet);
+        roshettaData.diet.printRequired = true;
+    }
+
     refreshView();
 }

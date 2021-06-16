@@ -21,6 +21,8 @@
 #include <QTextDocument>
 #include <QAbstractTextDocumentLayout>
 #include <QPageLayout>
+#include "sqlextra.h"
+
 namespace Ui {
 class printDrugs;
 }
@@ -29,6 +31,7 @@ class printDrugs : public QDialog
 {
     Q_OBJECT
 #define logoPreviewSizePx 72
+#define printDrugsDatabaseConnectionName "qt_sql_extra_printdrugs_connection"
 public:
     explicit printDrugs(QWidget *parent = nullptr);
     void savePrintSettings();
@@ -37,6 +40,7 @@ public:
     void saveRoshettaAutoComplete();
     void reset();
     void setRoshettaData(const mSettings::Roshetta & _roshetta);
+    void loadDiets(const QStringList &dietList);
     ~printDrugs();
 
 public slots:
@@ -48,7 +52,6 @@ public slots:
 private slots:
     void showEvent(QShowEvent *e);
     void makePrintPreview(QPrinter *preview);
-
     void printerProfile_activated(int index);
     void showInvs_clicked(bool checked);
     void drugsMode_activated(int index);
@@ -84,6 +87,7 @@ private slots:
     void ButtonRefresh_clicked();
     void setLogo();
     void resetLogo();
+    void dietSelected(const QString &_selectedDiet);
 
 private:
     void setupPrinter(QPrinter *p);
@@ -97,10 +101,13 @@ private:
     QTimer t;
     QString selectedPrintingProfile;
     wm_add2Completer *wm_add2completer;
+    sqlExtra *sqlextra;
     Ui::printDrugs *ui;
     QTextDocument *m_roshetta;
     Roshetta roshettaMaker;
     mSettings::Roshetta roshettaData;
+    QString selectedDiet;
+
 
 
 signals:

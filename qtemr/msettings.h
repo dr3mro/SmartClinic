@@ -93,6 +93,11 @@ public:
         QString StartDate;
     };
 
+    struct mDiet{
+        bool printRequired=false;
+        QString contents="";
+    };
+
     // this is data structure to hold the roshetta for printing
     struct Roshetta
     {
@@ -115,6 +120,7 @@ public:
         QList<drug> currentAlteredDrugsList;
         QList<drug> baseAlteredDrugsList;
         QStringList requests;
+        mDiet diet;
     };
 
     struct dbOptions

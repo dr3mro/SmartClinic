@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1122</width>
-    <height>901</height>
+    <height>926</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -462,6 +462,26 @@
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSplitter" name="splitter_12">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>Diet:</string>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="diet">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
               </widget>
              </item>
              <item>

@@ -1827,7 +1827,7 @@ void visitsBox::on_fastPrint_leftButtonClicked()
 {
     if (!drugLoadCompleted)
         return;
-    //print->loadDiets(sqlextra->getDietList());
+    print->loadDiets(sqlextra->getDietList());
     print->setRoshettaData(getRoshetta());
     print->show();
 }
