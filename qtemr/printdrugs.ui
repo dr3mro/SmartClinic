@@ -43,23 +43,23 @@
         <property name="title">
          <string>Current selected profile preferences</string>
         </property>
-        <layout class="QGridLayout" name="gridLayout">
-         <property name="leftMargin">
-          <number>3</number>
-         </property>
-         <property name="topMargin">
-          <number>3</number>
-         </property>
-         <property name="rightMargin">
-          <number>3</number>
-         </property>
-         <property name="bottomMargin">
-          <number>3</number>
-         </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
           <number>1</number>
          </property>
-         <item row="0" column="0">
+         <property name="leftMargin">
+          <number>1</number>
+         </property>
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="rightMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
+         <item>
           <widget class="QTabWidget" name="printingTabOptions">
            <property name="currentIndex">
             <number>0</number>
@@ -68,8 +68,8 @@
             <attribute name="title">
              <string>General</string>
             </attribute>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_16">
                <item>
                 <widget class="QLabel" name="label_32">
@@ -93,7 +93,7 @@
                </item>
               </layout>
              </item>
-             <item row="1" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_8">
                <item>
                 <widget class="QLabel" name="label_19">
@@ -117,7 +117,7 @@
                </item>
               </layout>
              </item>
-             <item row="2" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
                 <widget class="QLabel" name="label_16">
@@ -141,7 +141,7 @@
                </item>
               </layout>
              </item>
-             <item row="3" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <item>
                 <widget class="QLabel" name="label_17">
@@ -165,7 +165,7 @@
                </item>
               </layout>
              </item>
-             <item row="4" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_7">
                <item>
                 <widget class="QLabel" name="label_18">
@@ -189,7 +189,7 @@
                </item>
               </layout>
              </item>
-             <item row="5" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_18">
                <item>
                 <widget class="QLabel" name="label_35">
@@ -213,7 +213,7 @@
                </item>
               </layout>
              </item>
-             <item row="6" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_14">
                <item>
                 <widget class="QLabel" name="label_30">
@@ -243,7 +243,7 @@
                </item>
               </layout>
              </item>
-             <item row="7" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_17">
                <item>
                 <widget class="QLabel" name="label_34">
@@ -267,7 +267,7 @@
                </item>
               </layout>
              </item>
-             <item row="8" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_9">
                <item>
                 <widget class="QLabel" name="label_24">
@@ -291,7 +291,7 @@
                </item>
               </layout>
              </item>
-             <item row="9" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_10">
                <item>
                 <widget class="QLabel" name="label_21">
@@ -315,7 +315,7 @@
                </item>
               </layout>
              </item>
-             <item row="10" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_12">
                <item>
                 <widget class="QLabel" name="label_23">
@@ -339,7 +339,7 @@
                </item>
               </layout>
              </item>
-             <item row="11" column="0">
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_11">
                <item>
                 <widget class="QLabel" name="label_22">
@@ -363,14 +363,14 @@
                </item>
               </layout>
              </item>
-             <item row="12" column="0">
+             <item>
               <widget class="Line" name="line">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
-             <item row="13" column="0">
+             <item>
               <widget class="QSplitter" name="splitter_12">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -390,7 +390,7 @@
                </widget>
               </widget>
              </item>
-             <item row="14" column="0">
+             <item>
               <widget class="QSplitter" name="splitter_14">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -428,7 +428,7 @@
                </widget>
               </widget>
              </item>
-             <item row="15" column="0">
+             <item>
               <widget class="QSplitter" name="splitter_3">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -548,7 +548,7 @@
                </widget>
               </widget>
              </item>
-             <item row="16" column="0">
+             <item>
               <widget class="QSplitter" name="splitter_10">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -668,7 +668,7 @@
                </widget>
               </widget>
              </item>
-             <item row="17" column="0">
+             <item>
               <widget class="QSplitter" name="splitter_11">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -788,7 +788,7 @@
                </widget>
               </widget>
              </item>
-             <item row="18" column="0">
+             <item>
               <widget class="QSplitter" name="splitter_13">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -908,7 +908,7 @@
                </widget>
               </widget>
              </item>
-             <item row="19" column="0">
+             <item>
               <widget class="QSplitter" name="splitter_15">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1028,7 +1028,7 @@
                </widget>
               </widget>
              </item>
-             <item row="20" column="0">
+             <item>
               <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -1386,85 +1386,92 @@
            </widget>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QSplitter" name="splitter_9">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <widget class="QComboBox" name="printerProfile">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <item>
-             <property name="text">
-              <string>Profile1</string>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QComboBox" name="printerProfile">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Profile2</string>
+             <item>
+              <property name="text">
+               <string>Profile1</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Profile2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Profile3</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Profile4</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="ButtonRefresh">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Refresh&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
-            </item>
-            <item>
              <property name="text">
-              <string>Profile3</string>
+              <string>...</string>
              </property>
-            </item>
-            <item>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/Graphics/refresh</normaloff>:/Graphics/refresh</iconset>
+             </property>
+             <property name="shortcut">
+              <string>F9</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="lockUnlockButton">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toogle ReadOnly Mode&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
              <property name="text">
-              <string>Profile4</string>
+              <string>...</string>
              </property>
-            </item>
-           </widget>
-           <widget class="QToolButton" name="ButtonRefresh">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Refresh&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="resources.qrc">
-              <normaloff>:/Graphics/refresh</normaloff>:/Graphics/refresh</iconset>
-            </property>
-            <property name="shortcut">
-             <string>F9</string>
-            </property>
-           </widget>
-           <widget class="QToolButton" name="lockUnlockButton">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toogle ReadOnly Mode&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="resources.qrc">
-              <normaloff>:/Graphics/lock</normaloff>:/Graphics/lock</iconset>
-            </property>
-            <property name="shortcut">
-             <string>F8</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-           <widget class="QSplitter" name="splitter_8">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/Graphics/lock</normaloff>:/Graphics/lock</iconset>
+             </property>
+             <property name="shortcut">
+              <string>F8</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="printButton" name="fastPrint">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1498,8 +1505,8 @@
               <bool>true</bool>
              </property>
             </widget>
-           </widget>
-          </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
