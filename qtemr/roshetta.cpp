@@ -113,16 +113,11 @@ void Roshetta::stackFrames()
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-
-    if (roshettaSettings.showSignaturePrintedOn)
-        fillSignaturePrintedOn(cursor);
-
+    fillSignaturePrintedOn(cursor);
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-
-    if(roshettaSettings.showPrescriptionHeaderFooterLogo)
-        fillFooter(cursor);
+    fillFooter(cursor);
 
     cursor.movePosition(QTextCursor::NextBlock);
 
@@ -230,8 +225,7 @@ void Roshetta::makeFooter()
 {
     footerFormat.setWidth(mWidth);
     footerFormat.setHeight((mHeight*roshettaSettings.footerHeightPercent)/100);
-    //mDebug() << "footer" << (mHeight*roshettaSettings.footerHeightPercent)/100;
-    footerFormat.setBorder(1);
+    footerFormat.setBorder(roshettaSettings.showPrescriptionHeaderFooterLogo);
     footerFormat.setMargin(0);
     footerFormat.setBorderBrush(QBrush(Qt::darkGray));
     footerFormat.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
@@ -543,7 +537,9 @@ void Roshetta::fillFooter(QTextCursor &c)
     footerBlockFormat.setAlignment(Qt::AlignCenter);
     c.select(QTextCursor::BlockUnderCursor);
     c.setBlockFormat(footerBlockFormat);
-    c.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
+
+    if(roshettaSettings.showPrescriptionHeaderFooterLogo)
+        c.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
 }
 
 void Roshetta::fillDiet(QTextCursor &c)
