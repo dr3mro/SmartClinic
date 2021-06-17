@@ -36,6 +36,18 @@ QTextDocument * Roshetta::createRoshetta(const mSettings::Roshetta &_Roshetta, c
     // set body Format parameters
     makeBody();
 
+    // set drugs table parameters
+    makeDrugs();
+
+    // set requests parameter
+    makeRequests();
+
+    // set signature printted on parameters
+    makeSignaturePrintedOn();
+
+    //set vitals parameters
+    makeVitals();
+
     // create the base document frames
     stackFrames();
 
@@ -144,6 +156,11 @@ void Roshetta::makeBanner()
     bannerFormat.setWidth(mWidth);
     bannerFormat.setHeight(44);
     bannerFormat.setBorder(0);
+
+    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,50)
+                                                         << QTextLength(QTextLength::PercentageLength,25)
+                                                         << QTextLength(QTextLength::PercentageLength,25);
+    bannerFormat.setColumnWidthConstraints(bannertl);
 //    bannerFormat.setMargin(0);
 //    bannerFormat.setPadding(0);
 //    bannerFormat.setCellPadding(0);
@@ -160,6 +177,53 @@ void Roshetta::makeBody()
     bodyFormat.setBorder(0);
     bodyFormat.setMargin(0);
     bodyFormat.setAlignment(Qt::AlignCenter);
+
+    QVector<QTextLength> bodytl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,70)
+                                                         << QTextLength(QTextLength::PercentageLength,30);
+    bodyFormat.setColumnWidthConstraints(bodytl);
+
+}
+
+void Roshetta::makeDrugs()
+{
+    drugsTableFormat.setBorder(roshettaSettings.showDrugsTableOutline);
+    drugsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_Inset);
+    drugsTableFormat.setBorderBrush(QBrush(Qt::lightGray));
+    drugsTableFormat.setWidth(QTextLength(QTextLength::PercentageLength, 70));
+}
+
+void Roshetta::makeRequests()
+{
+    requestsTableFormat.setBorder(0);
+    requestsTableFormat.setMargin(10);
+    requestsTableFormat.setBackground(QBrush(QColor(240, 248, 255)));
+    requestsTableFormat.setWidth(mWidth*0.3);
+    requestsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
+    requestsHeaderBlockFormat.setAlignment(Qt::AlignCenter);
+    requestsBlockFormat.setNonBreakableLines(true);
+}
+
+void Roshetta::makeVitals()
+{
+    QVector<QTextLength> vitalstl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,30)
+                                                         << QTextLength(QTextLength::PercentageLength,70);
+
+    vitalsTableFormat.setBorder(1);
+    vitalsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_Inset);
+    vitalsTableFormat.setBorderBrush(QBrush(Qt::lightGray));
+    vitalsTableFormat.setMargin(5);
+    vitalsTableFormat.setColumnWidthConstraints(vitalstl);
+    headerCellFormat.setBackground(QBrush(QColor(176, 196, 222)));
+    headerBlockFormat.setAlignment(Qt::AlignCenter);
+
+}
+
+void Roshetta::makeSignaturePrintedOn()
+{
+    prefooterFormat.setBorder(0);
+    prefooterFormat.setMargin(0);
+    prefooterFormat.setWidth(mWidth);
+    prefooterFormat.setHeight(20);
 }
 
 void Roshetta::makeFooter()
@@ -203,16 +267,8 @@ void Roshetta::fillBanner(QTextCursor &c)
 
 void Roshetta::fillBody(QTextCursor &c)
 {
-    QVector<QTextLength> bodytl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,70)
-                                                         << QTextLength(QTextLength::PercentageLength,30);
-    bodyFormat.setColumnWidthConstraints(bodytl);
     c.insertTable(1,2,bodyFormat);
 
-    QTextTableFormat drugsTableFormat;
-    drugsTableFormat.setBorder(roshettaSettings.showDrugsTableOutline);
-    drugsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_Inset);
-    drugsTableFormat.setBorderBrush(QBrush(Qt::lightGray));
-    drugsTableFormat.setWidth(QTextLength(QTextLength::PercentageLength, 70));
     CurrentDrugRow =0; // to follow filling of table current row
 
     if(roshettaSettings.showDrugs){
@@ -368,21 +424,7 @@ void Roshetta::fillRequests(QTextCursor &c)
                  QString::number(roshettaSettings.requestsFont.fontSize),
                  roshettaSettings.requestsFont.fontBold? "bold":"normal");
 
-    requestsTableFormat.setBorder(0);
-    requestsTableFormat.setMargin(10);
-    requestsTableFormat.setBackground(QBrush(QColor(240, 248, 255)));
-    requestsTableFormat.setWidth(mWidth*0.3);
     c.insertTable(roshettaData.requests.count()+1,1,requestsTableFormat);
-
-    QTextTableCellFormat requestsHeaderFormat;
-    requestsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
-    //requestsHeaderFormat.setTopPadding(3);
-
-    QTextBlockFormat requestsHeaderBlockFormat;
-    requestsHeaderBlockFormat.setAlignment(Qt::AlignCenter);
-
-    QTextBlockFormat requestsBlockFormat;
-    requestsBlockFormat.setNonBreakableLines(true);
 
     c.insertHtml(QString("<div %1><b>REQUESTS</b></div>").arg(style));
     c.currentTable()->cellAt(0,0).setFormat(requestsHeaderFormat);
@@ -406,11 +448,6 @@ void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
                  QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
                  roshettaSettings.roshettaFont.fontBold? "bold":"normal");
 
-    QTextTableFormat prefooterFormat;
-    prefooterFormat.setBorder(0);
-    prefooterFormat.setMargin(0);
-    prefooterFormat.setWidth(mWidth);
-    prefooterFormat.setHeight(20);
     c.insertTable(1,2,prefooterFormat);
 
     if (roshettaSettings.showSignaturePrintedOn){
@@ -430,26 +467,6 @@ void Roshetta::fillVitals(QTextCursor &c)
         c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
         return;
     }
-
-    QVector<QTextLength> vitalstl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,30)
-                                                         << QTextLength(QTextLength::PercentageLength,70);
-
-    QTextTableFormat vitalsTableFormat;
-    vitalsTableFormat.setBorder(1);
-    vitalsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_Inset);
-    vitalsTableFormat.setBorderBrush(QBrush(Qt::lightGray));
-    vitalsTableFormat.setMargin(5);
-    vitalsTableFormat.setColumnWidthConstraints(vitalstl);
-    //vitalsTableFormat.setBackground(QBrush(QColor(240, 248, 255)));
-
-
-    QTextTableCellFormat headerCellFormat;
-    headerCellFormat.setBackground(QBrush(QColor(176, 196, 222)));
-    //headerCellFormat.setTopPadding(3);
-
-    QTextBlockFormat headerBlockFormat;
-    headerBlockFormat.setAlignment(Qt::AlignCenter);
-
 
     c.insertTable(rows+1,2,vitalsTableFormat);
 

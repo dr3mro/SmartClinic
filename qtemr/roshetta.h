@@ -28,6 +28,10 @@ private:
     void makeHeader();
     void makeBanner();
     void makeBody();
+    void makeDrugs();
+    void makeRequests();
+    void makeVitals();
+    void makeSignaturePrintedOn();
     void makeFooter();
     void fillHeader(QTextCursor &c);
     void fillBanner(QTextCursor &c);
@@ -45,15 +49,33 @@ private:
 
     mSettings::Roshetta roshettaData;
     QTextDocument *mRoshetta;
+
     QTextFrameFormat rootFrameFormat;
+
     QTextTableFormat headerFormat;
+    QTextTableFormat headerTableFormat;
+
     QTextFrameFormat bannerFrameFormat;
     QTextTableFormat bannerFormat;
+
     QTextTableFormat bodyFormat;
-    QTextFrameFormat footerFormat;
-    QTextTableFormat headerTableFormat;
     QTextTableFormat bodyTableFormat;
+
+    QTextTableFormat drugsTableFormat;
+
     QTextTableFormat requestsTableFormat;
+    QTextTableCellFormat requestsHeaderFormat;
+    QTextBlockFormat requestsBlockFormat;
+    QTextBlockFormat requestsHeaderBlockFormat;
+
+    QTextTableFormat vitalsTableFormat;
+    QTextTableCellFormat headerCellFormat;
+    QTextBlockFormat headerBlockFormat;
+
+    QTextTableFormat prefooterFormat;
+    QTextFrameFormat footerFormat;
+
+
     QTextTable *bannerTable;
     int CurrentDrugRow=0;
     mSettings::prescriptionPrintSettings roshettaSettings;
