@@ -337,10 +337,10 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     CurrentDrugRow++;
     foreach (const mSettings::drug & d, drugs) {
         if(roshettaSettings.showDrugsInitDate && roshettaSettings.showDoseNewLine){
-            c.insertHtml(QString("<div align=left dir=LTR %4>℞  %1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
+            c.insertHtml(QString("<div align=left dir=LTR %4>%1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
                          .arg(d.TradeName," ▶ ",d.StartDate,tradeNameStyle));
         }else{
-            c.insertHtml(QString("<div align=left dir=LTR %2>℞  %1</div>")
+            c.insertHtml(QString("<div align=left dir=LTR %2>%1</div>")
                          .arg(d.TradeName,tradeNameStyle));
         }
 

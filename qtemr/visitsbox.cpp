@@ -1721,18 +1721,21 @@ void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel
 
         if (sqlextra->isExpandExists(drug.TradeName)){
             drug.TradeName = sqlextra->getExpand(drug.TradeName);
-            drug.TradeName.remove(QRegExp("color:#[A-Fa-f0-9]{6};"));
-            drug.TradeName.remove(QRegExp("font-size:[0-9]{0,2}pt;"));
-            drug.TradeName.remove(QRegExp("font-weight:\\d+;"));
-            drug.TradeName.remove(QRegExp("font-family:'\\w+';"));
-            drug.TradeName.remove(QRegExp("font-style:'\\w+';"));
-
+            drug.TradeName.remove(QRegExp("style=\\\"([^\"]*)\\\"", Qt::CaseInsensitive));
+            drug.TradeName.remove(QRegExp("\\n", Qt::CaseInsensitive));
+            drug.TradeName.remove(QRegExp("<p ><span >", Qt::CaseInsensitive));
+            drug.TradeName.replace(QRegExp("</span></p>"),"<br>");
+            drug.TradeName.remove(QRegExp("^.*<body >", Qt::CaseInsensitive));
+            drug.TradeName.remove(QRegExp("<br><body>", Qt::CaseInsensitive));
+            drug.TradeName.remove(QRegExp("<br></body></html>", Qt::CaseInsensitive));
         }else{
             drug.TradeName.remove("(IMP)");
             drug.TradeName.remove("e/n");
             drug.TradeName.remove("e/e");
             drug.TradeName.remove(QRegExp("\\d+[(A|ST.|T|C|BX|S|V|CT|NV|P|D|F|L]+\\W+"));
         }
+        drug.TradeName.insert(0,"℞  ");
+        //mDebug() << drug.TradeName;
         drug.Dose = dataHelper::switchToEasternArabic(drugsModel->item(i,2)->text());
         drug.StartDate = QDate::fromJulianDay(drugsModel->item(i,3)->text().toInt()).toString("dd/MM/yyyy");
         drugs<< drug;
