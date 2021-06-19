@@ -49,6 +49,15 @@ void vitalBox::setVitalType(int vt,int sp)
         setStyleSheet(style.normalStylesheet);
         setRegExpValidator("^3[5-9][.][0-9]|^4[0-2][.][0-9]$");
         break;
+    case(4)://weight
+        setRegExpValidator("^[0-9]{1,3}[.][0-9]{0,2}$");
+        break;
+    case(5)://height
+        setRegExpValidator("^[0-9]{1,3}$");
+        break;
+    case(6)://spo2
+        setRegExpValidator("^(100|[1-9]?[0-9])$");
+        break;
     default:
         break;
     }

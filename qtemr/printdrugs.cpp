@@ -307,41 +307,43 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
     }else{
         t.start();
     }
-
-
     int reply=0;
 
-    if (_doc->pageCount() > 1 && !roshettaData.diet.printRequired){
-        reply = QMessageBox::question(nullptr,"Warning","Your print might be splitted over more than one page."
-                                                  " please recheck your print preview. Are you sure?",
-                                      QMessageBox::Yes,
-                                      QMessageBox::No);
-    }
-
-    if (reply ==  QMessageBox::No)
-        return;
-
-
-    if(_doc->pageCount() > 1 && roshettaData.diet.printRequired){
+    if(_doc->pageCount() > 1 ){
+        if (roshettaData.diet.printRequired){
             printer->setFromTo(1,1);
             _doc->print(p);
-            reply = QMessageBox::question(nullptr,"Attention","Now we will print diet on page to please flip the page and press Ok.",
-                                                  QMessageBox::Ok,
-                                                  QMessageBox::Cancel);
-            if (reply ==  QMessageBox::Cancel)
-                    return;
-
-            printer->setFromTo(2,2);
-            _doc->print(p);
             emit message("Message","Print job is being sent to your Default Printer.");
-            if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
-                this->close();
+            reply = QMessageBox::question(nullptr,"Attention","Please press Ok when ready to print the selected Diet.",
+                                          QMessageBox::Ok,
+                                          QMessageBox::Cancel);
+            if (reply ==  QMessageBox::Cancel){
+                printer->setFromTo(0,0);
+                return;
+            }else if (reply ==  QMessageBox::Ok){
+                printer->setFromTo(2,2);
+                _doc->print(p);
+                emit message("Message","Print job is being sent to your Default Printer.");
+                printer->setFromTo(0,0);
+            }
+        }else{
+            reply = QMessageBox::question(nullptr,"Warning","Your print might be splitted over more than one page."
+                                                          " please recheck your print preview. Are you sure?",
+                                          QMessageBox::Yes,
+                                          QMessageBox::No);
+            if (reply ==  QMessageBox::Yes){
+                _doc->print(p);
+                emit message("Message","Print job is being sent to your Default Printer.");
+            }else if (reply ==  QMessageBox::No){
+                return;
+            }
+        }
     }else{
-            _doc->print(p);
-            emit message("Message","Print job is being sent to your Default Printer.");
-            if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
-                this->close();
+        _doc->print(p);
+        emit message("Message","Print job is being sent to your Default Printer.");
     }
+    if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
+        this->close();
 }
 
 void printDrugs::applyPageSizeParamaters()

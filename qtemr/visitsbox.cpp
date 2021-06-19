@@ -58,6 +58,10 @@ void visitsBox::tweakui()
     ui->pBP->setVitalType(1,speciality);
     ui->pRR->setVitalType(2,speciality);
     ui->pTemp->setVitalType(3,speciality);
+    ui->weight->setVitalType(4,speciality);
+    ui->height->setVitalType(5,speciality);
+    ui->sPo2->setVitalType(6,speciality);
+    ui->RBS->setVitalType(7,speciality);
 
     bool isTreatingMinors =
             ( speciality == dataHelper::Speciality::Paediatrics || speciality == dataHelper::Speciality::FamilyMedicine );
@@ -1682,7 +1686,7 @@ int visitsBox::followNotify(const QDate &date)
 mSettings::Roshetta visitsBox::getRoshetta()
 {
     mSettings::Roshetta roshetta;
-    roshetta.ID = QStringLiteral("%1").arg(loadedVisit.ID, 5, 10, QLatin1Char('0'));
+    roshetta.ID = QStringLiteral("%1").arg(ID, 5, 10, QLatin1Char('0'));
     roshetta.name = pName;
     roshetta.printableAge = printableAge;
     roshetta.Diagnosis = ui->Diagnosis->text().simplified();
