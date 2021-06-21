@@ -18,6 +18,7 @@ class Roshetta : public QObject
     Q_OBJECT
 public:
     explicit Roshetta(QObject *parent = nullptr);
+    void setDocument(QTextDocument *doc);
     QTextDocument * createRoshetta(const mSettings::Roshetta & _Roshetta,const mSettings::prescriptionPrintSettings & _pSettings);
     ~Roshetta();
 private:

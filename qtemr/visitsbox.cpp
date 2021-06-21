@@ -1854,7 +1854,7 @@ void visitsBox::on_fastPrint_middleButtonClicked()
     if (!drugLoadCompleted)
         return;
     print->setRoshettaData(getRoshetta());
-    print->mPrint();
+    print->mPrint(true);
 }
 
 void visitsBox::enableRemoveDrugButton()

@@ -15,6 +15,7 @@ printDrugs::printDrugs(QWidget *parent) :
 {
     ui->setupUi(this);
     m_roshetta = ui->Roshetta->document();
+    roshettaMaker.setDocument(m_roshetta);
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
     setMinimumSize(800,600);
 
@@ -28,6 +29,9 @@ printDrugs::printDrugs(QWidget *parent) :
 
     selectedPrintingProfile = ui->printerProfile->currentText();
     lSettings = pSettings =  loadPrintSettings();
+
+    applyPageSizeParamaters();
+    setupPrinter(printer);
 
     connect(ui->printerProfile,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::printerProfile_activated,Qt::QueuedConnection);
     connect(ui->showInvs,&Switch::clicked,this,&printDrugs::showInvs_clicked,Qt::QueuedConnection);
@@ -115,8 +119,7 @@ printDrugs::~printDrugs()
 
 void printDrugs::showPrintDialog()
 {
-    setupPrinter(printer);
-    if ( dlg->exec() == QDialog::Accepted )
+    if ( dlg->exec() != QDialog::Rejected )
         printDoc(printer,m_roshetta);
 }
 
@@ -128,12 +131,11 @@ void printDrugs::showPrintPreviewDialog()
     previewDialog.exec();
 }
 
-void printDrugs::mPrint()
+void printDrugs::mPrint(const bool &reload)
 {
-    pSettings = grabPrintSettings();
-    applyPageSizeParamaters();
-    refreshView();
-    setupPrinter(printer);
+    if(reload)
+        refreshView();
+
     printDoc(printer,m_roshetta);
 }
 
@@ -241,6 +243,7 @@ void printDrugs::refreshView()
 {
     m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
     ui->Roshetta->setDocument(m_roshetta);
+    //mDebug() << "refreshView()";
 }
 
 void printDrugs::reset()
@@ -267,21 +270,18 @@ void printDrugs::showEvent(QShowEvent *e)
     ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));
     ui->lockUnlockButton->setChecked(true);
     ui->Roshetta->setReadOnly(true);
-    pSettings = grabPrintSettings();
     applyPageSizeParamaters();
+    setupPrinter(printer);
     refreshView();
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     restoreGeometry(reg.value("printWindowGeometry").toByteArray());
     QDialog::showEvent(e);
-    setupPrinter(printer);
+
 }
 
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
-    pSettings = grabPrintSettings();
-    applyPageSizeParamaters();
     refreshView();
-    setupPrinter(preview);
     printDoc(preview,m_roshetta,true);
 }
 
@@ -530,6 +530,7 @@ void printDrugs::paperSizeId_activated(const QString &arg1)
 {
     pSettings.paperSizeId = arg1;
     applyPageSizeParamaters();
+    setupPrinter(printer);
     refreshView();
 }
 
@@ -615,6 +616,7 @@ void printDrugs::pageMargin_valueChanged(int arg1)
         return;
     pSettings.pageMargin = arg1;
     applyPageSizeParamaters();
+    setupPrinter(printer);
     refreshView();
 }
 
@@ -635,8 +637,8 @@ void printDrugs::ButtonRefresh_clicked()
 {
     pSettings = grabPrintSettings();
     applyPageSizeParamaters();
-    m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
-    ui->Roshetta->setDocument(m_roshetta);
+    setupPrinter(printer);
+    refreshView();
     ui->lockUnlockButton->setChecked(true);
     QPixmap logo(LOGOFILE);
     ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));

@@ -1,10 +1,14 @@
 #include "roshetta.h"
 #include <QApplication>
 #include <QDesktopWidget>
-Roshetta::Roshetta(QObject *parent) : QObject(parent),
-    mRoshetta(new QTextDocument(this))
+Roshetta::Roshetta(QObject *parent) : QObject(parent)
 {
 
+}
+
+void Roshetta::setDocument(QTextDocument *doc)
+{
+    mRoshetta = doc;
 }
 
 QTextDocument * Roshetta::createRoshetta(const mSettings::Roshetta &_Roshetta, const mSettings::prescriptionPrintSettings &_pSettings)
