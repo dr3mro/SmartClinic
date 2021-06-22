@@ -177,9 +177,16 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
     newRow.append(ps_item);
 
     tn_item->setText(newDrug);
-    gn_item->setText(sqlcore->getDrugDetail(newDrug,"GENERICNAME"));
-    ds_item->setText(sqlextra->getDefaultDrugDose(newDrug));
-    fm_item->setText(sqlcore->getDrugDetail(newDrug,"FORM"));
+
+    if(!sqlextra->isExpandExists(newDrug)){
+        gn_item->setText(sqlcore->getDrugDetail(newDrug,"GENERICNAME"));
+        fm_item->setText(sqlcore->getDrugDetail(newDrug,"FORM"));
+    }else{
+        gn_item->setText(sqlextra->getExpand(newDrug));
+        fm_item->setText("EXPAND");
+    }
+
+    ds_item->setText(sqlextra->getDefaultDrugDose(newDrug));   
     rd_item->setText(QString::number(QDate::currentDate().toJulianDay()));
     st_item->setText(state);
     ps_item->setText(sqlcore->getDrugDetail(newDrug,"PRICE"));
@@ -449,6 +456,8 @@ drugsTable::~drugsTable()
     delete a_ShowAltDrugsSameGeneric;
     delete a_ShowAltDrugsSameIndication;
     delete a_ShowAltDrugsSameGroup;
+    delete a_EditExpander;
+    delete a_ResetExpander;
     delete cpDrugsMenu;
     delete a_updateAll2PWin;
     delete a_cp4rmPWin;
@@ -552,13 +561,18 @@ void drugsTable::createDrugsTableConMenu()
     a_ShowAltDrugsSameGroup->setIcon(QIcon(":/Graphics/beaker"));
 
 
+    a_EditExpander = new QAction("&Edit Exapnder",m_drugs);
+    a_EditExpander->setIcon(QIcon(":/Graphics/pencil"));
+
+    a_ResetExpander = new QAction("&Reset Expander",m_drugs);
+    a_ResetExpander->setIcon(QIcon(":/Graphics/undo"));
 
     QList<QAction*> actionList1;
     QList<QAction*> actionList2;
     QList<QAction*> actionList3;
     QList<QAction*> actionList4;
 
-    actionList1 << a_resume << a_stop << a_setDose << a_clearDefaultDose << a_checkPrice << a_genericInfo;
+    actionList1 << a_resume << a_stop << a_setDose << a_clearDefaultDose << a_EditExpander << a_ResetExpander << a_checkPrice << a_genericInfo;
     actionList2 <<  a_aAutoComp << a_rAutoComp << a_delete << a_stopAll << a_resumeAll << a_clear << a_clearInactive;
     actionList3 << a_ShowAltDrugsSameTrade << a_ShowAltDrugsSameGeneric << a_ShowAltDrugsSameIndication << a_ShowAltDrugsSameGroup;
     actionList4 << a_copy2pWin << a_updateAll2PWin << a_cp4rmPWin << a_cp4rmLastVisit << a_overWrite2pWin ;
@@ -594,6 +608,9 @@ void drugsTable::createDrugsTableConMenu()
 
     connect (a_stopAll,SIGNAL(triggered()),this,SLOT(toggleAllDrugs()));
     connect (a_resumeAll,SIGNAL(triggered()),this,SLOT(toggleAllDrugs()));
+
+    connect(a_EditExpander,&QAction::triggered,this,&drugsTable::showExpanderEasyEdit);
+    connect(a_ResetExpander,&QAction::triggered,this,&drugsTable::resetExpander);
 
     connect (a_ShowAltDrugsSameTrade,SIGNAL(triggered()),this,SLOT(findSameTradename()));
     connect (a_ShowAltDrugsSameGeneric,SIGNAL(triggered()),this,SLOT(findSameGeneric()));
@@ -635,11 +652,11 @@ void drugsTable::genDrugTableToolTip()
     QString tTip;
     QString price;
     QString category;
-    QString expander;
     QString date;
     QString dateLabel;
     QString currentTag;
-    bool isExpander = false;
+    QString form;
+    bool isExpand;
     for ( int t = 0 ; t < drugsModel->rowCount() ; t++ )
     {
         genericLabel = "Generic Name";
@@ -649,9 +666,18 @@ void drugsTable::genDrugTableToolTip()
         startDate = drugsModel->item(t,3)->text();
         stopDate = drugsModel->item(t,4)->text();
         current = drugsModel->item(t,5)->text().toInt();
+        form = drugsModel->item(t,6)->text();
         price = drugsModel->item(t,7)->text();
         category = sqlcore->getDrugDetail(tradeName,"CATEGORY");
-        expander = sqlextra->getExpand(tradeName);
+
+        isExpand = (form == "EXPAND" || (form.isEmpty() &&  sqlextra->isExpandExists(tradeName)));
+
+        if(isExpand){
+            if(form != "EXPAND")
+                genericName = sqlextra->getExpand(tradeName);
+
+            genericLabel = "Exapnded to";
+        }
 
         QLocale locale(QLocale::English , QLocale::UnitedStates );
         date = (current)? locale.toString(QDate::fromJulianDay(startDate.toInt()),"dd/MM/yyyy"):locale.toString(QDate::fromJulianDay(stopDate.toInt()),"dd/MM/yyyy");
@@ -664,22 +690,11 @@ void drugsTable::genDrugTableToolTip()
         if (price.isEmpty())
             price = "UNKNOWN";
 
-        if (genericName.isEmpty())
+        if (genericName.isEmpty()&&!isExpand)
             genericName = "UNKNOWN";
 
-        if (expander.isEmpty())
-        {
-            isExpander= false;
-        }
-        else
-        {
-            genericName = expander;
-            genericLabel = "Exapnded to";
-            isExpander=true;
-        }
-
         QString tooltip_template;
-        if ( !isExpander )
+        if ( !isExpand )
         {
             tooltip_template =
                     QString(   "<table>"
@@ -716,6 +731,8 @@ void drugsTable::genDrugTableToolTip()
         }
         else
         {
+            dataHelper::cleanExpanderHTML(genericName);
+            genericName.insert(0,"℞  ");
             tooltip_template =
                     QString(   "<table>"
                                "<tr>"
@@ -844,6 +861,8 @@ void drugsTable::showContextMenu(const QPoint &pos)
     QString genericName="";
     bool canFetchDrugInfo=false;
 
+    bool isExpand = drugsModel->item(cell.row(),6)->text() == "EXPAND";
+
     bool doesHavePatientDrugs = doeshaveDrugsInPatient();
     bool doesLastVisitHasDrugs = doesHaveDrugsInLastVisit();
 
@@ -882,6 +901,9 @@ void drugsTable::showContextMenu(const QPoint &pos)
     a_clearDefaultDose->setVisible(!isReadOnly&&sqlextra->isDefaultDoseExists(tradeName)&&!null_selected);
     a_clear->setVisible(!isReadOnly&&!no_drugs);
     a_delete->setVisible(!isReadOnly&&!null_selected);
+
+    a_EditExpander->setVisible(isExpand);
+    a_ResetExpander->setVisible(isExpand);
 
     a_stopAll->setVisible( isThereActiveDrugs() && !isReadOnly && !no_drugs);
     a_resumeAll->setVisible( isThereInactiveDrugs() && !isReadOnly && !no_drugs);
@@ -1271,6 +1293,36 @@ void drugsTable::Sync2Patient()
         sync = false;
 
     SyncToPatient(sync);
+}
+
+void drugsTable::showExpanderEasyEdit()
+{
+    QModelIndex cell =  this->selectionModel()->currentIndex();
+    QString expanderShortcut = drugsModel->item(cell.row(),0)->text();
+    QString expanderContents = drugsModel->item(cell.row(),1)->text();
+
+    if(expanderContents.isEmpty())
+        QString expanderContents = sqlextra->getExpand(expanderShortcut);
+
+    bool save =false;
+
+    ExpandEasyEditor eee(expanderShortcut,expanderContents,save);
+
+    eee.exec();
+
+    if(save){
+        drugsModel->item(cell.row(),1)->setText(expanderContents);
+        emit drugTableItemChanged();
+    }
+}
+
+void drugsTable::resetExpander()
+{
+    QModelIndex cell =  this->selectionModel()->currentIndex();
+    QString expanderShortcut = drugsModel->item(cell.row(),0)->text();
+    QString expanderContents = sqlextra->getExpand(expanderShortcut);
+    drugsModel->item(cell.row(),1)->setText(expanderContents);
+    emit drugTableItemChanged();
 }
 
 QString drugsTable::getSelectedDrugTradeName()

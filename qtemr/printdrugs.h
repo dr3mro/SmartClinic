@@ -97,11 +97,14 @@ private slots:
     void setLogo();
     void resetLogo();
     void dietSelected(const QString &_selectedDiet);
+    void roshettaEdited(bool b);
 
 private:
     void setupPrinter(QPrinter *p);
     void printDoc(QPrinter *p, QTextDocument *doc, bool isPreview=false);
     void applyPageSizeParamaters();
+    void reload();
+    bool modificationsOK();
     QPrinter *printer;
     QPrintDialog *dlg;
     mSettings& settings = mSettings::instance();
@@ -111,6 +114,7 @@ private:
     QString selectedPrintingProfile;
     wm_add2Completer *wm_add2completer;
     sqlExtra *sqlextra;
+    bool RoshettaEdited=false;
     Ui::printDrugs *ui;
     QTextDocument *m_roshetta;
     Roshetta roshettaMaker;

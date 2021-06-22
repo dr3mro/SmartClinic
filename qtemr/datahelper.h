@@ -36,10 +36,12 @@ public:
     static bool str2bool(QString string);
     static QString bool2String(bool b);
     static int appversiontoint(QByteArray ba);
-    static QString switchToEasternArabic(QString str);
+    static void switchToEasternArabic(QString &str);
     static void delay(const int &delay_msec);
     static bool doubleEqual(double a,double b);
     static QString getVisitType(int visitType,mSettings &settings);
+    static void cleanExpanderHTML(QString &expander);
+    static void cleanDrugName(QString &drug);
     ~dataHelper();
 
 signals:

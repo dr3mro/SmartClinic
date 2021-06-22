@@ -37,6 +37,7 @@
 #include "wm_visitsaver.h"
 #include "wm_add2completer.h"
 #include "mdialog.h"
+#include "datahelper.h"
 
 namespace Ui {
 class visitsBox;
@@ -58,7 +59,6 @@ public:
     ~visitsBox();
 
 public slots:
-    //void toggleInvestigationsButton();
     void grabSave();
     void onDrugLoadCompleted();
     void add2RoshettaAutoComplete(QString w);
@@ -112,7 +112,6 @@ private slots:
     void on_weight_textChanged(const QString &arg1);
     void on_checkBoxAntenatal_clicked(bool checked);
     void toggleContollers();
-    //QString genRoshettaHTML(mSettings::prescriptionPrintSettings mPrintsettings, QString selectedDiet, int drugsMode);
     void followUpDateChanged(const QDate &date);
     void onShift_pageUp();
     void onShift_pageDown();
@@ -159,7 +158,6 @@ private:
     wm_add2Completer *add2CompleterWorker;
     wm_visitSaver *visitSaverWorker;
     printDrugs *print;
-    //mCalendarWidget *calWidget;
     QShortcut *shift_pageUp;
     QShortcut *shift_pageDown;
     QShortcut *printShortcut;
@@ -201,7 +199,6 @@ private:
     mSettings& settings = mSettings::instance();
     int visitindex;
     bool vEditMode;
-    //double transparency=1.00;
     QString pName, pAge, FPAL;
     int ID;
     QString comboSelectedDataTime ;
@@ -226,7 +223,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     int m_nMouseClick_X_Coordinate;
     int m_nMouseClick_Y_Coordinate;
-    //void wheelEvent(QWheelEvent *event);
 
 };
 

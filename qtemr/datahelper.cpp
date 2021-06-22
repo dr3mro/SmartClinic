@@ -102,7 +102,7 @@ int dataHelper::appversiontoint(QByteArray ba)
     return QString(ba).remove(".").toInt();
 }
 
-QString dataHelper::switchToEasternArabic(QString str)
+void dataHelper::switchToEasternArabic(QString & str)
 {
     str.replace("0","٠");
     str.replace("1","١");
@@ -114,7 +114,6 @@ QString dataHelper::switchToEasternArabic(QString str)
     str.replace("7","٧");
     str.replace("8","٨");
     str.replace("9","٩");
-    return  str;
 }
 
 void dataHelper::delay(const int &delay_msec)
@@ -141,7 +140,26 @@ QString dataHelper::getVisitType(int visitType, mSettings &settings)
     }else if (visitType == maxfollowups+1) {
         return QString("Free");
     }else
-      return QString("Undefined");
+        return QString("Undefined");
+}
+
+void dataHelper::cleanExpanderHTML(QString &expander)
+{
+    expander.remove(QRegExp("style=\\\"([^\"]*)\\\"", Qt::CaseInsensitive));
+    expander.remove(QRegExp("\\n", Qt::CaseInsensitive));
+    expander.remove(QRegExp("<p ><span >", Qt::CaseInsensitive));
+    expander.replace(QRegExp("</span></p>"),"<br>");
+    expander.remove(QRegExp("^.*<body >", Qt::CaseInsensitive));
+    expander.remove(QRegExp("<br><body>", Qt::CaseInsensitive));
+    expander.remove(QRegExp("<br></body></html>", Qt::CaseInsensitive));
+}
+
+void dataHelper::cleanDrugName(QString &drug)
+{
+    drug.remove("(IMP)");
+    drug.remove("e/n");
+    drug.remove("e/e");
+    drug.remove(QRegExp("\\d+[(A|ST.|T|C|BX|S|V|CT|NV|P|D|F|L]+\\W+"));
 }
 
 dataHelper::~dataHelper()

@@ -38,6 +38,7 @@ SOURCES += main.cpp\
     3rdparty/pagedTextEdit/PagesTextEdit.cpp \
     3rdparty/smtp/smtp.cpp \
     3rdparty/zip/zip.cpp \
+    expandeasyeditor.cpp \
     expecteddeliveries.cpp \
     mainwindow.cpp \
     aboutwindow.cpp \
@@ -182,6 +183,7 @@ HEADERS  += mainwindow.h \
     3rdparty/zip/zlib.h \
     aboutwindow.h \
     build.h \
+    expandeasyeditor.h \
     expecteddeliveries.h \
     mcashtableview.h \
     netserver.h \
@@ -320,6 +322,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     aboutwindow.ui \
+    expandeasyeditor.ui \
     expecteddeliveries.ui \
     remoteassist.ui \
     settingsclass.ui \

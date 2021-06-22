@@ -104,6 +104,8 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->diet,&QComboBox::textActivated,this,&printDrugs::dietSelected,Qt::QueuedConnection);
     connect(ui->diet,&QComboBox::textHighlighted,this,&printDrugs::dietSelected,Qt::QueuedConnection);
 
+    connect(m_roshetta,&QTextDocument::modificationChanged,this,&printDrugs::roshettaEdited,Qt::QueuedConnection);
+
     this->setModal(true);
 }
 
@@ -125,10 +127,15 @@ void printDrugs::showPrintDialog()
 
 void printDrugs::showPrintPreviewDialog()
 {
+    if(this->isVisible()){
+        if(!modificationsOK())
+            return;
+    }
     mPrintPreviewDialog previewDialog(this);
     previewDialog.setWindowState(previewDialog.windowState() | Qt::WindowMaximized);
     connect(&previewDialog,SIGNAL(paintRequested(QPrinter*)),this,SLOT(makePrintPreview(QPrinter*)));
     previewDialog.exec();
+
 }
 
 void printDrugs::mPrint(const bool &reload)
@@ -241,9 +248,11 @@ void printDrugs::saveRoshettaAutoComplete()
 
 void printDrugs::refreshView()
 {
-    m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
-    ui->Roshetta->setDocument(m_roshetta);
-    //mDebug() << "refreshView()";
+
+    if(!modificationsOK())
+        return;
+
+    reload();
 }
 
 void printDrugs::reset()
@@ -266,6 +275,7 @@ void printDrugs::loadDiets(const QStringList &dietList)
 
 void printDrugs::showEvent(QShowEvent *e)
 {
+    RoshettaEdited=false;
     QPixmap logo(LOGOFILE);
     ui->logoPreview->setPixmap(logo.scaledToHeight(logoPreviewSizePx));
     ui->lockUnlockButton->setChecked(true);
@@ -281,7 +291,7 @@ void printDrugs::showEvent(QShowEvent *e)
 
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
-    refreshView();
+    reload();
     printDoc(preview,m_roshetta,true);
 }
 
@@ -350,6 +360,26 @@ void printDrugs::applyPageSizeParamaters()
 {
     ui->Roshetta->setPageFormat(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
     ui->Roshetta->setPageMargins(QMarginsF(pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin, pSettings.pageMargin));
+}
+
+void printDrugs::reload()
+{
+    m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
+    m_roshetta->setModified(false);
+    ui->Roshetta->setDocument(m_roshetta);
+    RoshettaEdited = false;
+}
+
+bool printDrugs::modificationsOK()
+{
+    if(RoshettaEdited){
+        int reply = QMessageBox::question(nullptr,"Caution","You have altered the current Roshetta, Press Ok to continue and lose any modifications you have done or press cancel.",QMessageBox::Ok,QMessageBox::Cancel);
+        if (reply != QMessageBox::Ok)
+            return false;
+        else
+            return true;
+    }
+    return true;
 }
 
 void printDrugs::closeEvent(QCloseEvent *e)
@@ -692,4 +722,9 @@ void printDrugs::dietSelected(const QString & _selectedDiet)
     }
 
     refreshView();
+}
+
+void printDrugs::roshettaEdited(bool b)
+{
+    RoshettaEdited = b;
 }

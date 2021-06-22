@@ -27,6 +27,7 @@
 #include "showaltdrugs.h"
 #include "genericonlinesearch.h"
 #include "mymessagebox.h"
+#include "expandeasyeditor.h"
 
 
 class drugsTable : public zTableView
@@ -77,6 +78,8 @@ private slots:
     void toggleAllDrugs();
     void calculateRxCosts();
     void Sync2Patient();
+    void showExpanderEasyEdit();
+    void resetExpander();
 
 signals:
     void drugTableItemChanged();
@@ -121,6 +124,8 @@ private:
     QAction *a_ShowAltDrugsSameGeneric;
     QAction *a_ShowAltDrugsSameIndication;
     QAction *a_ShowAltDrugsSameGroup;
+    QAction *a_EditExpander;
+    QAction *a_ResetExpander;
     QMenu *cpDrugsMenu;
     QAction *a_updateAll2PWin;
     QAction *a_cp4rmPWin;

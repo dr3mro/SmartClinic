@@ -8,6 +8,8 @@
 #include <QObject>
 #include <QSettings>
 #include <QApplication>
+#include <QList>
+#include <QPair>
 #include "mdebug.h"
 #include "globalvariables.h"
 #include "staticstrings.h"
@@ -104,6 +106,50 @@ public:
         QString getVisitSymbole(const int & _i){
             QStringList visitSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
             return visitSymbole.at(_i);
+        }
+
+        QString getNextFromJulian(const qint64& nextDateJulian){
+            QList<QPair<QString,int> > options { {"",0},
+                                                 {"أسبوع",1},
+                                                 {"أسبوعين",2},
+                                                 {"٣أسابيع",3},
+                                                 {"شهر",4},
+                                                 {"شهر",5},
+                                                 {"شهر و نصف",6},
+                                                 {"شهر و نصف",7},
+                                                 {"شهرين",8},
+                                                 {"شهرين",9},
+                                                 {"شهرين",10},
+                                                 {"٣ شهور",11},
+                                                 {"٣ شهور",12},
+                                                 {"٣ شهور",13},
+                                                 {"٣ شهور",14},
+                                                 {"٣ شهور",15},
+                                                 {"٤ شهور",16},
+                                                 {"٤ شهور",17},
+                                                 {"٤ شهور",18},
+                                                 {"٤ شهور",19},
+                                                 {"٥ شهور",20},
+                                                 {"٥ شهور",21},
+                                                 {"٥ شهور",22},
+                                                 {"٥ شهور",23},
+                                                 {"٦ شهور",24} };
+            qint64 julianToday = QDate::currentDate().toJulianDay();
+            qint64 remainingDays = nextDateJulian - julianToday;
+            qint64 remainingWeeks = round(remainingDays / 7 );
+
+            for(auto x:options){
+                if(x.second == remainingWeeks)
+                    return x.first;
+                else if(x.second < remainingWeeks)
+                    continue;
+                else
+                    return x.first;
+            }
+            return options.last().first;
+
+
+
         }
 
         QString ID;
