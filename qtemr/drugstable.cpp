@@ -874,8 +874,8 @@ void drugsTable::showContextMenu(const QPoint &pos)
     {
         tradeName = drugsModel->item(cell.row(),0)->text();
         genericName = drugsModel->item(cell.row(),1)->text();
-        canFetchDrugInfo = !( genericName.isEmpty() || genericName == "Unknown");
         isExpand = drugsModel->item(cell.row(),6)->text() == "EXPAND";
+        canFetchDrugInfo = !( isExpand || genericName.isEmpty() || genericName == "Unknown");
         null_selected = false;
     }
 
@@ -902,8 +902,8 @@ void drugsTable::showContextMenu(const QPoint &pos)
     a_clear->setVisible(!isReadOnly&&!no_drugs);
     a_delete->setVisible(!isReadOnly&&!null_selected);
 
-    a_EditExpander->setVisible( !null_selected && isExpand);
-    a_ResetExpander->setVisible( !null_selected && isExpand);
+    a_EditExpander->setVisible( !isReadOnly && !null_selected && isExpand);
+    a_ResetExpander->setVisible(!isReadOnly && !null_selected && isExpand);
 
     a_stopAll->setVisible( isThereActiveDrugs() && !isReadOnly && !no_drugs);
     a_resumeAll->setVisible( isThereInactiveDrugs() && !isReadOnly && !no_drugs);
