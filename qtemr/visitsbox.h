@@ -214,6 +214,7 @@ private:
     mSettings::Roshetta getRoshetta();
     void roshettaDrugsfiller(QList<mSettings::drug> &drugs, DrugsItemModel *drugsModel, bool alteredDrugsOnly);
     void roshettaVitalsFiller(mSettings::Vitals &vitals);
+    void setVitalsPlaceHolderText();
 
 protected:
     void closeEvent(QCloseEvent *event);

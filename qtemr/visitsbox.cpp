@@ -323,6 +323,7 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
     ui->dateFollowUp->setDate(fd);
     int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(fd,ID)+1;
     setFollowDateTooltip(selectedDateFollowUps,fd);
+    setVitalsPlaceHolderText();
 }
 
 void visitsBox::clearVisit()
@@ -1433,6 +1434,22 @@ void visitsBox::roshettaVitalsFiller(mSettings::Vitals &vitals)
     vitals.RR = ui->pRR->text().toInt();
     vitals.BP = ui->pBP->text();
     vitals.T = ui->pTemp->text().toDouble();
+}
+
+void visitsBox::setVitalsPlaceHolderText()
+{
+    QString lastVisitDateTimeString = ui->visitLists->itemText(ui->visitLists->currentIndex()+1);
+    mSettings::Vitals placeHolderText = sqlbase->getPatientVisitVitals(ID,lastVisitDateTimeString);
+    ui->pPulse->setPlaceholderText(placeHolderText.pulse <= 0 ? QString():QString::number(placeHolderText.pulse));
+    ui->pRR->setPlaceholderText(placeHolderText.RR <= 0 ? QString():QString::number(placeHolderText.RR));
+    ui->pTemp->setPlaceholderText(placeHolderText.T <= 0 ? QString():QString::number(placeHolderText.T));
+    ui->pBP->setPlaceholderText(placeHolderText.BP == "-1" ? QString():placeHolderText.BP);
+    ui->weight->setPlaceholderText(placeHolderText.weight <= 0 ? QString():QString::number(placeHolderText.weight));
+    ui->height->setPlaceholderText(placeHolderText.height <= 0 ? QString():QString::number(placeHolderText.height));
+    ui->RBS->setPlaceholderText(placeHolderText.RBS == "-1" ? QString():placeHolderText.RBS);
+    ui->sPo2->setPlaceholderText(placeHolderText.sPo2 <= 0 ? QString():QString::number(placeHolderText.sPo2));
+    ui->lineEditWeight->setPlaceholderText(placeHolderText.weight <= 0 ? QString():QString::number(placeHolderText.weight));
+    ui->lineEditLength->setPlaceholderText(placeHolderText.height <= 0 ? QString():QString::number(placeHolderText.height));
 }
 
 bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
