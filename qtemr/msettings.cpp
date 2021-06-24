@@ -178,7 +178,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
     mPageSettings.paperSizeId = settings.value(_paperSizeId,QVariant("A5")).toString();
-    mPageSettings.pageMargin = settings.value(_pageMargin,QVariant(0)).toDouble();
+    mPageSettings.pageMargin = settings.value(_pageMargin,QVariant(5)).toDouble();
     mPageSettings.showBanner = settings.value(_showBanner,QVariant(true)).toBool();
     mPageSettings.showDrugs = settings.value(_showDrugs,QVariant(true)).toBool();
     mPageSettings.showInvestigations = settings.value(_showInvsestigations,QVariant(true)).toBool();
@@ -189,9 +189,9 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.showPrescriptionHeaderFooterLogo = settings.value(_showHeaderFooterLogo,QVariant(false)).toBool();
     mPageSettings.logoSize = settings.value(_logoSize,QVariant(64)).toInt();
 
-    mPageSettings.headerHeightPercent = settings.value(_headerHeightPercent,QVariant(64)).toInt();
-    mPageSettings.footerHeightPercent = settings.value(_footerHeightPercent,QVariant(64)).toInt();
-    mPageSettings.bannerHeightPercent = settings.value(_bannerHeightPercent,QVariant(64)).toInt();
+    mPageSettings.headerHeightPercent = settings.value(_headerHeightPercent,QVariant(10)).toInt();
+    mPageSettings.footerHeightPercent = settings.value(_footerHeightPercent,QVariant(5)).toInt();
+    mPageSettings.bannerHeightPercent = settings.value(_bannerHeightPercent,QVariant(5)).toInt();
 
     mPageSettings.bannerFont.fontName = settings.value(_bannerFont,QVariant("Tahoma")).toString();
     mPageSettings.bannerFont.fontSize = settings.value(_bannerFontSize,QVariant(8)).toInt();

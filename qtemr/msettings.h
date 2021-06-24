@@ -436,8 +436,8 @@ public:
         int logoSize=72;
 
         int headerHeightPercent=10;
-        int footerHeightPercent=10;
-        int bannerHeightPercent=10;
+        int footerHeightPercent=5;
+        int bannerHeightPercent=5;
 
         struct roshettaFont doseFont{10,"Tahoma",false,false};
         struct roshettaFont bannerFont{10,"Tahoma",false,false};
