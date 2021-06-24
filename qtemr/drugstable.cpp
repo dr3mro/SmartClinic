@@ -1305,13 +1305,16 @@ void drugsTable::showExpanderEasyEdit()
         QString expanderContents = sqlextra->getExpand(expanderShortcut);
 
     bool save =false;
+    bool setDefault=true;
 
-    ExpandEasyEditor eee(expanderShortcut,expanderContents,save);
+    ExpandEasyEditor eee(expanderShortcut,expanderContents,setDefault,save);
 
     eee.exec();
 
     if(save){
         drugsModel->item(cell.row(),1)->setText(expanderContents);
+        if(setDefault)
+            sqlextra->saveExpand(expanderShortcut,expanderContents);
         emit drugTableItemChanged();
     }
 }

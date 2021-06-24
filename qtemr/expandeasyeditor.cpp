@@ -1,10 +1,11 @@
 #include "expandeasyeditor.h"
 #include "ui_expandeasyeditor.h"
 
-ExpandEasyEditor::ExpandEasyEditor(QString &expandShortcut, QString &expandContents, bool &save , QWidget *parent) :
+ExpandEasyEditor::ExpandEasyEditor(QString &expandShortcut, QString &expandContents,bool &setDefault, bool &save , QWidget *parent) :
     QDialog(parent),
     m_ExpandShortcut(expandShortcut),
     m_ExpandContents(expandContents),
+    m_SetDefault(setDefault),
     m_Save(save),
     ui(new Ui::ExpandEasyEditor)
 {
@@ -24,6 +25,7 @@ ExpandEasyEditor::~ExpandEasyEditor()
 void ExpandEasyEditor::save()
 {
     m_Save = true;
+    m_SetDefault = ui->setDefault->isChecked();
     m_ExpandContents = ui->expanderContents->toHtml();
     close();
 }

@@ -12,7 +12,7 @@ class ExpandEasyEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit ExpandEasyEditor(QString & expandShortcut, QString & expandContents,bool & save, QWidget *parent = nullptr);
+    explicit ExpandEasyEditor(QString & expandShortcut, QString & expandContents, bool &setDefault, bool & save, QWidget *parent = nullptr);
     ~ExpandEasyEditor();
 
 
@@ -26,6 +26,7 @@ private slots:
 private:
     QString & m_ExpandShortcut;
     QString & m_ExpandContents;
+    bool & m_SetDefault;
     bool &m_Save;
     Ui::ExpandEasyEditor *ui;
 };

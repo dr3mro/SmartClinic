@@ -85,6 +85,20 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Set as default</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Switch" name="setDefault">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
@@ -94,6 +108,11 @@
    <class>TextEdit</class>
    <extends>QTextEdit</extends>
    <header>textedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Switch</class>
+   <extends>QCheckBox</extends>
+   <header>switch.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
