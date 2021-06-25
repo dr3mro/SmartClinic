@@ -184,6 +184,8 @@ void mAssistant::doCalcs()
 {
     double TOTAL=0;
     QModelIndexList selection = ui->cashTableView->selectionModel()->selectedRows();
+    ui->calcTableView->setModel(nullptr);
+    calcModel->clear();
 
     calcModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getMyRegisterCalcModel,
                                         myRegisterModel,
