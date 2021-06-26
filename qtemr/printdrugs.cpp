@@ -415,6 +415,7 @@ void printDrugs::showInvs_clicked(bool checked)
 void printDrugs::drugsMode_activated(int index)
 {
     pSettings.drugsPrintMode = (mSettings::drugsPrintMode) index;
+    ui->drugsMode->setCurrentIndex(index);
     refreshView();
 }
 
@@ -712,7 +713,7 @@ void printDrugs::resetLogo()
 void printDrugs::dietSelected(const QString & _selectedDiet)
 {
     selectedDiet = _selectedDiet;
-
+    ui->diet->setCurrentText(_selectedDiet);
     if(selectedDiet == QString("-")){
         roshettaData.diet.contents = "";
         roshettaData.diet.printRequired=false;

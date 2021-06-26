@@ -385,7 +385,9 @@ void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
             suggestedVisitType = 0 ;
         }
         vEditMode = true;
+        setVitalsPlaceHolderText();
         enableEditMode(vEditMode);
+
     }
     toggleContollers();
 }

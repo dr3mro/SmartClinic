@@ -36,6 +36,8 @@ private slots:
     void createStyles(mSettings & settings);
 public slots:
     void makeEditable(bool b);
+protected:
+    void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // VITALBOX_H

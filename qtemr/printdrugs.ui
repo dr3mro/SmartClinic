@@ -593,7 +593,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Roshetta Font</string>
+                 <string>Drug Font</string>
                 </property>
                </widget>
                <widget class="mFontComboBox" name="roshettaFontName">
