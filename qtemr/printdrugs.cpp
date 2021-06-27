@@ -36,7 +36,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->printerProfile,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::printerProfile_activated,Qt::QueuedConnection);
     connect(ui->showInvs,&Switch::clicked,this,&printDrugs::showInvs_clicked,Qt::QueuedConnection);
     connect(ui->drugsMode,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::drugsMode_activated,Qt::QueuedConnection);
-    connect(ui->drugsMode,QOverload<int>::of(&QComboBox::highlighted),this,&printDrugs::drugsMode_activated,Qt::QueuedConnection);
+    //connect(ui->drugsMode,QOverload<int>::of(&QComboBox::highlighted),this,&printDrugs::drugsMode_activated,Qt::QueuedConnection);
     connect(ui->bannerFontName,&QFontComboBox::textActivated,this,&printDrugs::bannerFontName_activated,Qt::QueuedConnection);
     connect(ui->bannerFontName,&QFontComboBox::textHighlighted,this,&printDrugs::bannerFontName_activated,Qt::QueuedConnection);
     connect(ui->bannerFontSize,&QComboBox::textActivated,this,&printDrugs::bannerFontSize_activated,Qt::QueuedConnection);
@@ -102,7 +102,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->setLogo,&QPushButton::clicked,this,&printDrugs::setLogo,Qt::QueuedConnection);
 
     connect(ui->diet,&QComboBox::textActivated,this,&printDrugs::dietSelected,Qt::QueuedConnection);
-    connect(ui->diet,&QComboBox::textHighlighted,this,&printDrugs::dietSelected,Qt::QueuedConnection);
+    //connect(ui->diet,&QComboBox::textHighlighted,this,&printDrugs::dietSelected,Qt::QueuedConnection);
 
     connect(m_roshetta,&QTextDocument::modificationChanged,this,&printDrugs::roshettaEdited,Qt::QueuedConnection);
 
@@ -415,7 +415,7 @@ void printDrugs::showInvs_clicked(bool checked)
 void printDrugs::drugsMode_activated(int index)
 {
     pSettings.drugsPrintMode = (mSettings::drugsPrintMode) index;
-    ui->drugsMode->setCurrentIndex(index);
+    //ui->drugsMode->setCurrentIndex(index);
     refreshView();
 }
 
@@ -713,7 +713,7 @@ void printDrugs::resetLogo()
 void printDrugs::dietSelected(const QString & _selectedDiet)
 {
     selectedDiet = _selectedDiet;
-    ui->diet->setCurrentText(_selectedDiet);
+    //ui->diet->setCurrentText(_selectedDiet);
     if(selectedDiet == QString("-")){
         roshettaData.diet.contents = "";
         roshettaData.diet.printRequired=false;

@@ -160,7 +160,7 @@ void regApp::toggleBlock(bool b)
 
 int regApp::eval_max()
 {
-    return 100;
+    return 150;
 }
 
 regApp::~regApp()
