@@ -381,4 +381,5 @@ DISTFILES += \
     Graphics/newAppIcon.ico \
     README.md \
     BLUEPRINT.txt \
-    Graphics/AppIcon.ico
+    Graphics/AppIcon.ico \
+    ionicons/whatsapp.png

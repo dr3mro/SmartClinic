@@ -103,11 +103,15 @@
         <file alias="more">ionicons/more.png</file>
         <file alias="check">ionicons/checkmark-circled.png</file>
         <file alias="merge">ionicons/merge.png</file>
+        <file>ionicons/whatsapp.png</file>
     </qresource>
     <qresource prefix="/banner">
         <file alias="banner3">Banner/banner3.png</file>
     </qresource>
     <qresource prefix="/Audio">
         <file alias="Notify">audio/Notify.wav</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>ionicons/whatsapp.png</file>
     </qresource>
 </RCC>
