@@ -138,10 +138,10 @@ void printDrugs::showPrintPreviewDialog()
 
 }
 
-void printDrugs::mPrint(const bool &reload)
+void printDrugs::mPrint(const bool &_reload)
 {
-    if(reload)
-        refreshView();
+    if(_reload)
+        reload();
 
     printDoc(printer,m_roshetta);
 }

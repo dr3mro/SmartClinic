@@ -46,7 +46,7 @@ public:
 public slots:
     void showPrintDialog();
     void showPrintPreviewDialog();
-    void mPrint(const bool &reload=false);
+    void mPrint(const bool &_reload=false);
     void refreshView();
 
 private slots:
