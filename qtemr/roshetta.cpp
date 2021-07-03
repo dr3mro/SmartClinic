@@ -274,31 +274,37 @@ void Roshetta::fillBody(QTextCursor &c)
 
         if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
             if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
-                rows+= roshettaData.currentAlteredDrugsList.count()+roshettaData.baseAlteredDrugsList.count();
-                rows+= roshettaSettings.showDrugsTitle? 2:0;
+                rows+= roshettaData.currentAlteredDrugsList.count();
+                rows+= roshettaData.baseAlteredDrugsList.count();
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentAlteredDrugsList.count() > 0)? 1:0;
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseAlteredDrugsList.count() > 0)? 1:0;
             }else{
-                rows+= roshettaData.currentDrugsList.count()+roshettaData.baseDrugsList.count();
-                rows+= roshettaSettings.showDrugsTitle? 2:0;
+                rows+= roshettaData.currentDrugsList.count();
+                rows+= roshettaData.baseDrugsList.count();
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentDrugsList.count() > 0)? 1:0;
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseDrugsList.count() > 0)? 1:0;
+
             }
         }
         else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
             if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
                 rows+= roshettaData.currentAlteredDrugsList.count();
-                rows+= roshettaSettings.showDrugsTitle? 1:0;
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentAlteredDrugsList.count() > 0)? 1:0;
             }else{
                 rows+= roshettaData.currentDrugsList.count();
-                rows+= roshettaSettings.showDrugsTitle? 1:0;
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentDrugsList.count() > 0)? 1:0;
             }
         }
         else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
             if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
                 rows+= roshettaData.baseAlteredDrugsList.count();
-                rows+= roshettaSettings.showDrugsTitle? 1:0;
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseAlteredDrugsList.count() > 0)? 1:0;
             }else{
                 rows+= roshettaData.baseDrugsList.count();
-                rows+= roshettaSettings.showDrugsTitle? 1:0;
+                rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseDrugsList.count() > 0)? 1:0;
             }
         }
+
 
         if(rows > 0 ){
             if(roshettaSettings.showDoseNewLine)
@@ -359,6 +365,9 @@ void Roshetta::fillBaseDrugs(QTextCursor &c, const QString &title)
 
 void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QString &title)
 {
+    if(drugs.count() == 0)
+        return;
+
     QTextTableCellFormat drugsHeaderFormat;
     QTextBlockFormat drugsHeaderBlockFormat;
 
@@ -480,54 +489,52 @@ void Roshetta::fillVitals(QTextCursor &c)
     c.movePosition(QTextCursor::NextCell,QTextCursor::MoveAnchor,2);
 
 
-
-
     if(roshettaData.vitals.weight != 0){
         c.insertHtml(QString("<div %1>W</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 KG</div>").arg(QString::number(roshettaData.vitals.weight),style));
+        c.insertHtml(QString("<div %2> %1 KG</div>").arg(QString::number(roshettaData.vitals.weight),style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.height != 0){
         c.insertHtml(QString("<div %1>H</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 CM</div>").arg(QString::number(roshettaData.vitals.height),style));
+        c.insertHtml(QString("<div %2> %1 CM</div>").arg(QString::number(roshettaData.vitals.height),style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.sPo2 != 0){
         c.insertHtml(QString("<div %1>sPo2</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 %</div>").arg(QString::number(roshettaData.vitals.sPo2),style));
+        c.insertHtml(QString("<div %2> %1 %</div>").arg(QString::number(roshettaData.vitals.sPo2),style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.RBS != ""){
         c.insertHtml(QString("<div %1>RBS</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 mg/dl</div>").arg(roshettaData.vitals.RBS,style));
+        c.insertHtml(QString("<div %2> %1 mg/dl</div>").arg(roshettaData.vitals.RBS,style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.pulse != 0){
         c.insertHtml(QString("<div %1>PR</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 bpm</div>").arg(QString::number(roshettaData.vitals.pulse),style));
+        c.insertHtml(QString("<div %2> %1 bpm</div>").arg(QString::number(roshettaData.vitals.pulse),style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.RR != 0){
         c.insertHtml(QString("<div %1>RR</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 cpm</div>").arg(QString::number(roshettaData.vitals.RR),style));
+        c.insertHtml(QString("<div %2> %1 cpm</div>").arg(QString::number(roshettaData.vitals.RR),style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.BP != ""){
         c.insertHtml(QString("<div %1>BP</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 mmgh</div>").arg(roshettaData.vitals.BP,style));
+        c.insertHtml(QString("<div %2> %1 mmgh</div>").arg(roshettaData.vitals.BP,style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.T != 0){
         c.insertHtml(QString("<div %1>T</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2>: %1 C</div>").arg(QString::number(roshettaData.vitals.T),style));
+        c.insertHtml(QString("<div %2> %1 C</div>").arg(QString::number(roshettaData.vitals.T),style));
         c.movePosition(QTextCursor::NextCell);
     }
     c.currentTable()->mergeCells(0,0,1,2);

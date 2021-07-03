@@ -19,6 +19,8 @@
 #include "msettings.h"
 
 
+//#define VLD_FORCE_ENABLE
+//#include <vld.h>
 
 #if MEMLEAK == 1 && defined(QT_DEBUG) && defined(_MSC_VER)
 #include <vld.h>

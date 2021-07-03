@@ -258,6 +258,8 @@ void printDrugs::refreshView()
 void printDrugs::reset()
 {
     ui->drugsMode->setCurrentIndex(0);
+    pSettings.drugsPrintMode = mSettings::drugsPrintMode::visitOnly;
+
     ui->diet->setCurrentIndex(0);
     selectedDiet="-";
 }
