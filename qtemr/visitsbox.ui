@@ -1044,7 +1044,7 @@
                </widget>
               </item>
               <item>
-               <widget class="xLineEdit" name="lineEditWeight"/>
+               <widget class="vitalBox" name="lineEditWeight"/>
               </item>
               <item>
                <widget class="QLabel" name="labelLength">
@@ -1054,7 +1054,7 @@
                </widget>
               </item>
               <item>
-               <widget class="xLineEdit" name="lineEditLength"/>
+               <widget class="vitalBox" name="lineEditLength"/>
               </item>
               <item>
                <widget class="QLabel" name="labelHead">
@@ -1064,7 +1064,7 @@
                </widget>
               </item>
               <item>
-               <widget class="xLineEdit" name="lineEditHead"/>
+               <widget class="vitalBox" name="lineEditHead"/>
               </item>
              </layout>
             </item>
@@ -1565,11 +1565,6 @@
    <class>xCheckBox</class>
    <extends>QCheckBox</extends>
    <header>xcheckbox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>xLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>xlineedit.h</header>
   </customwidget>
   <customwidget>
    <class>navArrows</class>

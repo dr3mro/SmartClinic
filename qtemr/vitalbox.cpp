@@ -53,10 +53,15 @@ void vitalBox::setVitalType(int vt,int sp)
         setRegExpValidator("^[0-9]{1,3}[.][0-9]{0,2}$");
         break;
     case(5)://height
-        setRegExpValidator("^[0-9]{1,3}$");
+        setRegExpValidator("^[0-9]{1,3}[.][0-9]{0,2}$");
         break;
     case(6)://spo2
         setRegExpValidator("^(100|[1-9]?[0-9])$");
+        break;
+    case(7)://RBS
+        break;
+    case(8)://headcirc
+        setRegExpValidator("^[0-9]{1,3}[.][0-9]{0,2}$");
         break;
     default:
         break;

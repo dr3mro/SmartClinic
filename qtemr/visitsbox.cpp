@@ -59,9 +59,12 @@ void visitsBox::tweakui()
     ui->pRR->setVitalType(2,speciality);
     ui->pTemp->setVitalType(3,speciality);
     ui->weight->setVitalType(4,speciality);
+    ui->lineEditWeight->setVitalType(4,speciality);
     ui->height->setVitalType(5,speciality);
+    ui->lineEditLength->setVitalType(5,speciality);
     ui->sPo2->setVitalType(6,speciality);
     ui->RBS->setVitalType(7,speciality);
+    ui->lineEditHead->setVitalType(8,speciality);
 
     bool isTreatingMinors =
             ( speciality == dataHelper::Speciality::Paediatrics || speciality == dataHelper::Speciality::FamilyMedicine );
