@@ -171,12 +171,18 @@ bool investTable::addInvMedia(bool setState)
     QString dt = locale.toString(dateTime,"ddMMyyyyHHmmss");
     int visitJulianDate = invModel->item(0,2)->text().toInt();
     QFileDialog fileDialog;
-    QString desktop = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
-    QString selectedImagePath = fileDialog.getOpenFileName(this,"Select Photo Copy",desktop, "Images (*.png *.jpeg *.jpg)");
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    QString m_Path = reg.value("lastFolder").toString();
+
+    if(m_Path.isEmpty())
+        m_Path = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    QString selectedImagePath = fileDialog.getOpenFileName(this,"Select Photo Copy",m_Path, "Images (*.png *.jpeg *.jpg)");
 
     if (selectedImagePath.isEmpty() || selectedImagePath.isNull())
         return false;
+
 
     QString inv2Name = invName;
     QString localCopyPath = QString ( "data/media/%1/" ).arg(this->ID);
@@ -201,6 +207,7 @@ bool investTable::addInvMedia(bool setState)
         if (reply == QMessageBox::Yes)
             QFile::remove(selectedImagePath);
 
+        reg.setValue("lastFolder",QFileInfo(selectedImagePath).path());
         return true;
     }
     else
