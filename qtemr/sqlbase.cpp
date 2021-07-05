@@ -3098,13 +3098,7 @@ QString sqlBase::getPatientTooltip(const sqlBase::patientInfo &info)
                    "<td>Mobile</td><td>:</td><td><div align=\"left\">%7</div><\td>"
                    "</tr>"
                    "</table>")
-            .arg(info.Name)
-            .arg(info.Age)
-            .arg(info.Gender)
-            .arg(info.Residence)
-            .arg(info.MaritalStatus)
-            .arg(info.Occupation)
-            .arg(info.Mobile);
+            .arg(info.Name,info.Age,info.Gender,info.Residence,info.MaritalStatus,info.Occupation,info.Mobile);
 }
 
 void sqlBase::dropAllViews()
@@ -3586,7 +3580,7 @@ bool sqlBase::insertDefaultConditions()
     }
 
     //set conditions metadata
-    queryExec(QString("INSERT INTO metadata (data,version) VALUES(\"%1\",%2)").arg("conditions").arg(1));
+    queryExec(QString("INSERT INTO metadata (data,version) VALUES(\"%1\",%2)").arg("conditions",1));
     return true;
 }
 
@@ -3702,7 +3696,7 @@ QList<QPair<QString, QString> >sqlBase::sqlExecPair(QString sqlCmd)
 
 QString sqlBase::genericQuery(int ID, QString col, QString table)
 {
-    QString sqlPhrase = QString ("SELECT %1 FROM %2 WHERE ID=%3").arg(col).arg(table).arg(ID);
+    QString sqlPhrase = QString("SELECT %1 FROM %2 WHERE ID=%3").arg(col,table,QString::number(ID));
 
     return sqlExec(sqlPhrase);
 }

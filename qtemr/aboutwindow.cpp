@@ -11,16 +11,12 @@ AboutWindow::AboutWindow(QWidget *parent) : mDialog(parent),
 {
     ui->setupUi(this);
 
-    font.setStretch(1);
-    font.setCapitalization(QFont::AllUppercase);
-    font.setFamily("Consolas");
-    font.setBold(true);
-    font.setPointSize(14);
-
     bool reg_status = regMyApp.compare_reg_data();
     QString unique_device_id = regMyApp.genDeviceID();
 
-    ui->serialNumber->setFont(font);
+    QFont mFont;
+    ui->serialNumber->setFont(tweakFont(mFont));
+
     ui->serialNumber->setFocus(Qt::OtherFocusReason);
     ui->technology->setText(QString("Using Qt %1 Technology.").arg(QT_VERSION_STR));
     ui->compiler->setText(QString(COMPILER));
@@ -42,8 +38,10 @@ AboutWindow::AboutWindow(QWidget *parent) : mDialog(parent),
     setModal(true);
     setFixedSize(width(),height());
 
-    connect(ui->serialNumber,SIGNAL(returnPressed()),ui->regButton,SIGNAL(clicked()));
-
+    connect(ui->serialNumber,&QLineEdit::returnPressed,this,&AboutWindow::regButton_clicked);
+    connect(ui->serialNumber,&QLineEdit::textChanged,this,&AboutWindow::serialNumber_textChanged);
+    connect(ui->regButton,&QPushButton::clicked,this,&AboutWindow::regButton_clicked);
+    connect(ui->closeButton,&QToolButton::clicked,this,&AboutWindow::close);
 }
 
 AboutWindow::~AboutWindow()
@@ -52,10 +50,8 @@ AboutWindow::~AboutWindow()
     delete ui;
 }
 
-void AboutWindow::on_regButton_clicked()
+void AboutWindow::regButton_clicked()
 {
-    //regApp regMyApp;
-
     QString unique_device_id = regMyApp.genDeviceID();
     QString serial_number = regMyApp.generate_serial_number(unique_device_id).split("-").join("");
     QString enetered_serial_number = ui->serialNumber->text().split("-").join("").toUpper();
@@ -95,6 +91,16 @@ void AboutWindow::register_App()
 
 }
 
+QFont &AboutWindow::tweakFont(QFont &font)
+{
+    font.setStretch(1);
+    font.setCapitalization(QFont::AllUppercase);
+    font.setFamily("Consolas");
+    font.setBold(true);
+    font.setPointSize(14);
+    return font;
+}
+
 void AboutWindow::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Escape)
@@ -104,7 +110,7 @@ void AboutWindow::keyPressEvent(QKeyEvent *e)
 }
 
 
-void AboutWindow::on_serialNumber_textChanged(const QString &arg1)
+void AboutWindow::serialNumber_textChanged(const QString &arg1)
 {
     QString serialCapitalized = arg1.simplified().toUpper();
     if ( serialCapitalized == "TRIAL" || serialCapitalized == "MAXIMUS"  )
@@ -124,7 +130,3 @@ void AboutWindow::on_serialNumber_textChanged(const QString &arg1)
         ui->regButton->setEnabled(false);
 }
 
-void AboutWindow::on_closeButton_clicked()
-{
-    close();
-}

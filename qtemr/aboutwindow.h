@@ -35,10 +35,9 @@ public:
     ~AboutWindow();
 
 private slots:
-    void on_regButton_clicked();
+    void regButton_clicked();
     void keyPressEvent(QKeyEvent *e);
-    void on_serialNumber_textChanged(const QString &arg1);
-    void on_closeButton_clicked();
+    void serialNumber_textChanged(const QString &arg1);
 
 signals:
     void registerApp();
@@ -47,8 +46,8 @@ private:
     myMessageBox *msgbox;
     Ui::AboutWindow *ui;
     regApp regMyApp;
-    QFont font;
     void register_App();
+    QFont & tweakFont(QFont &font);
 };
 
 #endif // ABOUTWINDOW_H
