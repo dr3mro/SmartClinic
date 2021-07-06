@@ -6,8 +6,9 @@
 #define EMAIL_H
 
 #include <QObject>
-#include "3rdparty/smtp/smtp.h"
+#include "3rdparty/simple-email/SimpleMail"
 #include "globalvariables.h"
+#include "memory"
 
 class email : public QObject
 {
@@ -15,15 +16,11 @@ class email : public QObject
 
 public:
     explicit email(QObject *parent = nullptr);
-    void sendEmail(QString subject , QString body );
-    Smtp *smtp;
-    ~email();
+    void sendEmail(QString subject , QString messageText );
 
 signals:
     void messageSent();
     void messageFailed();
-public slots:
-    void mailSent(QString status);
 };
 
 #endif // EMAIL_H

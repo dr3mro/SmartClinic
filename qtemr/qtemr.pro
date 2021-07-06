@@ -36,6 +36,20 @@ TEMPLATE = app
 SOURCES += main.cpp\
     3rdparty/pagedTextEdit/PageMetrics.cpp \
     3rdparty/pagedTextEdit/PagesTextEdit.cpp \
+    3rdparty/simple-email/emailaddress.cpp \
+    3rdparty/simple-email/mimeattachment.cpp \
+    3rdparty/simple-email/mimecontentformatter.cpp \
+    3rdparty/simple-email/mimefile.cpp \
+    3rdparty/simple-email/mimehtml.cpp \
+    3rdparty/simple-email/mimeinlinefile.cpp \
+    3rdparty/simple-email/mimemessage.cpp \
+    3rdparty/simple-email/mimemultipart.cpp \
+    3rdparty/simple-email/mimepart.cpp \
+    3rdparty/simple-email/mimetext.cpp \
+    3rdparty/simple-email/quotedprintable.cpp \
+    3rdparty/simple-email/sender.cpp \
+    3rdparty/simple-email/server.cpp \
+    3rdparty/simple-email/serverreply.cpp \
     3rdparty/smtp/smtp.cpp \
     3rdparty/zip/zip.cpp \
     expandeasyeditor.cpp \
@@ -176,6 +190,28 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     3rdparty/pagedTextEdit/PageMetrics.h \
     3rdparty/pagedTextEdit/PagesTextEdit.h \
+    3rdparty/simple-email/SimpleMail \
+    3rdparty/simple-email/emailaddress.h \
+    3rdparty/simple-email/emailaddress_p.h \
+    3rdparty/simple-email/mimeattachment.h \
+    3rdparty/simple-email/mimecontentformatter.h \
+    3rdparty/simple-email/mimefile.h \
+    3rdparty/simple-email/mimehtml.h \
+    3rdparty/simple-email/mimeinlinefile.h \
+    3rdparty/simple-email/mimemessage.h \
+    3rdparty/simple-email/mimemessage_p.h \
+    3rdparty/simple-email/mimemultipart.h \
+    3rdparty/simple-email/mimemultipart_p.h \
+    3rdparty/simple-email/mimepart.h \
+    3rdparty/simple-email/mimepart_p.h \
+    3rdparty/simple-email/mimetext.h \
+    3rdparty/simple-email/quotedprintable.h \
+    3rdparty/simple-email/sender.h \
+    3rdparty/simple-email/sender_p.h \
+    3rdparty/simple-email/server.h \
+    3rdparty/simple-email/server_p.h \
+    3rdparty/simple-email/serverreply.h \
+    3rdparty/simple-email/serverreply_p.h \
     3rdparty/smtp/smtp.h \
     3rdparty/zip/zconf.h \
     3rdparty/zip/zipreader.h \

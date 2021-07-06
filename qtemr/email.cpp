@@ -4,27 +4,39 @@
 
 #include "email.h"
 
-email::email(QObject *parent) : QObject(parent)
+email::email(QObject *parent) : QObject(parent)//,
+    //server(std::make_unique<SimpleMail::Server>())
 {
-    smtp = new Smtp("smartclinic22@gmail.com","my1stlov","smtp.gmail.com",465);
-    connect (smtp,SIGNAL(status(QString)),this,SLOT(mailSent(QString)));
+
 }
 
-void email::sendEmail(QString subject, QString body)
+void email::sendEmail(QString subject, QString messageText)
 {
-    smtp->sendMail(selfEmail,devEmail,subject,body);
-}
+    //auto server = std::make_unique<SimpleMail::Server>();
+    SimpleMail::Server *server = new SimpleMail::Server(this);
+    connect(server,&SimpleMail::Server::itsOver,this,&email::messageFailed);
+    server->setHost("smtp.gmail.com");
+    server->setPort(465);
+    server->setConnectionType(SimpleMail::Server::SslConnection);
+    server->setUsername(selfEmail);
+    server->setPassword("my1stlov");
 
-email::~email()
-{
-    delete smtp;
-}
+    auto text(new SimpleMail::MimeText);
+    SimpleMail::MimeMessage message;
+    message.setSender(SimpleMail::EmailAddress(selfEmail, "Smart Clinic App"));
+    message.addTo(SimpleMail::EmailAddress(QString("Dr. Amr Osman <%1>").arg(devEmail)));
+    message.setSubject(subject);
+    text->setText(messageText);
+    message.addPart(text);
 
-void email::mailSent(QString status)
-{
-    if ( status == tr( "Message sent" ))
-        emit messageSent();
-    else if ( status == tr("Failed to send message"))
-        emit messageFailed();
+    SimpleMail::ServerReply *reply = server->sendMail(message);
+
+    connect(reply, &SimpleMail::ServerReply::finished,reply,[=]{
+        if ( !reply->error())
+            emit messageSent();
+
+        reply->deleteLater();
+    });
+
 }
 
