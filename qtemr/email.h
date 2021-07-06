@@ -21,6 +21,7 @@ public:
 signals:
     void messageSent();
     void messageFailed();
+    void mDisconnected();
 };
 
 #endif // EMAIL_H

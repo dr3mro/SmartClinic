@@ -13,8 +13,12 @@ email::email(QObject *parent) : QObject(parent)//,
 void email::sendEmail(QString subject, QString messageText)
 {
     //auto server = std::make_unique<SimpleMail::Server>();
+
     SimpleMail::Server *server = new SimpleMail::Server(this);
-    connect(server,&SimpleMail::Server::itsOver,this,&email::messageFailed);
+    connect(server, &SimpleMail::Server::Disconnected,this,[=]{
+        emit mDisconnected();
+    });
+
     server->setHost("smtp.gmail.com");
     server->setPort(465);
     server->setConnectionType(SimpleMail::Server::SslConnection);
@@ -32,11 +36,15 @@ void email::sendEmail(QString subject, QString messageText)
     SimpleMail::ServerReply *reply = server->sendMail(message);
 
     connect(reply, &SimpleMail::ServerReply::finished,reply,[=]{
-        if ( !reply->error())
+        if ( !reply->error()){
             emit messageSent();
-
+        } else {
+            emit messageFailed();
+        }
         reply->deleteLater();
     });
+
+
 
 }
 

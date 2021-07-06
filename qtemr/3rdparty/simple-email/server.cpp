@@ -223,11 +223,11 @@ void ServerPrivate::createSocket()
             state = Closing;
         } else if (sockState == QAbstractSocket::UnconnectedState) {
             state = Disconnected;
-            if (!queue.isEmpty()) {
-                emit q->itsOver();
-                //q->connectToServer();
+            emit q->Disconnected();
+//            if (!queue.isEmpty()) {
+//                    q->connectToServer();
+//                }
             }
-        }
     });
 
     q->connect(socket, &QTcpSocket::connected, q, [=] () {

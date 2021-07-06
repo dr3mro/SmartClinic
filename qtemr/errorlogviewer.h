@@ -41,6 +41,7 @@ private slots:
     void loadFromLogFile();
     QString readLogFromDisk();
     void readLogFromDiskThread();
+    void onDisconnect();
 private:
     Ui::errorLogViewer *ui;
     QScrollBar *vScrollBar;

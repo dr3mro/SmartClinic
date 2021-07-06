@@ -17,6 +17,7 @@ errorLogViewer::errorLogViewer(QWidget *parent) :
     connect(&mail,SIGNAL(messageSent()),this,SLOT(messageSent()));
     connect(&mail,SIGNAL(messageFailed()),this,SLOT(messageFailed()));
     connect(&watcher, SIGNAL(finished()), this, SLOT(loadFromLogFile()));
+    connect(&mail,&email::mDisconnected,this,&errorLogViewer::onDisconnect);
 }
 
 errorLogViewer::~errorLogViewer()
@@ -110,6 +111,15 @@ void errorLogViewer::readLogFromDiskThread()
 
     future = QtConcurrent::run(this,&errorLogViewer::readLogFromDisk);
     watcher.setFuture(future);
+}
+
+void errorLogViewer::onDisconnect()
+{
+    ui->status->setText("");
+    ui->sendReport->setEnabled(true);
+    if(this->isVisible())
+        QMessageBox::information(this,"Message","Looks like you are offline!. check your internet connection");
+
 }
 
 void errorLogViewer::on_sendReport_clicked()

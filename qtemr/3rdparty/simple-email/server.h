@@ -180,7 +180,7 @@ public:
 Q_SIGNALS:
     void smtpError(SmtpError e, const QString &description);
     void sslErrors(const QList<QSslError> &sslErrorList);
-    void itsOver();
+    void Disconnected();
 
 private:
     ServerPrivate *d_ptr;
