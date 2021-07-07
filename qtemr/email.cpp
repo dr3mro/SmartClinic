@@ -23,7 +23,7 @@ void email::sendEmail(QString subject, QString messageText)
     server->setPort(465);
     server->setConnectionType(SimpleMail::Server::SslConnection);
     server->setUsername(selfEmail);
-    server->setPassword("my1stlov");
+    server->setPassword(selfPass);
 
     auto text(new SimpleMail::MimeText);
     SimpleMail::MimeMessage message;

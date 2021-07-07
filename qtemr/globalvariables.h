@@ -22,7 +22,9 @@
 #define blockRegKey "Default"
 #define activateRegKey "Activated"
 #define blockregPath "HKEY_CURRENT_USER\\Software\\cortex64"
-#define selfEmail "smartclinic22@gmail.com"
+//#define selfEmail "smartclinic22@gmail.com" my1stlov // unsecure mode on
+#define selfEmail "smartclinic3x.app@gmail.com" // secure mode on with app pass on
+#define selfPass "xgbavzirteiudizs"
 #define devEmail "dr3mro@gmail.com"
 #define exeBackUp "backup/~smartClinic3.exe"
 #define dbVersion 2.88

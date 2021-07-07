@@ -8,7 +8,7 @@
 #include <QObject>
 #include "3rdparty/simple-email/SimpleMail"
 #include "globalvariables.h"
-#include "memory"
+//#include "memory"
 
 class email : public QObject
 {
