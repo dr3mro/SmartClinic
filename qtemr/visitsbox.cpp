@@ -361,7 +361,7 @@ void visitsBox::clearVisit()
     ui->patientPelvicExam->clear();
     ui->InvestigationsTable->clearInvestigations();
     ui->vDrugsTable->clear();
-
+    ui->dateFollowUp->setEnabled(true);
 }
 
 void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
