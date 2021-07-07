@@ -376,6 +376,8 @@ void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
         loadedVisit = sqlbase->getPatientVisitData(ID,comboSelectedDataTime);
         fillVisit(loadedVisit);
     }else{
+        loadedVisit.clear();// clean any previous loaded visits.
+        //fillVisit(loadedVisit); // useless as it is already cleared.
         ui->presentation->setFocus();
         QString visitDateString = comboSelectedDataTime.left(10);
         ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::fromString(visitDateString,"dd/MM/yyyy")); //.addDays(7));
