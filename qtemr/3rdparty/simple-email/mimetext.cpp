@@ -34,6 +34,7 @@ MimeText::MimeText(const QString &txt)
 
 MimeText::~MimeText()
 {
+    //mDebug() << "mime deleted";
 }
 
 void MimeText::setText(const QString &text)

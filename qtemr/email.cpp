@@ -14,7 +14,7 @@ void email::sendEmail(QString subject, QString messageText)
 {
     //auto server = std::make_unique<SimpleMail::Server>();
 
-    SimpleMail::Server *server = new SimpleMail::Server(this);
+    auto server(new SimpleMail::Server(this));
     connect(server, &SimpleMail::Server::Disconnected,this,[=]{
         emit mDisconnected();
     });
@@ -42,9 +42,7 @@ void email::sendEmail(QString subject, QString messageText)
             emit messageFailed();
         }
         reply->deleteLater();
+        server->deleteLater();
     });
-
-
-
 }
 

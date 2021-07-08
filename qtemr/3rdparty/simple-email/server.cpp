@@ -36,6 +36,7 @@ Server::Server(QObject *parent)
 
 Server::~Server()
 {
+    //mDebug() << "server deleted";
     delete d_ptr;
 }
 
