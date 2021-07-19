@@ -135,10 +135,12 @@
 #include "switch.h"
 #include "mship.h"
 #include "wm_mship.h"
-//#include "email.h"
+#include "email.h"
 #include "regapp.h"
 #include "3rdparty/smtp/smtp.h"
 #include "errorlogviewer.h"
+#include "m_ClickableLabel.h"
+#include "setdosedrugnamewidget.h"
 
 #include <string>
 #include <set>

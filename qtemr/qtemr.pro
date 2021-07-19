@@ -54,12 +54,14 @@ SOURCES += main.cpp\
     3rdparty/zip/zip.cpp \
     expandeasyeditor.cpp \
     expecteddeliveries.cpp \
+    m_ClickableLabel.cpp \
     mainwindow.cpp \
     aboutwindow.cpp \
     mcashtableview.cpp \
     netserver.cpp \
     remoteassist.cpp \
     roshetta.cpp \
+    setdosedrugnamewidget.cpp \
     squeeze.cpp \
     settingsclass.cpp \
     emptyprofiles.cpp \
@@ -164,7 +166,6 @@ SOURCES += main.cpp\
     mcolorpicker.cpp \
     visitboxswitch.cpp \
     searchwidget.cpp \
-    setdosedrugnamewidget.cpp \
     optimizer.cpp \
     mstyler.cpp \
     stylewidget.cpp \
@@ -221,11 +222,13 @@ HEADERS  += mainwindow.h \
     build.h \
     expandeasyeditor.h \
     expecteddeliveries.h \
+    m_ClickableLabel.h \
     mcashtableview.h \
     netserver.h \
     pch.h \
     remoteassist.h \
     roshetta.h \
+    setdosedrugnamewidget.h \
     squeeze.h \
     settingsclass.h \
     emptyprofiles.h \
@@ -333,7 +336,6 @@ HEADERS  += mainwindow.h \
     mcolorpicker.h \
     visitboxswitch.h \
     searchwidget.h \
-    setdosedrugnamewidget.h \
     optimizer.h \
     mstyler.h \
     stylewidget.h \

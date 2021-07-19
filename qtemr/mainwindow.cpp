@@ -23,7 +23,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     menuShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_M),this)),
     remoteAssistShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1), this, SLOT(showRemoteAssistWin()))),
     blureffect(new QGraphicsBlurEffect(this)),
-    rAssistant(new remoteAssist(this))
+    rAssistant(new remoteAssist(this)),
+    WA_widget(new QWidget(this)),
+    WA_vLayout(new QVBoxLayout(WA_widget)),
+    WA_title(new QLabel("Send a Whatsapp Message to."))
 {
     ui->setupUi(this);
 }
@@ -37,13 +40,38 @@ void MainWindow::boot()
     BirthDateWindow.setWindowFlags(Qt::Popup);
     BirthDateWindow.setWindowOpacity(0.99);
     calWidget->setMinimumDate(QDate(1900,01,01));
-    phoneValidator.setRegExp(QRegExp("("
-                                     "[1-9][0-9]*\\W+|"
-                                     "\\D*\\W+|"
-                                     "\\W*\\-*\\W*|"
-                                     "\\W*[0][1][0-9]{9}\\W*|"
-                                     "\\W*[0][2-9][0-9]{8}\\W*)*"));
+
+    phoneValidator.setRegExp(
+     QRegExp("([1-9][0-9]*\\W+|"
+             "\\D*\\W+|"
+             "\\W*\\-*\\W*|"
+             "\\W*[0][1][0-9]{9}\\W*|"
+             "\\W*[0][2-9][0-9]{8}\\W*)*"));
     ui->patientMobile->setValidator(&phoneValidator);
+
+    // WhatsApp widget & action creation
+
+    WA_widget->setWindowFlags(Qt::Popup);
+    WA_widget->setWindowOpacity(0.99);
+    WA_widget->setLayout(WA_vLayout);
+    WA_widget->setObjectName("WA_widget");
+    WA_title->setStyleSheet("font-weight: bold; font-size : 12pt;");
+    WA_vLayout->addWidget(WA_title);
+
+    QAction *WAaction = ui->patientMobile->addAction(QIcon(":/ionicons/ionicons/whatsapp.png"), QLineEdit::ActionPosition::TrailingPosition);
+    WAaction->setVisible(false);
+
+    connect(WAaction,&QAction::triggered,this,&MainWindow::WAaction_clicked);
+
+    connect(ui->patientMobile,&xLineEdit::textChanged,[=](){
+        QString phones = ui->patientMobile->text();
+        WAaction->setVisible(phones.contains(QRegExp("[0][1][0-9]{9}")));
+    });
+
+    // end of WA init code
+
+
+
 
     blureffect->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
     blureffect->setBlurRadius(3);
@@ -1519,6 +1547,9 @@ MainWindow::~MainWindow()
     delete gSettings;
     delete mship;
     delete rAssistant;
+    delete WA_title;
+    delete WA_vLayout;
+    delete WA_widget;
     sqlextra->optimize();
     sqlbase->optimize();
     sqlcore->optimize();
@@ -1910,4 +1941,38 @@ void MainWindow::newPatientWithData(const remoteAssist::Visitor &visitor)
     ui->patientOccupation->setText(visitor.job);
     ui->patientMobile->setText(visitor.tel);
     visitsbox->setSuggestedVisitType(visitor.visitType);
+}
+
+void MainWindow::WAaction_clicked()
+{
+    for (auto b:WA_widget->findChildren<m_ClickableLabel*>())
+        delete b;
+
+    QStringList numbers = ui->patientMobile->text().split(" ");
+
+    if ( numbers.count() <= 0 )
+        return;
+
+    for(auto number:numbers){
+        if(number.contains(QRegExp("[0][1][0-9]{9}"))){
+            m_ClickableLabel *l = new m_ClickableLabel(QString("📞 %1").arg(number));
+            l->setPhoneNumber(number);
+            l->setStyleSheet("font-weight: normal; font-size : 12pt;");
+            WA_vLayout->addWidget(l);
+
+            connect(l,&m_ClickableLabel::leftMouseButtonClicked,[=](){
+               QDesktopServices::openUrl(QUrl(QString("https://api.whatsapp.com/send/?phone=2%1&text&app_absent=0&lang=en").arg(l->getPhoneNumber())));
+            });
+
+            connect(l,&m_ClickableLabel::setFontBold,[l](bool isBold){
+                if(isBold)
+                    l->setStyleSheet("font-weight: bold; font-size : 12pt;");
+                else
+                    l->setStyleSheet("font-weight: normal; font-size : 12pt;");
+            });
+        }
+    }
+    WA_widget->move(QCursor::pos());
+    WA_widget->adjustSize();
+    WA_widget->show();
 }

@@ -185,6 +185,18 @@ color:messagebox_text_color;
 }
 
 
+QWidget[objectName^="WA_widget"]
+{
+background-color:messagebox_background_color;
+border:1 solid subWindow_border_color;
+border-radius:1;
+}
+QWidget[objectName^="WA_widget"] m_ClickcableLabel
+{
+color:messagebox_text_color;
+}
+
+
 QMainWindow
 {
 background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 window_top_color, stop:1 window_bottom_color);

@@ -62,6 +62,7 @@
 #include "mdebug.h"
 #include "remoteassist.h"
 #include "netserver.h"
+#include "m_ClickableLabel.h"
 
 #ifdef __GNUC__
 #define NO_RETURN __attribute__((noreturn))
@@ -177,6 +178,7 @@ private slots:
     void reloadTheme();
     void loadThemeWatcher();
     void newPatientWithData(const remoteAssist::Visitor &visitor);
+    void WAaction_clicked();
 
 signals:
     void clearDrugLineSignal();
@@ -254,6 +256,9 @@ private:
     remoteAssist *rAssistant;
     NetServer netserver;
     QString lcdID;
+    QWidget *WA_widget;
+    QVBoxLayout *WA_vLayout;
+    QLabel *WA_title;
 
 };
 #endif // MAINWINDOW_H
