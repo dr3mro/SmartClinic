@@ -4,7 +4,9 @@
 
 #include "netserver.h"
 
-NetServer::NetServer(QObject *parent) : QObject(parent),m_server(new QTcpServer)
+NetServer::NetServer(QObject *parent) : QObject(parent),
+    m_server(new QTcpServer(this)),
+    m_udpBroadcastSocket(new QUdpSocket(this))
 {
     if(m_server->listen(QHostAddress::Any, 8080))
     {
@@ -15,6 +17,26 @@ NetServer::NetServer(QObject *parent) : QObject(parent),m_server(new QTcpServer)
     {
        // qDebug() << QString("Unable to start the server: %1.").arg(m_server->errorString());
     }
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    QString m_InterfaceName =  reg.value("NetworkInterface").toString();
+
+    m_broadcastIPTimer.start(1000);
+    connect(&m_broadcastIPTimer,&QTimer::timeout,this,[=](){
+        QNetworkInterface interface = QNetworkInterface::interfaceFromName(m_InterfaceName);
+        QNetworkInterface::InterfaceFlags flags = interface.flags();
+        if( (bool)(flags & QNetworkInterface::IsRunning)
+                && !(bool)(flags & QNetworkInterface::IsLoopBack)
+                && (bool)(flags & QNetworkInterface::IsUp)
+                ){
+            foreach (const QNetworkAddressEntry &address, interface.addressEntries()) {
+                if(address.ip().protocol() == QAbstractSocket::IPv4Protocol){
+                    //mDebug() << address.ip().toString().toUtf8();
+                    QByteArray datagram = address.ip().toString().toUtf8();
+                    m_udpBroadcastSocket->writeDatagram(datagram, QHostAddress::Broadcast, 45454);
+                }
+            }
+        }
+    });
 }
 
 NetServer::~NetServer()
@@ -26,7 +48,16 @@ NetServer::~NetServer()
     }
 
     m_server->close();
+    m_udpBroadcastSocket->close();
     delete m_server;
+    delete m_udpBroadcastSocket;
+}
+
+void NetServer::setInterfaceName(const QString &_ifName)
+{
+    this->m_InterfaceName = _ifName;
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    reg.setValue("NetworkInterface",_ifName);
 }
 
 void NetServer::newConnection()

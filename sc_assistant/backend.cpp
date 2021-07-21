@@ -1,7 +1,8 @@
 #include "backend.h"
 
 BackEnd::BackEnd(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    bcl(new broadcastListener(serverIP,this))
 {
     QDir::setCurrent(QDir::homePath());
     serverIP = settings.value("ip").toString();

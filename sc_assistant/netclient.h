@@ -14,6 +14,7 @@
 #include <QFileInfo>
 #include <QTimer>
 #include <QApplication>
+#include "broadcastlistener.h"
 
 class netClient : public QObject
 {

@@ -16,6 +16,7 @@ CONFIG += c++11
 
 SOURCES += \
         backend.cpp \
+        broadcastlistener.cpp \
         main.cpp \
         netclient.cpp
 
@@ -40,4 +41,5 @@ DISTFILES += \
 
 HEADERS += \
     backend.h \
+    broadcastlistener.h \
     netclient.h

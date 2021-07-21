@@ -1,8 +1,8 @@
 #include "netclient.h"
 
-netClient::netClient(QObject *parent) : QObject(parent)
+netClient::netClient(QObject *parent) : QObject(parent),
+    socket(new QTcpSocket(this))
 {
-    socket = new QTcpSocket(this);
     socket->connectToHost(addr,8080);
     connect(&t,&QTimer::timeout,this,&netClient::reconnect);
 

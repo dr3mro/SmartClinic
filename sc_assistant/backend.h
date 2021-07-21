@@ -81,6 +81,7 @@ private:
     netClient net;
     QString serverIP;
     QSettings settings;
+    broadcastListener *bcl;
 
 };
 

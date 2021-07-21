@@ -159,6 +159,7 @@ void MainWindow::boot()
     connect (assistant,SIGNAL(toggleEditMode(bool)),this,SLOT(toggleEditMODE(bool)));
     connect (&clickTimer,&QTimer::timeout,&clickTimer,&QTimer::stop);
     connect (&netserver,&NetServer::loadVisitors,rAssistant,&remoteAssist::loadVisitors);
+    connect (rAssistant,&remoteAssist::setInterfaceName,&netserver,&NetServer::setInterfaceName);
     connect (rAssistant,&remoteAssist::search,ui->searchWidgetx,&searchWidget::setSearchString);
     connect (rAssistant,&remoteAssist::createVisitor,this,&MainWindow::newPatientWithData);
     if ( ! settings.isDeviceActivated())
