@@ -9,7 +9,15 @@ QML_IMPORT_MAJOR_VERSION = 1.0
 
 CONFIG+=sdk_no_version_check
 
-CONFIG += c++11
+CONFIG += -static openssl-linked c++14
+
+msvc:QMAKE_CFLAGS_RELEASE += /O2
+msvc:QMAKE_CXXFLAGS_RELEASE += /O2
+
+gcc:QMAKE_CFLAGS_RELEASE += -s -O2 -m32 -mtune=generic -fomit-frame-pointer
+gcc:QMAKE_CXXFLAGS_RELEASE += -s -O2 -m32 -mtune=generic -fomit-frame-pointer -fno-exceptions
+gcc:QMAKE_CXXFLAGS = -std=c++14
+gcc:QMAKE_LFLAGS += -static-libgcc -static-libstdc++ --enable-stdcall-fixup -Wl,--enable-auto-import -Wl,--enable-runtime-pseudo-reloc
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
