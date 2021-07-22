@@ -24,7 +24,9 @@ class BackEnd : public QObject
     Q_PROPERTY(QString job READ getJob WRITE setJob NOTIFY visitorChanged)
     Q_PROPERTY(QString tel READ getTel WRITE setTel NOTIFY visitorChanged)
     Q_PROPERTY(int visitType READ getVisitType WRITE setVisitType NOTIFY visitorChanged)
-    Q_PROPERTY(QString serverIP READ getServerIP WRITE setServerIP NOTIFY visitorChanged)
+    Q_PROPERTY(bool finished READ getFinished WRITE setFinished NOTIFY visitorChanged)
+    Q_PROPERTY(QString serverIP READ getServerIP WRITE setServerIP NOTIFY connectionStateChanged)
+    Q_PROPERTY(bool isConnected READ getIsConnected NOTIFY connectionStateChanged)
     QML_ELEMENT
 public:
     explicit BackEnd(QObject *parent = nullptr);
@@ -39,6 +41,7 @@ public:
     void setJob(const QString &_job);
     void setTel(const QString &_tel);
     void setVisitType(const int &_visitType);
+    void setFinished(const bool & _finished);
     void setServerIP(const QString &ip);
     QString getName()const;
     QString getID()const;
@@ -50,12 +53,15 @@ public:
     QString getJob()const;
     QString getTel()const;
     int getVisitType()const;
+    bool getFinished()const;
     QString getServerIP();
+    bool getIsConnected();
     Q_INVOKABLE void loadVisitor(const int & index);
     Q_INVOKABLE void addNew(const int &index);
     Q_INVOKABLE void delVisitor(const int &index);
+    Q_INVOKABLE void visitorSetFinishedState(const int &index, const bool &state);
     Q_INVOKABLE void deleteAll();
-    Q_INVOKABLE QStringList getPeopleList();
+    Q_INVOKABLE QVariantList getPeopleList();
     Q_INVOKABLE void send();
 
     QJsonDocument getJsonDocument();
@@ -66,6 +72,7 @@ public:
 
 signals:
     Q_SIGNAL void visitorChanged();
+    Q_SIGNAL void connectionStateChanged();
 
 private:
     QString name="";
@@ -78,10 +85,12 @@ private:
     QString job="";
     QString tel="";
     int visitType=-1;
+    bool finished =false;
     netClient net;
     QString & serverIP;
-    QSettings settings;
+    bool & isConnected;
     broadcastListener *bcl;
+    QTimer sendTimer;
 
 };
 

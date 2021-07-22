@@ -45,13 +45,28 @@
                     },
                     {
                         "access": "public",
+                        "arguments": [
+                            {
+                                "name": "index",
+                                "type": "int"
+                            },
+                            {
+                                "name": "state",
+                                "type": "bool"
+                            }
+                        ],
+                        "name": "visitorSetFinishedState",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
                         "name": "deleteAll",
                         "returnType": "void"
                     },
                     {
                         "access": "public",
                         "name": "getPeopleList",
-                        "returnType": "QStringList"
+                        "returnType": "QVariantList"
                     },
                     {
                         "access": "public",
@@ -205,8 +220,22 @@
                         "constant": false,
                         "designable": true,
                         "final": false,
-                        "name": "serverIP",
+                        "name": "finished",
                         "notify": "visitorChanged",
+                        "read": "getFinished",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "bool",
+                        "user": false,
+                        "write": "setFinished"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "name": "serverIP",
+                        "notify": "connectionStateChanged",
                         "read": "getServerIP",
                         "required": false,
                         "scriptable": true,
@@ -214,6 +243,19 @@
                         "type": "QString",
                         "user": false,
                         "write": "setServerIP"
+                    },
+                    {
+                        "constant": false,
+                        "designable": true,
+                        "final": false,
+                        "name": "isConnected",
+                        "notify": "connectionStateChanged",
+                        "read": "getIsConnected",
+                        "required": false,
+                        "scriptable": true,
+                        "stored": true,
+                        "type": "bool",
+                        "user": false
                     }
                 ],
                 "qualifiedClassName": "BackEnd",
@@ -221,6 +263,11 @@
                     {
                         "access": "public",
                         "name": "visitorChanged",
+                        "returnType": "void"
+                    },
+                    {
+                        "access": "public",
+                        "name": "connectionStateChanged",
                         "returnType": "void"
                     }
                 ],
@@ -265,6 +312,13 @@
                 "className": "netClient",
                 "object": true,
                 "qualifiedClassName": "netClient",
+                "signals": [
+                    {
+                        "access": "public",
+                        "name": "connectionStateChanged",
+                        "returnType": "void"
+                    }
+                ],
                 "slots": [
                     {
                         "access": "private",

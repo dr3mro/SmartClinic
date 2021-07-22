@@ -3,9 +3,12 @@
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent),
     serverIP(net.getIP()),
+    isConnected(net.getIsConnected()),
     bcl(new broadcastListener(serverIP,this))
 {
-
+    connect(&sendTimer,&QTimer::timeout,this,&BackEnd::send);
+    connect(&net,&netClient::connectionStateChanged,this,&BackEnd::connectionStateChanged);
+    sendTimer.start(3000);
 }
 
 BackEnd::~BackEnd()
@@ -62,6 +65,11 @@ void BackEnd::setVisitType(const int &_visitType)
 {
     visitType = _visitType;
 
+}
+
+void BackEnd::setFinished(const bool &_finished)
+{
+    finished = _finished;
 }
 
 void BackEnd::setServerIP(const QString &ip)
@@ -121,9 +129,19 @@ int BackEnd::getVisitType() const
     return visitType;
 }
 
+bool BackEnd::getFinished() const
+{
+    return finished;
+}
+
 QString BackEnd::getServerIP()
 {
     return serverIP;
+}
+
+bool BackEnd::getIsConnected()
+{
+    return isConnected;
 }
 void BackEnd::loadVisitor(const int &index)
 {
@@ -140,6 +158,7 @@ void BackEnd::loadVisitor(const int &index)
     job         = map["job"].toString();
     tel         = map["tel"].toString();
     visitType   = map["visitType"].toInt();
+    finished    = map["finished"].toBool();
     emit visitorChanged();
 }
 
@@ -161,6 +180,7 @@ void BackEnd::addNew(const int &index)
     json.insert("job",job);
     json.insert("tel",tel);
     json.insert("visitType",visitType);
+    json.insert("finished",finished);
     if(index == -1)
         array.append(json);
     else
@@ -183,6 +203,26 @@ void BackEnd::delVisitor(const int &index)
 
 }
 
+void BackEnd::visitorSetFinishedState(const int &index, const bool & state)
+{
+    QJsonDocument doc = getJsonDocument();
+
+    QJsonArray array = doc.array();
+
+    QJsonObject json = array.at(index).toObject();
+
+    array.removeAt(index);
+
+    auto x = json.find("finished");
+
+    *x = state;
+
+    array.insert(index,json);
+    QJsonDocument finalDoc;
+    finalDoc.setArray(array);
+    saveJson(finalDoc);
+}
+
 void BackEnd::deleteAll()
 {
     QFile file;
@@ -190,16 +230,21 @@ void BackEnd::deleteAll()
     file.remove();
 }
 
-QStringList  BackEnd::getPeopleList()
+QVariantList  BackEnd::getPeopleList()
 {
-    QStringList people;
+    QVariantList people;
+
+
     QJsonDocument doc = getJsonDocument();
     QJsonArray array = doc.array();
 
     foreach (const QJsonValue & v, array)
     {
         QJsonObject obj = v.toObject();
-        people << obj.value("Name").toString();
+        QVariantMap pair1;
+        pair1.insert("name", obj.value("Name").toString());
+        pair1.insert("state", obj.value("finished").toBool());
+        people << pair1;
     }
     return people;
 }

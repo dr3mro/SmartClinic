@@ -6,5 +6,11 @@
         <file>main.qml</file>
         <file>icon.icns</file>
         <file>icon.ico</file>
+        <file>Ui_Menu.qml</file>
+        <file>Ui_VisitorEditor.qml</file>
+        <file>MenuBackIcon.qml</file>
+        <file alias="addIcon">plus-icon-33.png</file>
+        <file>AddButton.qml</file>
+        <file>PeopleList.qml</file>
     </qresource>
 </RCC>

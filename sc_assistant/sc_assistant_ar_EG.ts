@@ -2,248 +2,354 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ar_EG">
 <context>
+    <name>Ui_Settings</name>
+    <message>
+        <location filename="Ui_Settings.qml" line="33"/>
+        <source>save</source>
+        <translation type="unfinished">حفظ</translation>
+    </message>
+    <message>
+        <location filename="Ui_Settings.qml" line="42"/>
+        <source>cancel</source>
+        <translation type="unfinished">إلغاء</translation>
+    </message>
+    <message>
+        <location filename="Ui_Settings.qml" line="51"/>
+        <source>Clear</source>
+        <translation type="unfinished">مسح الكل</translation>
+    </message>
+    <message>
+        <location filename="Ui_Settings.qml" line="54"/>
+        <source>Are you sure you want to delete all</source>
+        <translation>هل آنت متأكد؟</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_VisitorEditor</name>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="30"/>
+        <source>ID</source>
+        <translation>رقم الملف</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="35"/>
+        <source>Visitor ID</source>
+        <translation>ادخل رقم الملف</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="46"/>
+        <source>Name</source>
+        <translation>الاسم</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="50"/>
+        <source>Visitor Name</source>
+        <translation>ادخل اسم الزائر هنا</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="62"/>
+        <source>Age</source>
+        <translation>السن</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="79"/>
+        <source>Sex</source>
+        <translation>النوع</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="84"/>
+        <source>Male</source>
+        <translation>ذكر</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="84"/>
+        <source>Female</source>
+        <translation>آنثى</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="95"/>
+        <source>Marital</source>
+        <translation>الحالة الاجتماعيه</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="100"/>
+        <source>Single</source>
+        <translation>أعزب</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="100"/>
+        <source>Married</source>
+        <translation>متزوج</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="100"/>
+        <source>Widdowed</source>
+        <translation>أرمل</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="100"/>
+        <source>Devorced</source>
+        <translation>مطلق</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="113"/>
+        <location filename="Ui_VisitorEditor.qml" line="118"/>
+        <source>Residence</source>
+        <translation>محل الاقامة</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="131"/>
+        <location filename="Ui_VisitorEditor.qml" line="136"/>
+        <source>Place of birth</source>
+        <translation>محل الميلاد</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="146"/>
+        <location filename="Ui_VisitorEditor.qml" line="151"/>
+        <source>Job</source>
+        <translation>الوظيفة</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="162"/>
+        <source>Tel</source>
+        <translation>التليفون</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="166"/>
+        <source>Telephone</source>
+        <translation>ادخل رقم التليفون</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="178"/>
+        <source>Visit Type</source>
+        <translation>نوع الزياره</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="183"/>
+        <source>New</source>
+        <translation>جديد</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="183"/>
+        <source>follow1</source>
+        <translation>اعاده١</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="183"/>
+        <source>follow2</source>
+        <translation>اعادة٢</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="183"/>
+        <source>follow3</source>
+        <translation>اعادة٣</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="183"/>
+        <source>follow4</source>
+        <translation>اعادة٤</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="183"/>
+        <source>free</source>
+        <translation>مجاني</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="197"/>
+        <source>Save</source>
+        <translation>حفظ</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="205"/>
+        <source>Delete</source>
+        <translation>حذف</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="209"/>
+        <source>Are you sure you want to delete this visitor</source>
+        <translation>هل توافق علي الغاء الزائر؟</translation>
+    </message>
+    <message>
+        <location filename="Ui_VisitorEditor.qml" line="225"/>
+        <source>Back</source>
+        <translation>رجوع</translation>
+    </message>
+</context>
+<context>
     <name>main</name>
     <message>
-        <location filename="main.qml" line="40"/>
-        <location filename="main.qml" line="46"/>
         <source> </source>
-        <translation> </translation>
+        <translation type="vanished"> </translation>
     </message>
     <message>
-        <location filename="main.qml" line="63"/>
         <source>⋮</source>
-        <translation>⋮</translation>
+        <translation type="vanished">⋮</translation>
     </message>
     <message>
-        <location filename="main.qml" line="166"/>
         <source>Add Visitor</source>
-        <translation>إضافة زائر</translation>
+        <translation type="vanished">إضافة زائر</translation>
     </message>
     <message>
         <source>Remove Visitor</source>
         <translation type="vanished">إلغاء زائر</translation>
     </message>
     <message>
-        <location filename="main.qml" line="177"/>
         <source>Show All</source>
-        <translation>إظهار الكل</translation>
+        <translation type="vanished">إظهار الكل</translation>
     </message>
     <message>
-        <location filename="main.qml" line="202"/>
-        <location filename="main.qml" line="412"/>
         <source>ID</source>
-        <translation>رقم الملف</translation>
+        <translation type="vanished">رقم الملف</translation>
     </message>
     <message>
-        <location filename="main.qml" line="207"/>
-        <location filename="main.qml" line="417"/>
         <source>Visitor ID</source>
-        <translation>ادخل رقم الملف</translation>
+        <translation type="vanished">ادخل رقم الملف</translation>
     </message>
     <message>
-        <location filename="main.qml" line="217"/>
-        <location filename="main.qml" line="429"/>
         <source>Name</source>
-        <translation>الاسم</translation>
+        <translation type="vanished">الاسم</translation>
     </message>
     <message>
-        <location filename="main.qml" line="221"/>
-        <location filename="main.qml" line="433"/>
         <source>Visitor Name</source>
-        <translation>ادخل اسم الزائر هنا</translation>
+        <translation type="vanished">ادخل اسم الزائر هنا</translation>
     </message>
     <message>
-        <location filename="main.qml" line="233"/>
-        <location filename="main.qml" line="444"/>
         <source>Age</source>
-        <translation>السن</translation>
+        <translation type="vanished">السن</translation>
     </message>
     <message>
-        <location filename="main.qml" line="250"/>
-        <location filename="main.qml" line="461"/>
         <source>Sex</source>
-        <translation>النوع</translation>
+        <translation type="vanished">النوع</translation>
     </message>
     <message>
-        <location filename="main.qml" line="255"/>
-        <location filename="main.qml" line="466"/>
         <source>Male</source>
-        <translation>ذكر</translation>
+        <translation type="vanished">ذكر</translation>
     </message>
     <message>
-        <location filename="main.qml" line="255"/>
-        <location filename="main.qml" line="466"/>
         <source>Female</source>
-        <translation>آنثى</translation>
+        <translation type="vanished">آنثى</translation>
     </message>
     <message>
-        <location filename="main.qml" line="265"/>
-        <location filename="main.qml" line="477"/>
         <source>Marital</source>
-        <translation>الحالة الاجتماعيه</translation>
+        <translation type="vanished">الحالة الاجتماعيه</translation>
     </message>
     <message>
-        <location filename="main.qml" line="270"/>
-        <location filename="main.qml" line="482"/>
         <source>Single</source>
-        <translation>أعزب</translation>
+        <translation type="vanished">أعزب</translation>
     </message>
     <message>
-        <location filename="main.qml" line="270"/>
-        <location filename="main.qml" line="482"/>
         <source>Married</source>
-        <translation>متزوج</translation>
+        <translation type="vanished">متزوج</translation>
     </message>
     <message>
-        <location filename="main.qml" line="270"/>
-        <location filename="main.qml" line="482"/>
         <source>Widdowed</source>
-        <translation>أرمل</translation>
+        <translation type="vanished">أرمل</translation>
     </message>
     <message>
-        <location filename="main.qml" line="270"/>
-        <location filename="main.qml" line="482"/>
         <source>Devorced</source>
-        <translation>مطلق</translation>
+        <translation type="vanished">مطلق</translation>
     </message>
     <message>
-        <location filename="main.qml" line="283"/>
-        <location filename="main.qml" line="288"/>
-        <location filename="main.qml" line="495"/>
-        <location filename="main.qml" line="500"/>
         <source>Residence</source>
-        <translation>محل الاقامة</translation>
+        <translation type="vanished">محل الاقامة</translation>
     </message>
     <message>
-        <location filename="main.qml" line="301"/>
-        <location filename="main.qml" line="306"/>
-        <location filename="main.qml" line="513"/>
-        <location filename="main.qml" line="518"/>
         <source>Place of birth</source>
-        <translation>محل الميلاد</translation>
+        <translation type="vanished">محل الميلاد</translation>
     </message>
     <message>
-        <location filename="main.qml" line="316"/>
-        <location filename="main.qml" line="321"/>
-        <location filename="main.qml" line="529"/>
-        <location filename="main.qml" line="534"/>
         <source>Job</source>
-        <translation>الوظيفة</translation>
+        <translation type="vanished">الوظيفة</translation>
     </message>
     <message>
-        <location filename="main.qml" line="332"/>
-        <location filename="main.qml" line="545"/>
         <source>Tel</source>
-        <translation>التليفون</translation>
+        <translation type="vanished">التليفون</translation>
     </message>
     <message>
-        <location filename="main.qml" line="336"/>
-        <location filename="main.qml" line="549"/>
         <source>Telephone</source>
-        <translation>ادخل رقم التليفون</translation>
+        <translation type="vanished">ادخل رقم التليفون</translation>
     </message>
     <message>
-        <location filename="main.qml" line="348"/>
-        <location filename="main.qml" line="561"/>
         <source>Visit Type</source>
-        <translation>نوع الزياره</translation>
+        <translation type="vanished">نوع الزياره</translation>
     </message>
     <message>
-        <location filename="main.qml" line="353"/>
-        <location filename="main.qml" line="566"/>
         <source>New</source>
-        <translation>جديد</translation>
+        <translation type="vanished">جديد</translation>
     </message>
     <message>
-        <location filename="main.qml" line="353"/>
-        <location filename="main.qml" line="566"/>
         <source>follow1</source>
-        <translation>اعاده١</translation>
+        <translation type="vanished">اعاده١</translation>
     </message>
     <message>
-        <location filename="main.qml" line="353"/>
-        <location filename="main.qml" line="566"/>
         <source>follow2</source>
-        <translation>اعادة٢</translation>
+        <translation type="vanished">اعادة٢</translation>
     </message>
     <message>
-        <location filename="main.qml" line="353"/>
-        <location filename="main.qml" line="566"/>
         <source>follow3</source>
-        <translation>اعادة٣</translation>
+        <translation type="vanished">اعادة٣</translation>
     </message>
     <message>
-        <location filename="main.qml" line="353"/>
-        <location filename="main.qml" line="566"/>
         <source>follow4</source>
-        <translation>اعادة٤</translation>
+        <translation type="vanished">اعادة٤</translation>
     </message>
     <message>
-        <location filename="main.qml" line="353"/>
-        <location filename="main.qml" line="566"/>
         <source>free</source>
-        <translation>مجاني</translation>
+        <translation type="vanished">مجاني</translation>
     </message>
     <message>
-        <location filename="main.qml" line="363"/>
-        <location filename="main.qml" line="579"/>
         <source>Save</source>
-        <translation>حفظ</translation>
+        <translation type="vanished">حفظ</translation>
     </message>
     <message>
-        <location filename="main.qml" line="606"/>
         <source>Delete</source>
-        <translation>الغاء</translation>
+        <translation type="vanished">الغاء</translation>
     </message>
     <message>
-        <location filename="main.qml" line="610"/>
         <source>Are you sure you want to delete this visitor</source>
-        <translation>هل توافق علي الغاء الزائر؟</translation>
+        <translation type="vanished">هل توافق علي الغاء الزائر؟</translation>
     </message>
     <message>
-        <location filename="main.qml" line="673"/>
         <source>Are you sure you want to quit</source>
-        <translation>هل انت متاكد؟</translation>
+        <translation type="vanished">هل انت متاكد؟</translation>
     </message>
     <message>
-        <location filename="main.qml" line="638"/>
+        <location filename="main.qml" line="28"/>
         <source>Yes</source>
         <translation>نعم</translation>
     </message>
     <message>
-        <location filename="main.qml" line="105"/>
         <source>save</source>
-        <translation>حفظ</translation>
+        <translation type="vanished">حفظ</translation>
     </message>
     <message>
-        <location filename="main.qml" line="112"/>
         <source>cancel</source>
-        <translation>إلغاء</translation>
+        <translation type="vanished">إلغاء</translation>
     </message>
     <message>
-        <location filename="main.qml" line="639"/>
+        <location filename="main.qml" line="29"/>
         <source>No</source>
         <translation>لا</translation>
     </message>
     <message>
-        <location filename="main.qml" line="652"/>
         <source>Push</source>
-        <translation>ارسل</translation>
+        <translation type="vanished">ارسل</translation>
     </message>
     <message>
-        <location filename="main.qml" line="659"/>
         <source>Clear</source>
-        <translation>مسح الكل</translation>
+        <translation type="vanished">مسح الكل</translation>
     </message>
     <message>
-        <location filename="main.qml" line="662"/>
         <source>Are you sure you want to delete all</source>
-        <translation>هل آنت متأكد؟</translation>
+        <translation type="vanished">هل آنت متأكد؟</translation>
     </message>
     <message>
-        <location filename="main.qml" line="670"/>
+        <source>Settings</source>
+        <translation type="vanished">الاعدادات</translation>
+    </message>
+    <message>
         <source>Close</source>
-        <translation>اغلاق</translation>
+        <translation type="vanished">اغلاق</translation>
     </message>
 </context>
 </TS>

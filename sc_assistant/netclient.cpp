@@ -9,11 +9,15 @@ netClient::netClient(QObject *parent) : QObject(parent),
     t.start();
     t.setInterval(5000);
 
-    if(socket->waitForConnected(1000))
+    if(socket->waitForConnected(1000)){
         qDebug() << "Connected to Server" << m_ServerIP;
+        isConnected = true;
+        emit connectionStateChanged();
+    }
     else{
         qDebug() << "QTCPClient"<< QString("The following error occurred: %1.").arg(socket->errorString());
-
+        isConnected = false;
+        emit connectionStateChanged();
     }
 }
 
@@ -69,14 +73,23 @@ QString & netClient::getIP()
     return m_ServerIP;
 }
 
+bool &netClient::getIsConnected()
+{
+    return isConnected;
+}
+
 void netClient::reconnect()
 {
     if(socket->waitForConnected(900) && qApp->applicationState() == Qt::ApplicationState::ApplicationActive){
         qDebug() << "Connected to Server" << m_ServerIP;
+        isConnected = true;
+        emit connectionStateChanged();
         return;
     }
     else if ( qApp->applicationState() == Qt::ApplicationState::ApplicationActive) {
         qDebug() << "QTCPClient"<< QString("The following error occurred: %1:%2.").arg(socket->errorString(),m_ServerIP);
+        isConnected = false;
+        emit connectionStateChanged();
         socket->connectToHost(m_ServerIP,8080);
     }
 }
