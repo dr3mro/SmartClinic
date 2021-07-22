@@ -88,7 +88,7 @@ ApplicationWindow {
                     text: "server"
                     color:"Yellow"
                     height: 40
-                    anchors.bottom: server.top
+                    //anchors.bottom: server.top
                 }
                 TextField {
                     Layout.alignment:Qt.AlignHCenter | Qt.AlignVCenter
@@ -98,7 +98,7 @@ ApplicationWindow {
                     text:serverIP
                 }
                 Row{
-                    anchors.top: server.bottom
+                    //anchors.top: server.bottom
                     Layout.alignment:Qt.AlignHCenter | Qt.AlignVCenter
                     spacing: 10
                     Button{
@@ -311,7 +311,7 @@ ApplicationWindow {
 
                     }
                     RowLayout{
-                        width: editVisitorScroll.width
+                        width: parent.width
                         Label{
                             text: qsTr("Job")
 
@@ -635,8 +635,8 @@ ApplicationWindow {
             Component.onCompleted:
             {
                 visible = true
-                messageDialog.standardButton(dialog.Yes).text=qsTr("Yes")
-                messageDialog.standardButton(dialog.No).text=qsTr("No")
+                //messageDialog.standardButton(dialog.Yes).text=qsTr("Yes")
+                //messageDialog.standardButton(dialog.No).text=qsTr("No")
             }
         }
     }

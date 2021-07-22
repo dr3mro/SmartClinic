@@ -79,7 +79,7 @@ private:
     QString tel="";
     int visitType=-1;
     netClient net;
-    QString serverIP;
+    QString & serverIP;
     QSettings settings;
     broadcastListener *bcl;
 

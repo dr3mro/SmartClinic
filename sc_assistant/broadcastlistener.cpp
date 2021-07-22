@@ -4,7 +4,7 @@ broadcastListener::broadcastListener(QString &ip_address, QObject *parent) : QOb
     udpSocket(new QUdpSocket(this)),
     m_ip_address(ip_address)
 {
-    udpSocket->bind(QHostAddress::AnyIPv4,45454,QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+    udpSocket->bind(QHostAddress::AnyIPv4,45454,QUdpSocket::ShareAddress);
 
     connect(udpSocket, &QUdpSocket::readyRead,
             this, &broadcastListener::processPendingDatagrams);
@@ -12,6 +12,7 @@ broadcastListener::broadcastListener(QString &ip_address, QObject *parent) : QOb
 
 broadcastListener::~broadcastListener()
 {
+    udpSocket->close();
     delete udpSocket;
 }
 

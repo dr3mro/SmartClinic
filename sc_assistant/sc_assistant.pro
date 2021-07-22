@@ -1,7 +1,8 @@
 QT += quick
 QT += widgets
+TARGET="Remote Assistant"
 ICON = icon.icns
-
+RC_ICONS = icon.ico
 CONFIG += qmltypes
 QML_IMPORT_NAME = Sc_assitant.Backend
 QML_IMPORT_MAJOR_VERSION = 1.0
@@ -37,9 +38,19 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    android/AndroidManifest.xml \
+    android/build.gradle \
+    android/gradle.properties \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
     sc_assistant_ar_EG.qm
 
 HEADERS += \
     backend.h \
     broadcastlistener.h \
     netclient.h
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

@@ -2,16 +2,15 @@
 
 BackEnd::BackEnd(QObject *parent) :
     QObject(parent),
+    serverIP(net.getIP()),
     bcl(new broadcastListener(serverIP,this))
 {
-    QDir::setCurrent(QDir::homePath());
-    serverIP = settings.value("ip").toString();
-    net.setIP(serverIP);
+
 }
 
 BackEnd::~BackEnd()
 {
-    settings.setValue("ip", serverIP);
+    delete bcl;
 }
 
 void BackEnd::setName(const QString &_name)
@@ -68,7 +67,7 @@ void BackEnd::setVisitType(const int &_visitType)
 void BackEnd::setServerIP(const QString &ip)
 {
     serverIP = ip;
-    net.setIP(serverIP);
+    //net.setIP(serverIP);
 }
 
 

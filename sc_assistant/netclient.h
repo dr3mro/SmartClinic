@@ -21,9 +21,10 @@ class netClient : public QObject
     Q_OBJECT
 public:
     explicit netClient(QObject *parent = nullptr);
+    ~netClient();
     void send(const QString & file);
     void setIP(const QString & ip);
-    QString getIP();
+    QString &getIP();
 signals:
 
 private:
@@ -32,7 +33,7 @@ private:
 private slots:
     void reconnect();
 private:
-    QString addr=QString("127.0.0.1");
+    QString m_ServerIP=QString("127.0.0.1");
 
 };
 

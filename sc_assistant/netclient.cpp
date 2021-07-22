@@ -3,18 +3,24 @@
 netClient::netClient(QObject *parent) : QObject(parent),
     socket(new QTcpSocket(this))
 {
-    socket->connectToHost(addr,8080);
+    socket->connectToHost(m_ServerIP,8080);
     connect(&t,&QTimer::timeout,this,&netClient::reconnect);
 
     t.start();
     t.setInterval(5000);
 
     if(socket->waitForConnected(1000))
-        qDebug() << "Connected to Server";
+        qDebug() << "Connected to Server" << m_ServerIP;
     else{
         qDebug() << "QTCPClient"<< QString("The following error occurred: %1.").arg(socket->errorString());
 
     }
+}
+
+netClient::~netClient()
+{
+    socket->close();
+    delete  socket;
 }
 
 void netClient::send(const QString &file)
@@ -55,22 +61,22 @@ void netClient::send(const QString &file)
 
 void netClient::setIP(const QString &ip)
 {
-    addr = ip;
+    m_ServerIP = ip;
 }
 
-QString netClient::getIP()
+QString & netClient::getIP()
 {
-    return addr;
+    return m_ServerIP;
 }
 
 void netClient::reconnect()
 {
     if(socket->waitForConnected(900) && qApp->applicationState() == Qt::ApplicationState::ApplicationActive){
-        qDebug() << "Connected to Server" << addr;
+        qDebug() << "Connected to Server" << m_ServerIP;
         return;
     }
     else if ( qApp->applicationState() == Qt::ApplicationState::ApplicationActive) {
-        qDebug() << "QTCPClient"<< QString("The following error occurred: %1:%2.").arg(socket->errorString(),addr);
-        socket->connectToHost(addr,8080);
+        qDebug() << "QTCPClient"<< QString("The following error occurred: %1:%2.").arg(socket->errorString(),m_ServerIP);
+        socket->connectToHost(m_ServerIP,8080);
     }
 }
