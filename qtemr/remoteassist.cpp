@@ -18,23 +18,8 @@ remoteAssist::remoteAssist(QWidget *parent) :
     connect(ui->searchByTel,&QToolButton::clicked,this,&remoteAssist::searchByTel);
     connect(ui->reload,&QToolButton::clicked,this,&remoteAssist::loadVisitors);
     connect(ui->visitorsTableView->selectionModel(),&QItemSelectionModel::currentRowChanged,this,&remoteAssist::showVisitor);
-    connect(ui->interfaces,&QComboBox::currentTextChanged,this,&remoteAssist::setInterfaceName);
-
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
-    QString m_InterfaceName =  reg.value("NetworkInterface").toString();
 
     loadVisitors();
-
-    foreach(auto interface, QNetworkInterface::allInterfaces())
-      {
-          if (interface.flags().testFlag(QNetworkInterface::IsUp) && !interface.flags().testFlag(QNetworkInterface::IsLoopBack))
-              foreach (QNetworkAddressEntry entry, interface.addressEntries())
-              {
-              if ( interface.hardwareAddress() != "00:00:00:00:00:00" && entry.ip().toString().contains(".") && !interface.humanReadableName().contains("VM"))
-                  ui->interfaces->addItem(interface.name());
-              }
-    }
-    ui->interfaces->setCurrentText(m_InterfaceName);
 }
 
 remoteAssist::~remoteAssist()

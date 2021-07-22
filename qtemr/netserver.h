@@ -20,7 +20,7 @@ public:
     explicit NetServer(QObject *parent = nullptr);
     ~NetServer();
 public slots:
-    void setInterfaceName(const QString& _ifName);
+
 private slots:
     void newConnection();
     void appendToSocketList(QTcpSocket* socket);
@@ -33,6 +33,8 @@ private:
     QTimer m_broadcastIPTimer;
     QSet<QTcpSocket*> connection_set;
     QString m_InterfaceName;
+    QList<QHostAddress> broadcastAddresses;
+    QList<QHostAddress> ipAddresses;
 };
 
 #endif // NETSERVER_H

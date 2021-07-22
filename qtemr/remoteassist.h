@@ -64,7 +64,6 @@ private:
 signals:
     void search(const QString & str);
     void createVisitor(const Visitor &visitor);
-    void setInterfaceName(const QString &ifName);
 };
 
 #endif // REMOTEASSIST_H

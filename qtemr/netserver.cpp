@@ -17,23 +17,37 @@ NetServer::NetServer(QObject *parent) : QObject(parent),
     {
        // qDebug() << QString("Unable to start the server: %1.").arg(m_server->errorString());
     }
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
-    QString m_InterfaceName =  reg.value("NetworkInterface").toString();
 
-    m_broadcastIPTimer.start(1000);
+    m_broadcastIPTimer.start(3000);
     connect(&m_broadcastIPTimer,&QTimer::timeout,this,[=](){
-        QNetworkInterface interface = QNetworkInterface::interfaceFromName(m_InterfaceName);
-        QNetworkInterface::InterfaceFlags flags = interface.flags();
-        if( (bool)(flags & QNetworkInterface::IsRunning)
-                && !(bool)(flags & QNetworkInterface::IsLoopBack)
-                && (bool)(flags & QNetworkInterface::IsUp)
-                ){
-            foreach (const QNetworkAddressEntry &address, interface.addressEntries()) {
-                if(address.ip().protocol() == QAbstractSocket::IPv4Protocol){
-                    //mDebug() << address.ip().toString().toUtf8();
-                    QByteArray datagram = address.ip().toString().toUtf8();
-                    m_udpBroadcastSocket->writeDatagram(datagram, QHostAddress::Broadcast, 45454);
+        broadcastAddresses.clear();
+        ipAddresses.clear();
+        const QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
+        for (const QNetworkInterface &interface : interfaces) {
+            QNetworkInterface::InterfaceFlags flags = interface.flags();
+            if( ( ( interface.type() == QNetworkInterface::Ethernet || interface.type() == QNetworkInterface::Wifi ) && interface.type() != QNetworkInterface::Virtual ) &&
+                    (    (bool)(flags & QNetworkInterface::IsRunning)
+                     && !(bool)(flags & QNetworkInterface::IsLoopBack)
+                     &&  (bool)(flags & QNetworkInterface::IsUp)
+                     &&  (bool) (flags & QNetworkInterface::CanBroadcast)
+                     ) ) {
+
+
+                const QList<QNetworkAddressEntry> entries = interface.addressEntries();
+                for (const QNetworkAddressEntry &entry : entries) {
+                    QHostAddress broadcastAddress = entry.broadcast();
+                    if (broadcastAddress != QHostAddress::Null && entry.ip() != QHostAddress::LocalHost) {
+                        broadcastAddresses << broadcastAddress;
+                        ipAddresses << entry.ip();
+                    }
                 }
+            }
+        }
+        for (const QHostAddress &address : qAsConst(broadcastAddresses)) {
+            for (auto server:ipAddresses){
+                QByteArray datagram = "hello";//server.toString().toUtf8();
+                m_udpBroadcastSocket->writeDatagram(datagram, address, 45454);
+                mDebug() << server ;
             }
         }
     });
@@ -53,12 +67,6 @@ NetServer::~NetServer()
     delete m_udpBroadcastSocket;
 }
 
-void NetServer::setInterfaceName(const QString &_ifName)
-{
-    this->m_InterfaceName = _ifName;
-    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
-    reg.setValue("NetworkInterface",_ifName);
-}
 
 void NetServer::newConnection()
 {
