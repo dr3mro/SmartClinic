@@ -1,6 +1,6 @@
 QT += quick
 QT += widgets
-TARGET="Remote Assistant"
+TARGET=Assistant
 ICON = icon.icns
 RC_ICONS = icon.ico
 CONFIG += qmltypes
