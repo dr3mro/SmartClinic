@@ -27,14 +27,15 @@ netClient::~netClient()
     delete  socket;
 }
 
-void netClient::send(const QString &file)
+void netClient::send(const QString &filePath)
 {
+    if(!isDataModified(fileChecksum(filePath,QCryptographicHash::Md5)))
+        return;
+
     if(socket)
     {
         if(socket->isOpen())
         {
-            QString filePath = file;
-
             QFile file(filePath);
             if(file.open(QIODevice::ReadOnly)){
 
@@ -49,6 +50,8 @@ void netClient::send(const QString &file)
                 header.resize(128);
 
                 QByteArray byteArray = file.readAll();
+
+
                 byteArray.prepend(header);
 
                 socketStream.setVersion(QDataStream::Qt_5_15);
@@ -92,4 +95,28 @@ void netClient::reconnect()
         emit connectionStateChanged();
         socket->connectToHost(m_ServerIP,8080);
     }
+}
+
+QByteArray netClient::fileChecksum(const QString &fileName,QCryptographicHash::Algorithm hashAlgorithm)
+{
+    QFile f(fileName);
+    if (f.open(QFile::ReadOnly)) {
+        QCryptographicHash hash(hashAlgorithm);
+        if (hash.addData(&f)) {
+            return hash.result();
+        }
+    }
+    return QByteArray();
+}
+
+bool netClient::isDataModified(const QByteArray &hash)
+{
+    static QByteArray lastHash;
+
+    bool status  = (lastHash != hash);
+
+    lastHash = hash;
+
+    qDebug() << status;
+    return  status;
 }

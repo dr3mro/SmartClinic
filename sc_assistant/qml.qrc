@@ -12,5 +12,7 @@
         <file alias="addIcon">plus-icon-33.png</file>
         <file>AddButton.qml</file>
         <file>PeopleList.qml</file>
+        <file>TextInputWithLabel.qml</file>
+        <file>ComboBoxWithTextField.qml</file>
     </qresource>
 </RCC>

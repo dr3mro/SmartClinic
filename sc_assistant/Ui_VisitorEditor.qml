@@ -9,7 +9,7 @@ Item {
     property alias del_btn: btn_del
     property alias visitorName : name.text
     property alias visitorID : visitorID.text;
-    property alias visitorAge : age.value;
+    property alias visitorAge : age.text;
     property alias visitorSex : sex.currentIndex;
     property alias visitorMarital : marital.currentIndex;
     property alias visitorResidence : residence.text
@@ -28,167 +28,75 @@ Item {
         ColumnLayout{
             id:column
             width: parent.width
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("ID")
 
-                }
-                TextField{
-                    id:visitorID
-                    placeholderText: qsTr("Visitor ID")
-                    Layout.fillWidth: true
-                    selectByMouse: true
-                }
 
+            TextInputWithLabel { // patient ID
+                id:visitorID
+                label: qsTr("ID")
+                placeholderText: qsTr("Visitor ID")
+                validator: RegExpValidator { regExp: /[0-9]{1,7}/ }
             }
 
 
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Name")
-                }
-                TextField{
-                    id:name
-                    placeholderText: qsTr("Visitor Name")
-                    Layout.fillWidth: true
-                    selectByMouse: true
-
-                }
-
+            TextInputWithLabel { // patient Name
+                id:name
+                label: qsTr("Name")
+                placeholderText: qsTr("Visitor Name")
             }
 
 
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Age")
-                }
-                SpinBox{
-                    id:age
-                    Layout.fillWidth: true
-                    editable: true
+            TextInputWithLabel{
+                id:age
+                label: qsTr("Age")
+                placeholderText: qsTr("Visitor Age")
+                validator: RegExpValidator { regExp: /[0-9]{1,2}/ }
+            }
 
-                }
-
+            ComboBoxWithTextField {
+                id: sex
+                label: qsTr("Sex")
+                model: [ qsTr("Male"),  qsTr("Female")]
             }
 
 
 
-
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Sex")
-
-                }
-                ComboBox{
-                    id:sex
-                    model: [ qsTr("Male"),  qsTr("Female")]
-                    Layout.fillWidth: true
-
-                }
-
+            ComboBoxWithTextField {
+                id: marital
+                label: qsTr("Marital")
+                model: [ qsTr("Single"),qsTr("Married"),qsTr("Widdowed"),qsTr("Devorced")]
             }
 
 
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Marital")
-
-                }
-                ComboBox{
-                    id:marital
-                    model: [ qsTr("Single"),qsTr("Married"),qsTr("Widdowed"),qsTr("Devorced")]
-                    Layout.fillWidth: true
-
-                }
-
+            TextInputWithLabel{
+                id:residence
+                label : qsTr("Residence")
+                placeholderText: qsTr("Residence")
             }
 
-
-
-
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Residence")
-
-                }
-                TextField{
-                    id:residence
-                    placeholderText: qsTr("Residence")
-                    Layout.fillWidth: true
-                    selectByMouse: true
-
-                }
-
+            TextInputWithLabel{
+                id:placeofbirth
+                label : qsTr("Place of birth")
+                placeholderText: qsTr("Place of birth")
             }
 
-
-
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Place of birth")
-
-                }
-                TextField{
-                    id:placeofbirth
-                    placeholderText: qsTr("Place of birth")
-                    Layout.fillWidth: true
-                    selectByMouse: true
-
-                }
-
-            }
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Job")
-
-                }
-                TextField{
-                    id:job
-                    placeholderText: qsTr("Job")
-                    Layout.fillWidth: true
-                    selectByMouse: true
-                }
-
+            TextInputWithLabel{
+                id:job
+                label : qsTr("Job")
+                placeholderText: qsTr("Job")
             }
 
-
-            RowLayout{
-                width: parent.width
-                Label{
-                    text: qsTr("Tel")
-                }
-                TextField{
-                    id:mobile
-                    placeholderText: qsTr("Telephone")
-                    Layout.fillWidth: true
-                    selectByMouse: true
-                }
-
+            TextInputWithLabel{
+                id:mobile
+                label : qsTr("Tel")
+                placeholderText: qsTr("Telephone")
             }
 
-
-            RowLayout{
+            ComboBoxWithTextField{
                 width: parent.width
-                Label{
-                    text: qsTr("Visit Type")
-
-                }
-                ComboBox{
-                    id:visitType
-                    model: [ qsTr("New"),qsTr("follow1"),qsTr("follow2"),qsTr("follow3"),qsTr("follow4"),qsTr("free")]
-                    Layout.fillWidth: true
-                }
-
+                label: qsTr("Visit Type")
+                id:visitType
+                model: [ qsTr("New"),qsTr("follow1"),qsTr("follow2"),qsTr("follow3"),qsTr("follow4"),qsTr("free")]
             }
-
 
 
             RowLayout{
