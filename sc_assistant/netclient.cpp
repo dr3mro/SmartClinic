@@ -3,22 +3,19 @@
 netClient::netClient(QObject *parent) : QObject(parent),
     socket(new QTcpSocket(this))
 {
-    socket->connectToHost(m_ServerIP,8080);
-    connect(&t,&QTimer::timeout,this,&netClient::reconnect);
+    connect(&t,&QTimer::timeout,this,&netClient::mConnect);
 
-    t.start();
-    t.setInterval(5000);
+    connect(socket,&QTcpSocket::disconnected,this,[=](){
+        t.start(5000);
+    });
+    connect(socket,&QTcpSocket::errorOccurred,this,[=](){
+        t.start(5000);
+    });
+    connect(socket,&QTcpSocket::connected,this,[=](){
+        t.stop();
+    });
 
-    if(socket->waitForConnected(1000)){
-        qDebug() << "Connected to Server" << m_ServerIP;
-        isConnected = true;
-        emit connectionStateChanged();
-    }
-    else{
-        qDebug() << "QTCPClient"<< QString("The following error occurred: %1.").arg(socket->errorString());
-        isConnected = false;
-        emit connectionStateChanged();
-    }
+    t.start(5000);
 }
 
 netClient::~netClient()
@@ -27,10 +24,10 @@ netClient::~netClient()
     delete  socket;
 }
 
-void netClient::send(const QString &filePath)
+bool netClient::send(const QString &filePath)
 {
-    if(!isDataModified(fileChecksum(filePath,QCryptographicHash::Md5)))
-        return;
+//    if(!isDataModified(fileChecksum(filePath,QCryptographicHash::Md5)))
+//        return false;
 
     if(socket)
     {
@@ -56,6 +53,7 @@ void netClient::send(const QString &filePath)
 
                 socketStream.setVersion(QDataStream::Qt_5_15);
                 socketStream << byteArray;
+                return true;
             }else
                 qDebug() << "Attachment is not readable!";
         }
@@ -81,42 +79,44 @@ bool &netClient::getIsConnected()
     return isConnected;
 }
 
-void netClient::reconnect()
+void netClient::mConnect()
 {
-    if(socket->waitForConnected(900) && qApp->applicationState() == Qt::ApplicationState::ApplicationActive){
-        qDebug() << "Connected to Server" << m_ServerIP;
-        isConnected = true;
-        emit connectionStateChanged();
-        return;
-    }
-    else if ( qApp->applicationState() == Qt::ApplicationState::ApplicationActive) {
-        qDebug() << "QTCPClient"<< QString("The following error occurred: %1:%2.").arg(socket->errorString(),m_ServerIP);
-        isConnected = false;
-        emit connectionStateChanged();
+    if (qApp->applicationState() == Qt::ApplicationState::ApplicationActive){
+
         socket->connectToHost(m_ServerIP,8080);
+
+        bool oldState = isConnected;
+
+        isConnected = socket->waitForConnected(900);
+
+        qDebug() << "Connections state is : " << isConnected << " to server: " << m_ServerIP;
+
+        if(oldState != isConnected)
+            emit connectionStateChanged();
     }
 }
 
-QByteArray netClient::fileChecksum(const QString &fileName,QCryptographicHash::Algorithm hashAlgorithm)
-{
-    QFile f(fileName);
-    if (f.open(QFile::ReadOnly)) {
-        QCryptographicHash hash(hashAlgorithm);
-        if (hash.addData(&f)) {
-            return hash.result();
-        }
-    }
-    return QByteArray();
-}
+//QByteArray netClient::fileChecksum(const QString &fileName,QCryptographicHash::Algorithm hashAlgorithm)
+//{
+//    QFile f(fileName);
+//    if (f.open(QFile::ReadOnly)) {
+//        QCryptographicHash hash(hashAlgorithm);
+//        if (hash.addData(&f)) {
+//            return hash.result();
+//        }
+//    }
+//    return QByteArray();
+//}
 
-bool netClient::isDataModified(const QByteArray &hash)
-{
-    static QByteArray lastHash;
+//bool netClient::isDataModified(const QByteArray &hash)
+//{
+//    static QByteArray lastHash;
 
-    bool status  = (lastHash != hash);
+//    bool status  = (lastHash != hash);
 
-    lastHash = hash;
+//    lastHash = hash;
 
-    qDebug() << status;
-    return  status;
-}
+//    qDebug() << status;
+
+//    return  status;
+//}

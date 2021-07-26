@@ -132,8 +132,8 @@ ApplicationWindow {
 
                 save_btn.onClicked: {
                     backend.name = visitorName
-                    backend.ID = visitorID
-                    backend.age = visitorAge
+                    backend.ID = parseInt(visitorID,10)
+                    backend.age = parseInt(visitorAge,10)
                     backend.sex = visitorSex
                     backend.marital = visitorMarital
                     backend.residence = visitorResidence
@@ -169,8 +169,8 @@ ApplicationWindow {
 
                 save_btn.onClicked: {
                     backend.name = visitorName
-                    backend.ID = visitorID
-                    backend.age = visitorAge
+                    backend.ID = parseInt(visitorID,10)
+                    backend.age = parseInt(visitorAge,10)
                     backend.sex = visitorSex
                     backend.marital = visitorMarital
                     backend.residence = visitorResidence

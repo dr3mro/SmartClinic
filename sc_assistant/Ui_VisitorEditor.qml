@@ -35,6 +35,7 @@ Item {
                 label: qsTr("ID")
                 placeholderText: qsTr("Visitor ID")
                 validator: RegExpValidator { regExp: /[0-9]{1,7}/ }
+                text:"0"
             }
 
 
@@ -50,6 +51,7 @@ Item {
                 label: qsTr("Age")
                 placeholderText: qsTr("Visitor Age")
                 validator: RegExpValidator { regExp: /[0-9]{1,2}/ }
+                text:"0"
             }
 
             ComboBoxWithTextField {

@@ -23,7 +23,7 @@ class netClient : public QObject
 public:
     explicit netClient(QObject *parent = nullptr);
     ~netClient();
-    void send(const QString & filePath);
+    bool send(const QString & filePath);
     void setIP(const QString & ip);
     QString &getIP();
     bool &getIsConnected();
@@ -31,14 +31,14 @@ signals:
     void connectionStateChanged();
 
 private slots:
-    void reconnect();
+    void mConnect();
 private:
     QString m_ServerIP=QString("127.0.0.1");
     bool isConnected=false;
     QTcpSocket* socket;
     QTimer t;
-    QByteArray fileChecksum(const QString &fileName,QCryptographicHash::Algorithm hashAlgorithm);
-    bool isDataModified(const QByteArray &hash);
+//    QByteArray fileChecksum(const QString &fileName,QCryptographicHash::Algorithm hashAlgorithm);
+//    bool isDataModified(const QByteArray &hash);
 
 };
 

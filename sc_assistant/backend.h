@@ -15,7 +15,7 @@ class BackEnd : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ getName WRITE setName NOTIFY visitorChanged)
-    Q_PROPERTY(QString ID   READ getID WRITE setID NOTIFY visitorChanged)
+    Q_PROPERTY(int ID   READ getID WRITE setID NOTIFY visitorChanged)
     Q_PROPERTY(int sex READ getSex WRITE setSex NOTIFY visitorChanged)
     Q_PROPERTY(int marital READ getMarital WRITE setMarital NOTIFY visitorChanged)
     Q_PROPERTY(int age READ getAge WRITE setAge NOTIFY visitorChanged)
@@ -28,11 +28,12 @@ class BackEnd : public QObject
     Q_PROPERTY(QString serverIP READ getServerIP WRITE setServerIP NOTIFY connectionStateChanged)
     Q_PROPERTY(bool isConnected READ getIsConnected NOTIFY connectionStateChanged)
     QML_ELEMENT
+
 public:
     explicit BackEnd(QObject *parent = nullptr);
     ~BackEnd();
     void setName(const QString &_name);
-    void setID(const QString &_id);
+    void setID(const int &_id);
     void setSex(const int &_sex);
     void setMarital(const int &_marital);
     void setAge(const int &_age);
@@ -44,7 +45,7 @@ public:
     void setFinished(const bool & _finished);
     void setServerIP(const QString &ip);
     QString getName()const;
-    QString getID()const;
+    int getID()const;
     int getSex()const;
     int getMarital()const;
     int getAge()const;
@@ -76,7 +77,7 @@ signals:
 
 private:
     QString name="";
-    QString ID="";
+    int ID=-1;
     int sex=-1;
     int marital=-1;
     int age=-1;
@@ -91,6 +92,8 @@ private:
     bool & isConnected;
     broadcastListener *bcl;
     QTimer sendTimer;
+    QFileSystemWatcher dataChangeWatcher;
+    const QString jsonFileName = "visitors.json";
 
 };
 

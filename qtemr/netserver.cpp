@@ -11,6 +11,11 @@ NetServer::NetServer(QObject *parent) : QObject(parent),
     if(m_server->listen(QHostAddress::Any, 8080))
     {
        connect(m_server, &QTcpServer::newConnection, this, &NetServer::newConnection);
+
+       connect(m_server, &QTcpServer::newConnection,this,[=](){
+           m_broadcastIPTimer.stop();
+       });
+
        //qDebug() <<"Server is listening...";
     }
     else
@@ -80,7 +85,18 @@ void NetServer::appendToSocketList(QTcpSocket *socket)
     connection_set.insert(socket);
     connect(socket, &QTcpSocket::readyRead, this, &NetServer::readSocket);
 
-    qDebug() <<QString::number(socket->socketDescriptor());
+    connect(socket,&QTcpSocket::disconnected,this,[=](){
+        m_broadcastIPTimer.start(3000);
+    });
+
+
+    connect(socket,&QTcpSocket::disconnected,this,[=](){
+        connection_set.remove(socket);
+        delete socket;
+    });
+
+    mDebug() << "Socket count: " << connection_set.count();
+    qDebug() << QString::number(socket->socketDescriptor());
     qDebug() << QString("INFO :: Client with sockd:%1 has just entered the room").arg(socket->socketDescriptor());
 }
 

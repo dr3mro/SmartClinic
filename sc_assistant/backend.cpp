@@ -9,6 +9,12 @@ BackEnd::BackEnd(QObject *parent) :
     connect(&sendTimer,&QTimer::timeout,this,&BackEnd::send);
     connect(&net,&netClient::connectionStateChanged,this,&BackEnd::connectionStateChanged);
     sendTimer.start(3000);
+    dataChangeWatcher.addPath(jsonFileName);
+
+    connect(&dataChangeWatcher,&QFileSystemWatcher::fileChanged,this,[=](){
+        sendTimer.start(3000);
+    });
+
 }
 
 BackEnd::~BackEnd()
@@ -21,7 +27,7 @@ void BackEnd::setName(const QString &_name)
     name = _name;
 }
 
-void BackEnd::setID(const QString &_id)
+void BackEnd::setID(const int &_id)
 {
     ID =_id;
 }
@@ -84,7 +90,7 @@ QString BackEnd::getName() const
     return name;
 }
 
-QString BackEnd::getID() const
+int BackEnd::getID() const
 {
     return ID;
 }
@@ -149,7 +155,7 @@ void BackEnd::loadVisitor(const int &index)
     QList<QVariant> list = doc.toVariant().toList();
     QMap<QString, QVariant> map = list[index].toMap();
     name        = map["Name"].toString();
-    ID          = map["ID"].toString();
+    ID          = map["ID"].toInt();
     marital     = map["Marital"].toInt();
     age         = map["Age"].toInt();
     sex         = map["Sex"].toInt();
@@ -226,7 +232,7 @@ void BackEnd::visitorSetFinishedState(const int &index, const bool & state)
 void BackEnd::deleteAll()
 {
     QFile file;
-    file.setFileName("visitors.json");
+    file.setFileName(jsonFileName);
     file.remove();
 }
 
@@ -251,13 +257,14 @@ QVariantList  BackEnd::getPeopleList()
 
 void BackEnd::send()
 {
-    net.send("visitors.json");
+    if(net.send(jsonFileName))
+        sendTimer.stop();
 }
 
 QJsonDocument BackEnd::getJsonDocument()
 {
     QFile file;
-    file.setFileName("visitors.json");
+    file.setFileName(jsonFileName);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QByteArray jsonRaw = file.readAll();
     QJsonDocument doc = QJsonDocument::fromJson(jsonRaw);
@@ -268,7 +275,7 @@ QJsonDocument BackEnd::getJsonDocument()
 void BackEnd::saveJson(const QJsonDocument &doc)
 {
     QFile file;
-    file.setFileName("visitors.json");
+    file.setFileName(jsonFileName);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     file.resize(0);
     file.write(doc.toJson());
