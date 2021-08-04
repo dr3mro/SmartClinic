@@ -25,7 +25,7 @@ QString invIconHelper::getInvestigationTooltip(const QString &path, const QStrin
         return QString("<center>"
                        "<b>%1</b><br/>"
                        "<img src='data:image/png;base64, %2'><br/>"
-                       "<i>Shift + double click to open file.</i>"
+                       "<i>Double click to open file.</i>"
                        "</center>")
                 .arg(name)
                 .arg(QString(iconBase64));

@@ -65,6 +65,7 @@
 #define _showOnlyNewlyModifiedAddedDrugs "showOnlyNewlyModifiedAddedDrugs"
 #define _showTradeNamesBold "showTradeNamesBold"
 #define _showDoseNewLine "showDoseNewLine"
+#define _preferArabic "prefereArabic"
 
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"

@@ -220,6 +220,8 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.showTradeNamesBold = settings.value(_showTradeNamesBold,QVariant(false)).toBool();
     mPageSettings.showDoseNewLine = settings.value(_showDoseNewLine,QVariant(false)).toBool();
 
+    mPageSettings.preferArabic = settings.value(_preferArabic,QVariant(true)).toBool();
+
     settings.endGroup();
     return mPageSettings;
 }
@@ -270,6 +272,8 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_showOnlyNewlyModifiedAddedDrugs,mPageSettings.showOnlyNewlyModifiedAddedDrugs);
     settings.setValue(_showTradeNamesBold,mPageSettings.showTradeNamesBold);
     settings.setValue(_showDoseNewLine,mPageSettings.showDoseNewLine);
+
+    settings.setValue(_preferArabic,mPageSettings.preferArabic);
 
     settings.endGroup();
 }

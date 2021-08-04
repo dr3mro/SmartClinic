@@ -335,7 +335,7 @@
                <item>
                 <widget class="QLabel" name="label_23">
                  <property name="text">
-                  <string>show drugs tradenames in bold.</string>
+                  <string>Show drugs tradenames in bold.</string>
                  </property>
                 </widget>
                </item>
@@ -359,12 +359,36 @@
                <item>
                 <widget class="QLabel" name="label_22">
                  <property name="text">
-                  <string>show drugs dose in new line below tradename</string>
+                  <string>Show drugs dose in new line below tradename.</string>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="Switch" name="showDoseNewLine">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <item>
+                <widget class="QLabel" name="label_25">
+                 <property name="text">
+                  <string>Prefer Arabic when feasable.</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Switch" name="preferArabic">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>

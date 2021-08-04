@@ -52,7 +52,7 @@ NetServer::NetServer(QObject *parent) : QObject(parent),
             for (auto server:ipAddresses){
                 QByteArray datagram = "hello";//server.toString().toUtf8();
                 m_udpBroadcastSocket->writeDatagram(datagram, address, 45454);
-                mDebug() << server ;
+                //mDebug() << server ;
             }
         }
     });

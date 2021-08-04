@@ -192,6 +192,9 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->showOnlyNewlyModifiedAddedDrugs->setChecked(printSettings.showOnlyNewlyModifiedAddedDrugs);
     ui->showTradeNamesBold->setChecked(printSettings.showTradeNamesBold);
     ui->showDoseNewLine->setChecked(printSettings.showDoseNewLine);
+
+    ui->preferArabic->setChecked(printSettings.preferArabic);
+
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
     return printSettings;
@@ -237,6 +240,9 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.showOnlyNewlyModifiedAddedDrugs = ui->showOnlyNewlyModifiedAddedDrugs->isChecked();
     printSettings.showTradeNamesBold = ui->showTradeNamesBold->isChecked();
     printSettings.showDoseNewLine = ui->showDoseNewLine->isChecked();
+
+    printSettings.preferArabic = ui->preferArabic->isChecked();
+
     return printSettings;
 }
 
