@@ -1,7 +1,7 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
+#pragma once
 #ifndef MSETTINGS_H
 #define MSETTINGS_H
 
@@ -14,6 +14,9 @@
 #include "globalvariables.h"
 #include "staticstrings.h"
 #include "mstyler.h"
+#include "datahelper.h"
+
+class dataHelper;
 
 class mSettings : public QObject
 {
@@ -165,6 +168,7 @@ public:
         Vitals vitals;
         QDate visitDate;
         QDate nextDate;
+        dataHelper::AgeStyle ageStyle;
         QDateTime printedinDate;
         bool caseClosed;
         QString visitSymbole;

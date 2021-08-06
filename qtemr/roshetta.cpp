@@ -157,8 +157,8 @@ void Roshetta::makeBanner()
     bannerFormat.setBorder(0);
     bannerFormat.setLayoutDirection(roshettaSettings.preferArabic? Qt::RightToLeft : Qt::LeftToRight);
 
-    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,40)
-                                                         << QTextLength(QTextLength::PercentageLength,30)
+    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,50)
+                                                         << QTextLength(QTextLength::PercentageLength,20)
                                                          << QTextLength(QTextLength::PercentageLength,30);
     bannerFormat.setColumnWidthConstraints(bannertl);
 //    bannerFormat.setMargin(0);
@@ -252,7 +252,7 @@ void Roshetta::fillBanner(QTextCursor &c)
     QString patient_age_sex = QString("%2%1")
             .arg(roshettaData.sex == mSettings::mSex::male ? "m":"f",
                  dataHelper::julianToAge(QDate::currentDate().toJulianDay() - roshettaData.age,
-                                         dataHelper::AgeStyle::printable));
+                                         roshettaData.ageStyle));
     if(roshettaData.caseClosed)
         nextDate = roshettaData.getNextFromJulian(roshettaData.nextDate.toJulianDay());
     else

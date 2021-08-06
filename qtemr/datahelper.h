@@ -1,7 +1,7 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
+#pragma once
 #ifndef DATAHELPER_H
 #define DATAHELPER_H
 
@@ -12,6 +12,8 @@
 #include <QEventLoop>
 #include "mdebug.h"
 #include "msettings.h"
+
+class mSettings;
 
 class dataHelper : public QObject
 {

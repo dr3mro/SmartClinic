@@ -1379,6 +1379,15 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshetta.printedinDate = QDateTime::currentDateTime();
     roshetta.caseClosed = ui->CheckButtonCaseClose->isChecked();
     roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex());
+
+    if ( settings.userSpeciality() == dataHelper::Speciality::Paediatrics ||
+         settings.userSpeciality() == dataHelper::Speciality::FamilyMedicine )
+        roshetta.ageStyle = dataHelper::AgeStyle::compact;
+    else
+        roshetta.ageStyle = dataHelper::AgeStyle::printable;
+
+
+
     roshettaDrugsfiller(roshetta.baseDrugsList,getDrugsModel(),false);
     roshettaDrugsfiller(roshetta.currentDrugsList,ui->vDrugsTable->getDrugsModel(),false);
     roshettaDrugsfiller(roshetta.baseAlteredDrugsList,getDrugsModel(),true);
