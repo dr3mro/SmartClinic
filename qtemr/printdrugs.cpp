@@ -90,6 +90,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->showOnlyNewlyModifiedAddedDrugs,&Switch::clicked,this,&printDrugs::showOnlyNewlyModifiedAddedDrugs_clicked,Qt::QueuedConnection);
     connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked,Qt::QueuedConnection);
     connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked,Qt::QueuedConnection);
+    connect(ui->preferArabic,&Switch::clicked,this,&printDrugs::preferArabic_clicked,Qt::QueuedConnection);
 
     connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged,Qt::QueuedConnection);
     connect(ui->logoSize,&QComboBox::textActivated,this,&printDrugs::logoSize_activated,Qt::QueuedConnection);
@@ -646,6 +647,12 @@ void printDrugs::showTradeNamesBold_clicked(bool checked)
 void printDrugs::showDoseNewLine_clicked(bool checked)
 {
     pSettings.showDoseNewLine = checked;
+    refreshView();
+}
+
+void printDrugs::preferArabic_clicked(bool checked)
+{
+    pSettings.preferArabic = checked;
     refreshView();
 }
 

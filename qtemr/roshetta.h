@@ -10,6 +10,7 @@
 #include <QTextListFormat>
 #include "staticstrings.h"
 #include "dataiohelper.h"
+#include "datahelper.h"
 #include "msettings.h"
 #include "PageMetrics.h"
 

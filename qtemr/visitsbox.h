@@ -48,13 +48,22 @@ class visitsBox : public mDialog
     Q_OBJECT
 
 public:
+
+    struct mPatientBasicDetails{
+        int ID = 0;
+        int age = 0;
+        mSettings::mSex sex = mSettings::mSex::male;
+        QString Name = "null";
+        QString fPal = "0-0-0-0";
+    };
+
     explicit visitsBox(QWidget *parent = nullptr);
     sqlBase::Visit grabVisit();
     void fillVisit(const sqlBase::Visit &visit);
     void clearVisit();
     void updateVisitAge();
     void enableEditMode(bool vEditMode);
-    void setPatient(int id = 0 , QString Age = "0" , QString Name = "0",QString fpal="0-0-0-0");
+    void setPatient(visitsBox::mPatientBasicDetails &_patientBasicDetails);
     void tweakui();
     ~visitsBox();
 
@@ -199,8 +208,6 @@ private:
     mSettings& settings = mSettings::instance();
     int visitindex;
     bool vEditMode;
-    QString pName, pAge, FPAL;
-    int ID;
     QString comboSelectedDataTime ;
     QString visitAge;
     QString currentVisitDateTime;
@@ -215,6 +222,7 @@ private:
     void roshettaDrugsfiller(QList<mSettings::drug> &drugs, DrugsItemModel *drugsModel, bool alteredDrugsOnly);
     void roshettaVitalsFiller(mSettings::Vitals &vitals);
     void setVitalsPlaceHolderText();
+    mPatientBasicDetails patientBasicDetails;
 
 protected:
     void closeEvent(QCloseEvent *event);

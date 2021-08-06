@@ -700,10 +700,17 @@ void MainWindow::on_ButtonVisit_clicked()
         return;
 
     clickTimer.start();
-
     ID = patient.ID;
     visitsbox->toggleVisualEffects(settings.isVisualEffectsEnabled());
-    visitsbox->setPatient(ID,patient.age,patient.name,ui->ObstWidget->getFPAL());
+
+    patientBasicDetails.ID = patient.ID;
+    patientBasicDetails.Name = patient.name;
+    patientBasicDetails.age = patient.age.toInt();
+    patientBasicDetails.fPal = ui->ObstWidget->getFPAL();
+    patientBasicDetails.sex = patient.gender == "Male" ? mSettings::mSex::male : mSettings::mSex::female;
+
+
+    visitsbox->setPatient(patientBasicDetails);
     applyBlurEffect();
     visitsbox->exec();
     removeBlurEffect();

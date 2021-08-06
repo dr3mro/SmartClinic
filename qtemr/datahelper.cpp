@@ -33,6 +33,9 @@ QString dataHelper::julianToAge(int totalDays,dataHelper::AgeStyle style)
     case AgeStyle::compact:
         _string = "<b>%1</b>Y<b>%2</b>M<b>%3</b>D";
         break;
+    case AgeStyle::printable:
+        _string = "%1";
+        return QString(_string).arg(QString::number(years));
     default:
         break;
     }

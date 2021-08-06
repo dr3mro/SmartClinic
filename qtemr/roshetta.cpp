@@ -245,31 +245,41 @@ void Roshetta::fillHeader(QTextCursor &c)
 
 void Roshetta::fillBanner(QTextCursor &c)
 {
+    QLocale loc = roshettaSettings.preferArabic ? QLocale(QLocale::Arabic,QLocale::Egypt):QLocale(QLocale::English,QLocale::UnitedStates);
+    QString datefmt = roshettaSettings.preferArabic ? "ddd yyyy/MM/dd":"ddd dd/MM/yyyy";
+    QString nextDate,visitDate;
+
+    QString patient_age_sex = QString("%2%1")
+            .arg(roshettaData.sex == mSettings::mSex::male ? "m":"f",
+                 dataHelper::julianToAge(QDate::currentDate().toJulianDay() - roshettaData.age,
+                                         dataHelper::AgeStyle::printable));
+    if(roshettaData.caseClosed)
+        nextDate = roshettaData.getNextFromJulian(roshettaData.nextDate.toJulianDay());
+    else
+        nextDate = loc.toString(roshettaData.nextDate,datefmt);
+
+
+    visitDate = loc.toString(roshettaData.visitDate,datefmt);
+
     bannerTable = c.insertTable(2,3,bannerFormat);
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.bannerFont.fontName,
                  QString::number(roshettaSettings.bannerFont.fontSize),
                  roshettaSettings.bannerFont.fontBold? "bold":"normal");
 
+    c.insertHtml(QString("<div %2><b>Nx: </b>%1</div>").arg(roshettaData.name,style));
+    c.movePosition(QTextCursor::NextCell);
+    c.insertHtml(QString("<div %2><b>ASx:</b>%1</div>").arg(patient_age_sex,style));
+    c.movePosition(QTextCursor::NextCell);
+    c.insertHtml(QString("<div %2><b>eDt: </b>%1</div>").arg(visitDate,style));
+    c.movePosition(QTextCursor::NextCell);
 
-    c.insertHtml(QString("<div %2><b>%3 </b>%1</div>")
-                 .arg(roshettaData.name,
-                      style,
-                      roshettaSettings.preferArabic? "الاسم:" : "Name:"));
-
-    c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<div %2><b>%3</b>%1</div>")
-                 .arg(roshettaData.printableAge,
-                      style,
-                      roshettaSettings.preferArabic? "السن:": "Age:"));
-    c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<div %4><b>ID: </b>%1%2%3</div>").arg(roshettaData.ID , " ▶ " , roshettaData.visitSymbole,style));
-    c.movePosition(QTextCursor::NextCell);
     c.insertHtml(QString("<div %2><b>Dx: </b>%1</div>").arg(roshettaData.Diagnosis,style));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<div %2><b>Dt: </b>%1</div>").arg(roshettaData.visitDate,style));
+    c.insertHtml(QString("<div %4><b>ID: </b>%1 %2</div>").arg(roshettaData.ID ,roshettaData.visitSymbole,style));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<div %2><b>Nxt: </b>%1</div>").arg(roshettaData.nextDate,style));
+    c.insertHtml(QString("<div %2><b>fDt: </b>%1</div>").arg(nextDate,style));
+
 }
 
 void Roshetta::fillBody(QTextCursor &c)
@@ -408,6 +418,11 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
 
     CurrentDrugRow++;
     foreach (const mSettings::drug & d, drugs) {
+        QString dose = d.Dose;
+
+        if(roshettaSettings.preferArabic)
+            dataHelper::switchToEasternArabic(dose);
+
         if(roshettaSettings.showDrugsInitDate && roshettaSettings.showDoseNewLine){
             c.insertHtml(QString("<div align=left dir=LTR %4>%1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
                          .arg(d.TradeName," ▶ ",d.StartDate,tradeNameStyle));
@@ -418,10 +433,10 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
 
         if(roshettaSettings.showDoseNewLine){
             c.insertHtml("<br>");
-            c.insertHtml(QString("<div align=left dir=RTL %2>%1</div>").arg(d.Dose,doseStyle));
+            c.insertHtml(QString("<div align=left dir=RTL %2>%1</div>").arg(dose,doseStyle));
         }else{
             c.movePosition(QTextCursor::NextCell);
-            c.insertHtml(QString("<div align=right dir=RTL %2>%1</div>").arg(d.Dose,doseStyle));
+            c.insertHtml(QString("<div align=right dir=RTL %2>%1</div>").arg(dose,doseStyle));
         }
 
         c.movePosition(QTextCursor::NextCell);
@@ -459,6 +474,7 @@ void Roshetta::fillRequests(QTextCursor &c)
 
 void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
 {
+    QString printedinDate = QDateTime::currentDateTime().toString("dddd dd/MM/yyyy hh:mm AP");
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.roshettaFont.fontName,
                  QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
@@ -467,7 +483,7 @@ void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
     c.insertTable(1,2,prefooterFormat);
 
     if (roshettaSettings.showSignaturePrintedOn){
-        c.insertHtml(QString("<div %2><b>printed on:</b> %1</div>").arg(roshettaData.printedinDate,style));
+        c.insertHtml(QString("<div %2><b>printed on:</b> %1</div>").arg(printedinDate,style));
         c.movePosition(QTextCursor::NextCell);
         c.insertHtml(QString("<div %1><b>Physician's Signature:</b></div>").arg(style));
     }else{

@@ -211,7 +211,7 @@ void visitsBox::on_ButtonNew_clicked()
 
     visitindex = 0;
     double visitPrice = settings.getVisitPrice(visitindex);
-    sqlbase->createNewVisit(ID,
+    sqlbase->createNewVisit(patientBasicDetails.ID,
                             visit.visitDateTime,
                             datetime,
                             visitindex,
@@ -220,7 +220,7 @@ void visitsBox::on_ButtonNew_clicked()
                             ui->vDrugsTable->getDrugsModel(),
                             ui->InvestigationsTable->getInvestigationsModel(),
                             sqlextra);
-    ui->visitLists->populateWithVisitList(ID);
+    ui->visitLists->populateWithVisitList(patientBasicDetails.ID);
     updateVisitAge();
     vEditMode = true;
     enableEditMode(vEditMode);
@@ -241,7 +241,7 @@ void visitsBox::on_ButtonSave_clicked()
 sqlBase::Visit visitsBox::grabVisit()
 {
     sqlBase::Visit visit;
-    visit.ID = ID;
+    visit.ID = patientBasicDetails.ID;
     visit.presentation  = ui->presentation->text().simplified();
     visit.presentationAnalysis = ui->presentationAnalysis->toHtml();
     visit.diagnosis = ui->Diagnosis->text().simplified();
@@ -318,13 +318,13 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
         enableEditMode(vEditMode);
     }
     updateVisitAge();
-    ui->vDrugsTable->loadPatientDrugsModel(ID,visitDateTime2JulianDate());
-    ui->InvestigationsTable->populateInvests(ID,visitDateTime2JulianDate());
+    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,visitDateTime2JulianDate());
+    ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDateTime2JulianDate());
     ui->dateFollowUp->setMinimumDate(locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd").date());
 
     QDate fd = QDate::fromJulianDay(visit.followDate.toInt());
     ui->dateFollowUp->setDate(fd);
-    int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(fd,ID)+1;
+    int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(fd,patientBasicDetails.ID)+1;
     setFollowDateTooltip(selectedDateFollowUps,fd);
     setVitalsPlaceHolderText();
 }
@@ -371,9 +371,9 @@ void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
     clearVisit();
     comboSelectedDataTime = arg1;
     updateVisitAge();
-    if (sqlbase->isVisitExists(ID,comboSelectedDataTime) )
+    if (sqlbase->isVisitExists(patientBasicDetails.ID,comboSelectedDataTime) )
     {
-        loadedVisit = sqlbase->getPatientVisitData(ID,comboSelectedDataTime);
+        loadedVisit = sqlbase->getPatientVisitData(patientBasicDetails.ID,comboSelectedDataTime);
         fillVisit(loadedVisit);
     }else{
         loadedVisit.clear();// clean any previous loaded visits.
@@ -382,8 +382,8 @@ void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
         QString visitDateString = comboSelectedDataTime.left(10);
         ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::fromString(visitDateString,"dd/MM/yyyy")); //.addDays(7));
         ui->dateFollowUp->setMinimumDate(QDate::fromString(visitDateString,"dd/MM/yyyy"));
-        ui->vDrugsTable->loadPatientDrugsModel(ID,visitDateTime2JulianDate());
-        ui->InvestigationsTable->populateInvests(ID,visitDateTime2JulianDate());
+        ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,visitDateTime2JulianDate());
+        ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDateTime2JulianDate());
         if(suggestedVisitType!=0)
         {
             ui->comboVisitType->setCurrentIndex(suggestedVisitType);
@@ -425,9 +425,9 @@ void visitsBox::on_ButtonDel_clicked()
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     int julianDate = static_cast<int>(locale.toDateTime(ComboCurrentVisit,"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
     int mVisitTime = static_cast<int>(locale.toDateTime(ComboCurrentVisit,"dd/MM/yyyy hh:mm AP ddd").time().msecsSinceStartOfDay())/1000;
-    if(sqlbase->deletePatientVisit(ID,julianDate,mVisitTime))
+    if(sqlbase->deletePatientVisit(patientBasicDetails.ID,julianDate,mVisitTime))
     {
-        ui->visitLists->populateWithVisitList(ID);
+        ui->visitLists->populateWithVisitList(patientBasicDetails.ID);
         emit newMessage("Information","Visit deletion success.");
     }
     else
@@ -476,8 +476,7 @@ void visitsBox::updateVisitAge()
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     QDateTime englishDateTime = locale.toDateTime(currentVisitDateTime, "dd/MM/yyyy hh:mm AP ddd");
     int jdstr = static_cast<int>(englishDateTime.date().toJulianDay());
-    int jpAge = pAge.toInt();
-    int jvisitAge = jdstr - jpAge;
+    int jvisitAge = jdstr - patientBasicDetails.age;
 
     if (jvisitAge < 0 )
         jvisitAge = 0;
@@ -532,8 +531,8 @@ void visitsBox::on_buttonRemoveInvestigations_clicked()
     int visitDate = ui->InvestigationsTable->invModel->item(row,2)->text().toInt();
     QString path = ui->InvestigationsTable->invModel->item(row,3)->text();
 
-    sqlbase->deleteInvestigation(ID,visitDate,path,invName);
-    ui->InvestigationsTable->populateInvests(ID,visitDate);
+    sqlbase->deleteInvestigation(patientBasicDetails.ID,visitDate,path,invName);
+    ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDate);
     lastInvestigationRow = (row==0)? 0:row-1;
     emit clearInvLine();
 }
@@ -622,7 +621,7 @@ void visitsBox::on_ButtonVisit_clicked()
     double visitPrice = settings.getVisitPrice(visitindex);
     ui->comboVisitType->setCurrentIndex(visitindex);
 
-    sqlbase->createNewVisit(ID,
+    sqlbase->createNewVisit(patientBasicDetails.ID,
                             visit.visitDateTime,
                             datetime,
                             visitindex,
@@ -632,7 +631,7 @@ void visitsBox::on_ButtonVisit_clicked()
                             ui->InvestigationsTable->getInvestigationsModel(),
                             sqlextra);
     ui->visitLists->clear();
-    ui->visitLists->populateWithVisitList(ID);
+    ui->visitLists->populateWithVisitList(patientBasicDetails.ID);
     updateVisitAge();
     emit newMessage("Information","A New follow up visit was Created");
     newVisitCreationInProgress=false;
@@ -857,7 +856,7 @@ void visitsBox::on_toolButtonRefresh_clicked()
     if(reply==QMessageBox::No)
         return;
 
-    fillVisit(sqlbase->getPatientVisitData(ID,comboSelectedDataTime));
+    fillVisit(sqlbase->getPatientVisitData(patientBasicDetails.ID,comboSelectedDataTime));
     emit newMessage("Information","Visit data was reloaded");
 }
 
@@ -917,7 +916,7 @@ bool sortDrugsStar(const QString &s1,const QString &s2)
 
 void visitsBox::on_buttonInvest_clicked()
 {
-    invesList invList(this,ID);
+    invesList invList(this,patientBasicDetails.ID);
     invList.toggleVisualEffects(settings.isVisualEffectsEnabled());
     invList.exec();
 }
@@ -1010,7 +1009,7 @@ void visitsBox::SyncToVisit()
         return;
     }
 
-    ui->vDrugsTable->loadPatientDrugsModel(ID,0,true);
+    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,0,true);
 }
 
 void visitsBox::SyncLastVisit()
@@ -1043,7 +1042,7 @@ void visitsBox::SyncLastVisit()
         emit newMessage("Warning","Visit drugs list should be empty prior filling from last visit drugs.");
         return;
     }
-    ui->vDrugsTable->loadPatientDrugsModel(ID,date,true);
+    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,date,true);
 
 }
 
@@ -1075,9 +1074,9 @@ void visitsBox::addNewInvestigation(QString newInvName)
         price = sqlextra->getPaidServicePrice(newInvName);
     }
 
-    ui->InvestigationsTable->addNewInvest(ID,julianDate,newInvName,state,price);
+    ui->InvestigationsTable->addNewInvest(patientBasicDetails.ID,julianDate,newInvName,state,price);
     emit insertUniqueItem(newInvName,"investigationsLine");
-    ui->InvestigationsTable->saveInvestigation(ID,julianDate);
+    ui->InvestigationsTable->saveInvestigation(patientBasicDetails.ID,julianDate);
 }
 
 void visitsBox::addNewDrug(QString newDrugName)
@@ -1179,12 +1178,12 @@ bool visitsBox::doesHaveDrugsInLastVisit()
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     QDateTime dt = locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
     int date = static_cast<int>(dt.date().toJulianDay());
-    return (getDrugsCountForVists(ID,date) > 0);
+    return (getDrugsCountForVists(patientBasicDetails.ID,date) > 0);
 }
 
 bool visitsBox::doeshaveDrugsInPatient()
 {
-    return (getPatientsDrugsCount(ID) > 0);
+    return (getPatientsDrugsCount(patientBasicDetails.ID) > 0);
 }
 
 void visitsBox::toggleDateFollowup()
@@ -1346,7 +1345,7 @@ int visitsBox::followNotify(const QDate &date)
 {
     QLocale en_US = QLocale(QLocale::English,QLocale::UnitedStates);
 
-    int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(date,ID)+1;
+    int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(date,patientBasicDetails.ID)+1;
     if ( selectedDateFollowUps > maxFollowUps && maxFollowUps > 0)
     {
         newMessage("Message",
@@ -1369,20 +1368,17 @@ int visitsBox::followNotify(const QDate &date)
 mSettings::Roshetta visitsBox::getRoshetta()
 {
     mSettings::Roshetta roshetta;
-    roshetta.ID = QStringLiteral("%1").arg(ID, 5, 10, QLatin1Char('0'));
-    roshetta.name = pName;
-    roshetta.printableAge = printableAge;
+
+    roshetta.ID = QStringLiteral("%1").arg(patientBasicDetails.ID, 5, 10, QLatin1Char('0'));
+    roshetta.name = patientBasicDetails.Name;
+    roshetta.age = patientBasicDetails.age;
+    roshetta.sex = patientBasicDetails.sex;
     roshetta.Diagnosis = ui->Diagnosis->text().simplified();
     roshetta.visitDate = ui->visitLists->getParentVisitDate(ui->visitLists->currentIndex());
-
-    if(ui->CheckButtonCaseClose->isChecked())
-        roshetta.nextDate = roshetta.getNextFromJulian(ui->dateFollowUp->date().toJulianDay());
-    else
-        roshetta.nextDate = QDate::fromJulianDay(ui->dateFollowUp->date().toJulianDay()).toString("ddd dd/MM/yyyy");
-
-
+    roshetta.nextDate = ui->dateFollowUp->date();
+    roshetta.printedinDate = QDateTime::currentDateTime();
+    roshetta.caseClosed = ui->CheckButtonCaseClose->isChecked();
     roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex());
-
     roshettaDrugsfiller(roshetta.baseDrugsList,getDrugsModel(),false);
     roshettaDrugsfiller(roshetta.currentDrugsList,ui->vDrugsTable->getDrugsModel(),false);
     roshettaDrugsfiller(roshetta.baseAlteredDrugsList,getDrugsModel(),true);
@@ -1392,10 +1388,6 @@ mSettings::Roshetta visitsBox::getRoshetta()
             roshetta.requests << inv;
 
     roshettaVitalsFiller(roshetta.vitals);
-
-
-    QLocale locale(QLocale::English, QLocale::UnitedStates);
-    roshetta.printedinDate = locale.toString(QDateTime::currentDateTime(),"dddd dd/MM/yyyy hh:mm AP");
 
     return roshetta;
 }
@@ -1423,9 +1415,7 @@ void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel
             dataHelper::cleanDrugName(drug.TradeName);
         }
         drug.TradeName.insert(0,"℞  ");
-        //mDebug() << drug.TradeName;
         drug.Dose = drugsModel->item(i,2)->text();
-        dataHelper::switchToEasternArabic(drug.Dose);
         drug.StartDate = QDate::fromJulianDay(drugsModel->item(i,3)->text().toInt()).toString("dd/MM/yyyy");
         drugs<< drug;
     }
@@ -1446,7 +1436,7 @@ void visitsBox::roshettaVitalsFiller(mSettings::Vitals &vitals)
 void visitsBox::setVitalsPlaceHolderText()
 {
     QString lastVisitDateTimeString = ui->visitLists->itemText(ui->visitLists->currentIndex()+1);
-    mSettings::Vitals placeHolderText = sqlbase->getPatientVisitVitals(ID,lastVisitDateTimeString);
+    mSettings::Vitals placeHolderText = sqlbase->getPatientVisitVitals(patientBasicDetails.ID,lastVisitDateTimeString);
     ui->pPulse->setPlaceholderText(placeHolderText.pulse <= 0 ? QString():QString::number(placeHolderText.pulse));
     ui->pRR->setPlaceholderText(placeHolderText.RR <= 0 ? QString():QString::number(placeHolderText.RR));
     ui->pTemp->setPlaceholderText(placeHolderText.T <= 0 ? QString():QString::number(placeHolderText.T));
@@ -1470,7 +1460,7 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
         emit syncLMPDateWithPatients(ui->lmpDate->date());
 
     sqlBase::visitData visitData;
-    visitData.ID =  ID;
+    visitData.ID =  patientBasicDetails.ID;
     visitData.visit = visit;
     visitData.visitDateTime = visit.visitDateTime;
     visitData.visitDate = visitDateTime2JulianDate();
@@ -1501,7 +1491,7 @@ void visitsBox::toggleSyncPrintButtons()
     ui->buttonRemoveDrug->setEnabled(vEditMode && ui->vDrugsTable->selectionModel()->hasSelection());
 }
 
-void visitsBox::setPatient(int id, QString Age, QString Name, QString fpal)
+void visitsBox::setPatient(visitsBox::mPatientBasicDetails &_patientBasicDetails)
 {
     aboutToClose = false;
     vEditMode = true;
@@ -1509,15 +1499,14 @@ void visitsBox::setPatient(int id, QString Age, QString Name, QString fpal)
     ui->visitLists->clear();
     clearVisit();
     emit styleVitals(settings);
-    pAge = Age;
-    pName = Name;
-    FPAL = fpal;
-    ID = id;
-    ui->patientName->setText(pName);
-    ui->fpal->setText(FPAL);
 
-    ui->InvestigationsTable->setPatientID(ID);
-    ui->visitLists->populateWithVisitList(ID);
+    this->patientBasicDetails = _patientBasicDetails;
+
+    ui->patientName->setText(patientBasicDetails.Name);
+    ui->fpal->setText(patientBasicDetails.fPal);
+
+    ui->InvestigationsTable->setPatientID(patientBasicDetails.ID);
+    ui->visitLists->populateWithVisitList(patientBasicDetails.ID);
     ui->lmpDate->setDate(QDate::currentDate());
     ui->eddDate->setHidden(!ui->checkBoxAntenatal->isChecked());
     ui->labelEDD->setHidden(!ui->checkBoxAntenatal->isChecked());

@@ -17,7 +17,7 @@ class dataHelper : public QObject
 {
     Q_OBJECT
 public:
-    enum AgeStyle{compact,expanded,normal};
+    enum AgeStyle{compact,expanded,normal,printable};
     enum Speciality{InternalMedicine=0,
                     Paediatrics=1,
                     Orthopaedics=2,

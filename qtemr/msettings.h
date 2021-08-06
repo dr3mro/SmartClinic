@@ -95,6 +95,11 @@ public:
         QString StartDate;
     };
 
+    enum mSex{
+        male,
+        female
+    };
+
     struct mDiet{
         bool printRequired=false;
         QString contents="";
@@ -154,12 +159,14 @@ public:
 
         QString ID;
         QString name;
-        QString printableAge;
+        mSex sex;
+        int age;
         QString Diagnosis;
         Vitals vitals;
-        QString visitDate;
-        QString printedinDate;
-        QString nextDate;
+        QDate visitDate;
+        QDate nextDate;
+        QDateTime printedinDate;
+        bool caseClosed;
         QString visitSymbole;
         QList<drug> currentDrugsList;
         QList<drug> baseDrugsList;
