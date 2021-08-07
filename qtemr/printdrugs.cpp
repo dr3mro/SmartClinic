@@ -91,6 +91,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked,Qt::QueuedConnection);
     connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked,Qt::QueuedConnection);
     connect(ui->preferArabic,&Switch::clicked,this,&printDrugs::preferArabic_clicked,Qt::QueuedConnection);
+    connect(ui->showStartDate,&Switch::clicked,this,&printDrugs::showStartDate_clicked,Qt::QueuedConnection);
 
     connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged,Qt::QueuedConnection);
     connect(ui->logoSize,&QComboBox::textActivated,this,&printDrugs::logoSize_activated,Qt::QueuedConnection);
@@ -195,6 +196,8 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->showDoseNewLine->setChecked(printSettings.showDoseNewLine);
 
     ui->preferArabic->setChecked(printSettings.preferArabic);
+    ui->showStartDate->setChecked(printSettings.showStartDate);
+    ui->showStartDate->setEnabled(printSettings.showDoseNewLine);
 
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
@@ -243,6 +246,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.showDoseNewLine = ui->showDoseNewLine->isChecked();
 
     printSettings.preferArabic = ui->preferArabic->isChecked();
+    printSettings.showStartDate = ui->showStartDate->isChecked();
 
     return printSettings;
 }
@@ -647,12 +651,19 @@ void printDrugs::showTradeNamesBold_clicked(bool checked)
 void printDrugs::showDoseNewLine_clicked(bool checked)
 {
     pSettings.showDoseNewLine = checked;
+    ui->showStartDate->setEnabled(checked);
     refreshView();
 }
 
 void printDrugs::preferArabic_clicked(bool checked)
 {
     pSettings.preferArabic = checked;
+    refreshView();
+}
+
+void printDrugs::showStartDate_clicked(bool checked)
+{
+    pSettings.showStartDate = checked;
     refreshView();
 }
 

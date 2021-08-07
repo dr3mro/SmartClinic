@@ -425,7 +425,7 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
 
         if(roshettaSettings.showDrugsInitDate && roshettaSettings.showDoseNewLine){
             c.insertHtml(QString("<div align=left dir=LTR %4>%1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
-                         .arg(d.TradeName," ▶ ",d.StartDate,tradeNameStyle));
+                         .arg(d.TradeName,roshettaSettings.showStartDate ? " ▶ ":"",roshettaSettings.showStartDate ?d.StartDate:"",tradeNameStyle));
         }else{
             c.insertHtml(QString("<div align=left dir=LTR %2>%1</div>")
                          .arg(d.TradeName,tradeNameStyle));

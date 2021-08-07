@@ -403,6 +403,30 @@
               </layout>
              </item>
              <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_15">
+               <item>
+                <widget class="QLabel" name="label_26">
+                 <property name="text">
+                  <string>show drugs start date.</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Switch" name="showStartDate">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
               <widget class="Line" name="line">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>

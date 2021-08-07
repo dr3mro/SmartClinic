@@ -91,6 +91,7 @@ private slots:
     void showTradeNamesBold_clicked(bool checked);
     void showDoseNewLine_clicked(bool checked);
     void preferArabic_clicked(bool checked);
+    void showStartDate_clicked(bool checked);
     void pageMargin_valueChanged(int arg1);
     void logoSize_activated(const QString &arg1);
     void lockUnlockButton_toggled(bool checked);

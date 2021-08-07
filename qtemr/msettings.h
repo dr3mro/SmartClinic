@@ -465,6 +465,7 @@ public:
         bool showDoseNewLine=true;
 
         bool preferArabic=true;
+        bool showStartDate=true;
 
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
@@ -492,7 +493,8 @@ public:
                             showOnlyNewlyModifiedAddedDrugs,
                             showTradeNamesBold,
                             showDoseNewLine,
-                            preferArabic
+                            preferArabic,
+                            showStartDate
                             ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
                         prescriptionprintsettings.pageMargin,
@@ -518,7 +520,8 @@ public:
                         prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
                         prescriptionprintsettings.showTradeNamesBold,
                         prescriptionprintsettings.showDoseNewLine,
-                        prescriptionprintsettings.preferArabic); }
+                        prescriptionprintsettings.preferArabic,
+                        prescriptionprintsettings.showStartDate); }
     };
     struct lineStyle
     {
