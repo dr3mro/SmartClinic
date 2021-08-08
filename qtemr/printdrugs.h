@@ -17,7 +17,7 @@
 #include "colorpicker.h"
 #include <QSizeF>
 #include "wm_add2completer.h"
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QTextDocument>
 #include <QAbstractTextDocumentLayout>
 #include <QPageLayout>

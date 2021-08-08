@@ -9,7 +9,7 @@
 #include <QWidget>
 #include <QComboBox>
 #include <QWheelEvent>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 #include <QFuture>
 #include <QFutureWatcher>
 #include "wm_visitlistloader.h"

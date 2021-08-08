@@ -8,7 +8,7 @@
 #include <QDialog>
 #include <QMovie>
 #include <QCloseEvent>
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QFuture>
 #include "msettings.h"
 #include "optimizer.h"

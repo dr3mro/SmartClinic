@@ -7,7 +7,7 @@
 
 #include <QWidget>
 #include "sqlbase.h"
-#include <QSqlDatabase>
+#include <QtSql/QSqlDatabase>
 #include "mdebug.h"
 
 

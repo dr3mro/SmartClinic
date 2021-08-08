@@ -7,7 +7,7 @@
 
 #include <QObject>
 #include <QTimer>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 #include "wm_mship.h"
 #include "internet.h"
 #include "email.h"

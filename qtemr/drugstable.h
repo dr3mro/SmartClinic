@@ -17,7 +17,7 @@
 #include <QLabel>
 
 #include <QFuture>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 
 #include "setdosedrugnamewidget.h"
 #include "sqlextra.h"

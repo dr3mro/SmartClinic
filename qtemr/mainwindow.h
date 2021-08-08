@@ -15,7 +15,7 @@
 #include <QLocale>
 #include <QGraphicsBlurEffect>
 #include <QShortcut>
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QFutureWatcher>
 #include <QTime>
 #include "mdebug.h"

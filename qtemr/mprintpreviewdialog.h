@@ -6,8 +6,8 @@
 #define MPRINTPREVIEWDIALOG_H
 
 #include <QObject>
-#include <QPrintPreviewDialog>
-#include <QPrinter>
+#include <QtPrintSupport/QPrintPreviewDialog>
+#include <QtPrintSupport/QPrinter>
 #include <QToolBar>
 #include <QShortcut>
 #include "mdebug.h"

@@ -21,7 +21,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <QTextStream>
 #include <QtWidgets/QMessageBox>
 #include <QByteArray>
-#include <QSslSocket>
+#include <QtNetwork/QSslSocket>
 #include "globalvariables.h"
 #include "build.h"
 

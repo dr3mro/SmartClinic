@@ -10,7 +10,7 @@
 #include <QTextStream>
 #include <QStandardItemModel>
 #include <QXmlStreamReader>
-#include <QDomDocument>
+#include <QtXml/QDomDocument>
 #include <QFileInfo>
 #include <QDir>
 #include "mdebug.h"

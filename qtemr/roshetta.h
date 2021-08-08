@@ -12,7 +12,7 @@
 #include "dataiohelper.h"
 #include "datahelper.h"
 #include "msettings.h"
-#include "PageMetrics.h"
+#include "3rdparty/pagedTextEdit/PageMetrics.h"
 
 class Roshetta : public QObject
 {

@@ -9,6 +9,7 @@
 #include <QLineEdit>
 #include <QRegExpValidator>
 #include <QString>
+#include <QMouseEvent>
 #include <datahelper.h>
 #include <msettings.h>
 

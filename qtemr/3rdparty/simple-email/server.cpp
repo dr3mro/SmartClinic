@@ -16,9 +16,9 @@
 #include "server_p.h"
 #include "serverreply.h"
 
-#include <QSslSocket>
-#include <QTcpSocket>
-#include <QHostInfo>
+#include <QtNetwork/QSslSocket>
+#include <QtNetwork/QTcpSocket>
+#include <QtNetwork/QHostInfo>
 #include <QMessageAuthenticationCode>
 #include <QLoggingCategory>
 

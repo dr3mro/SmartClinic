@@ -3,6 +3,8 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "msettings.h"
+#include "datahelper.h"
+
 mSettings &mSettings::instance()
 {
     static mSettings s_instance;

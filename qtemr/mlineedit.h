@@ -9,7 +9,7 @@
 #include <QLineEdit>
 #include <QStringListModel>
 #include <QKeyEvent>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 #include <QFuture>
 #include <QFutureWatcher>
 #include "mcompleter.h"

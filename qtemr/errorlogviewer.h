@@ -9,7 +9,7 @@
 #include <QTimer>
 #include <QByteArray>
 #include <QKeyEvent>
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QFutureWatcher>
 #include <QScrollBar>
 #include <QIcon>

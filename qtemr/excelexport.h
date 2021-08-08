@@ -6,9 +6,10 @@
 #define EXCELEXPORT_H
 
 #include <QObject>
-#include <QtSql>
-#include <QSqlDatabase>
-#include <QSqlQuery>
+#include <QtSql/QSql>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
 #include "mdebug.h"
 
 

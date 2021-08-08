@@ -10,7 +10,7 @@
 #include <QtGui>
 #include <QObject>
 #include <QFuture>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 #include "dataiohelper.h"
 #include "wm_invmodelloader.h"
 #include "sqlbase.h"

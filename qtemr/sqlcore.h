@@ -6,7 +6,7 @@
 #define SQLCORE_H
 
 #include <QObject>
-#include <QtSql>
+#include <QtSql/QtSql>
 #include <QStandardItemModel>
 #include <QStringList>
 #include "mdebug.h"

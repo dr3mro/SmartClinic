@@ -6,7 +6,7 @@
 #define MSQL_H
 
 #include <QObject>
-#include <QtSql>
+#include <QtSql/QtSql>
 #include "mdebug.h"
 #include "msettings.h"
 class msql : public QObject

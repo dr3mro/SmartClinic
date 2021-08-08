@@ -17,7 +17,7 @@
 #include "wm_texteditcompleterloader.h"
 #include <QFuture>
 #include <QFutureWatcher>
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 
 
 class QCompleter;

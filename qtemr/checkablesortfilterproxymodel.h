@@ -6,7 +6,7 @@
 #define CHECKABLESORTFILTERPROXYMODEL_H
 
 #include <QSortFilterProxyModel>
-#include <QSqlQueryModel>
+#include <QtSql/QSqlQueryModel>
 #include <QObject>
 
 class CheckableSortFilterProxyModel : public QSortFilterProxyModel

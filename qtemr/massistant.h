@@ -10,7 +10,7 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QMessageBox>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QShortcut>

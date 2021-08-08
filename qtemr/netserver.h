@@ -6,11 +6,15 @@
 #define NETSERVER_H
 
 #include <QObject>
-#include <QTcpServer>
-#include <QTcpSocket>
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
+#include <QtNetwork/QUdpSocket>
+#include <QtNetwork/QNetworkInterface>
+#include <QTimer>
 #include <QDebug>
 #include <QDataStream>
 #include <QFile>
+#include "mdebug.h"
 
 
 class NetServer : public QObject

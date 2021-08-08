@@ -7,7 +7,7 @@
 
 #include <QObject>
 #include <QtCore>
-#include <QNetworkInterface>
+#include <QtNetwork/QNetworkInterface>
 #include <QFile>
 #include <QList>
 #include <QSettings>

@@ -13,7 +13,7 @@
 #include "sqlbase.h"
 #include <QKeyEvent>
 #include <QSettings>
-#include <QtConcurrentRun>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QFutureWatcher>
 #include <QStandardItemModel>
 

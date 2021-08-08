@@ -6,7 +6,7 @@
 #define SQLEXTRA_H
 
 #include <QObject>
-#include <QtSql>
+#include <QtSql/QtSql>
 #include <QApplication>
 #include <QStringListModel>
 #include "sqlcore.h"

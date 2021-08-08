@@ -6,7 +6,7 @@
 #define SERVICEMODEL_H
 
 #include <QObject>
-#include <QSqlTableModel>
+#include <QtSql/QSqlTableModel>
 
 
 class serviceModel : public QSqlTableModel

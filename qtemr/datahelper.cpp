@@ -3,7 +3,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "datahelper.h"
-
+#include "msettings.h"
 dataHelper::dataHelper(QObject *parent) : QObject(parent)
 {
 

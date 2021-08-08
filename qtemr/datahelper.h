@@ -11,7 +11,6 @@
 #include <QCoreApplication>
 #include <QEventLoop>
 #include "mdebug.h"
-#include "msettings.h"
 
 class mSettings;
 

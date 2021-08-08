@@ -6,8 +6,8 @@
 #define SINGLEINSTANCE_H
 
 #include <QObject>
-#include <QLocalServer>
-#include <QLocalSocket>
+#include <QtNetwork/QLocalServer>
+#include <QtNetwork/QLocalSocket>
 #include "mdebug.h"
 
 class SingleInstance : public QObject

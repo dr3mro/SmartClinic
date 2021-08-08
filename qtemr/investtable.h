@@ -13,7 +13,7 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QFuture>
-#include <QtConcurrent>
+#include <QtConcurrent/QtConcurrent>
 #include <QEvent>
 #include "investmodel.h"
 #include "wm_invmodelloader.h"

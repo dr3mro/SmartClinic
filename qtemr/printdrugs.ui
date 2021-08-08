@@ -1647,7 +1647,7 @@
   <customwidget>
    <class>PagesTextEdit</class>
    <extends>QTextEdit</extends>
-   <header>pagestextedit.h</header>
+   <header>3rdparty\pagedTextEdit\PagesTextEdit.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -1660,6 +1660,7 @@
   <tabstop>Roshetta</tabstop>
  </tabstops>
  <resources>
+  <include location="resources.qrc"/>
   <include location="resources.qrc"/>
  </resources>
  <connections/>

@@ -9,7 +9,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
-#include <QSound>
+#include <QtMultimedia/QSound>
 #include <QApplication>
 #include <QMouseEvent>
 #include <QShowEvent>

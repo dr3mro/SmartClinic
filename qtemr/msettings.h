@@ -15,7 +15,7 @@
 #include "staticstrings.h"
 #include "mstyler.h"
 #include "datahelper.h"
-
+#include <math.h>
 class dataHelper;
 
 class mSettings : public QObject
