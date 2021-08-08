@@ -6,6 +6,15 @@
 cmake_minimum_required(VERSION 3.19)
 project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
 set(TARGET_NAME "smartClinic3")
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_WIN32_EXECUTABLE ON)
+
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -16,17 +25,31 @@ find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 find_package(Qt5Printsupport REQUIRED)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_WIN32_EXECUTABLE ON)
+add_library(Qt5Core STATIC IMPORTED)
+add_library(Qt5Widgets STATIC IMPORTED)
+add_library(Qt5Gui STATIC IMPORTED)
+add_library(Qt5Xml STATIC IMPORTED)
+add_library(Qt5Network STATIC IMPORTED)
+add_library(Qt5Sql STATIC IMPORTED)
+add_library(Qt5Multimedia STATIC IMPORTED)
+add_library(Qt5Concurrent STATIC IMPORTED)
+add_library(Qt5Printsupport STATIC IMPORTED)
 
-set(Qt5Core_DIR "C:/Qt/5.15.2/mingw81_32/lib/cmake/Qt5Core")
-set(Qt5_DIR "C:/Qt/5.15.2/mingw81_32/lib/cmake/Qt5")
-set(QT_QMAKE_EXECUTABLE "C:/Qt/5.15.2/mingw81_32/bin/qmake.exe")
+set(CMAKE_CXX_FLAGS_RELEASE "/W3 /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "/W3 /MTd")
+set(CMAKE_C_FLAGS_RELEASE "/W3 /MT")
+set(CMAKE_C_FLAGS_DEBUG "/W3 /MTd")
+
+
+set(Qt5Core_DIR "${CMAKE_PREFIX_PATH}/lib/cmake/Qt5Core")
+set(Qt5_DIR "${CMAKE_PREFIX_PATH}/lib/cmake/Qt5")
+set(QT_QMAKE_EXECUTABLE "${CMAKE_PREFIX_PATH}/bin/qmake.exe")
+
+if(MSVC)
+    add_definitions(/MP)
+endif()
+
+#message(STATUS "Qt Path" ${CMAKE_PREFIX_PATH} )
 
 set(SOURCES
     main.cpp
@@ -224,7 +247,17 @@ set(SOURCES
 qt5_add_resources(SOURCES resources.qrc)
 
 add_executable(${TARGET_NAME} ${SOURCES})
-target_link_libraries(${TARGET_NAME} Qt5::Widgets Qt5::Network Qt5::Multimedia Qt5::Sql Qt5::Concurrent Qt5::Xml Qt5::PrintSupport)
+target_link_libraries(${TARGET_NAME}
+    Qt5::Widgets
+    Qt5::Network
+    Qt5::Multimedia
+    Qt5::Sql
+    Qt5::Concurrent
+    Qt5::Xml
+    Qt5::PrintSupport
+    ${PROJECT_SOURCE_DIR}/zlib/msvc2017/zlib.lib
+    )
+
 # Keys ignored in scope 1:.:.:qtemr.pro:<TRUE>:
 # DISTFILES = "Graphics/newAppIcon.ico" "README.md" "BLUEPRINT.txt" "Graphics/AppIcon.ico" "ionicons/whatsapp.png"
 # OTHER_FILES = "MyApplication.rc" "Theme1.css" "TODO.txt"
