@@ -3287,7 +3287,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         QStandardItem *newCOUNT = new QStandardItem(QString::number(newVisitCOUNT));
         newCOUNT->setBackground(getVisitColors().at(0));
         newCOUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        QStandardItem *newSUBTOTAL = new QStandardItem(QString::number(subTotalNewVisits));
+        QStandardItem *newSUBTOTAL = new QStandardItem(QString::number(subTotalNewVisits,'f',2));
         newSUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         newSUBTOTAL->setBackground(getVisitColors().at(0));
         calcModel->appendRow(QList<QStandardItem*>() << newItem << newCOUNT << newSUBTOTAL);
@@ -3300,7 +3300,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         QStandardItem *follow1COUNT = new QStandardItem(QString::number(follow1VisitCOUNT));
         follow1COUNT->setBackground(getVisitColors().at(1));
         follow1COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        QStandardItem *follow1SUBTOTAL = new QStandardItem(QString::number(subTotalFollow1Visits));
+        QStandardItem *follow1SUBTOTAL = new QStandardItem(QString::number(subTotalFollow1Visits,'f',2));
         follow1SUBTOTAL->setBackground(getVisitColors().at(1));
         follow1SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         calcModel->appendRow(QList<QStandardItem*>() << followItem1 << follow1COUNT << follow1SUBTOTAL );
@@ -3314,7 +3314,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         QStandardItem *follow2COUNT = new QStandardItem(QString::number(follow2VisitCOUNT));
         follow2COUNT->setBackground(getVisitColors().at(2));
         follow2COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        QStandardItem *follow2SUBTOTAL = new QStandardItem(QString::number(subTotalFollow2Visits));
+        QStandardItem *follow2SUBTOTAL = new QStandardItem(QString::number(subTotalFollow2Visits,'f',2));
         follow2SUBTOTAL->setBackground(getVisitColors().at(2));
         follow2SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         calcModel->appendRow(QList<QStandardItem*>() << followItem2 << follow2COUNT << follow2SUBTOTAL );
@@ -3327,7 +3327,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         QStandardItem *follow3COUNT = new QStandardItem(QString::number(follow3VisitCOUNT));
         follow3COUNT->setBackground(getVisitColors().at(3));
         follow3COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        QStandardItem *follow3SUBTOTAL = new QStandardItem(QString::number(subTotalFollow3Visits));
+        QStandardItem *follow3SUBTOTAL = new QStandardItem(QString::number(subTotalFollow3Visits,'f',2));
         follow3SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         follow3SUBTOTAL->setBackground(getVisitColors().at(3));
         calcModel->appendRow(QList<QStandardItem*>() << followItem3 << follow3COUNT << follow3SUBTOTAL );
@@ -3340,7 +3340,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         QStandardItem *follow4COUNT = new QStandardItem(QString::number(follow4VisitCOUNT));
         follow4COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         follow4COUNT->setBackground(getVisitColors().at(4));
-        QStandardItem *follow4SUBTOTAL = new QStandardItem(QString::number(subTotalFollow4Visits));
+        QStandardItem *follow4SUBTOTAL = new QStandardItem(QString::number(subTotalFollow4Visits,'f',2));
         follow4SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         follow4SUBTOTAL->setBackground(getVisitColors().at(4));
         calcModel->appendRow(QList<QStandardItem*>() << followItem4 << follow4COUNT << follow4SUBTOTAL );
@@ -3353,7 +3353,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         QStandardItem *freeCOUNT = new QStandardItem(QString::number(freeVisitCOUNT));
         freeCOUNT->setBackground(getVisitColors().at(5));
         freeCOUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        QStandardItem *freeSUBTOTAL = new QStandardItem(QString::number(subTotalFree));
+        QStandardItem *freeSUBTOTAL = new QStandardItem(QString::number(subTotalFree,'f',2));
         freeSUBTOTAL->setBackground(getVisitColors().at(5));
         freeSUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         calcModel->appendRow(QList<QStandardItem*>() << freeItem << freeCOUNT << freeSUBTOTAL );

@@ -129,13 +129,13 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
         QRegularExpression re("\\d*");
 
         // check if str is a phone number
-        if (re.match(str,QRegularExpression::NormalMatch).hasMatch() && ( str.startsWith("0",Qt::CaseInsensitive) || str.startsWith("+",Qt::CaseInsensitive)))
+        if (re.match(str,QRegularExpression::PartialPreferFirstMatch).hasMatch() && ( str.startsWith("0",Qt::CaseInsensitive) || str.startsWith("+",Qt::CaseInsensitive)))
         {
             ui->PatientListTableView->setFiletrByMobile();
-            ui->PatientListTableView->sortByColumn(0,Qt::AscendingOrder);
+            ui->PatientListTableView->sortByColumn(2,Qt::AscendingOrder);
         }
         // check if str is ID
-        else if ( re.match(str,QRegularExpression::NormalMatch).hasMatch())
+        else if ( re.match(str,QRegularExpression::PartialPreferFirstMatch).hasMatch())
         {
             ui->PatientListTableView->setFilterByID();
             ui->PatientListTableView->sortByColumn(0,Qt::AscendingOrder);
@@ -152,12 +152,12 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
     if(isFuzzySearchEnabled)
     {
         str.replace(" ","*");
-        str.replace(QRegularExpression("[آ|أ|إ|ا]"),"[آ,أ,إ,ا]");
-        str.replace(QRegularExpression("[ه|ة]"),"[ه,ة]");
-        str.replace(QRegularExpression("[ى|ي]"),"[ى,ي]");
+        str.replace(QRegularExpression("[آ|أ|إ|ا]",QRegularExpression::PatternOption::InvertedGreedinessOption),"[آ,أ,إ,ا]");
+        str.replace(QRegularExpression("[ه|ة]",QRegularExpression::PatternOption::InvertedGreedinessOption),"[ه,ة]");
+        str.replace(QRegularExpression("[ى|ي]",QRegularExpression::PatternOption::InvertedGreedinessOption),"[ى,ي]");
         str.replace(QString("بو"),"[ب][و]*");
         str.replace(QString("عبد"),"[ع][ب][د]*");
-        str.replace(QRegularExpression("(?<!ب)[ؤ,و]+[ء]*"),"[ؤ,و]*");
+        str.replace(QRegularExpression("(?<!ب)[ؤ,و]+[ء]*",QRegularExpression::PatternOption::InvertedGreedinessOption),"[ؤ,و]*");
     }
 
 
