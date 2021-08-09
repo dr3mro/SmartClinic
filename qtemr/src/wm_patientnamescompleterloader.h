@@ -6,6 +6,7 @@
 #define WM_PATIENTNAMESCOMPLETERLOADER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "sqlbase.h"
 
 class wm_patientnamesCompleterLoader : public QObject

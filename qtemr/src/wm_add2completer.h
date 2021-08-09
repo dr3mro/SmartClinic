@@ -6,6 +6,7 @@
 #define WM_ADD2COMPLETER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "sqlextra.h"
 #include "datahelper.h"
 #include "sqlbase.h"

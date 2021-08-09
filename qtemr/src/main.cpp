@@ -273,12 +273,8 @@ int main(int argc, char *argv[])
     seatBelt(cInstance,banner);
     QObject::connect(&cInstance,SIGNAL(doAction()),&w,SLOT(showMainwindowIfMinimizedToTray()));
     cInstance.listen(singleInstance);
-    banner->updateprogress(QString("creating random hook"));
-    QTime time = QTime::currentTime();
-    qsrand((static_cast<uint>(time.msec())));
-    banner->updateprogress(QString("creating application main parts"));
     w.boot();
-    QRect screenres = QApplication::desktop()->screenGeometry(QCursor::pos());
+    QRect screenres = qApp->screenAt(QCursor::pos())->geometry();
     w.move(QPoint(screenres.x(), screenres.y()));
     w.showMaximized();
     banner->updateprogress(QString("Starting Application"));
@@ -290,11 +286,5 @@ int main(int argc, char *argv[])
     auto exitCode = a.exec();
     //_CrtDumpMemoryLeaks();
     
-    //int* p = new int();
-    //int n = 5;
-    //p = &n;
-    //while (n--) {
-    //    new int;
-    //}
     return  exitCode;// a.exec();;
 }

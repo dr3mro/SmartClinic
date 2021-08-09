@@ -6,6 +6,7 @@
 #define WM_DRUGMODELLOADER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "drugsitemmodel.h"
 #include "sqlbase.h"
 

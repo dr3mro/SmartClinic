@@ -246,7 +246,7 @@ private:
     toast tNotify;
     QStringList notificationsList;
     notifications notifyWidget;
-    QRegExpValidator phoneValidator;
+    QRegularExpressionValidator phoneValidator;
     bool drugsAltered=false;
     bool allergiesAltered=false;
     bool opAdAltered=false;

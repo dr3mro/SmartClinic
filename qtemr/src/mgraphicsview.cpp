@@ -69,7 +69,7 @@ void mGraphicsView::wheelEvent(QWheelEvent *event)
 {
     double scaleFactor = 1.05;
 
-    if(event->delta() > 0)
+    if(event->angleDelta().ry() > 0)
         scale(scaleFactor, scaleFactor);
     else
         scale(1.0 / scaleFactor, 1.0 / scaleFactor);

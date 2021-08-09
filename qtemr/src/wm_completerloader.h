@@ -6,6 +6,7 @@
 #define WM_COMPLETERLOADER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "sqlbase.h"
 #include "sqlextra.h"
 
@@ -26,7 +27,6 @@ private:
     QString tableName;
     sqlExtra *sqlextra=nullptr;
     QString connectionName;
-    
 };
 
 #endif // WM_COMPLETERLOADER_H

@@ -9,6 +9,7 @@
 #include <QtSql/QtSql>
 #include <QApplication>
 #include <QStringListModel>
+#include <QRandomGenerator>
 #include "sqlcore.h"
 #include "servicemodel.h"
 #include "msql.h"

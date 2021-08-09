@@ -7,8 +7,7 @@
 wm_drugModelLoader::wm_drugModelLoader(QObject *parent) : QObject(parent)
 {
     connectionName = QString("qt_sql_base_drugsModel_%1_%2")
-            .arg(qrand())
-            .arg(qrand());
+            .arg(QRandomGenerator::global()->bounded(0,9999999),QRandomGenerator::global()->bounded(0,9999999));
     sqlbase = new sqlBase(this,connectionName,false);
 }
 

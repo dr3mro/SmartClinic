@@ -17,14 +17,13 @@ QString regApp::genDeviceID()
 {
     QString unique_device_id;
     QProcess p1;
-    p1.start(QString ("wmic bios get serialnumber"));
+    p1.start("wmic",QStringList({"bios", "get", "serialnumber"}));
     p1.waitForStarted();
     p1.waitForFinished();
 
     QSettings settings1("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS",QSettings::NativeFormat);
     QString key1 = settings1.value("BaseBoardManufacturer","0").toString().split(" ").at(0);
     QString key2 = settings1.value("BaseBoardProduct","0").toString().split(" ").at(0);
-
 
     QString bios_serial = QString::fromLocal8Bit( p1.readAll()).split("\n").at(1).simplified();
 

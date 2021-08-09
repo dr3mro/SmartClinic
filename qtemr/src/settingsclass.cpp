@@ -12,8 +12,8 @@ settingsClass::settingsClass(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    exConName = QString("qt_sql_extra_settings_connection_%1").arg(qrand());
-    bsConName = QString("qt_sql_base_settings_connection_%1").arg(qrand());
+    exConName = QString("qt_sql_extra_settings_connection_%1").arg(QRandomGenerator::global()->bounded(0,9999999));
+    bsConName = QString("qt_sql_base_settings_connection_%1").arg(QRandomGenerator::global()->bounded(0,9999999));
     sqlextra = new sqlExtra(this,exConName,false);
     sqlbase = new sqlBase(this,bsConName,false);
 
@@ -39,8 +39,8 @@ settingsClass::settingsClass(QWidget *parent) :
     ui->EncryptionProgress->setMovie(movie);
 
     setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
-    QDesktopWidget* m = QApplication::desktop();
-    QRect desktop = m->screenGeometry(m->screenNumber(QCursor::pos()));
+
+    QRect desktop = qApp->screenAt(QCursor::pos())->geometry();
 
     if (desktop.size() == QSize(800,600))
     {

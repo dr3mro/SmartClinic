@@ -46,7 +46,7 @@ public slots:
 private:
     Ui::miniUpdater *ui;
     QTimer *timeOut;
-    QTime clock;
+    QElapsedTimer clock;
     microUpdater *microupdater;
     fileGrabber *updateFileGraber;
     QString updateUrl,updateMD5,latestVersion,latestBuildNo,latestBuildDate,latestBuildTime,updateMessage;

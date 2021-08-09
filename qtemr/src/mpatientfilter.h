@@ -23,7 +23,7 @@ signals:
     void focusPatientTable();
     void toggleFilters(bool);
 private:
-    QRegExpValidator validator;
+    QRegularExpressionValidator validator;
 };
 
 #endif // MPATIENTFILTER_H

@@ -182,7 +182,7 @@ QString mStyler::getThemePath(QString theme)
 {
     foreach(QString t, getPackagedThemes() )
     {
-        if(theme == t.remove(QRegExp(".ini$")))
+        if(theme == t.remove(QRegularExpression(".ini$")))
             return QString(":/Themes/%1.ini").arg(theme);
     }
     return QString("%1\\themes\\%2.ini").arg(dataIOhelper::getCurrentFolder()).arg(theme);
@@ -194,7 +194,7 @@ QStringList mStyler::getPackagedThemes()
     foreach(QString t, QDir(":/Themes/").entryList() )
     {
         if(!t.endsWith(".css"))
-        packagedThemes << t.remove(QRegExp(".ini$"));
+        packagedThemes << t.remove(QRegularExpression(".ini$"));
     }
     return packagedThemes;
 }
@@ -205,7 +205,7 @@ QStringList mStyler::getNonPackagedThemes()
     foreach(QString t, QDir(QString("%1\\themes\\").arg(dataIOhelper::getCurrentFolder())).entryList() )
     {
         if(t.endsWith(".ini"))
-            nonPackagedThemes << t.remove(QRegExp(".ini$"));
+            nonPackagedThemes << t.remove(QRegularExpression(".ini$"));
     }
     return nonPackagedThemes;
 }

@@ -6,7 +6,7 @@
 #define SEARCHWIDGET_H
 
 #include <QWidget>
-#include <QValidator>
+#include <QRegularExpressionValidator>
 #include <QString>
 
 namespace Ui {
@@ -48,7 +48,7 @@ private:
     void filterToggled();
     bool filtersVisibility=false;
     bool isFuzzySearchEnabled=true;
-    QRegExpValidator validator;
+    QRegularExpressionValidator validator;
 
 signals:
     void loadPatient();

@@ -6,6 +6,7 @@
 #define WM_VISITLISTLOADER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "sqlbase.h"
 
 class wm_visitListLoader : public QObject
@@ -19,7 +20,6 @@ private:
     sqlBase *sqlbase;
     int ID;
     QString connectionName;
-    
 
 public slots:
     QVector<sqlBase::visitItem> Work();

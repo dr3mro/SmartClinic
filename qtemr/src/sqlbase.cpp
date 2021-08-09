@@ -950,7 +950,7 @@ QVector<sqlBase::visitItem> sqlBase::getPatientVisits(int ID)
         vector.append(item);
     }
     query->finish();
-    qSort(vector.begin(),vector.end(),sortVisits);
+    std::sort(vector.begin(),vector.end(),sortVisits);
 
     if(vector.isEmpty())
     {

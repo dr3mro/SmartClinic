@@ -99,7 +99,7 @@
 #include <QCloseEvent>
 #include <QStyledItemDelegate>
 #include <QHeaderView>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QScrollBar>
 #include <QIcon>
 #include <QFileSystemWatcher>
@@ -137,7 +137,7 @@
 #include "wm_mship.h"
 #include "email.h"
 #include "regapp.h"
-#include "3rdparty/smtp/smtp.h"
+#include "3rdparty/simple-email/SimpleMail"
 #include "errorlogviewer.h"
 #include "m_ClickableLabel.h"
 #include "setdosedrugnamewidget.h"

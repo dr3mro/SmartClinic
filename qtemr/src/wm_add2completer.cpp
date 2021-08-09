@@ -6,7 +6,7 @@
 
 wm_add2Completer::wm_add2Completer(QObject *parent) : QObject(parent)
 {
-    connectionName = QString("qt_sql_extra_add2Completer_%1_%2").arg(qrand()).arg(QTime::currentTime().msecsSinceStartOfDay());
+    connectionName = QString("qt_sql_extra_add2Completer_%1_%2").arg(QRandomGenerator::global()->bounded(0,9999999)).arg(QTime::currentTime().msecsSinceStartOfDay());
     sqlextra = new sqlExtra(this,connectionName,false);
 }
 
@@ -46,14 +46,14 @@ void wm_add2Completer::vWork()
 {
     if ( autocompletebyword )
     {
-        QStringList complaints = visit.presentation.split(QRegularExpression("\\s"),QString::SkipEmptyParts);
+        QStringList complaints = visit.presentation.split(QRegularExpression("\\s"),Qt::SkipEmptyParts);
         foreach (QString c, complaints )
         {
             if ( c.length() > 2 )
                 sqlextra->addToAutoComplete("complaints",c);
         }
 
-        QStringList diagnoses = visit.diagnosis.split(QRegularExpression("\\s"),QString::SkipEmptyParts);
+        QStringList diagnoses = visit.diagnosis.split(QRegularExpression("\\s"),Qt::SkipEmptyParts);
         foreach (QString d, diagnoses )
         {
             if ( d.length() > 2 )
@@ -101,7 +101,7 @@ void wm_add2Completer::saveDicts(QStringList dicts)
     {
         foreach ( QString w , splitDict(d) )
         {
-            if ( w.length() > 2 && !w.contains(QRegExp("^\\d")) )
+            if ( w.length() > 2 && !w.contains(QRegularExpression("^\\d")) )
                 sqlextra->addToAutoComplete("dictionary",w);
         }
     }
@@ -110,5 +110,5 @@ void wm_add2Completer::saveDicts(QStringList dicts)
 QStringList wm_add2Completer::splitDict(QString &dict)
 {
     QString plainText = dataHelper::cleanHTML(dict);
-    return plainText.split(QRegExp("[\r\n\t ]+"), QString::SkipEmptyParts);
+    return plainText.split(QRegularExpression("[\r\n\t ]+"), Qt::SkipEmptyParts);
 }

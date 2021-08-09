@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.19)
 project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
 
+
+add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
+
 if (MSVC)
-    add_compile_definitions(MEMLEAK 0)
+    add_compile_definitions(MEMLEAK=0)
     add_compile_definitions(/MP)
 else()
     add_compile_options()
@@ -45,14 +48,14 @@ file(GLOB_RECURSE HEADERS src/*.h)
 file(GLOB_RECURSE UI src/*.ui)
 
 qt5_add_resources(SOURCES res/resources.qrc)
-qt5_wrap_ui(SOURCES ${UI})
+qt5_wrap_ui(${UI})
 
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/res/MyApplication.rc")
 
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
-add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${APP_ICON_RESOURCE_WINDOWS})
+add_executable(${TARGET_NAME} WIN32 ${UI} ${SOURCES} ${HEADERS} ${APP_ICON_RESOURCE_WINDOWS})
 set_property(TARGET ${TARGET_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 target_precompile_headers(${TARGET_NAME} PRIVATE src/pch.h)

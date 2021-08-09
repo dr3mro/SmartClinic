@@ -6,7 +6,7 @@
 
 wm_invModelLoader::wm_invModelLoader(QObject *parent) : QObject(parent)
 {
-    r = qrand();
+    r = QRandomGenerator::global()->bounded(0,9999999);
     connectionName = QString("qt_sql_base_investigations_%1").arg(r);
     sqlbase = new sqlBase(this,connectionName,false);
 }

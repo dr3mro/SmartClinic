@@ -6,6 +6,7 @@
 #define WM_INVMODELLOADER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "investmodel.h"
 #include "sqlbase.h"
 

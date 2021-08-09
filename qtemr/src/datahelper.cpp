@@ -148,13 +148,13 @@ QString dataHelper::getVisitType(int visitType, mSettings &settings)
 
 void dataHelper::cleanExpanderHTML(QString &expander)
 {
-    expander.remove(QRegExp("style=\\\"([^\"]*)\\\"", Qt::CaseInsensitive));
-    expander.remove(QRegExp("\\n", Qt::CaseInsensitive));
-    expander.remove(QRegExp("<p ><span >", Qt::CaseInsensitive));
-    expander.replace(QRegExp("</span></p>"),"<br>");
-    expander.remove(QRegExp("^.*<body >", Qt::CaseInsensitive));
-    expander.remove(QRegExp("<br><body>", Qt::CaseInsensitive));
-    expander.remove(QRegExp("<br></body></html>", Qt::CaseInsensitive));
+    expander.remove(QRegularExpression("style=\\\"([^\"]*)\\\"", QRegularExpression::CaseInsensitiveOption));
+    expander.remove(QRegularExpression("\\n", QRegularExpression::CaseInsensitiveOption));
+    expander.remove(QRegularExpression("<p ><span >", QRegularExpression::CaseInsensitiveOption));
+    expander.replace(QRegularExpression("</span></p>"),"<br>");
+    expander.remove(QRegularExpression("^.*<body >", QRegularExpression::CaseInsensitiveOption));
+    expander.remove(QRegularExpression("<br><body>", QRegularExpression::CaseInsensitiveOption));
+    expander.remove(QRegularExpression("<br></body></html>", QRegularExpression::CaseInsensitiveOption));
 }
 
 void dataHelper::cleanDrugName(QString &drug)
@@ -162,7 +162,7 @@ void dataHelper::cleanDrugName(QString &drug)
     drug.remove("(IMP)");
     drug.remove("e/n");
     drug.remove("e/e");
-    drug.remove(QRegExp("\\d+[(A|ST.|T|C|BX|S|V|CT|NV|P|D|F|L]+\\W+"));
+    drug.remove(QRegularExpression("\\d+[(A|ST.|T|C|BX|S|V|CT|NV|P|D|F|L]+\\W+"));
 }
 
 dataHelper::~dataHelper()

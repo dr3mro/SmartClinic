@@ -167,7 +167,7 @@ void invesList::addInvestigation(QString invName, QString selectedImagePath)
 
     QString inv2Name = invName;
     QString localCopyPath = QString ( "data/media/%1/" ).arg(ID);
-    QString localImagePath = QString("%1%2_%3.jpg").arg(localCopyPath).arg(inv2Name.replace(QRegExp("[^A-Za-z\\d\\s]"),"_")).arg(dt);
+    QString localImagePath = QString("%1%2_%3.jpg").arg(localCopyPath).arg(inv2Name.replace(QRegularExpression("[^A-Za-z\\d\\s]"),"_")).arg(dt);
     QImage img;
     QDir mediaDir(localCopyPath);
     bool addInvBool = false;

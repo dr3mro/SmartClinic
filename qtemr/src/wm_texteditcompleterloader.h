@@ -6,6 +6,7 @@
 #define WM_TEXTEDITCOMPLETERLOADER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "sqlextra.h"
 
 class wm_texteditCompleterLoader : public QObject

@@ -139,7 +139,7 @@ QStringList sqlCore::getCoreDrugList()
         //drugs <<  crypto.decryptToString(query->value(0).toString());
         drugs <<  query->value(0).toString();
     }
-    qSort(drugs.begin(),drugs.end());
+    std::sort(drugs.begin(),drugs.end());
     query->finish();
     return drugs;
 }

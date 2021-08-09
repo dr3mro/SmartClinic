@@ -10,6 +10,8 @@
 #include <QKeyEvent>
 #include <QMovie>
 #include <QDesktopWidget>
+#include <QRandomGenerator>
+
 #include "sqlextra.h"
 #include "sqlbase.h"
 #include "globalvariables.h"

@@ -123,7 +123,7 @@ void genericOnlineSearch::on_listView_clicked(const QModelIndex &index)
 
 void genericOnlineSearch::tradeNameDoubleClicked()
 {
-    QString tradeName = QString(rawTradeName.split(QRegExp("(\\d+(\\.\\d+)?)")).first()).simplified();
+    QString tradeName = QString(rawTradeName.split(QRegularExpression("(\\d+(\\.\\d+)?)")).first()).simplified();
     QString form = rawTradeName.split(" ").last();
     QString tradeForm = QString("%1 %2").arg(tradeName).arg(form);
     QString engineUrl = searchEngine();
@@ -132,7 +132,7 @@ void genericOnlineSearch::tradeNameDoubleClicked()
 
 void genericOnlineSearch::searchGoogle()
 {
-    QString tradeName = QString(rawTradeName.split(QRegExp("(\\d+(\\.\\d+)?)")).first()).simplified();
+    QString tradeName = QString(rawTradeName.split(QRegularExpression("(\\d+(\\.\\d+)?)")).first()).simplified();
     QString form = rawTradeName.split(" ").last();
     QString tradeForm = QString("%1 %2").arg(tradeName).arg(form);
     QString engineUrl = "https://www.google.com.eg/search?q=%1";

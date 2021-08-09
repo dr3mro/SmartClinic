@@ -6,6 +6,7 @@
 #define WM_VISITSAVER_H
 
 #include <QObject>
+#include <QRandomGenerator>
 #include "sqlbase.h"
 
 class wm_visitSaver : public QObject

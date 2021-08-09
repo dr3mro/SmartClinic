@@ -12,12 +12,12 @@ drugsTable::drugsTable(QWidget *parent):zTableView(parent)
     tweakDrugsTable();
     exConName = QString("qt_sql_extra_drugsTable_%1_%2_%3")
             .arg(this->objectName())
-            .arg(qrand())
-            .arg(qrand());
+            .arg(QRandomGenerator::global()->bounded(0,9999999))
+            .arg(QRandomGenerator::global()->bounded(0,9999999));
     coConName = QString("qt_sql_core_drugsTable_%1_%2_%3")
             .arg(this->objectName())
-            .arg(qrand())
-            .arg(qrand());
+            .arg(QRandomGenerator::global()->bounded(0,9999999))
+            .arg(QRandomGenerator::global()->bounded(0,9999999));
 
     sqlextra = new sqlExtra(this,exConName,false);
     sqlcore = new sqlCore(this,coConName);
@@ -1126,7 +1126,7 @@ void drugsTable::findSameTradename()
 {
     QModelIndex cell = selectionModel()->currentIndex();
     QString rawTradeName = drugsModel->item(cell.row(),0)->text();
-    QString tradeName = QString(rawTradeName.split(QRegExp("(\\d+(\\.\\d+)?)")).first()).simplified();
+    QString tradeName = QString(rawTradeName.split(QRegularExpression("(\\d+(\\.\\d+)?)")).first()).simplified();
 
     //    if (tradeName.split(" ").count() > 1 )
     //    {

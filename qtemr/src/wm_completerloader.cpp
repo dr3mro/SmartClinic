@@ -6,7 +6,7 @@
 
 wm_CompleterLoader::wm_CompleterLoader(QObject *parent) : QObject(parent)
 {
-    r = qrand();
+    r = QRandomGenerator::global()->bounded(0,9999999);
 }
 
 QStringList wm_CompleterLoader::Work()

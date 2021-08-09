@@ -76,7 +76,7 @@ TextEdit::TextEdit(QWidget *parent) :
 bool TextEdit::findRemoveText(QString text)
 {
     moveCursor(QTextCursor::Start);
-    if (find (QRegExp(QString("^%1:.*$").arg(text))))
+    if (find (QRegularExpression(QString("^%1:.*$").arg(text))))
     {
         textCursor().removeSelectedText();
         textCursor().deletePreviousChar();
@@ -161,10 +161,10 @@ void TextEdit::deleteSelectedText()
 void TextEdit::insertChar(QString str)
 {
     QTextCursor tc = textCursor();
-    QRegExp r("[\\n|\\r|\\s]");
+    QRegularExpression r("[\\n|\\r|\\s]");
 
 
-    if ( r.exactMatch(str) || isSelectionStyled )
+    if ( r.match(str,QRegularExpression::NormalMatch).hasMatch() || isSelectionStyled )
         tc.clearSelection();
 
     tc.insertText(str);

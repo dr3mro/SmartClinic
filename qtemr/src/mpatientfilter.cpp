@@ -6,7 +6,7 @@
 
 mPatientFilter::mPatientFilter(QWidget *parent)
 {
-    validator.setRegExp(QRegExp("^\\S(.*\\S)?$"));
+    validator.setRegularExpression(QRegularExpression("^\\S(.*\\S)?$"));
     setValidator(&validator);
 
     QAction *filterToggleAction =

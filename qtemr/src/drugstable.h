@@ -13,9 +13,9 @@
 #include <QHeaderView>
 #include <QEvent>
 #include <QMouseEvent>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QLabel>
-
+#include <QRandomGenerator>
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
 
@@ -156,7 +156,6 @@ private:
     QFutureWatcher<DrugsItemModel*> watcher;
     int sortCol=5;
     bool working=false;
-
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

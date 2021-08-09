@@ -166,7 +166,7 @@ bool investTable::addInvMedia(bool setState)
     int row = selectionModel()->currentIndex().row();
     QLocale locale(QLocale::English , QLocale::UnitedStates );
 
-    QString invName = invModel->item(row,1)->text().replace(QRegExp("[^A-Za-z\\d\\s]"),"_");
+    QString invName = invModel->item(row,1)->text().replace(QRegularExpression("[^A-Za-z\\d\\s]"),"_");
     QDateTime dateTime = QDateTime::currentDateTime();
     QString dt = locale.toString(dateTime,"ddMMyyyyHHmmss");
     int visitJulianDate = invModel->item(0,2)->text().toInt();

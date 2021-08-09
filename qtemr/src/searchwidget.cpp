@@ -10,7 +10,7 @@ searchWidget::searchWidget(QWidget *parent) :
     ui(new Ui::searchWidget)
 {
     ui->setupUi(this);
-    validator.setRegExp(QRegExp("^\\S(.*\\S)?$"));
+    validator.setRegularExpression(QRegularExpression("^\\S(.*\\S)?$"));
     ui->filterLineEdit->setValidator(&validator);
 
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
@@ -126,16 +126,16 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
     if(!filtersVisibility)
     {
         // create a regexp of numbers
-        QRegExp re("\\d*");
+        QRegularExpression re("\\d*");
 
         // check if str is a phone number
-        if (re.exactMatch(str) && ( str.startsWith("0",Qt::CaseInsensitive) || str.startsWith("+",Qt::CaseInsensitive)))
+        if (re.match(str,QRegularExpression::NormalMatch).hasMatch() && ( str.startsWith("0",Qt::CaseInsensitive) || str.startsWith("+",Qt::CaseInsensitive)))
         {
             ui->PatientListTableView->setFiletrByMobile();
             ui->PatientListTableView->sortByColumn(0,Qt::AscendingOrder);
         }
         // check if str is ID
-        else if ( re.exactMatch(str))
+        else if ( re.match(str,QRegularExpression::NormalMatch).hasMatch())
         {
             ui->PatientListTableView->setFilterByID();
             ui->PatientListTableView->sortByColumn(0,Qt::AscendingOrder);
@@ -152,12 +152,12 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
     if(isFuzzySearchEnabled)
     {
         str.replace(" ","*");
-        str.replace(QRegExp("[آ|أ|إ|ا]"),"[آ,أ,إ,ا]");
-        str.replace(QRegExp("[ه|ة]"),"[ه,ة]");
-        str.replace(QRegExp("[ى|ي]"),"[ى,ي]");
+        str.replace(QRegularExpression("[آ|أ|إ|ا]"),"[آ,أ,إ,ا]");
+        str.replace(QRegularExpression("[ه|ة]"),"[ه,ة]");
+        str.replace(QRegularExpression("[ى|ي]"),"[ى,ي]");
         str.replace(QString("بو"),"[ب][و]*");
         str.replace(QString("عبد"),"[ع][ب][د]*");
-        str.replace(QRegExp("(?<!ب)[ؤ,و]+[ء]*"),"[ؤ,و]*");
+        str.replace(QRegularExpression("(?<!ب)[ؤ,و]+[ء]*"),"[ؤ,و]*");
     }
 
 

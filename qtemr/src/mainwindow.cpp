@@ -41,8 +41,8 @@ void MainWindow::boot()
     BirthDateWindow.setWindowOpacity(0.99);
     calWidget->setMinimumDate(QDate(1900,01,01));
 
-    phoneValidator.setRegExp(
-     QRegExp("([1-9][0-9]*\\W+|"
+    phoneValidator.setRegularExpression(
+    QRegularExpression("([1-9][0-9]*\\W+|"
              "\\D*\\W+|"
              "\\W*\\-*\\W*|"
              "\\W*[0][1][0-9]{9}\\W*|"
@@ -65,7 +65,7 @@ void MainWindow::boot()
 
     connect(ui->patientMobile,&xLineEdit::textChanged,[=](){
         QString phones = ui->patientMobile->text();
-        WAaction->setVisible(phones.contains(QRegExp("[0][1][0-9]{9}")));
+        WAaction->setVisible(phones.contains(QRegularExpression("[0][1][0-9]{9}")));
     });
 
     // end of WA init code
@@ -1225,8 +1225,7 @@ bool MainWindow::isErrorLogEmpty()
 
 int MainWindow::getCenterPos()
 {
-    QDesktopWidget* m = QApplication::desktop();
-    QRect desktop = m->screenGeometry(m->screenNumber(QCursor::pos()));
+    QRect desktop = qApp->screenAt(QCursor::pos())->geometry();
     return desktop.width()/2;
 }
 
@@ -1961,7 +1960,7 @@ void MainWindow::WAaction_clicked()
         return;
 
     for(auto number:numbers){
-        if(number.contains(QRegExp("[0][1][0-9]{9}"))){
+        if(number.contains(QRegularExpression("[0][1][0-9]{9}"))){
             m_ClickableLabel *l = new m_ClickableLabel(QString("📞 %1").arg(number));
             l->setPhoneNumber(number);
             l->setStyleSheet("font-weight: normal; font-size : 12pt;");

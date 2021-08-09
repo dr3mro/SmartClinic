@@ -107,7 +107,7 @@ void visitsBox::tweakui()
     if ( screenMode )
     {   //setWindowState(this->windowState() | Qt::WindowMaximized);
         QDesktopWidget* m = QApplication::desktop();
-        QRect dw = m->screenGeometry(m->screenNumber(QCursor::pos()));
+        QRect dw = qApp->screenAt(QCursor::pos())->geometry();
 
         if ( dw.size() == QSize(800,600) )
         {

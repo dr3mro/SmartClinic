@@ -9,7 +9,7 @@
 #include <QItemDelegate>
 #include <QLineEdit>
 #include <QCompleter>
-
+#include <QRandomGenerator>
 #include "sqlextra.h"
 class favouriteDoseDelegate : public QItemDelegate
 {
