@@ -22,9 +22,9 @@ class mCompleter : public QCompleter
 {
     Q_OBJECT
 public:
-    mCompleter(QLineEdit *parent, char delimiter/*,mSettings::defaultFont defaultfont*/);
-    mCompleter(QLineEdit *parent, char delimiter/*,mSettings::defaultFont defaultfont*/,QStringListModel *model);
-    mCompleter(QLineEdit *parent, char delimiter/*,mSettings::defaultFont defaultfont*/,const QStringList &list);
+    mCompleter(QLineEdit *parent, char _delimiter/*,mSettings::defaultFont defaultfont*/);
+    mCompleter(QLineEdit *parent, char _delimiter/*,mSettings::defaultFont defaultfont*/, QStringListModel *model);
+    mCompleter(QLineEdit *parent, char _delimiter/*,mSettings::defaultFont defaultfont*/, const QStringList &list);
     QString pathFromIndex(const QModelIndex &index) const;
     QStringList splitPath(const QString &path) const;
     void putModel(QStringListModel *model);

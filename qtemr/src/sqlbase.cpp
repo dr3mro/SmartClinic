@@ -275,7 +275,7 @@ bool sqlBase::updatePatient(int ID, Patient patient)
     return b;
 }
 
-bool sqlBase::updateVisit(int ID, QString visitDateTime, Visit visit)
+bool sqlBase::updateVisit(int ID, QString visitDateTime,const Visit & visit)
 {
     QString sqlPhraseVisit = createVisitUpdatePreparePhrase(ID,visitDateTime);
     QString sqlPhraseVitals = createVisitVitalsUpdatePreparePhrase(ID,visitDateTime);
@@ -301,7 +301,7 @@ bool sqlBase::savePatient(int ID, Patient patient)
     return save;
 }
 
-bool sqlBase::saveVisit(int ID, QString visitDateTime, Visit visit, double Price)
+bool sqlBase::saveVisit(int ID, QString visitDateTime, const Visit & visit, double Price)
 {
     bool save = false;
 
@@ -3780,51 +3780,47 @@ InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int
     int row = 0;
     QString path;
     QLocale locale(QLocale::English, QLocale::UnitedStates);
-    QStandardItem *IDItem, *nameItem, *visitDateItem, *pathItem,
-            *invDateItem , *invTimeItem, *invStateItem,
-            *priceItem, *resultsItem;
-
 
     while ( query->next())
     {
-        IDItem =new QStandardItem(QString::number(ID));
-        name = query->value(1).toString();
-        path = query->value(3).toString();
-        nameItem =new QStandardItem(name);
+        auto IDItem = std::make_shared<QStandardItem*>(new QStandardItem(QString::number(ID)));
+        auto name = query->value(1).toString();
+        auto path = query->value(3).toString();
+        auto nameItem = std::make_shared<QStandardItem*>(new QStandardItem(name));
         //nameItem->setToolTip(invIconHelper::getInvestigationTooltip(path,name));
-        visitDateItem =new QStandardItem(QString::number(query->value(2).toInt()));
-        pathItem =new QStandardItem(path);
-        invDateItem =new QStandardItem();
-        invTimeItem =new QStandardItem();
-        invStateItem =new QStandardItem(QString::number(query->value(6).toInt()));
-        priceItem =new QStandardItem(query->value(7).toString());
-        resultsItem =new QStandardItem(query->value(8).toString());
+        auto visitDateItem = std::make_shared<QStandardItem*>(new QStandardItem(QString::number(query->value(2).toInt())));
+        auto pathItem = std::make_shared<QStandardItem*>(new QStandardItem(path));
+        auto invDateItem = std::make_shared<QStandardItem*>(new QStandardItem());
+        auto invTimeItem = std::make_shared<QStandardItem*>(new QStandardItem());
+        auto invStateItem = std::make_shared<QStandardItem*>(new QStandardItem(QString::number(query->value(6).toInt())));
+        auto priceItem = std::make_shared<QStandardItem*>(new QStandardItem(query->value(7).toString()));
+        auto resultsItem = std::make_shared<QStandardItem*>(new QStandardItem(query->value(8).toString()));
 
         if ( visitJulianDate == 0 ) // for list not visitbox
         {
-            invDateItem->setText(locale.toString(QDate::fromJulianDay(query->value(4).toInt()),"dd/MM/yyyy"));
+            (*invDateItem.get())->setText(locale.toString(QDate::fromJulianDay(query->value(4).toInt()),"dd/MM/yyyy"));
             if ( ! paths.contains(query->value(3).toString()))
                 paths << path;
             else
                 continue;
         }
         else
-            invDateItem->setText(QString::number(query->value(4).toInt()));
+            (*invDateItem.get())->setText(QString::number(query->value(4).toInt()));
 
         if ( visitJulianDate == 0 )
-            invTimeItem->setText(locale.toString(QTime::fromMSecsSinceStartOfDay(query->value(5).toInt()*1000),"hh:mm AP"));
+            (*invTimeItem.get())->setText(locale.toString(QTime::fromMSecsSinceStartOfDay(query->value(5).toInt()*1000),"hh:mm AP"));
         else
-            invTimeItem->setText(query->value(5).toString());
+            (*invTimeItem.get())->setText(query->value(5).toString());
 
-        investModel->setItem(row,0,IDItem);
-        investModel->setItem(row,1,nameItem);
-        investModel->setItem(row,2,visitDateItem);
-        investModel->setItem(row,3,pathItem);
-        investModel->setItem(row,4,invDateItem);
-        investModel->setItem(row,5,invTimeItem);
-        investModel->setItem(row,6,invStateItem);
-        investModel->setItem(row,7,priceItem);
-        investModel->setItem(row,8,resultsItem);
+        investModel->setItem(row,0,*IDItem.get());
+        investModel->setItem(row,1,*nameItem.get());
+        investModel->setItem(row,2,*visitDateItem.get());
+        investModel->setItem(row,3,*pathItem.get());
+        investModel->setItem(row,4,*invDateItem.get());
+        investModel->setItem(row,5,*invTimeItem.get());
+        investModel->setItem(row,6,*invStateItem.get());
+        investModel->setItem(row,7,*priceItem.get());
+        investModel->setItem(row,8,*resultsItem.get());
         row+=1;
     }
     query->finish();

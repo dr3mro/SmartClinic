@@ -4,10 +4,11 @@
 
 #include "wm_texteditcompleterloader.h"
 
-wm_texteditCompleterLoader::wm_texteditCompleterLoader(QObject *parent) : QObject(parent)
+wm_texteditCompleterLoader::wm_texteditCompleterLoader(QObject *parent) : QObject(parent),
+    connectionName ( QString("qt_sql_extra_%1_%2_%3").arg(QString("dictionary"),QRandomGenerator::global()->bounded(0,9999999),QTime::currentTime().msecsSinceStartOfDay())),
+    sqlextra ( new sqlExtra(this,connectionName,false))
 {
-    connectionName = QString("qt_sql_extra_%1_%2_%3").arg(QString("dictionary"),QRandomGenerator::global()->bounded(0,9999999),QTime::currentTime().msecsSinceStartOfDay());
-    sqlextra = new sqlExtra(this,connectionName,false);
+
 
 
 }

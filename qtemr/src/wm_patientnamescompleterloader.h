@@ -18,8 +18,9 @@ public:
 public slots:
     QStringList Work();
 private:
-    sqlBase *sqlbase;
     QString connectionName;
+    sqlBase *sqlbase;
+
     
 signals:
 

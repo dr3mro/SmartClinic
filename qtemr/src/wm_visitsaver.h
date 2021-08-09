@@ -25,8 +25,9 @@ public slots:
 private:
     sqlBase::visitData visitData;
     QString tableName;
-    sqlBase *sqlbase=nullptr;
     QString connectionName;
+    sqlBase *sqlbase=nullptr;
+
     
 
 };

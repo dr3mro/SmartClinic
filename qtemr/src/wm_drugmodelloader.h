@@ -24,9 +24,10 @@ signals:
 private:
     int ID;
     int julianDate;
+    QString connectionName;
     sqlBase *sqlbase;
     DrugsItemModel *model;
-    QString connectionName;
+
     
 public slots:
     DrugsItemModel *Work();

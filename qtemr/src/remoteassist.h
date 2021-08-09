@@ -26,16 +26,16 @@ class remoteAssist : public QDialog
 
 public:
     struct Visitor{
-        QString name;
-        QString ID;
-        int sex;
-        int marital;
-        int age;
-        QString residence;
-        QString placeofbirth;
-        QString job;
-        QString tel;
-        int visitType;
+        QString name="-1";
+        QString ID="-1";
+        int sex=-1;
+        int marital=-1;
+        int age=-1;
+        QString residence="-1";
+        QString placeofbirth="-1";
+        QString job="-1";
+        QString tel="-1";
+        int visitType=-1;
     };
     explicit remoteAssist(QWidget *parent = nullptr);
     ~remoteAssist();

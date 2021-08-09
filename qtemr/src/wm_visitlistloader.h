@@ -17,9 +17,10 @@ public:
     ~wm_visitListLoader();
     void setID(int id);
 private:
+    QString connectionName;
     sqlBase *sqlbase;
     int ID;
-    QString connectionName;
+
 
 public slots:
     QVector<sqlBase::visitItem> Work();

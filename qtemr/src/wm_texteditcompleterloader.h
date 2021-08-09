@@ -21,8 +21,9 @@ signals:
 public slots:
     QStringList work();
 private:
-    sqlExtra *sqlextra;
     QString connectionName;
+    sqlExtra *sqlextra;
+
     
 };
 

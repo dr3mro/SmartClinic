@@ -5,10 +5,12 @@
 #include "favouritedosedelegate.h"
 
 favouriteDoseDelegate::favouriteDoseDelegate(QWidget *parent):
-    QItemDelegate(parent)
+    QItemDelegate(parent),
+	connectionName (QString("favoriteDelegate_%1").arg(QRandomGenerator::global()->bounded(0,9999999))),
+	sqlextra( new sqlExtra(this,connectionName,false))
 {
-    connectionName = QString("favoriteDelegate_%1").arg(QRandomGenerator::global()->bounded(0,9999999));
-    sqlextra = new sqlExtra(this,connectionName,false);
+    
+    
 }
 
 favouriteDoseDelegate::~favouriteDoseDelegate()

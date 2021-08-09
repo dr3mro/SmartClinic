@@ -4,10 +4,11 @@
 
 #include "wm_visitlistloader.h"
 
-wm_visitListLoader::wm_visitListLoader(QObject *parent) : QObject(parent)
+wm_visitListLoader::wm_visitListLoader(QObject *parent) : QObject(parent),
+    connectionName ( QString("qt_sql_base_visitListLoader_%1").arg(QRandomGenerator::global()->bounded(0,9999999))),
+    sqlbase ( new sqlBase(this,connectionName,false))
 {
-    connectionName = QString("qt_sql_base_visitListLoader_%1").arg(QRandomGenerator::global()->bounded(0,9999999));
-    sqlbase = new sqlBase(this,connectionName,false);
+
 }
 
 wm_visitListLoader::~wm_visitListLoader()

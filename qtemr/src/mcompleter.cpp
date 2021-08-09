@@ -5,10 +5,9 @@
 #include "mcompleter.h"
 
 
-mCompleter::mCompleter(QLineEdit *parent, char delimiter/*,mSettings::defaultFont defaultfont*/)
-        : QCompleter(parent), delimiter(delimiter)//,defaultfont(defaultfont)
+mCompleter::mCompleter(QLineEdit *parent, char _delimiter/*,mSettings::defaultFont defaultfont*/)
+        : QCompleter(parent), delimiter(_delimiter),line_edit(qobject_cast<QLineEdit*>(parent))//,defaultfont(defaultfont)
 {
-    line_edit = qobject_cast<QLineEdit*>(parent);
     setCaseSensitivity(Qt::CaseInsensitive);
     setParent(line_edit);
     line_edit->setCompleter(this);
@@ -18,10 +17,9 @@ mCompleter::mCompleter(QLineEdit *parent, char delimiter/*,mSettings::defaultFon
 }
 
 
-mCompleter::mCompleter(QLineEdit *parent, char delimiter,/*mSettings::defaultFont defaultfont,*/QStringListModel *model)
-        : QCompleter(model, parent), delimiter(delimiter)//,defaultfont(defaultfont)
+mCompleter::mCompleter(QLineEdit *parent, char _delimiter,/*mSettings::defaultFont defaultfont,*/QStringListModel *model)
+        : QCompleter(model, parent), delimiter(_delimiter),line_edit(qobject_cast<QLineEdit*>(parent))//,defaultfont(defaultfont)
 {
-    line_edit = qobject_cast<QLineEdit*>(parent);
     setCaseSensitivity(Qt::CaseInsensitive);
     setParent(line_edit);
     line_edit->setCompleter(this);
@@ -30,10 +28,9 @@ mCompleter::mCompleter(QLineEdit *parent, char delimiter,/*mSettings::defaultFon
 }
 
 
-mCompleter::mCompleter(QLineEdit *parent, char delimiter,/* mSettings::defaultFont defaultfont,*/ const QStringList &list)
-        : QCompleter(list, parent), delimiter(delimiter)//,defaultfont(defaultfont)
+mCompleter::mCompleter(QLineEdit *parent, char _delimiter,/* mSettings::defaultFont defaultfont,*/ const QStringList &list)
+        : QCompleter(list, parent), delimiter(_delimiter),line_edit(qobject_cast<QLineEdit*>(parent))//,defaultfont(defaultfont)
 {
-    line_edit = qobject_cast<QLineEdit*>(parent);
     setCaseSensitivity(Qt::CaseInsensitive);
     setParent(line_edit);
     line_edit->setCompleter(this);

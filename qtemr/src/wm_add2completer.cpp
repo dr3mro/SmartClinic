@@ -4,10 +4,11 @@
 
 #include "wm_add2completer.h"
 
-wm_add2Completer::wm_add2Completer(QObject *parent) : QObject(parent)
+wm_add2Completer::wm_add2Completer(QObject *parent) : QObject(parent),
+    connectionName (QString("qt_sql_extra_add2Completer_%1_%2").arg(QRandomGenerator::global()->bounded(0,9999999)).arg(QTime::currentTime().msecsSinceStartOfDay())),
+    sqlextra (new sqlExtra(this,connectionName,false))
 {
-    connectionName = QString("qt_sql_extra_add2Completer_%1_%2").arg(QRandomGenerator::global()->bounded(0,9999999)).arg(QTime::currentTime().msecsSinceStartOfDay());
-    sqlextra = new sqlExtra(this,connectionName,false);
+
 }
 
 wm_add2Completer::~wm_add2Completer()

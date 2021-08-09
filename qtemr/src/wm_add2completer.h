@@ -34,9 +34,8 @@ private:
     bool autocompletebyword;
     void saveDicts(QStringList dicts);
     QStringList splitDict(QString &dict);
-    sqlExtra *sqlextra;
     QString connectionName;
-    
+    sqlExtra *sqlextra;
     QString husband;
 };
 

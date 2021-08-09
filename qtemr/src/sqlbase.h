@@ -647,9 +647,9 @@ public:
     sqlBase::Attended isFollowVisitAttended(int ID,int julianDate);
     bool isPatientNameUsed(QString name);
     bool updatePatient(int ID , Patient patient);
-    bool updateVisit(int ID, QString visitDateTime , Visit visit);
+    bool updateVisit(int ID, QString visitDateTime , const Visit & visit);
     bool savePatient(int ID, Patient patient);
-    bool saveVisit(int ID, QString visitDateTime , Visit visit, double Price);
+    bool saveVisit(int ID, QString visitDateTime , const Visit & visit, double Price);
     bool savePatientData(Patient& patient, DrugsItemModel *drugsModel, QStandardItemModel *siblings, QList<QPair<QString, int> > conditions, development develop, perinatal pnatal, obGyn og);
     bool saveVisitData(visitData vdata);
     DrugsItemModel *readDrugs(int ID, int visitDate, DrugsItemModel *drugsModel);

@@ -4,11 +4,12 @@
 
 #include "wm_patientnamescompleterloader.h"
 
-wm_patientnamesCompleterLoader::wm_patientnamesCompleterLoader(QObject *parent) : QObject(parent)
+wm_patientnamesCompleterLoader::wm_patientnamesCompleterLoader(QObject *parent) : QObject(parent),
+    connectionName ( QString("qt_sql_base_%1_%2_%3")
+            .arg(QString("patientNames"),QRandomGenerator::global()->bounded(0,9999999),QTime::currentTime().msecsSinceStartOfDay())),
+    sqlbase ( new sqlBase(nullptr,connectionName,false))
 {
-    connectionName = QString("qt_sql_base_%1_%2_%3")
-            .arg(QString("patientNames"),QRandomGenerator::global()->bounded(0,9999999),QTime::currentTime().msecsSinceStartOfDay());
-    sqlbase = new sqlBase(nullptr,connectionName,false);
+
 }
 
 wm_patientnamesCompleterLoader::~wm_patientnamesCompleterLoader()

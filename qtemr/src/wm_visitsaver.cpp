@@ -4,10 +4,11 @@
 
 #include "wm_visitsaver.h"
 
-wm_visitSaver::wm_visitSaver(QObject *parent) : QObject(parent)
+wm_visitSaver::wm_visitSaver(QObject *parent) : QObject(parent),
+    connectionName (QString("qt_sql_base_visitSaver_%1_%2").arg(QRandomGenerator::global()->bounded(0,9999999),QTime::currentTime().msecsSinceStartOfDay())),
+    sqlbase ( new sqlBase(this,connectionName,false))
 {
-    connectionName = QString("qt_sql_base_visitSaver_%1_%2").arg(QRandomGenerator::global()->bounded(0,9999999),QTime::currentTime().msecsSinceStartOfDay());
-    sqlbase = new sqlBase(this,connectionName,false);
+
 }
 
 wm_visitSaver::~wm_visitSaver()
