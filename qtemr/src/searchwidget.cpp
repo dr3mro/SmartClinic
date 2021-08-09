@@ -22,8 +22,8 @@ searchWidget::searchWidget(QWidget *parent) :
     ui->filtersWidget->hide();
     ui->PatientListTableView->hideColumn(2);
 
-//    qRegisterMetaType<QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
-//    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
+    //    qRegisterMetaType<QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
+    //    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
 
     connect(this,SIGNAL(loadPatient()),ui->PatientListTableView,SLOT(loadPatient()));
     connect(this,SIGNAL(updatePatients()),ui->PatientListTableView,SLOT(updatePatients()));
@@ -123,46 +123,41 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
 
     // replace ؟ with ? to fix arabic search
     str.replace(QString("؟"),QString("?"));
+
+
+
     if(!filtersVisibility)
     {
-        // create a regexp of numbers
-        QRegularExpression re("\\d*");
+        QRegularExpression phone ("^[0][0-9]{0,10}");
+        QRegularExpression id("[1-9]+[0-9]*");
 
-        // check if str is a phone number
-        if (re.match(str,QRegularExpression::PartialPreferFirstMatch).hasMatch() && ( str.startsWith("0",Qt::CaseInsensitive) || str.startsWith("+",Qt::CaseInsensitive)))
-        {
+        if (phone.match(str).hasMatch()){ // check if str is a phone number
             ui->PatientListTableView->setFiletrByMobile();
-            ui->PatientListTableView->sortByColumn(2,Qt::AscendingOrder);
-        }
-        // check if str is ID
-        else if ( re.match(str,QRegularExpression::PartialPreferFirstMatch).hasMatch())
-        {
+            ui->PatientListTableView->sortByColumn(0,Qt::AscendingOrder);
+            //mDebug() << str << "filter by mobile";
+        }else if (id.match(str).hasMatch()){ // check if str is ID
             ui->PatientListTableView->setFilterByID();
             ui->PatientListTableView->sortByColumn(0,Qt::AscendingOrder);
-        }
-        // if not then it should be a name
-        else
-        {
+            //mDebug() << str << "filter by id";
+        }else{ // if not then it should be a name
             ui->PatientListTableView->setFilterByName();
             ui->PatientListTableView->sortByColumn(1,Qt::AscendingOrder);
+            //mDebug() << str << "filter by name";
         }
-        //setFilter
     }
 
     if(isFuzzySearchEnabled)
     {
         str.replace(" ","*");
-
-        str.replace(QRegularExpression("[a,b,c,d]"),"[z,c,f,g]");
-
-//        str.replace(QRegularExpression("[ه,ة]{0,1}"),"[ه,ة]");
-//        str.replace(QRegularExpression("[ى,ي]{0,1}"),"[ى,ي]");
-//        str.replace(QString("بو"),"[ب,و]*");
-//        str.replace(QString("عبد"),"[ع,ب,د]*");
-//        str.replace(QRegularExpression("(?<!ب)[ؤ,و]+[ء]*"),"[ؤ,و]*");
+        str.replace(QRegularExpression("[ا|أ|إ|آ]",QRegularExpression::PatternOption::UseUnicodePropertiesOption),"[ا,أ,إ,آ]");
+        str.replace(QRegularExpression("[ه|ة]",QRegularExpression::PatternOption::UseUnicodePropertiesOption),"[ه,ة]");
+        str.replace(QRegularExpression("[ى|ي]",QRegularExpression::PatternOption::UseUnicodePropertiesOption),"[ى,ي]");
+        str.replace(QString("بو"),"بو*");
+        str.replace(QString("عبد"),"عبد*");
+        str.replace(QRegularExpression("(?<!ب)[ؤ|و]+[ء]*",QRegularExpression::PatternOption::UseUnicodePropertiesOption),"[ؤ,و]*");
     }
 
-    mDebug() << str;
+    //mDebug() << str;
     ui->PatientListTableView->FilterPatients(str);
     ui->PatientListTableView->selectRow(0);
 }
