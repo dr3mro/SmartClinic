@@ -1,0 +1,830 @@
+QLCDNumber
+{
+border:input_border_width px solid input_border_color_normal;
+background-color:rgb(0,0,0);
+color:rgb(0,255,0);
+border-radius:input_border_radius px;
+height:25px;
+}
+
+
+
+QCheckBox::indicator {
+width: 13px;
+height: 13px;
+}
+
+QCheckBox::indicator:partiallychecked {
+image: url(":/Graphics/partiallycheckedbox");
+}
+
+
+QCheckBox::indicator:unchecked {
+image: url(":/Graphics/uncheckedbox");
+}
+
+QCheckBox::indicator:checked {
+image: url(":/Graphics/checkedbox");
+}
+
+QComboBox
+{
+border:input_border_widthpx solid input_border_color_normal;
+border-radius: input_border_radiuspx;
+height:18px;
+padding:1px;
+background-color:input_color_normal;
+}
+
+QComboBox#visitLists,
+QComboBox#comboVisitType
+{
+border:input_border_widthpx solid button_border_color_normal;
+border-radius: input_border_radiuspx;
+height:18px;
+padding:1px;
+background-color: background_Flat_3D;
+}
+
+QComboBox:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+}
+
+QComboBox:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+}
+
+QComboBox QAbstractItemView {
+border:input_border_widthpx solid input_border_color_normal;
+border-radius:input_border_radiuspx;
+selection-background-color: list_selected_item_color;
+background-color:input_color_normal;
+}
+
+QComboBox:drop-down
+{
+border-left-width:input_border_widthpx;
+border-left-color:input_border_color_normal;
+}
+
+QComboBox:disabled
+{
+color:inputText_color_disabled;
+}
+
+QComboBox:down-arrow
+{
+image:url(":/Graphics/chevBot");
+height:8px;
+width:8px;
+
+}
+QComboBox::down-arrow:pressed
+{
+top:1px;
+}
+
+QSpinBox,
+QDoubleSpinBox
+{
+border:input_border_widthpx solid input_border_color_normal;
+border-radius: input_border_radiuspx;
+height:18px;
+padding:1px;
+background-color:input_color_normal;
+}
+QSpinBox:focus,
+QDoubleSpinBox:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+}
+
+QSpinBox:hover,
+QDoubleSpinBox:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+}
+
+
+QSpinBox:up-button,
+QDoubleSpinBox:up-button
+{
+image:url(":/Graphics/chevUp");
+height:8px;
+width:8px;
+}
+QSpinBox:down-button,
+QDoubleSpinBox:down-button
+{
+image:url(":/Graphics/chevBot");
+height:8px;
+width:8px;
+}
+
+QSpinBox::down-button:pressed,
+QSpinBox::up-button:pressed,
+QDoubleSpinBox::down-button:pressed,
+QDoubleSpinBox::up-button:pressed
+{
+top:1px;
+}
+
+
+QPushButton
+{
+border:button_border_widthpx solid button_border_color_normal;
+border-radius:button_border_radiuspx;
+background: button_color_normal;
+background: background_Flat_3D;
+
+height:24px;
+width:75px;
+color:elementText_color_normal;
+}
+
+QPushButton:hover
+{
+border-color:button_border_color_hover;
+background:background_Flat_3D_hover;
+color:elementText_color_hover;
+}
+QPushButton:focus,
+QPushButton:pressed
+{
+border-color:button_border_color_focus;
+background:background_Flat_3D_focus;
+color:elementText_color_focus;
+}
+QPushButton:disabled
+{
+border:button_border_widthpx solid button_border_color_diabled;
+background:background_Flat_3D_disabled;
+color:elementText_color_disabled;
+}
+
+
+
+QMessageBox QCheckBox
+{
+color:messagebox_text_color;
+}
+
+
+
+QMessageBox
+{
+background-color:messagebox_background_color;
+border:subWindow_border_widthpx solid subWindow_border_color;
+border-radius:subWindow_border_radiuspx;
+}
+QMessageBox QLabel
+{
+color:messagebox_text_color;
+}
+
+
+QWidget[objectName^="WA_widget"]
+{
+background-color:messagebox_background_color;
+border:1 solid subWindow_border_color;
+border-radius:1;
+}
+QWidget[objectName^="WA_widget"] m_ClickcableLabel
+{
+color:messagebox_text_color;
+}
+
+
+QMainWindow
+{
+background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 window_top_color, stop:1 window_bottom_color);
+}
+
+
+
+
+
+settingsClass,
+Agenda,
+statistics,
+AboutWindow,
+visitsBox,
+PatientList,
+listEditor,
+EmptyProfiles,
+drugIndex,
+backup,
+invesList,
+mAssistant,
+surgicalNotes,
+drugExapnder,
+getInvestigationName,
+favouriteDrugsEditor,
+DietEditor,
+MergeDlg
+{
+background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1,
+stop:0 subWindow_top_color,
+stop:1 subWindow_bottom_color);
+
+border:subWindow_border_widthpx solid subWindow_border_color;
+border-radius:subWindow_border_radiuspx;
+}
+
+
+userpass
+{
+background-color: white;
+border:5px solid black;
+/*border-radius:15px;*/
+}
+
+
+
+
+QCheckBox
+{
+color: elementText_color_normal;
+}
+
+
+
+
+QLineEdit
+{
+border-radius:input_border_radiuspx;
+border:input_border_widthpx solid input_border_color_normal;
+background-color:input_color_normal;
+color:inputText_color_normal;
+padding:1px;
+height:18px;
+}
+
+QLineEdit:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+background-color:input_color_hover;
+color:inputText_color_hover;
+}
+
+QLineEdit:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+background-color:input_color_focus;
+color:inputText_color_focus;
+}
+
+
+QTextEdit
+{
+border-radius:input_border_radiuspx;
+border:input_border_widthpx solid input_border_color_normal;
+background-color:input_color_normal;
+color:inputText_color_normal;
+}
+
+QTextEdit:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+background-color:input_color_hover;
+color:inputText_color_hover;
+}
+
+QTextEdit:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+background-color:input_color_focus;
+color:inputText_color_focus;
+}
+
+PagesTextEdit#Roshetta
+{
+background-color:lightgrey;
+}
+
+QListWidget
+{
+border-radius:input_border_radiuspx;
+border:input_border_widthpx solid input_border_color_normal;
+background-color:input_color_normal;
+selection-background-color:list_selected_item_color;
+selection-color:inputText_color_normal;
+}
+
+QListWidget:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+background-color:input_color_hover;
+}
+
+
+QListWidget:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+background-color:input_color_focus;
+}
+
+
+QTableView#pDrugsTable,
+QTableView#vDrugsTable,
+QTableView#investTable,
+QTableView#cashTableView,
+QTableView#calcTableView,
+QTableView#agendaTableView,
+QTableView#siblings,
+QTableView#surgNotes,
+QTableView#indexTable,
+QTableView#visitorsTableView
+{
+border-radius:input_border_radiuspx;
+border:input_border_widthpx solid input_border_color_normal;
+background-color:input_color_normal;
+selection-background-color:list_selected_item_color;
+selection-color:inputText_color_normal;
+}
+
+QTableView#pDrugsTable:hover,
+QTableView#vDrugsTable:hover,
+QTableView#investTable:hover,
+QTableView#InvestigationsTable:hover,
+QTableView#cashTableView:hover,
+QTableView#calcTableView:hover,
+QTableView#agendaTableView:hover,
+QTableView#siblings:hover,
+QTableView#surgNotes:hover,
+QTableView#indexTable:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+background-color:input_color_hover;
+}
+
+
+QTableView#pDrugsTable:focus,
+QTableView#vDrugsTable:focus,
+QTableView#investTable:focus,
+QTableView#InvestigationsTable:focus,
+QTableView#siblings:focus,
+QTableView#surgNotes:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+background-color:input_color_focus;
+}
+
+QDateTimeEdit
+{
+border-radius:input_border_radiuspx;
+border:input_border_widthpx solid input_border_color_normal;
+background-color:input_color_normal;
+}
+QDateTimeEdit:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+}
+
+QDateTimeEdit:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+}
+
+QDateTimeEdit:down-arrow
+{
+image:url(":/Graphics/chevBot");
+height:9px;
+width:9px;
+}
+
+QDateTimeEdit:drop-down
+{
+border-left-width:0px;
+}
+
+
+
+
+QDateEdit
+{
+border:input_border_widthpx solid input_border_color_normal;
+border-radius: input_border_radiuspx;
+height:18px;
+padding:1px;
+background-color:input_color_normal;
+}
+QDateEdit#fromDate,
+QDateEdit#toDate,
+QDateEdit#dateFollowUp
+{
+border:input_border_widthpx solid button_border_color_normal;
+border-radius: input_border_radiuspx;
+height:18px;
+padding:1px;
+/*background-color:input_color_normal;*/
+background-color: background_Flat_3D;
+}
+
+
+QDateEdit:hover
+{
+border:input_border_widthpx solid input_border_color_hover;
+background-color: input_color_hover;
+}
+
+QDateEdit#fromDate:hover,
+QDateEdit#toDate:hover,
+QDateEdit#dateFollowUp:hover
+{
+border:input_border_widthpx solid button_border_color_hover;
+background-color: background_Flat_3D_hover;
+}
+
+QDateEdit:focus
+{
+border:input_border_widthpx solid input_border_color_focus;
+background-color: input_color_focus;
+}
+
+QDateEdit#fromDate:focus,
+QDateEdit#toDate:focus,
+QDateEdit#dateFollowUp:focus
+{
+border:input_border_widthpx solid button_border_color_focus;
+background-color: background_Flat_3D_focus;
+}
+
+
+QDateEdit::down-arrow:pressed
+{
+top:1px;
+}
+
+
+
+
+QTimeEdit
+{
+border:input_border_widthpx solid button_border_color_normal;
+border-radius: input_border_radiuspx;
+height:18px;
+padding:1px;
+/*background-color:input_color_normal;*/
+background-color: background_Flat_3D;
+}
+QTimeEdit:hover
+{
+border:input_border_widthpx solid button_border_color_hover;
+}
+
+QTimeEdit:focus
+{
+border:input_border_widthpx solid button_border_color_focus;
+}
+
+QTimeEdit:up-button
+{
+image:url(":/Graphics/chevUp");
+height:8px;
+width:8px;
+}
+QTimeEdit:down-button
+{
+image:url(":/Graphics/chevBot");
+height:8px;
+width:8px;
+}
+
+
+QTimeEdit::down-button:pressed,
+QTimeEdit::up-button:pressed
+{
+top:1px;
+}
+
+
+
+
+QToolButton#buttonPatientList,
+QToolButton#buttonAgenda,
+QToolButton#buttonStats,
+QToolButton#ButtonRefresh,
+QToolButton#goButton,
+QToolButton#buttonListEditor,
+QToolButton#settingButton,
+QToolButton#ButtonAbout,
+QToolButton#buttonInvestigations,
+QToolButton#ButtonNew,
+QToolButton#ButtonVisit,
+QToolButton#ButtonDel,
+QToolButton#toolButtonRefresh,
+QToolButton#buttonInvest,
+QToolButton#buttonSyncDrugs,
+QToolButton#ButtonSave,
+QToolButton#buttonAdd,
+QToolButton#buttonDelete,
+QToolButton#drugIndexButton,
+QToolButton#backupButton,
+/*vPrintButton#fastPrint,*/
+QToolButton#buttonSuricalNotes,
+QToolButton#buttonDel,
+QToolButton#buttonEdit,
+QToolButton#resetButton,
+QToolButton#buttonClearDrugs,
+QToolButton#lockUnlockButton,
+QToolButton#searchByID,
+QToolButton#searchByName,
+QToolButton#searchByTel,
+QToolButton#reload,
+QToolButton#loadID,
+QToolButton#loadName
+
+{
+border:button_border_widthpx solid button_border_color_normal;
+border-radius:14px;
+background-color: toolbutton_color_normal;
+background: background_Flat_3D;
+color:elementText_color_normal;
+height:21px;
+width:21px;
+}
+
+QToolButton#buttonPatientList:disabled,
+QToolButton#buttonAgenda:disabled,
+QToolButton#buttonStats:disabled,
+QToolButton#ButtonRefresh:disabled,
+QToolButton#goButton:disabled,
+QToolButton#buttonListEditor:disabled,
+QToolButton#settingButton:disabled,
+QToolButton#ButtonAbout:disabled,
+QToolButton#buttonInvestigations:disabled,
+QToolButton#ButtonNew:disabled,
+QToolButton#ButtonVisit:disabled,
+QToolButton#ButtonDel:disabled,
+QToolButton#toolButtonRefresh:disabled,
+QToolButton#buttonInvest:disabled,
+QToolButton#buttonSyncDrugs:disabled,
+QToolButton#ButtonSave:disabled,
+QToolButton#buttonAdd:disabled,
+QToolButton#buttonDelete:disabled,
+QToolButton#drugIndexButton:disabled,
+QToolButton#backupButton:disabled,
+/*vPrintButton#fastPrint:disabled,*/
+QToolButton#buttonSuricalNotes:disabled,
+QToolButton#buttonDel:disabled,
+QToolButton#buttonEdit:disabled,
+QToolButton#resetButton:disabled,
+QToolButton#buttonClearDrugs:disabled,
+QToolButton#lockUnlockButton:disabled,
+QToolButton#searchByID:disabled,
+QToolButton#searchByName:disabled,
+QToolButton#searchByTel:disabled,
+QToolButton#reload:disabled,
+QToolButton#loadID:disabled,
+QToolButton#loadName:disabled
+{
+border:button_border_widthpx solid button_border_color_diabled;
+background-color:button_color_disabled;
+}
+
+QToolButton#buttonPatientList:hover,
+QToolButton#buttonAgenda:hover,
+QToolButton#buttonStats:hover,
+QToolButton#ButtonRefresh:hover,
+QToolButton#goButton:hover,
+QToolButton#buttonListEditor:hover,
+QToolButton#settingButton:hover,
+QToolButton#ButtonAbout:hover,
+QToolButton#buttonInvestigations:hover,
+QToolButton#ButtonNew:hover,
+QToolButton#ButtonVisit:hover,
+QToolButton#ButtonDel:hover,
+QToolButton#toolButtonRefresh:hover,
+QToolButton#buttonInvest:hover,
+QToolButton#buttonSyncDrugs:hover,
+QToolButton#ButtonSave:hover,
+QToolButton#buttonAdd:hover,
+QToolButton#buttonDelete:hover,
+QToolButton#drugIndexButton:hover,
+QToolButton#backupButton:hover,
+/*vPrintButton#fastPrint:hover,*/
+QToolButton#buttonSuricalNotes:hover,
+QToolButton#buttonDel:hover,
+QToolButton#buttonEdit:hover
+QToolButton#resetButton:hover,
+QToolButton#buttonClearDrugs:hover,
+QToolButton#lockUnlockButton:hover,
+QToolButton#searchByID:hover,
+QToolButton#searchByName:hover,
+QToolButton#searchByTel:hover,
+QToolButton#reload:hover,
+QToolButton#loadID:hover,
+QToolButton#loadName:hover
+{
+border:button_border_widthpx solid button_border_color_hover;
+background-color:button_color_hover;
+}
+
+QToolButton#buttonPatientList:focus,
+QToolButton#buttonAgenda:focus,
+QToolButton#buttonStats:focus,
+QToolButton#ButtonRefresh:focus,
+QToolButton#goButton:focus,
+QToolButton#buttonListEditor:focus,
+QToolButton#settingButton:focus,
+QToolButton#ButtonAbout:focus,
+QToolButton#buttonInvestigations:focus,
+QToolButton#ButtonNew:focus,
+QToolButton#ButtonVisit:focus,
+QToolButton#ButtonDel:focus,
+QToolButton#toolButtonRefresh:focus,
+QToolButton#buttonInvest:focus,
+QToolButton#buttonSyncDrugs:focus,
+QToolButton#ButtonSave:focus,
+QToolButton#buttonAdd:focus,
+QToolButton#buttonDelete:focus,
+QToolButton#drugIndexButton:focus,
+QToolButton#backupButton:focus,
+vPrintButton#fastPrint:focus,
+QToolButton#buttonSuricalNotes:focus,
+QToolButton#buttonDel:focus,
+QToolButton#buttonEdit:focus
+QToolButton#resetButton:focus,
+QToolButton#buttonClearDrugs:focus,
+QToolButton#lockUnlockButton:focus,
+QToolButton#searchByID:focus,
+QToolButton#searchByName:focus,
+QToolButton#searchByTel:focus,
+QToolButton#reload:focus,
+QToolButton#loadID:focus,
+QToolButton#loadName:focus,
+QToolButton#buttonPatientList:pressed,
+QToolButton#buttonAgenda:pressed,
+QToolButton#buttonStats:pressed,
+QToolButton#ButtonRefresh:pressed,
+QToolButton#goButton:pressed,
+QToolButton#buttonListEditor:pressed,
+QToolButton#settingButton:pressed,
+QToolButton#ButtonAbout:pressed,
+QToolButton#buttonInvestigations:pressed,
+QToolButton#ButtonNew:pressed,
+QToolButton#ButtonVisit:pressed,
+QToolButton#ButtonDel:pressed,
+QToolButton#toolButtonRefresh:pressed,
+QToolButton#buttonInvest:pressed,
+QToolButton#buttonSyncDrugs:pressed,
+QToolButton#ButtonSave:pressed,
+QToolButton#buttonAdd:pressed,
+QToolButton#buttonDelete:pressed,
+QToolButton#drugIndexButton:pressed,
+QToolButton#backupButton:pressed,
+vPrintButton#fastPrint:pressed,
+QToolButton#buttonSuricalNotes:pressed,
+QToolButton#buttonDel:pressed,
+QToolButton#buttonEdit:pressed
+QToolButton#resetButton:pressed,
+QToolButton#buttonClearDrugs:pressed,
+QToolButton#lockUnlockButton:pressed,
+QToolButton#searchByID:pressed,
+QToolButton#searchByName:pressed,
+QToolButton#searchByTel:pressed,
+QToolButton#reload:pressed,
+QToolButton#loadID:pressed,
+QToolButton#loadName:pressed
+{
+border:button_border_widthpx solid button_border_color_focus;
+background-color:button_color_focus;
+}
+
+
+QTableView#PatientListTableView,
+QTableView#listOfAvailableBackUps,
+QTableView#InvestigationsTable,
+QTableView#dietList
+{
+border:2px solid input_border_color_normal;
+selection-background-color:list_selected_item_color;
+selection-color:inputText_color_normal;
+background-color:input_color_normal;
+}
+
+QToolButton#ExitButton,
+QToolButton#closeButton
+
+{
+border:2px solid red;
+background-color:red;
+height:12px;
+width:40px;
+image: url(":/Graphics/remove");
+subcontrol-position: right center;
+subcontrol-origin: padding;
+left: -2px;
+}
+
+QToolButton#ExitButton:hover,
+QToolButton#closeButton:hover
+{
+border:2px solid darkred;
+background-color:darkred;
+image: url(":/Graphics/removeW");
+subcontrol-position: right center;
+subcontrol-origin: padding;
+left: -2px;
+}
+
+QToolButton#minimizeButton,
+QToolButton#maximizeButton
+{
+border:2px solid lightgrey;
+/*border-radius:3px;*/
+background-color:lightgrey;
+background: background_Flat_3D;
+height:10px;
+width:15px;
+}
+
+QLabel
+{
+color:_textColor_;
+}
+
+QTabWidget::tab-bar#tabWidget {
+alignment: center;
+}
+
+
+QScrollBar:vertical {
+border: 0px solid window_top_color;;
+background-color: window_bottom_color;
+width: 12px;
+margin: 12px 0px 12px 0px;
+}
+QScrollBar::handle:vertical {
+border: 1px solid qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 window_top_color, stop:1 window_bottom_color);
+background: black;
+min-height: 60px;
+width:12px;
+margin:0px;
+}
+QScrollBar::add-line:vertical {
+border: 0px solid window_top_color;
+background: window_top_color;
+height: 16px;
+width:16px;
+subcontrol-position: bottom;
+subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+border: 0px solid window_top_color;
+background: window_top_color;
+height: 16px;
+width:16px;
+subcontrol-position: top;
+subcontrol-origin: margin;
+}
+QScrollBar::up-arrow:vertical {
+image: url(":/Graphics/chevUp");
+width: 9px;
+height: 9px;
+
+}
+QScrollBar::down-arrow:vertical
+{
+image: url(":/Graphics/chevBot");
+width: 9px;
+height: 9px;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+background: none;
+}
+
+/*
+QHeaderView::section
+{
+background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+stop:0 #616161, stop: 0.5 #505050,
+stop: 0.6 #434343, stop:1 #656565);
+border-top: 0px;
+border-right: 1px solid _borderColor1_;
+border-left: 0px;
+border-bottom: 1px solid _borderColor1_;
+padding-left: 4px;
+height:18px;
+}
+
+QHeaderView::section:checked
+{
+background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+stop:0 #616161, stop: 0.5 #505050,
+stop: 0.6 #434343, stop:1 #656565);
+}
+
+QHeaderView::down-arrow {
+image: url(":/Graphics/chevBot");
+}
+
+QHeaderView::up-arrow {
+image: url(":/Graphics/chevUp");
+}
+*/
