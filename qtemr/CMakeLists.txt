@@ -15,6 +15,14 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_WIN32_EXECUTABLE ON)
 
+set(Qt5_USE_STATIC_LIBS ON)
+set(Qt5_USE_STATIC_RUNTIME ON)
+set(BUILD_SHARED_LIBS OFF)
+
+set(Qt5Core_DIR "${CMAKE_PREFIX_PATH}/lib/cmake/Qt5Core")
+set(Qt5_DIR "${CMAKE_PREFIX_PATH}/lib/cmake/Qt5")
+set(QT_QMAKE_EXECUTABLE "${CMAKE_PREFIX_PATH}/bin/qmake.exe")
+
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -25,6 +33,7 @@ find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 find_package(Qt5Printsupport REQUIRED)
 
+
 add_library(Qt5Core STATIC IMPORTED)
 add_library(Qt5Widgets STATIC IMPORTED)
 add_library(Qt5Gui STATIC IMPORTED)
@@ -34,16 +43,6 @@ add_library(Qt5Sql STATIC IMPORTED)
 add_library(Qt5Multimedia STATIC IMPORTED)
 add_library(Qt5Concurrent STATIC IMPORTED)
 add_library(Qt5Printsupport STATIC IMPORTED)
-
-set(CMAKE_CXX_FLAGS_RELEASE "/W3 /MT")
-set(CMAKE_CXX_FLAGS_DEBUG "/W3 /MTd")
-set(CMAKE_C_FLAGS_RELEASE "/W3 /MT")
-set(CMAKE_C_FLAGS_DEBUG "/W3 /MTd")
-
-
-set(Qt5Core_DIR "${CMAKE_PREFIX_PATH}/lib/cmake/Qt5Core")
-set(Qt5_DIR "${CMAKE_PREFIX_PATH}/lib/cmake/Qt5")
-set(QT_QMAKE_EXECUTABLE "${CMAKE_PREFIX_PATH}/bin/qmake.exe")
 
 if(MSVC)
     add_definitions(/MP)
@@ -246,7 +245,21 @@ set(SOURCES
 # Resources:
 qt5_add_resources(SOURCES resources.qrc)
 
-add_executable(${TARGET_NAME} ${SOURCES})
+add_executable(${TARGET_NAME} WIN32 ${SOURCES})
+set(QMAKE_CXXFLAGS_RELEASE ${QMAKE_CXXFLAGS_DEBUG} " /MT")
+
+#set(CompilerFlags
+#        CMAKE_CXX_FLAGS
+#        CMAKE_CXX_FLAGS_DEBUG
+#        CMAKE_CXX_FLAGS_RELEASE
+#        CMAKE_C_FLAGS
+#        CMAKE_C_FLAGS_DEBUG
+#        CMAKE_C_FLAGS_RELEASE
+#        )
+#foreach(CompilerFlag ${CompilerFlags})
+#  string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+##endforeach()
+
 target_link_libraries(${TARGET_NAME}
     Qt5::Widgets
     Qt5::Network
@@ -256,6 +269,7 @@ target_link_libraries(${TARGET_NAME}
     Qt5::Xml
     Qt5::PrintSupport
     ${PROJECT_SOURCE_DIR}/zlib/msvc2017/zlib.lib
+    -static
     )
 
 # Keys ignored in scope 1:.:.:qtemr.pro:<TRUE>:
