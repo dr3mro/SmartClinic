@@ -17,7 +17,6 @@ listEditor::listEditor(QWidget *parent) :
           << "diagnoses" << "dictionary"
           << "doses" << "drugs" << "surgeries"
           << "investigations" << "jobs" << "places" << "placeOfBirth";
-
     QString initialItem = lists.at(0);
     ui->lineEdit->setTableDeli(initialItem);
     emit loadCompleters();
@@ -37,7 +36,6 @@ listEditor::listEditor(QWidget *parent) :
     ui->comboList->addItems(lists);
     this->setStyleSheet(settings.themeMaker());
     setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
-
 }
 
 listEditor::~listEditor()

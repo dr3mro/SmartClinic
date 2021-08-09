@@ -3,6 +3,7 @@ project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
 
 if (MSVC)
     add_compile_definitions(MEMLEAK 0)
+    add_compile_definitions(/MP)
 else()
     add_compile_options()
 endif()
@@ -39,7 +40,6 @@ else()
 endif()
 
 
-
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE HEADERS src/*.h)
 file(GLOB_RECURSE UI src/*.ui)
@@ -54,6 +54,15 @@ find_package(OpenSSL REQUIRED)
 
 add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${APP_ICON_RESOURCE_WINDOWS})
 set_property(TARGET ${TARGET_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+set_target_properties(${TARGET_NAME}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "../"
+    LIBRARY_OUTPUT_DIRECTORY "../"
+    RUNTIME_OUTPUT_DIRECTORY "../"
+)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}"../build/objs")
+
 
 target_precompile_headers(${TARGET_NAME} PRIVATE src/pch.h)
 
