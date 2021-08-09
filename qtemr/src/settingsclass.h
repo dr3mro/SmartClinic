@@ -32,14 +32,14 @@ public:
     explicit settingsClass(QWidget *parent = nullptr);
     mSettings::pSettings getValuesFromUI();
     void setValuesToUI(const mSettings::pSettings &_settings);
-    void closeEvent(QCloseEvent *event);
-    void keyPressEvent(QKeyEvent *e);
+
     int exec();
     ~settingsClass();
     bool isSettingsModified=false;
 
 protected:
-
+    void closeEvent(QCloseEvent *event) override;
+    void keyPressEvent(QKeyEvent *e);
 private slots:
     void on_setPasswdButton_clicked();
     void on_passwordLine_textChanged(const QString &arg1);

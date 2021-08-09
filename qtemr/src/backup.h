@@ -36,7 +36,7 @@ private slots:
     void on_buttonRestore_clicked();
     bool createBackup();
 protected:
-    void closeEvent(QCloseEvent *e);
+    void closeEvent(QCloseEvent *e) override;
     void keyPressEvent(QKeyEvent *e);
 private:
     Ui::backup *ui;

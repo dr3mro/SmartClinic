@@ -49,7 +49,7 @@ private:
     mSettings& settings=mSettings::instance();
 
 protected:
-    void closeEvent(QCloseEvent *e);
+    void closeEvent(QCloseEvent *e) override;
 };
 
 #endif // EMPTYPROFILES_H

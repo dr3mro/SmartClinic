@@ -84,6 +84,7 @@ void mDialog::closeEvent(QCloseEvent *e)
         mpFadeOut->start();
         e->ignore();
     }
+    QDialog::closeEvent(e);
 }
 
 void mDialog::showEvent(QShowEvent *e)
