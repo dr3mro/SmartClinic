@@ -67,11 +67,7 @@ void MainWindow::boot()
         QString phones = ui->patientMobile->text();
         WAaction->setVisible(phones.contains(QRegularExpression("[0][1][0-9]{9}")));
     });
-
     // end of WA init code
-
-
-
 
     blureffect->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
     blureffect->setBlurRadius(3);
@@ -179,6 +175,7 @@ void MainWindow::boot()
     connect ( &t_bugTicker,SIGNAL(timeout()),this,SLOT(bugTicker()));
     t_bugTicker.start(500);
     passwordPopup();
+
 }
 
 void MainWindow::setCompleters()

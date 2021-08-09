@@ -23,11 +23,10 @@ welcomeBanner::welcomeBanner(QWidget *parent) :
 
 void welcomeBanner::updateprogress(const QString &op_name)
 {
-    //called 13 times
-    percent +=7;
+    //called 11 times
+    percent +=9;
     ui->progressBar->setValue(percent);
     ui->current_stage->setText(op_name);
-    //dataHelper::delay(100);
 }
 
 void welcomeBanner::setProgress(const int &perc)

@@ -124,7 +124,9 @@ bool isAppClosedNormaly()
 void createLockFile(welcomeBanner * banner)
 {
     banner->updateprogress(QString("creating lock file"));
+    QApplication::processEvents();
     QFile lockFile(".lock");
+    QApplication::processEvents();
     lockFile.open(QFile::WriteOnly);
     lockFile.close();
 }
@@ -214,6 +216,7 @@ void seatBelt(SingleInstance &cInstance,welcomeBanner * banner)
     }
     else
     {
+        QApplication::processEvents();
         createLockFile(banner);
         //createCopyOfPatientsDB(banner);
     }
@@ -251,36 +254,58 @@ int main(int argc, char *argv[])
 
     banner->updateprogress(QString("initializing application"));
     dataIOhelper::setCurrentFolder();
+    QApplication::processEvents();
     initializeSettings();
+    QApplication::processEvents();
     banner->updateprogress(QString("initializing settings"));
     QSharedMemory sharedMemory;
+    QApplication::processEvents();
     sharedMemory.setKey(singleInstance);
+    QApplication::processEvents();
     banner->updateprogress(QString("initializing single Instance"));
+    QApplication::processEvents();
     isSharedMemoryCreated = sharedMemory.create(1);
+    QApplication::processEvents();
     banner->updateprogress(QString("initializing logger"));
+    QApplication::processEvents();
     qSetMessagePattern("[%{type}] %{appname} (%{file}:%{line}) - %{message}");
+    QApplication::processEvents();
     qInstallMessageHandler(myMessageLogger);
     a.setQuitOnLastWindowClosed(false);
+    QApplication::processEvents();
     banner->updateprogress(QString("creating folders"));
+    QApplication::processEvents();
     createFolders();
+    QApplication::processEvents();
     dataIOhelper::dumpLogoNotExists();
+    QApplication::processEvents();
     banner->updateprogress(QString("drugs local databse"));
+    QApplication::processEvents();
     copyDrugsDatabase2LocalDataFolder();
+    QApplication::processEvents();
     banner->updateprogress(QString("creating UserInterface"));
+    QApplication::processEvents();
     SingleInstance cInstance;
+    QApplication::processEvents();
     MainWindow w;
+    QApplication::processEvents();
     banner->updateprogress(QString("Making sure only one instance is running"));
+    QApplication::processEvents();
     seatBelt(cInstance,banner);
+    QApplication::processEvents();
     QObject::connect(&cInstance,SIGNAL(doAction()),&w,SLOT(showMainwindowIfMinimizedToTray()));
     cInstance.listen(singleInstance);
+    QApplication::processEvents();
     w.boot();
+    QApplication::processEvents();
     QRect screenres = qApp->screenAt(QCursor::pos())->geometry();
+
     w.move(QPoint(screenres.x(), screenres.y()));
     w.showMaximized();
+    QApplication::processEvents();
     banner->updateprogress(QString("Starting Application"));
     banner->setProgress(100);
-    QTimer::singleShot(1000,banner,SLOT(close()));
-    QTimer::singleShot(1500,banner,SLOT(deleteLater()));
+    QApplication::processEvents();
     banner->close();
     delete banner;
     auto exitCode = a.exec();
