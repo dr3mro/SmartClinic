@@ -71,15 +71,15 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
         {
             row = query->value(0).toInt() -1 ;
             ID  = query->value(0).toInt();
-            QStandardItem *id_Item = new QStandardItem();
-            id_Item->setData(QString::number(ID).rightJustified(5, '0'), Qt::DisplayRole);
+            auto id_Item = std::make_shared<QStandardItem*>(new QStandardItem);
+            (*id_Item.get())->setData(QString::number(ID).rightJustified(5, '0'), Qt::DisplayRole);
             info.Name = getHumanizedName(query->value(1).toString());
             info.Mobile = query->value(2).toString();
-            QStandardItem *name_Item = new QStandardItem(info.Name);
-            QStandardItem *mobile_Item = new QStandardItem(info.Mobile);
+            auto name_Item = std::make_shared<QStandardItem*>(new QStandardItem(info.Name));
+            auto mobile_Item = std::make_shared<QStandardItem*>(new QStandardItem(info.Mobile));
 
             if ( deceasedList.contains(QString::number(ID)))
-                name_Item->setData(QIcon(":/Graphics/redSkull"),Qt::DecorationRole);
+                (*name_Item.get())->setData(QIcon(":/Graphics/redSkull"),Qt::DecorationRole);
 
             info.Age = getAge(todayJulian - query->value(3).toInt());
 
@@ -88,9 +88,9 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
             info.MaritalStatus = query->value(6).toString();
             info.Occupation = query->value(7).toString();
 
-            patientTableModel->setItem(row,0,id_Item);
-            patientTableModel->setItem(row,1,name_Item);
-            patientTableModel->setItem(row,2,mobile_Item);
+            patientTableModel->setItem(row,0,*id_Item.get());
+            patientTableModel->setItem(row,1,*name_Item.get());
+            patientTableModel->setItem(row,2,*mobile_Item.get());
 
             toolTip = getPatientTooltip(info);
             patientTableModel->item(row,0)->setToolTip(toolTip);
@@ -368,28 +368,28 @@ DrugsItemModel *sqlBase::readDrugs(int ID, int visitDate,DrugsItemModel *drugsMo
 {
     //    drugsLoaded = true;
     drugsModel->clear();
-    QStandardItem *item1,*item2,*item3,*item4,*item5,*item6,*item7,*item8;
+    //QStandardItem *item1,*item2,*item3,*item4,*item5,*item6,*item7,*item8;
     int x =0;
     query->clear();
     query->exec(QString("select * from drugs where id=%1 and visitdate=%2").arg(ID).arg(visitDate));
     while (query->next())
     {
-        item1 = new QStandardItem( query->value(0).toString() );
-        item2 = new QStandardItem( query->value(1).toString() );
-        item3 = new QStandardItem( query->value(2).toString() );
-        item4 = new QStandardItem( query->value(3).toString() );
-        item5 = new QStandardItem( query->value(4).toString() );
-        item6 = new QStandardItem( query->value(5).toString() );
-        item7 = new QStandardItem( query->value(6).toString() );
-        item8 = new QStandardItem( query->value(7).toString() );
-        drugsModel->setItem(x,0,item1);
-        drugsModel->setItem(x,1,item2);
-        drugsModel->setItem(x,2,item3);
-        drugsModel->setItem(x,3,item4);
-        drugsModel->setItem(x,4,item5);
-        drugsModel->setItem(x,5,item6);
-        drugsModel->setItem(x,6,item7);
-        drugsModel->setItem(x,7,item8);
+        auto item1 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(0).toString()));
+        auto item2 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(1).toString()));
+        auto item3 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(2).toString()));
+        auto item4 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(3).toString()));
+        auto item5 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(4).toString()));
+        auto item6 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(5).toString()));
+        auto item7 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(6).toString()));
+        auto item8 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(7).toString()));
+        drugsModel->setItem(x,0,*item1.get());
+        drugsModel->setItem(x,1,*item2.get());
+        drugsModel->setItem(x,2,*item3.get());
+        drugsModel->setItem(x,3,*item4.get());
+        drugsModel->setItem(x,4,*item5.get());
+        drugsModel->setItem(x,5,*item6.get());
+        drugsModel->setItem(x,6,*item7.get());
+        drugsModel->setItem(x,7,*item8.get());
         x+=1;
     }
     query->finish();

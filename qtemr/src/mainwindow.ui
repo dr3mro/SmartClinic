@@ -77,7 +77,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/ionicons/bug</normaloff>:/ionicons/bug</iconset>
         </property>
         <property name="autoRaise">
@@ -91,7 +91,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/Graphics/chevBot</normaloff>:/Graphics/chevBot</iconset>
         </property>
        </widget>
@@ -150,7 +150,7 @@
              <string>&lt;</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/back</normaloff>:/Graphics/back</iconset>
             </property>
             <property name="shortcut">
@@ -213,7 +213,7 @@
              <string>&gt;</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/forward</normaloff>:/Graphics/forward</iconset>
             </property>
             <property name="shortcut">
@@ -233,7 +233,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/person</normaloff>:/Graphics/person</iconset>
             </property>
             <property name="shortcut">
@@ -253,7 +253,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/refresh</normaloff>:/Graphics/refresh</iconset>
             </property>
             <property name="iconSize">
@@ -292,7 +292,7 @@
              <string>&amp;Save</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/ok</normaloff>:/Graphics/ok</iconset>
             </property>
             <property name="shortcut">
@@ -312,7 +312,7 @@
              <string>Visi&amp;ts</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/control</normaloff>:/Graphics/control</iconset>
             </property>
             <property name="shortcut">
@@ -332,7 +332,7 @@
              <string>&amp;Delete</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/ionicons/close</normaloff>:/ionicons/close</iconset>
             </property>
             <property name="shortcut">
@@ -349,7 +349,7 @@
              <string>&amp;Cancel</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/person</normaloff>:/Graphics/person</iconset>
             </property>
             <property name="shortcut">
@@ -379,7 +379,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/settings</normaloff>:/Graphics/settings</iconset>
             </property>
            </widget>
@@ -393,7 +393,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/search</normaloff>:/Graphics/search</iconset>
             </property>
             <property name="iconSize">
@@ -419,7 +419,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/beaker</normaloff>:/Graphics/beaker</iconset>
             </property>
             <property name="shortcut">
@@ -837,13 +837,6 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
                 </widget>
                </item>
               </layout>
@@ -882,13 +875,6 @@
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
                  </property>
                  <property name="toolTip">
                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;F1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -930,7 +916,7 @@
                   <string>...</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="resources.qrc">
+                  <iconset resource="../res/resources.qrc">
                    <normaloff>:/Graphics/sptreadsheet</normaloff>:/Graphics/sptreadsheet</iconset>
                  </property>
                  <property name="autoRaise">
@@ -951,13 +937,6 @@
                    <width>190</width>
                    <height>0</height>
                   </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
                  </property>
                  <property name="readOnly">
                   <bool>true</bool>
@@ -1058,13 +1037,6 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
                 </widget>
                </item>
               </layout>
@@ -1079,15 +1051,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="genericLineEdit" name="patientOccupation">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                </widget>
+                <widget class="genericLineEdit" name="patientOccupation"/>
                </item>
                <item>
                 <widget class="xComboBox" name="comboBoxMaritalStatus">
@@ -1140,7 +1104,7 @@
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../res/resources.qrc">
                  <normaloff>:/Graphics/paperClip</normaloff>:/Graphics/paperClip</iconset>
                </property>
               </widget>
@@ -1190,7 +1154,7 @@
                 <string>...</string>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../res/resources.qrc">
                  <normaloff>:/Graphics/doc</normaloff>:/Graphics/doc</iconset>
                </property>
               </widget>
@@ -1382,7 +1346,7 @@
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="resources.qrc">
+               <iconset resource="../res/resources.qrc">
                 <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
               </property>
               <property name="autoRaise">
@@ -1399,7 +1363,7 @@
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="resources.qrc">
+               <iconset resource="../res/resources.qrc">
                 <normaloff>:/Graphics/minus</normaloff>:/Graphics/minus</iconset>
               </property>
               <property name="autoRaise">
@@ -1439,7 +1403,7 @@
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="resources.qrc">
+               <iconset resource="../res/resources.qrc">
                 <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
               </property>
               <property name="autoRaise">
@@ -1456,7 +1420,7 @@
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="resources.qrc">
+               <iconset resource="../res/resources.qrc">
                 <normaloff>:/Graphics/minus</normaloff>:/Graphics/minus</iconset>
               </property>
               <property name="autoRaise">
@@ -1487,7 +1451,7 @@
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="resources.qrc">
+               <iconset resource="../res/resources.qrc">
                 <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
               </property>
               <property name="autoRaise">
@@ -1504,7 +1468,7 @@
                <string>...</string>
               </property>
               <property name="icon">
-               <iconset resource="resources.qrc">
+               <iconset resource="../res/resources.qrc">
                 <normaloff>:/Graphics/minus</normaloff>:/Graphics/minus</iconset>
               </property>
               <property name="autoRaise">
@@ -1693,7 +1657,7 @@
   <tabstop>goHigherID</tabstop>
  </tabstops>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

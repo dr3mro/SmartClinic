@@ -10,7 +10,7 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QMessageBox>
-
+#include <memory>
 #include "sqlextra.h"
 #include "datahelper.h"
 #include "simplecrypt.h"

@@ -32,8 +32,8 @@ private:
     sqlBase::Visit visit;
     sqlBase::Patient patient;
     bool autocompletebyword;
-    void saveDicts(QStringList dicts);
-    QStringList splitDict(QString &dict);
+    void saveDicts(const QStringList & dicts);
+    QStringList splitDict(const QString &dict);
     QString connectionName;
     sqlExtra *sqlextra;
     QString husband;

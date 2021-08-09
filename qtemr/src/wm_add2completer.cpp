@@ -96,7 +96,7 @@ void wm_add2Completer::pWork()
     emit finished();
 }
 
-void wm_add2Completer::saveDicts(QStringList dicts)
+void wm_add2Completer::saveDicts(const QStringList & dicts)
 {
     foreach (QString d, dicts )
     {
@@ -108,7 +108,7 @@ void wm_add2Completer::saveDicts(QStringList dicts)
     }
 }
 
-QStringList wm_add2Completer::splitDict(QString &dict)
+QStringList wm_add2Completer::splitDict(const QString &dict)
 {
     QString plainText = dataHelper::cleanHTML(dict);
     return plainText.split(QRegularExpression("[\r\n\t ]+"), Qt::SkipEmptyParts);
