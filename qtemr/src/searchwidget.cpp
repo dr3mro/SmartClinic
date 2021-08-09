@@ -152,15 +152,17 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
     if(isFuzzySearchEnabled)
     {
         str.replace(" ","*");
-        str.replace(QRegularExpression("[آ|أ|إ|ا]",QRegularExpression::PatternOption::InvertedGreedinessOption),"[آ,أ,إ,ا]");
-        str.replace(QRegularExpression("[ه|ة]",QRegularExpression::PatternOption::InvertedGreedinessOption),"[ه,ة]");
-        str.replace(QRegularExpression("[ى|ي]",QRegularExpression::PatternOption::InvertedGreedinessOption),"[ى,ي]");
-        str.replace(QString("بو"),"[ب][و]*");
-        str.replace(QString("عبد"),"[ع][ب][د]*");
-        str.replace(QRegularExpression("(?<!ب)[ؤ,و]+[ء]*",QRegularExpression::PatternOption::InvertedGreedinessOption),"[ؤ,و]*");
+
+        str.replace(QRegularExpression("[a,b,c,d]"),"[z,c,f,g]");
+
+//        str.replace(QRegularExpression("[ه,ة]{0,1}"),"[ه,ة]");
+//        str.replace(QRegularExpression("[ى,ي]{0,1}"),"[ى,ي]");
+//        str.replace(QString("بو"),"[ب,و]*");
+//        str.replace(QString("عبد"),"[ع,ب,د]*");
+//        str.replace(QRegularExpression("(?<!ب)[ؤ,و]+[ء]*"),"[ؤ,و]*");
     }
 
-
+    mDebug() << str;
     ui->PatientListTableView->FilterPatients(str);
     ui->PatientListTableView->selectRow(0);
 }
