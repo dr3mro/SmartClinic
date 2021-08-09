@@ -48,8 +48,7 @@ void mSiblings::tweakCoulmnSize()
 
 QString mSiblings::calculateFPAL()
 {
-    int f,p,a,l;
-    f = p = a = l = 0;
+    int f=0,p=0,a=0,l=0;
     QStringList term  =  QStringList() << "FullTerm" << "PreTerm" << "Abortion";
     for (int r = 0; r < model->rowCount() ; r++)
     {
