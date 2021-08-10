@@ -34,17 +34,17 @@ private:
     sqlBase::Sibling getSibling();
 
 signals:
-    void addSibling(const sqlBase::Sibling&);
-    void editSibling(int,const sqlBase::Sibling&);
+    void addSibling(const sqlBase::Sibling &siblings);
+    void editSibling(int,const sqlBase::Sibling &);
     void loadCompleters();
     void setReadWrite(bool);
     void reloadCompleter();
     void updateTextFont();
 
 private slots:
-    void on_addSibling_clicked();
-    void on_closeButton_clicked();
-    void on_editSibling_clicked();
+    void onAddSibling_clicked();
+    void onCloseButton_clicked();
+    void onEditSibling_clicked();
     void makeReadWrite(bool rw);
 };
 

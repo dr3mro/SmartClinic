@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.19)
 project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
 
-
+#set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
 add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
 
 if (MSVC)
     add_compile_definitions(MEMLEAK=0)
-    add_compile_definitions(/MP)
+    #add_compile_definitions(/MP)
 else()
     add_compile_options()
 endif()
@@ -71,3 +71,4 @@ target_link_libraries(${TARGET_NAME}
     ${ZLIB}
     ${VLDLIB}
     )
+

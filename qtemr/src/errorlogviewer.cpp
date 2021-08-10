@@ -18,6 +18,10 @@ errorLogViewer::errorLogViewer(QWidget *parent) :
     connect(&mail,SIGNAL(messageFailed()),this,SLOT(messageFailed()));
     connect(&watcher, SIGNAL(finished()), this, SLOT(loadFromLogFile()));
     connect(&mail,&email::mDisconnected,this,&errorLogViewer::onDisconnect);
+    connect(ui->delButton,&QToolButton::clicked,this,&errorLogViewer::onDelButton_clicked);
+    connect(ui->playPause,&QToolButton::clicked,this,&errorLogViewer::onPlayPause_clicked);
+    connect(ui->sendReport,&QToolButton::clicked,this,&errorLogViewer::onSendReport_clicked);
+    connect(ui->refresh,&QToolButton::clicked,this,&errorLogViewer::onRefresh_clicked);
 }
 
 errorLogViewer::~errorLogViewer()
@@ -33,7 +37,7 @@ void errorLogViewer::loadLog()
     readLogFromDiskThread();
 }
 
-void errorLogViewer::on_delButton_clicked()
+void errorLogViewer::onDelButton_clicked()
 {
     dataIOhelper::saveFile("error.log",QByteArray());
     ui->plainTextEdit->clear();
@@ -53,7 +57,7 @@ void errorLogViewer::showEvent(QShowEvent *event)
     QWidget::showEvent(event);
 }
 
-void errorLogViewer::on_playPause_clicked()
+void errorLogViewer::onPlayPause_clicked()
 {
     pause = !pause;
     QIcon icon;
@@ -72,7 +76,7 @@ void errorLogViewer::on_playPause_clicked()
     ui->playPause->setIcon(icon);
 }
 
-void errorLogViewer::on_refresh_clicked()
+void errorLogViewer::onRefresh_clicked()
 {
     readLogFromDiskThread();
 }
@@ -122,7 +126,7 @@ void errorLogViewer::onDisconnect()
 
 }
 
-void errorLogViewer::on_sendReport_clicked()
+void errorLogViewer::onSendReport_clicked()
 {
     sending = true;
     ui->sendReport->setEnabled(false);

@@ -32,10 +32,10 @@ public:
     ~errorLogViewer();
 private slots:
     void loadLog();
-    void on_delButton_clicked();
-    void on_playPause_clicked();
-    void on_refresh_clicked();
-    void on_sendReport_clicked();
+    void onDelButton_clicked();
+    void onPlayPause_clicked();
+    void onRefresh_clicked();
+    void onSendReport_clicked();
     void messageSent();
     void messageFailed();
     void loadFromLogFile();

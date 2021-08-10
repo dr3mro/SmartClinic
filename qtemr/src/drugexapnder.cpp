@@ -112,7 +112,7 @@ void drugExapnder::addThisName()
     bool b = sqlextra->addNewExpand(name);
     reLoadAll();
     if (!b)
-        newMessage("WARNING","FAILED TO ADD THIS SHORTCUT,MAY BE IT'S ALREADY THERE OR A DUPLICATE");
+        emit newMessage("WARNING","FAILED TO ADD THIS SHORTCUT,MAY BE IT'S ALREADY THERE OR A DUPLICATE");
     ui->shortcut->clear();
     ui->shortcut->setFocus();
 }

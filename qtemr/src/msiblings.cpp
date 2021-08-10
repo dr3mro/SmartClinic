@@ -138,7 +138,7 @@ void mSiblings::appendRow(const sqlBase::Sibling& sibling)
     QStandardItem *gndr_item = new QStandardItem;
     QStandardItem *pob_item = new QStandardItem;
     QStandardItem *cmpl_item = new QStandardItem;
-    QStandardItem *state_item = new QStandardItem;
+    QStandardItem *term_item = new QStandardItem;
 
 
     QList<QStandardItem * > newRow;
@@ -148,14 +148,14 @@ void mSiblings::appendRow(const sqlBase::Sibling& sibling)
     newRow.append(gndr_item);
     newRow.append(pob_item);
     newRow.append(cmpl_item);
-    newRow.append(state_item);
+    newRow.append(term_item);
 
     dob_item->setText(sibling.DateOfBirth);
     tod_item->setText(sibling.TypeOfDelivery);
     gndr_item->setText(sibling.Gender);
     pob_item->setText(sibling.PlaceOfBirth);
     cmpl_item->setText(sibling.Complications);
-    state_item->setText(sibling.State);
+    term_item->setText(sibling.Term);
 
     pob_item->setToolTip(sibling.PlaceOfBirth);
     cmpl_item->setToolTip(sibling.Complications);

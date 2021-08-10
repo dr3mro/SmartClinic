@@ -152,7 +152,7 @@ QDomDocument dataIOhelper::readXMLdoc(QString path)
     }
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        mDebug() << QString ("%1<%2>").arg("Failed to open the file for reading.").arg(path);
+        mDebug() << QString ("%1<%2>").arg("Failed to open the file for reading.",path);
         document.setContent(QString("<xml/>"));
     }
     else
@@ -296,7 +296,7 @@ bool dataIOhelper::makePortable(bool enable)
 
 QString dataIOhelper::PortabilityLockFile()
 {
-    QString PortabilityLock = QString("%1/%2").arg(QCoreApplication::applicationDirPath()).arg(PORTABILITYLOCK).replace('/','\\');
+    QString PortabilityLock = QString("%1/%2").arg(QCoreApplication::applicationDirPath(),PORTABILITYLOCK).replace('/','\\');
     return PortabilityLock;
 }
 

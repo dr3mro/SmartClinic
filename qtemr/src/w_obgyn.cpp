@@ -141,7 +141,7 @@ void w_obGyn::toggleLMPdateBox(bool checked)
 void w_obGyn::on_addSiblings_clicked()
 {
     addSiblings addsiblings(ui->siblings->getSelectedRow(),ui->siblings->getSelectedRowContent(),this,false);
-    connect (&addsiblings,SIGNAL(addSibling(const sqlBase::Sibling&)),ui->siblings,SLOT(appendRow(const sqlBase::Sibling&)));
+    connect (&addsiblings,&addSiblings::addSibling,ui->siblings,&mSiblings::appendRow);
     addsiblings.exec();
 }
 
@@ -175,6 +175,6 @@ void w_obGyn::on_siblings_clicked(const QModelIndex &index)
 void w_obGyn::on_editSiblingButton_clicked()
 {
     addSiblings addsiblings(ui->siblings->getSelectedRow(),ui->siblings->getSelectedRowContent(),this,true);
-    connect (&addsiblings,SIGNAL(editSibling(int,const sqlBase::Sibling&)),ui->siblings,SLOT(editRow(int,const sqlBase::Sibling&)));
+    connect(&addsiblings,&addSiblings::editSibling,ui->siblings,&mSiblings::editRow);
     addsiblings.exec();
 }

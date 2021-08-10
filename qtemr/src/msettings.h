@@ -117,7 +117,7 @@ public:
         }
 
         QString getNextFromJulian(const qint64& nextDateJulian){
-            QList<QPair<QString,int> > options { {"",0},
+            QVector<QPair<QString,int> > options { {"",0},
                                                  {"أسبوع",1},
                                                  {"أسبوعين",2},
                                                  {"٣أسابيع",3},
@@ -146,7 +146,7 @@ public:
             qint64 remainingDays = nextDateJulian - julianToday;
             qint64 remainingWeeks = round(remainingDays / 7 );
 
-            for(auto x:options){
+            for(const auto &x:options){
                 if(x.second == remainingWeeks)
                     return x.first;
                 else if(x.second < remainingWeeks)

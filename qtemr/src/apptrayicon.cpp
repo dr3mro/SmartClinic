@@ -97,7 +97,7 @@ appTrayIcon::appTrayIcon(QObject *parent) : QSystemTrayIcon(parent)
     trayMenu->addActions(actionsList);
 
     this->setContextMenu(trayMenu);
-    this->setToolTip(QString("%1 %2").arg(APPNAME).arg(APPVERSION));
+    this->setToolTip(QString("%1 %2").arg(APPNAME,APPVERSION));
     connect (this,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),parent,SLOT(toggleWindow(QSystemTrayIcon::ActivationReason)));
 }
 

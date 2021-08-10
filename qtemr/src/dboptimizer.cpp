@@ -183,7 +183,7 @@ void dbOptimizer::closeEvent(QCloseEvent *e)
 void dbOptimizer::status(QString operation,bool state)
 {
     QApplication::processEvents();
-    ui->status->append(QString ("<b>%1</b> : %2").arg(operation).arg(state? "<b style='color:green;'>OK</b>":"<b style='color:red;'>FAIL</b>"));
+    ui->status->append(QString ("<b>%1</b> : %2").arg(operation,state? "<b style='color:green;'>OK</b>":"<b style='color:red;'>FAIL</b>"));
 }
 
 void dbOptimizer::message(QString msg)

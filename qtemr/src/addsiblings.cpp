@@ -13,6 +13,9 @@ addSiblings::addSiblings(int row, sqlBase::Sibling sibling, QWidget *parent, boo
 {
     ui->setupUi(this);
     connect(parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeReadWrite(bool)));
+    connect(ui->addSibling,&QPushButton::clicked,this,&addSiblings::onAddSibling_clicked);
+    connect(ui->editSibling,&QPushButton::clicked,this,&addSiblings::onEditSibling_clicked);
+    connect(ui->closeButton,&QPushButton::clicked,this,&addSiblings::onCloseButton_clicked);
     clean();
     ui->addSibling->setHidden(edit);
     ui->editSibling->setVisible(edit);
@@ -23,7 +26,7 @@ addSiblings::addSiblings(int row, sqlBase::Sibling sibling, QWidget *parent, boo
         ui->gender->setCurrentText(sibling.Gender);
         ui->placeOfBirth->setText(sibling.PlaceOfBirth);
         ui->complications->setText(sibling.Complications);
-        ui->state->setCurrentText(sibling.State);
+        ui->term->setCurrentText(sibling.Term);
 
     }
     setMinimumSize(300,400);
@@ -45,7 +48,7 @@ void addSiblings::clean()
     ui->gender->setCurrentIndex(0);
     ui->placeOfBirth->clear();
     ui->complications->clear();
-    ui->state->setCurrentIndex(0);
+    ui->term->setCurrentIndex(0);
 }
 
 void addSiblings::completer()
@@ -68,11 +71,11 @@ sqlBase::Sibling addSiblings::getSibling()
     sibling.Gender = ui->gender->currentText();
     sibling.PlaceOfBirth = ui->placeOfBirth->text();
     sibling.Complications = ui->complications->toPlainText();
-    sibling.State = ui->state->currentText();
+    sibling.Term = ui->term->currentText();
     return sibling;
 }
 
-void addSiblings::on_addSibling_clicked()
+void addSiblings::onAddSibling_clicked()
 {
 
     emit addSibling(getSibling());
@@ -80,13 +83,13 @@ void addSiblings::on_addSibling_clicked()
 }
 
 
-void addSiblings::on_closeButton_clicked()
+void addSiblings::onCloseButton_clicked()
 {
     clean();
     close();
 }
 
-void addSiblings::on_editSibling_clicked()
+void addSiblings::onEditSibling_clicked()
 {
     emit editSibling(selectedRow,getSibling());
     clean();

@@ -613,7 +613,7 @@ public:
         QString Gender;
         QString PlaceOfBirth;
         QString Complications;
-        QString State;
+//        QString State;
         QString Term;
     };
 

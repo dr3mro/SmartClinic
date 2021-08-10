@@ -85,7 +85,7 @@ bool backup::createBackup()
     QString dtLocalized = locale.toString(dt,"yyyyMMddHHmmss");
     QString cDT = locale.toString(dt,"ddd dd/MM/yyyy hh:mm:ss AP");
 
-    ZipName =  QString ( "%1%2%3").arg("backup/").arg(dtLocalized).arg(".zip");
+    ZipName =  QString ( "%1%2%3").arg("backup/").arg(dtLocalized,".zip");
     QString cDateTime = QString ("%1 [Manual]").arg(cDT);
     ui->label->setText("Initiating .. ");
     QStringList mediaFilesList = sqlbase->getInvestigationsMediaFilesList();

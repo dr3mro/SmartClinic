@@ -8,7 +8,7 @@ xListWidget::xListWidget(QWidget *parent) //-V730
 {
     connect(parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeReadWrite(bool)));
     connect(this,SIGNAL(popUpMessage(QString,QString)),parent->window(),SLOT(popUpMessage(QString,QString)));
-    connect(this,SIGNAL(afterAddItemxListWidget(QString,QString)),parent->window(),SLOT(afterAddItemxListWidget(QString, QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(afterAddItemxListWidget(QString,QString)),parent->window(),SLOT(afterAddItemxListWidget(QString,QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(itemSelectionChanged()),this,SLOT(selectedRowChanged()));
     connect( parent->window(),SIGNAL(updateTextFont()),this,SLOT(setDefaultFont()));
 }

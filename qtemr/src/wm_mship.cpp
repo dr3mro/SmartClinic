@@ -24,7 +24,7 @@ void wm_mShip::work()
 
     if ( !settings.isDeviceActivated() && !rApp.check_eval_copy() )
     {
-        emit sendMail("New Device Registered",QString("%1 %2").arg(rApp.genDeviceID()).arg(rApp.read_reg_data()));
+        emit sendMail("New Device Registered",QString("%1 %2").arg(rApp.genDeviceID(),rApp.read_reg_data()));
     }
 }
 

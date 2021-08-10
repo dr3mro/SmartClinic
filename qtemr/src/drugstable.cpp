@@ -79,7 +79,7 @@ drugsTable::drugsTable(QWidget *parent):zTableView(parent)
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,SIGNAL(drugTableItemChanged()),this,SLOT(drugsTableSort()));
     connect(this,SIGNAL(drugTableItemChanged()),this,SLOT(calculateRxCosts()));
-    connect(this ,SIGNAL(customContextMenuRequested(const QPoint)),this,SLOT(showContextMenu(const QPoint)));
+    connect(this ,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(showContextMenu(QPoint)));
     connect(parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeReadWrite(bool)));
     connect(le_setDose,SIGNAL(removeItemFromCompleter(QString,QString)),this,SLOT(removeItemFromCompleter(QString,QString)));
     connect(this,SIGNAL(setFindDrugsModel(QStandardItemModel*)),altDrugs,SLOT(setModel(QStandardItemModel*)));
@@ -105,7 +105,7 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
 
         if ( insertUnknownDrugCounter == 0)
         {
-            popUpMessage("Warning","The item you are trying to add is unknown! press ENTER again to confirm. ");
+            emit popUpMessage("Warning","The item you are trying to add is unknown! press ENTER again to confirm. ");
             insertUnknownDrugCounter+=1;
             insertUnknownDrugName=newDrug;
             return false;
@@ -113,7 +113,7 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
         else if( insertUnknownDrugCounter>0)
         {
             insertUnknownDrugCounter=0;
-            popUpMessage("Warning","The Unknown drug has been added.");
+            emit popUpMessage("Warning","The Unknown drug has been added.");
         }
 
     }
@@ -140,7 +140,7 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
         }
         else if ( drug.toUpper() == newDrug.toUpper() && (drugsModel->item(i,5)->text() == "1") )
         {
-            popUpMessage("Warning","The item you are trying to add to this Drug List already exists!");
+            emit popUpMessage("Warning","The item you are trying to add to this Drug List already exists!");
             return true;
         }
     }
@@ -235,7 +235,7 @@ void drugsTable::addDrug2DrugListByStringList(QStringList stringList)
 
     drugsModel->appendRow(newRow);
     tweakDrugsTable();
-    drugTableItemChanged();
+    emit drugTableItemChanged();
     emit drugsHasBeenAltered(true);
 }
 
@@ -358,7 +358,7 @@ void drugsTable::replaceDrug(QString newDrug)
     {
         if ( drug.toUpper() == newDrug.toUpper() && (drugsModel->item(i,5)->text() == "1") )
         {
-            popUpMessage("Warning","The item you are trying to add to this Drug List already exists!");
+            emit popUpMessage("Warning","The item you are trying to add to this Drug List already exists!");
             return;
         }
     }
@@ -717,15 +717,7 @@ void drugsTable::genDrugTableToolTip()
                                "<td><b> Category     </td><td>:</td> </b><td><p align=\"left\"> %5.</p></td>"
                                "</tr>"
                                "</table>");
-            tTip = QString (tooltip_template)
-                    .arg(genericName)
-                    .arg(dose)
-                    .arg(date)
-                    .arg(price)
-                    .arg(category)
-                    .arg(genericLabel)
-                    .arg(dateLabel)
-                    .arg(currentTag);
+            tTip = QString (tooltip_template).arg(genericName,dose,date,price,category,genericLabel,dateLabel,currentTag);
 
 
         }
@@ -749,12 +741,7 @@ void drugsTable::genDrugTableToolTip()
                                "</tr>"
                                "</table>");
             tTip = QString (tooltip_template)
-                    .arg(genericName)
-                    .arg(dose)
-                    .arg(date)
-                    .arg(genericLabel)
-                    .arg(dateLabel)
-                    .arg(currentTag);
+                    .arg(genericName,dose,date,genericLabel,dateLabel,currentTag);
         }
 
 
