@@ -992,8 +992,8 @@ bool sqlBase::deletePatientRecord(int ID)
     if ( p && v && d && i && s && n && k && l && c && dev && pn && og)
     {
         b = true;
-        QDir d(QString("data/media/%1/").arg(ID));
-        d.removeRecursively();
+        QDir dir(QString("data/media/%1/").arg(ID));
+        dir.removeRecursively();
     }
     else
     {

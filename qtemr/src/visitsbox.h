@@ -63,7 +63,7 @@ public:
     void clearVisit();
     void updateVisitAge();
     void enableEditMode(bool vEditMode);
-    void setPatient(visitsBox::mPatientBasicDetails &_patientBasicDetails);
+    void setPatient(const mPatientBasicDetails &_patientBasicDetails);
     void tweakui();
     ~visitsBox();
 
@@ -225,7 +225,7 @@ private:
     mPatientBasicDetails patientBasicDetails;
 
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
     void keyPressEvent(QKeyEvent *e);
     void keyReleaseEvent(QKeyEvent *e);
     void mousePressEvent(QMouseEvent *event);

@@ -130,10 +130,10 @@ QIcon visitsList::getVisitIcon(int visitType) const
         return QIcon(":/Graphics/newvisit");
     else if ( visitType <= maxFollows )
         return QIcon(":/Graphics/fvisit");
-    else if ( visitType > maxFollows )
+    else //if ( visitType > maxFollows )
         return QIcon(":/Graphics/free");
-    else
-        return QIcon();
+    
+    return QIcon();
 }
 
 

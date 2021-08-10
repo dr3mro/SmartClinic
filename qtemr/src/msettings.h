@@ -112,8 +112,8 @@ public:
     struct Roshetta
     {
         QString getVisitSymbole(const int & _i){
-            QStringList visitSymbole = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
-            return visitSymbole.at(_i);
+            QStringList _visitSymboleList = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
+            return _visitSymboleList.at(_i);
         }
 
         QString getNextFromJulian(const qint64& nextDateJulian){
@@ -530,7 +530,7 @@ public:
         QString normalStylesheet;
     };
     static mSettings &instance();
-    void saveSettings(pSettings &psets);
+    void saveSettings(const pSettings &psets);
     pSettings readSettings();
     QString themeMaker();
     double getVisitPrice(int visitType);

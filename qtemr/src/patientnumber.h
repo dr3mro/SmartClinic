@@ -22,7 +22,7 @@ public slots:
 
 private:
     int maxValue;
-    void toggleButtons(int &value);
+    void toggleButtons(const int &value);
 
 signals:
     void enableGoLower(bool);

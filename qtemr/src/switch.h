@@ -20,7 +20,7 @@ class Switch : public QAbstractButton {
 
 public:
     explicit Switch(QWidget *parent = nullptr);
-    Switch(const QBrush &brush, QWidget *parent = nullptr);
+    explicit Switch(const QBrush &brush, QWidget *parent = nullptr);
 
     QSize sizeHint() const override;
 

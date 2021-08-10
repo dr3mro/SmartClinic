@@ -18,7 +18,7 @@ wm_visitSaver::~wm_visitSaver()
     QSqlDatabase::removeDatabase(connectionName);
 }
 
-void wm_visitSaver::setVisitData(sqlBase::visitData &_data)
+void wm_visitSaver::setVisitData(const sqlBase::visitData &_data)
 {
     visitData = _data;
 }

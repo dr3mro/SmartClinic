@@ -28,7 +28,7 @@ void patientNumber::display(const QString &str)
     QLCDNumber::display(str);
 }
 
-void patientNumber::toggleButtons(int &value)
+void patientNumber::toggleButtons(const int &value)
 {
     if ( value == 1  )
     {

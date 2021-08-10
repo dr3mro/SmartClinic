@@ -9,7 +9,6 @@
 #include <QCloseEvent>
 #include <QKeyEvent>
 #include <QMovie>
-#include <QDesktopWidget>
 #include <QRandomGenerator>
 
 #include "sqlextra.h"

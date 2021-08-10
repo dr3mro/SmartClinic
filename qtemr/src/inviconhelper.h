@@ -10,7 +10,6 @@
 #include <QPixmap>
 #include <QBuffer>
 #include <QImageReader>
-#include <QDesktopWidget>
 #include <QRect>
 #include <QApplication>
 #include "mdebug.h"

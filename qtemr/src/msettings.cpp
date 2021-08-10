@@ -11,7 +11,7 @@ mSettings &mSettings::instance()
     return s_instance;
 }
 
-void mSettings::saveSettings(mSettings::pSettings &psets)
+void mSettings::saveSettings(const mSettings::pSettings &psets)
 {
     QSettings && settings = QSettings("./settings.ini",QSettings::IniFormat);
     psettings = psets;
@@ -485,7 +485,7 @@ mStyler::Style &mSettings::getStyle()
 
 mSettings::lineStyle mSettings::getLineStylesheet()
 {
-    mStyler::Style & style = getStyle();
+    const mStyler::Style & style = getStyle();
     QString normalTextColor = style.inputText.color_normal;
     QString warningTextColor = style.inputText.color_warning;
     QString errorTextColor = style.inputText.color_error;

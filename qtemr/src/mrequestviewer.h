@@ -63,7 +63,7 @@ private:
 
 protected:
     void hideEvent(QHideEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
     void paintEvent(QPaintEvent *event);
 
 };

@@ -7,7 +7,6 @@
 
 #include <QObject>
 #include <QLabel>
-#include <QDesktopWidget>
 #include <QString>
 #include <QFont>
 #include <QGraphicsDropShadowEffect>
@@ -23,7 +22,6 @@ public:
     void show();
     void setMessage(QString msg);
 private:
-    QDesktopWidget *desktop;
     QGraphicsDropShadowEffect *effect;
     WindowManager wm;
 };

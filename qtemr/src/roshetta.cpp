@@ -1,6 +1,5 @@
 #include "roshetta.h"
 #include <QApplication>
-#include <QDesktopWidget>
 Roshetta::Roshetta(QObject *parent) : QObject(parent)
 {
 

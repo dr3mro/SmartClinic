@@ -13,7 +13,6 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QShowEvent>
-#include <QDesktopWidget>
 class toast : public QLabel
 {
     Q_OBJECT

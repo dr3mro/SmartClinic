@@ -7,7 +7,6 @@
 
 #include <QDialog>
 #include <QKeyEvent>
-#include <QDesktopWidget>
 #include "msettings.h"
 #include "dataiohelper.h"
 #include "sqlbase.h"

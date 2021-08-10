@@ -106,7 +106,7 @@ void visitsBox::tweakui()
 
     if ( screenMode )
     {   //setWindowState(this->windowState() | Qt::WindowMaximized);
-        QDesktopWidget* m = QApplication::desktop();
+        //QDesktopWidget* m = QApplication::desktop();
         QRect dw = qApp->screenAt(QCursor::pos())->geometry();
 
         if ( dw.size() == QSize(800,600) )
@@ -949,7 +949,7 @@ void visitsBox::on_drugLine_textChanged(const QString &arg1)
 }
 
 void visitsBox::SyncToPatient(bool sync)
-{ 
+{
     int reply = msgbox->question(this,"Confirm Drugs %1",QString(
                                      "Are you sure that you want to %1 %2")
                                  .arg(sync? "Sync this visit prescripton to Patient drugs list? ":
@@ -1500,7 +1500,7 @@ void visitsBox::toggleSyncPrintButtons()
     ui->buttonRemoveDrug->setEnabled(vEditMode && ui->vDrugsTable->selectionModel()->hasSelection());
 }
 
-void visitsBox::setPatient(visitsBox::mPatientBasicDetails &_patientBasicDetails)
+void visitsBox::setPatient(const visitsBox::mPatientBasicDetails &_patientBasicDetails)
 {
     aboutToClose = false;
     vEditMode = true;

@@ -330,9 +330,10 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
     }else{
         t.start();
     }
-    int reply=0;
+    
 
     if(_doc->pageCount() > 1 ){
+		int reply=0;
         if (roshettaData.diet.printRequired){
             printer->setFromTo(1,1);
             _doc->print(p);

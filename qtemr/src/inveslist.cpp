@@ -64,9 +64,9 @@ void invesList::mShow()
 }
 
 
-void invesList::on_tableView_activated(const QModelIndex &index)
+void invesList::on_tableView_activated(const QModelIndex &_index)
 {
-    QString mediaFileurl = model->item(index.row(),3)->text();
+    QString mediaFileurl = model->item(_index.row(),3)->text();
     QFile file(mediaFileurl);
     QImage img;
     if( file.exists()

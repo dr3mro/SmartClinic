@@ -16,7 +16,7 @@ class m_ClickableLabel : public QLabel
 public:
     explicit m_ClickableLabel(QWidget *parent=nullptr, Qt::WindowFlags f=Qt::WindowFlags());
     explicit m_ClickableLabel(const QString &text, QWidget *parent=nullptr, Qt::WindowFlags f=Qt::WindowFlags());
-    void setPhoneNumber(QString &p);
+    void setPhoneNumber(const QString &p);
     QString getPhoneNumber();
 private:
     QString phoneNumber="";

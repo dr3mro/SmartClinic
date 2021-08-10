@@ -14,7 +14,7 @@ m_ClickableLabel::m_ClickableLabel(const QString &text, QWidget *parent, Qt::Win
 
 }
 
-void m_ClickableLabel::setPhoneNumber(QString &p)
+void m_ClickableLabel::setPhoneNumber(const QString &p)
 {
     phoneNumber = p;
 }

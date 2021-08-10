@@ -15,7 +15,7 @@ class wm_visitSaver : public QObject
 public:
     explicit wm_visitSaver(QObject *parent = nullptr);
     ~wm_visitSaver();
-    void setVisitData(sqlBase::visitData &_data);
+    void setVisitData(const sqlBase::visitData &_data);
 
 signals:
     void finished();
