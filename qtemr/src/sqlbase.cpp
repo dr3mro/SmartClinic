@@ -71,15 +71,15 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
         {
             row = query->value(0).toInt() -1 ;
             ID  = query->value(0).toInt();
-            auto id_Item = std::make_shared<QStandardItem*>(new QStandardItem);
-            (*id_Item.get())->setData(QString::number(ID).rightJustified(5, '0'), Qt::DisplayRole);
+            auto id_Item = new QStandardItem;
+            id_Item->setData(QString::number(ID).rightJustified(5, '0'), Qt::DisplayRole);
             info.Name = getHumanizedName(query->value(1).toString());
             info.Mobile = query->value(2).toString();
-            auto name_Item = std::make_shared<QStandardItem*>(new QStandardItem(info.Name));
-            auto mobile_Item = std::make_shared<QStandardItem*>(new QStandardItem(info.Mobile));
+            auto name_Item = new QStandardItem(info.Name);
+            auto mobile_Item = new QStandardItem(info.Mobile);
 
             if ( deceasedList.contains(QString::number(ID)))
-                (*name_Item.get())->setData(QIcon(":/Graphics/redSkull"),Qt::DecorationRole);
+                name_Item->setData(QIcon(":/Graphics/redSkull"),Qt::DecorationRole);
 
             info.Age = getAge(todayJulian - query->value(3).toInt());
 
@@ -88,9 +88,9 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
             info.MaritalStatus = query->value(6).toString();
             info.Occupation = query->value(7).toString();
 
-            patientTableModel->setItem(row,0,*id_Item.get());
-            patientTableModel->setItem(row,1,*name_Item.get());
-            patientTableModel->setItem(row,2,*mobile_Item.get());
+            patientTableModel->setItem(row,0,id_Item);
+            patientTableModel->setItem(row,1,name_Item);
+            patientTableModel->setItem(row,2,mobile_Item);
 
             toolTip = getPatientTooltip(info);
             patientTableModel->item(row,0)->setToolTip(toolTip);
@@ -374,22 +374,22 @@ DrugsItemModel *sqlBase::readDrugs(int ID, int visitDate,DrugsItemModel *drugsMo
     query->exec(QString("select * from drugs where id=%1 and visitdate=%2").arg(ID).arg(visitDate));
     while (query->next())
     {
-        auto item1 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(0).toString()));
-        auto item2 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(1).toString()));
-        auto item3 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(2).toString()));
-        auto item4 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(3).toString()));
-        auto item5 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(4).toString()));
-        auto item6 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(5).toString()));
-        auto item7 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(6).toString()));
-        auto item8 = std::make_shared<QStandardItem*>(new QStandardItem(query->value(7).toString()));
-        drugsModel->setItem(x,0,*item1.get());
-        drugsModel->setItem(x,1,*item2.get());
-        drugsModel->setItem(x,2,*item3.get());
-        drugsModel->setItem(x,3,*item4.get());
-        drugsModel->setItem(x,4,*item5.get());
-        drugsModel->setItem(x,5,*item6.get());
-        drugsModel->setItem(x,6,*item7.get());
-        drugsModel->setItem(x,7,*item8.get());
+        auto item1 = new QStandardItem(query->value(0).toString());
+        auto item2 = new QStandardItem(query->value(1).toString());
+        auto item3 = new QStandardItem(query->value(2).toString());
+        auto item4 = new QStandardItem(query->value(3).toString());
+        auto item5 = new QStandardItem(query->value(4).toString());
+        auto item6 = new QStandardItem(query->value(5).toString());
+        auto item7 = new QStandardItem(query->value(6).toString());
+        auto item8 = new QStandardItem(query->value(7).toString());
+        drugsModel->setItem(x,0,item1);
+        drugsModel->setItem(x,1,item2);
+        drugsModel->setItem(x,2,item3);
+        drugsModel->setItem(x,3,item4);
+        drugsModel->setItem(x,4,item5);
+        drugsModel->setItem(x,5,item6);
+        drugsModel->setItem(x,6,item7);
+        drugsModel->setItem(x,7,item8);
         x+=1;
     }
     query->finish();
@@ -3783,44 +3783,44 @@ InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int
 
     while ( query->next())
     {
-        auto IDItem = std::make_shared<QStandardItem*>(new QStandardItem(QString::number(ID)));
+        auto IDItem = new QStandardItem(QString::number(ID));
         auto name = query->value(1).toString();
         auto path = query->value(3).toString();
-        auto nameItem = std::make_shared<QStandardItem*>(new QStandardItem(name));
+        auto nameItem = new QStandardItem(name);
         //nameItem->setToolTip(invIconHelper::getInvestigationTooltip(path,name));
-        auto visitDateItem = std::make_shared<QStandardItem*>(new QStandardItem(QString::number(query->value(2).toInt())));
-        auto pathItem = std::make_shared<QStandardItem*>(new QStandardItem(path));
-        auto invDateItem = std::make_shared<QStandardItem*>(new QStandardItem());
-        auto invTimeItem = std::make_shared<QStandardItem*>(new QStandardItem());
-        auto invStateItem = std::make_shared<QStandardItem*>(new QStandardItem(QString::number(query->value(6).toInt())));
-        auto priceItem = std::make_shared<QStandardItem*>(new QStandardItem(query->value(7).toString()));
-        auto resultsItem = std::make_shared<QStandardItem*>(new QStandardItem(query->value(8).toString()));
+        auto visitDateItem = new QStandardItem(QString::number(query->value(2).toInt()));
+        auto pathItem = new QStandardItem(path);
+        auto invDateItem = new QStandardItem();
+        auto invTimeItem = new QStandardItem();
+        auto invStateItem = new QStandardItem(QString::number(query->value(6).toInt()));
+        auto priceItem = new QStandardItem(query->value(7).toString());
+        auto resultsItem = new QStandardItem(query->value(8).toString());
 
         if ( visitJulianDate == 0 ) // for list not visitbox
         {
-            (*invDateItem.get())->setText(locale.toString(QDate::fromJulianDay(query->value(4).toInt()),"dd/MM/yyyy"));
+            invDateItem->setText(locale.toString(QDate::fromJulianDay(query->value(4).toInt()),"dd/MM/yyyy"));
             if ( ! paths.contains(query->value(3).toString()))
                 paths << path;
             else
                 continue;
         }
         else
-            (*invDateItem.get())->setText(QString::number(query->value(4).toInt()));
+            invDateItem->setText(QString::number(query->value(4).toInt()));
 
         if ( visitJulianDate == 0 )
-            (*invTimeItem.get())->setText(locale.toString(QTime::fromMSecsSinceStartOfDay(query->value(5).toInt()*1000),"hh:mm AP"));
+            invTimeItem->setText(locale.toString(QTime::fromMSecsSinceStartOfDay(query->value(5).toInt()*1000),"hh:mm AP"));
         else
-            (*invTimeItem.get())->setText(query->value(5).toString());
+            invTimeItem->setText(query->value(5).toString());
 
-        investModel->setItem(row,0,*IDItem.get());
-        investModel->setItem(row,1,*nameItem.get());
-        investModel->setItem(row,2,*visitDateItem.get());
-        investModel->setItem(row,3,*pathItem.get());
-        investModel->setItem(row,4,*invDateItem.get());
-        investModel->setItem(row,5,*invTimeItem.get());
-        investModel->setItem(row,6,*invStateItem.get());
-        investModel->setItem(row,7,*priceItem.get());
-        investModel->setItem(row,8,*resultsItem.get());
+        investModel->setItem(row,0,IDItem);
+        investModel->setItem(row,1,nameItem);
+        investModel->setItem(row,2,visitDateItem);
+        investModel->setItem(row,3,pathItem);
+        investModel->setItem(row,4,invDateItem);
+        investModel->setItem(row,5,invTimeItem);
+        investModel->setItem(row,6,invStateItem);
+        investModel->setItem(row,7,priceItem);
+        investModel->setItem(row,8,resultsItem);
         row+=1;
     }
     query->finish();
