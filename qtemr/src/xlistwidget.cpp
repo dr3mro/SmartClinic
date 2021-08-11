@@ -54,9 +54,9 @@ void xListWidget::setDefaultFont()
 {
     mSettings::defaultFont defaultfont = settings.getDefaultFont();
     QFont defaultFont = QFont(defaultfont.fontName);
-    int defaultPointSize = static_cast<int>(defaultfont.fontSize);
-    bool defaultBold = defaultfont.fontBold;
-    defaultFont.setBold(defaultBold);
-    defaultFont.setPointSize(defaultPointSize);
+//    int defaultPointSize = static_cast<int>(defaultfont.fontSize);
+//    bool defaultBold = defaultfont.fontBold;
+//    defaultFont.setBold(defaultBold);
+//    defaultFont.setPointSize(defaultPointSize);
     setFont(defaultFont);
 }

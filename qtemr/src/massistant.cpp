@@ -135,7 +135,7 @@ void mAssistant::tweakRegisterTable()
     ui->cashTableView->setColumnWidth(0,50);
     //ui->cashTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->cashTableView->setColumnWidth(1,350-servPixelWidth);
-    ui->cashTableView->setColumnWidth(4,80);
+    ui->cashTableView->setColumnWidth(4,85);
 
     ui->cashTableView->sortByColumn(2,Qt::SortOrder::AscendingOrder);
     ui->cashTableView->hideColumn(2);
@@ -196,9 +196,9 @@ void mAssistant::doCalcs()
 
     calcModelFuture.waitForFinished();
     ui->calcTableView->setModel(calcModel);
-    ui->calcTableView->setColumnWidth(0,80);
-    ui->calcTableView->setColumnWidth(1,50);
-    ui->calcTableView->setColumnWidth(2,50);
+    ui->calcTableView->setColumnWidth(0,90);
+    ui->calcTableView->setColumnWidth(1,45);
+    ui->calcTableView->setColumnWidth(2,45);
     ui->calcTableView->horizontalHeader()->setStretchLastSection(true);
     ui->SUMlineEdit->setText(QString::number(TOTAL,'f',2));
     labelMsg.hide();
@@ -302,7 +302,7 @@ void mAssistant::onAgendaModelLoaded()
     ui->agendaTableView->resizeColumnToContents(2);
     ui->agendaTableView->setColumnWidth(0,50);
     //ui->agendaTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    ui->agendaTableView->setColumnWidth(1,340);
+    ui->agendaTableView->setColumnWidth(1,330);
     ui->agendaTableView->horizontalHeader()->setStretchLastSection(true);
     ui->agendaTableView->clearSelection();
 

@@ -946,7 +946,7 @@
                <item>
                 <widget class="xSpinBox" name="spinBoxAge">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -956,13 +956,6 @@
                    <width>0</width>
                    <height>18</height>
                   </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                  </font>
                  </property>
                  <property name="maximum">
                   <number>300</number>
@@ -1301,29 +1294,33 @@
           </item>
           <item row="3" column="1">
            <widget class="xListWidget" name="allergyList">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="gridSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContents</enum>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Adjust</enum>
             </property>
            </widget>
           </item>
           <item row="3" column="2">
            <widget class="xListWidget" name="opAdmissionsList">
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContents</enum>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Adjust</enum>
             </property>
            </widget>
           </item>
