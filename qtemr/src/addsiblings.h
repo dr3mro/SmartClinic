@@ -24,6 +24,7 @@ public:
     explicit addSiblings(int row, sqlBase::Sibling sibling, QWidget *parent = nullptr, bool edit=false);
     ~addSiblings();
 public slots:
+    void makeReadWrite(bool rw);
 private:
     void clean();
     void completer();
@@ -45,7 +46,6 @@ private slots:
     void onAddSibling_clicked();
     void onCloseButton_clicked();
     void onEditSibling_clicked();
-    void makeReadWrite(bool rw);
 };
 
 #endif // ADDSIBLINGS_H

@@ -12,7 +12,6 @@ addSiblings::addSiblings(int row, sqlBase::Sibling sibling, QWidget *parent, boo
     ui(new Ui::addSiblings)
 {
     ui->setupUi(this);
-    connect(parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeReadWrite(bool)));
     connect(ui->addSibling,&QPushButton::clicked,this,&addSiblings::onAddSibling_clicked);
     connect(ui->editSibling,&QPushButton::clicked,this,&addSiblings::onEditSibling_clicked);
     connect(ui->closeButton,&QPushButton::clicked,this,&addSiblings::onCloseButton_clicked);

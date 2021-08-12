@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>794</width>
-    <height>195</height>
+    <height>202</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,7 +85,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/Graphics/minus</normaloff>:/Graphics/minus</iconset>
         </property>
         <property name="autoRaise">
@@ -178,7 +178,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
         </property>
         <property name="autoRaise">
@@ -230,7 +230,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/Graphics/pencil</normaloff>:/Graphics/pencil</iconset>
         </property>
         <property name="autoRaise">
@@ -473,7 +473,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/Graphics/puzle</normaloff>:/Graphics/puzle</iconset>
         </property>
         <property name="autoRaise">
@@ -503,18 +503,18 @@
    <header>xlineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>mSiblings</class>
-   <extends>QTableView</extends>
-   <header>msiblings.h</header>
-  </customwidget>
-  <customwidget>
    <class>xComboBox</class>
    <extends>QComboBox</extends>
    <header>xcombobox.h</header>
   </customwidget>
+  <customwidget>
+   <class>mSiblings</class>
+   <extends>QTableView</extends>
+   <header>msiblings.h</header>
+  </customwidget>
  </customwidgets>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

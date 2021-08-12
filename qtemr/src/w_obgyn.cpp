@@ -7,10 +7,11 @@
 
 w_obGyn::w_obGyn(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::w_obGyn)
+    ui(new Ui::w_obGyn),
+    sqlbase (new sqlBase(this,"w_ObGyn",false))
 {
     ui->setupUi(this);
-    sqlbase = new sqlBase(this,"w_ObGyn",false);
+
     ui->LMP->setDate(QDate::currentDate());
     connect (ui->checkBoxMenoPause,SIGNAL(toggled(bool)),this,SLOT(toggleLMPdateBox(bool)));
 }
@@ -43,6 +44,7 @@ QString w_obGyn::getFPAL()
 void w_obGyn::toggleEditMode(bool pEditMODE)
 {
     ui->addSiblings->setEnabled(pEditMODE);
+    ui->editSiblingButton->setEnabled((ui->siblings->selectionModel()->currentIndex().row() >= 0 ) ? pEditMODE:false);
     ui->removeSiblings->setEnabled((ui->siblings->selectionModel()->currentIndex().row() >= 0 ) ? pEditMODE:false);
     ui->LMP->setEnabled(pEditMODE ? !ui->checkBoxMenoPause->isChecked():false);
     ui->fpalCalButton->setEnabled(pEditMODE);
