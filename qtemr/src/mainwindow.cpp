@@ -1123,6 +1123,7 @@ void MainWindow::on_ButtonRefresh_clicked()
 
 void MainWindow::quitApp(){
     deleteLockFile();
+    trayIcon->hide();
     exit(0);
 }
 
@@ -1589,6 +1590,7 @@ void MainWindow::show_backup_win()
     connect (&b,SIGNAL(loadFirstPatient()),this,SLOT(loadFirstPatient()));
     connect (&b,SIGNAL(closeDataBase()),this,SLOT(closeDataBase()));
     connect (&b,SIGNAL(reOpenDataBase()),this,SLOT(reOpenDataBase()));
+    connect (&b,&backup::quit_app,this,&MainWindow::quitApp);
     sqlbase->WAL_CheckPoint(QString("TRUNCATE"));
     sqlextra->WAL_CheckPoint(QString("TRUNCATE"));
     b.exec();

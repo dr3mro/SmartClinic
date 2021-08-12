@@ -29,24 +29,23 @@ public:
     ~backup();
 
 private slots:
-    void on_closeButton_clicked();
-    void on_buttonNew_clicked();
-    void on_buttonDelete_clicked();
-    void on_listOfAvailableBackUps_clicked(const QModelIndex &index);
-    void on_buttonRestore_clicked();
+    void onCloseButton_clicked();
+    void onButtonNew_clicked();
+    void onButtonDelete_clicked();
+    void onListOfAvailableBackUps_clicked(const QModelIndex &index);
+    void onButtonRestore_clicked();
     bool createBackup();
 protected:
     void closeEvent(QCloseEvent *e) override;
-    void keyPressEvent(QKeyEvent *e);
+    void keyPressEvent(QKeyEvent *e) override;
 private:
     Ui::backup *ui;
     mSettings& settings=mSettings::instance();
-    QString getZipMD5(QString zipFile);
+    QString getZipMD5(const QString &zipFile);
     void makeList();
     bool clearFolders();
-    QByteArray getFileContents(QString fileName);
+    void getFileContents(const QString &fileName, QByteArray *fileContents);
     QStringList getMediaDirList(QStringList mediaFiles);
-    int indexLENGTH;
     QString ZipName;
     QStandardItemModel *model;
     QString selectedZip,savedMD5;
@@ -55,11 +54,13 @@ private:
     myMessageBox msg;
     sqlBase *sqlbase;
     double databaseVersion;
+    int indexLENGTH;
 
 signals:
     void closeDataBase();
     void reOpenDataBase();
     void loadFirstPatient();
+    void quit_app();
 };
 
 #endif // BACKUP_H
