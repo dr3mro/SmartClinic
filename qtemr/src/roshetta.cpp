@@ -157,8 +157,8 @@ void Roshetta::makeBanner()
     bannerFormat.setLayoutDirection(roshettaSettings.preferArabic? Qt::RightToLeft : Qt::LeftToRight);
 
     QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,50)
-                                                         << QTextLength(QTextLength::PercentageLength,20)
-                                                         << QTextLength(QTextLength::PercentageLength,30);
+                                                         << QTextLength(QTextLength::PercentageLength,18)
+                                                         << QTextLength(QTextLength::PercentageLength,32);
     bannerFormat.setColumnWidthConstraints(bannertl);
 //    bannerFormat.setMargin(0);
 //    bannerFormat.setPadding(0);
@@ -266,18 +266,18 @@ void Roshetta::fillBanner(QTextCursor &c)
                  QString::number(roshettaSettings.bannerFont.fontSize),
                  roshettaSettings.bannerFont.fontBold? "bold":"normal");
 
-    c.insertHtml(QString("<div %2><b>Nx: </b>%1</div>").arg(roshettaData.name,style));
+    c.insertHtml(QString("<div %2><b>Nx:</b>%1</div>").arg(roshettaData.name,style));
     c.movePosition(QTextCursor::NextCell);
     c.insertHtml(QString("<div %2><b>ASx:</b>%1</div>").arg(patient_age_sex,style));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<div %2><b>eDt: </b>%1</div>").arg(visitDate,style));
+    c.insertHtml(QString("<div %2><b>eDt:</b>%1</div>").arg(visitDate,style));
     c.movePosition(QTextCursor::NextCell);
 
-    c.insertHtml(QString("<div %2><b>Dx: </b>%1</div>").arg(roshettaData.Diagnosis,style));
+    c.insertHtml(QString("<div %2><b>Dx:</b>%1</div>").arg(roshettaData.Diagnosis,style));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<div %4><b>ID: </b>%1 %2</div>").arg(roshettaData.ID ,roshettaData.visitSymbole,style));
+    c.insertHtml(QString("<div %3><b>ID:</b>%1</div>").arg(roshettaData.ID,style));
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString("<div %2><b>fDt: </b>%1</div>").arg(nextDate,style));
+    c.insertHtml(QString("<div %2><b>fDt:</b>%1 %3</div>").arg(nextDate,style,roshettaData.visitSymbole));
 
 }
 

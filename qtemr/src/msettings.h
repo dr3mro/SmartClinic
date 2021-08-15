@@ -111,37 +111,46 @@ public:
     // this is data structure to hold the roshetta for printing
     struct Roshetta
     {
-        QString getVisitSymbole(const int & _i){
+        QString getVisitSymbole(const int & _i,const int & _maxFollows){
+            int index;
+
+            if (_i < _maxFollows)
+                index = _i +1;
+            else if(_i == _maxFollows)
+                index = 0;
+            else //if(_i > _maxFollows)
+                index = 5;
             QStringList _visitSymboleList = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
-            return _visitSymboleList.at(_i);
+
+            return _visitSymboleList.at(index);
         }
 
         QString getNextFromJulian(const qint64& nextDateJulian){
             QVector<QPair<QString,int> > options { {"",0},
-                                                 {"أسبوع",1},
-                                                 {"أسبوعين",2},
-                                                 {"٣أسابيع",3},
-                                                 {"شهر",4},
-                                                 {"شهر",5},
-                                                 {"شهر و نصف",6},
-                                                 {"شهر و نصف",7},
-                                                 {"شهرين",8},
-                                                 {"شهرين",9},
-                                                 {"شهرين",10},
-                                                 {"٣ شهور",11},
-                                                 {"٣ شهور",12},
-                                                 {"٣ شهور",13},
-                                                 {"٣ شهور",14},
-                                                 {"٣ شهور",15},
-                                                 {"٤ شهور",16},
-                                                 {"٤ شهور",17},
-                                                 {"٤ شهور",18},
-                                                 {"٤ شهور",19},
-                                                 {"٥ شهور",20},
-                                                 {"٥ شهور",21},
-                                                 {"٥ شهور",22},
-                                                 {"٥ شهور",23},
-                                                 {"٦ شهور",24} };
+                                                   {"أسبوع",1},
+                                                   {"أسبوعين",2},
+                                                   {"٣أسابيع",3},
+                                                   {"شهر",4},
+                                                   {"شهر",5},
+                                                   {"شهر و نصف",6},
+                                                   {"شهر و نصف",7},
+                                                   {"شهرين",8},
+                                                   {"شهرين",9},
+                                                   {"شهرين",10},
+                                                   {"٣ شهور",11},
+                                                   {"٣ شهور",12},
+                                                   {"٣ شهور",13},
+                                                   {"٣ شهور",14},
+                                                   {"٣ شهور",15},
+                                                   {"٤ شهور",16},
+                                                   {"٤ شهور",17},
+                                                   {"٤ شهور",18},
+                                                   {"٤ شهور",19},
+                                                   {"٥ شهور",20},
+                                                   {"٥ شهور",21},
+                                                   {"٥ شهور",22},
+                                                   {"٥ شهور",23},
+                                                   {"٦ شهور",24} };
             qint64 julianToday = QDate::currentDate().toJulianDay();
             qint64 remainingDays = nextDateJulian - julianToday;
             qint64 remainingWeeks = round(remainingDays / 7 );
