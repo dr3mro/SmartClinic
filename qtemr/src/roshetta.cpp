@@ -252,7 +252,7 @@ void Roshetta::fillBanner(QTextCursor &c)
             .arg(roshettaData.sex == mSettings::mSex::male ? "m":"f",
                  dataHelper::julianToAge(QDate::currentDate().toJulianDay() - roshettaData.age,
                                          roshettaData.ageStyle));
-    if(roshettaData.caseClosed)
+    if(roshettaData.caseClosed || roshettaData.printedinDate.date() == roshettaData.nextDate)
         nextDate = roshettaData.getNextFromJulian(roshettaData.nextDate.toJulianDay());
     else
         nextDate = loc.toString(roshettaData.nextDate,datefmt);
