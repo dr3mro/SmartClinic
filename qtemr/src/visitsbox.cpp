@@ -1378,7 +1378,7 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshetta.nextDate = ui->dateFollowUp->date();
     roshetta.printedinDate = QDateTime::currentDateTime();
     roshetta.caseClosed = ui->CheckButtonCaseClose->isChecked();
-    roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex(),maxFollows);
+    roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex(),maxFollows,ui->CheckButtonCaseClose->isChecked());
 
     if ( settings.userSpeciality() == dataHelper::Speciality::Paediatrics ||
          settings.userSpeciality() == dataHelper::Speciality::FamilyMedicine )

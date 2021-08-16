@@ -141,7 +141,7 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
             //mDebug() << str << "filter by id";
         }else{ // if not then it should be a name
             ui->PatientListTableView->setFilterByName();
-            ui->PatientListTableView->sortByColumn(1,Qt::AscendingOrder);
+            ui->PatientListTableView->sortByColumn(0,Qt::AscendingOrder);
             //mDebug() << str << "filter by name";
         }
     }

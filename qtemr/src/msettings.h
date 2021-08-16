@@ -111,10 +111,12 @@ public:
     // this is data structure to hold the roshetta for printing
     struct Roshetta
     {
-        QString getVisitSymbole(const int & _i,const int & _maxFollows){
+        QString getVisitSymbole(const int & _i,const int & _maxFollows,const bool &isCaseClosed){
             int index;
 
-            if (_i < _maxFollows)
+            if(isCaseClosed)
+                index = 0;
+            else if (_i < _maxFollows)
                 index = _i +1;
             else if(_i == _maxFollows)
                 index = 0;
