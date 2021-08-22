@@ -3379,7 +3379,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
             QStandardItem *itemCount = new QStandardItem(QString::number(count));
             itemCount->setBackground(QBrush(QColor::fromRgb(255,204,255)));
             itemCount->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-            QStandardItem *itemPrice = new QStandardItem(QString::number(subTOTAL));
+            QStandardItem *itemPrice = new QStandardItem(QString::number(subTOTAL,'f',2));
             itemPrice->setBackground(QBrush(QColor::fromRgb(255,204,255)));
             itemPrice->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
             calcModel->appendRow(QList<QStandardItem*>() << itemService << itemCount << itemPrice );
