@@ -16,6 +16,7 @@ endif()
 set(TARGET_NAME "smartClinic3")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -49,11 +50,12 @@ find_package(Qt5Printsupport REQUIRED)
 
 
 include_directories("src/")
+include_directories("ui/")
 
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE HEADERS src/*.h)
-file(GLOB_RECURSE UI src/*.ui)
+file(GLOB_RECURSE UI ui/*.ui)
 
 
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/res/MyApplication.rc")
