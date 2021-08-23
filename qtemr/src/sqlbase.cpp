@@ -3580,7 +3580,7 @@ bool sqlBase::insertDefaultConditions()
     }
 
     //set conditions metadata
-    queryExec(QString("INSERT INTO metadata (data,version) VALUES(\"%1\",%2)").arg("conditions",1));
+    queryExec(QString("INSERT INTO metadata (data,version) VALUES(\"%1\",1)").arg("conditions"));
     return true;
 }
 

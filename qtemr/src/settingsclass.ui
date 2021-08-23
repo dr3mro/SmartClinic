@@ -1090,7 +1090,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="resources.qrc">
+            <iconset resource="../res/resources.qrc">
              <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
            </property>
           </widget>
@@ -1104,7 +1104,7 @@
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="resources.qrc">
+            <iconset resource="../res/resources.qrc">
              <normaloff>:/Graphics/remove</normaloff>:/Graphics/remove</iconset>
            </property>
           </widget>
@@ -1258,7 +1258,7 @@
             <string>Clear</string>
            </property>
            <property name="icon">
-            <iconset resource="resources.qrc">
+            <iconset resource="../res/resources.qrc">
              <normaloff>:/Graphics/shield</normaloff>:/Graphics/shield</iconset>
            </property>
           </widget>
@@ -1349,7 +1349,7 @@
             <string>Select</string>
            </property>
            <property name="icon">
-            <iconset resource="resources.qrc">
+            <iconset resource="../res/resources.qrc">
              <normaloff>:/Graphics/home</normaloff>:/Graphics/home</iconset>
            </property>
           </widget>
@@ -1394,7 +1394,7 @@
             <string>Reset</string>
            </property>
            <property name="icon">
-            <iconset resource="resources.qrc">
+            <iconset resource="../res/resources.qrc">
              <normaloff>:/ionicons/reDose</normaloff>:/ionicons/reDose</iconset>
            </property>
           </widget>
@@ -1654,7 +1654,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
             </property>
             <property name="checkable">
@@ -1687,7 +1687,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="resources.qrc">
+             <iconset resource="../res/resources.qrc">
               <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
             </property>
             <property name="checkable">
@@ -1835,7 +1835,7 @@
   <tabstop>closeButton</tabstop>
  </tabstops>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

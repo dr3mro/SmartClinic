@@ -180,7 +180,6 @@ QByteArray dataIOhelper::readFile(QString path)
     {
         ba = file.readAll();
         file.close();
-        file.flush();
     }
     return ba;
 }

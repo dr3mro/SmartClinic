@@ -73,7 +73,7 @@ void createFolders()
 
 void dumpDrugsDatabase()
 {
-    QFile resDrugsdb(":/databases/drugsIndex.db");
+    QFile resDrugsdb(":/databases/db");
     QFile drugsdb("./data/drugs.db");
     resDrugsdb.open(QIODevice::ReadOnly);
     QByteArray dbArray = resDrugsdb.readAll();

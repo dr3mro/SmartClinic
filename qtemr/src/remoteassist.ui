@@ -29,7 +29,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset>
          <normaloff>:/Graphics/forward</normaloff>:/Graphics/forward</iconset>
        </property>
       </widget>
@@ -244,7 +244,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset>
          <normaloff>:/Graphics/forward</normaloff>:/Graphics/forward</iconset>
        </property>
       </widget>
@@ -262,7 +262,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset>
          <normaloff>:/Graphics/refresh</normaloff>:/Graphics/refresh</iconset>
        </property>
       </widget>
@@ -273,7 +273,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset>
          <normaloff>:/Graphics/search</normaloff>:/Graphics/search</iconset>
        </property>
       </widget>
@@ -284,7 +284,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset>
          <normaloff>:/Graphics/search</normaloff>:/Graphics/search</iconset>
        </property>
       </widget>
@@ -295,7 +295,7 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset resource="resources.qrc">
+        <iconset>
          <normaloff>:/Graphics/search</normaloff>:/Graphics/search</iconset>
        </property>
       </widget>
@@ -355,8 +355,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

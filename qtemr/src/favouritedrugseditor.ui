@@ -145,7 +145,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/ionicons/add</normaloff>:/ionicons/add</iconset>
         </property>
        </widget>
@@ -162,7 +162,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="resources.qrc">
+         <iconset resource="../res/resources.qrc">
           <normaloff>:/ionicons/rm</normaloff>:/ionicons/rm</iconset>
         </property>
        </widget>
@@ -223,14 +223,14 @@
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
+     <attribute name="verticalHeaderMinimumSectionSize">
+      <number>20</number>
+     </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>20</number>
      </attribute>
      <attribute name="verticalHeaderHighlightSections">
       <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderMinimumSectionSize">
-      <number>20</number>
      </attribute>
     </widget>
    </item>
@@ -251,7 +251,7 @@
   <tabstop>tableView</tabstop>
  </tabstops>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

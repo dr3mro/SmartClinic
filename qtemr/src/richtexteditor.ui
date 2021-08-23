@@ -42,7 +42,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/alignLeft</normaloff>:/Graphics/alignLeft</iconset>
       </property>
       <property name="checkable">
@@ -60,7 +60,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/alignCenter</normaloff>:/Graphics/alignCenter</iconset>
       </property>
       <property name="checkable">
@@ -78,7 +78,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/alignRight</normaloff>:/Graphics/alignRight</iconset>
       </property>
       <property name="checkable">
@@ -165,7 +165,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/undo</normaloff>:/Graphics/undo</iconset>
       </property>
       <property name="shortcut">
@@ -186,7 +186,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/redo</normaloff>:/Graphics/redo</iconset>
       </property>
       <property name="shortcut">
@@ -223,7 +223,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/brush</normaloff>:/Graphics/brush</iconset>
       </property>
       <property name="shortcut">
@@ -241,7 +241,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/clear</normaloff>:/Graphics/clear</iconset>
       </property>
       <property name="autoRaise">
@@ -256,7 +256,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/selectall</normaloff>:/Graphics/selectall</iconset>
       </property>
       <property name="shortcut">
@@ -293,7 +293,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/cut</normaloff>:/Graphics/cut</iconset>
       </property>
       <property name="shortcut">
@@ -311,7 +311,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/copy</normaloff>:/Graphics/copy</iconset>
       </property>
       <property name="shortcut">
@@ -329,7 +329,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/paste</normaloff>:/Graphics/paste</iconset>
       </property>
       <property name="shortcut">
@@ -347,7 +347,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/capsLock</normaloff>:/Graphics/capsLock</iconset>
       </property>
       <property name="shortcut">
@@ -387,7 +387,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
       </property>
       <property name="shortcut">
@@ -408,7 +408,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/italic</normaloff>:/Graphics/italic</iconset>
       </property>
       <property name="shortcut">
@@ -429,7 +429,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/underline</normaloff>:/Graphics/underline</iconset>
       </property>
       <property name="shortcut">
@@ -450,7 +450,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/strike</normaloff>:/Graphics/strike</iconset>
       </property>
       <property name="shortcut">
@@ -471,7 +471,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="resources.qrc">
+       <iconset resource="../res/resources.qrc">
         <normaloff>:/Graphics/highlight</normaloff>:/Graphics/highlight</iconset>
       </property>
       <property name="shortcut">
@@ -610,7 +610,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="resources.qrc">
+      <iconset resource="../res/resources.qrc">
        <normaloff>:/ionicons/earth</normaloff>:/ionicons/earth</iconset>
      </property>
      <property name="shortcut">
@@ -631,7 +631,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

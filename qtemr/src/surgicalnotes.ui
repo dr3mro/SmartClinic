@@ -37,7 +37,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="resources.qrc">
+      <iconset>
        <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
      </property>
     </widget>
@@ -51,7 +51,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="resources.qrc">
+      <iconset>
        <normaloff>:/Graphics/minus</normaloff>:/Graphics/minus</iconset>
      </property>
     </widget>
@@ -65,7 +65,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="resources.qrc">
+      <iconset>
        <normaloff>:/Graphics/pencil</normaloff>:/Graphics/pencil</iconset>
      </property>
     </widget>
@@ -123,8 +123,6 @@
    <header>msurgicalnotes.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

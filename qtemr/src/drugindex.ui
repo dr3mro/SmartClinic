@@ -176,7 +176,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="resources.qrc">
+      <iconset resource="../res/resources.qrc">
        <normaloff>:/Graphics/ex</normaloff>:/Graphics/ex</iconset>
      </property>
      <property name="autoRaise">
@@ -233,7 +233,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>
