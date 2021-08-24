@@ -4,7 +4,7 @@ project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
 set(OPENSSL_USE_STATIC_LIBS true)
 
 #set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
-add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x050F00)
+add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
 if (MSVC)
     add_compile_definitions(MEMLEAK=0)
