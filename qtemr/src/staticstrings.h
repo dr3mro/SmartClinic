@@ -39,7 +39,10 @@
 #define _showDrugsTableOutline "showDrugsTableOutline"
 #define _drugsPrintMode "drugsPrintMode"
 #define _showDrugsTitle "showDrugsTitle"
-#define _showHeaderFooterLogo "showPrescriptionHeaderFooterLogo"
+#define _showHeader "showPrescriptionHeader"
+#define _showFooter "showPrescriptionFooter"
+#define _showLogo "showPrescriptionLogo"
+#define _bannerStyle "prscriptionBannerStyle"
 #define _logoSize "logoPixelSize"
 
 #define _headerHeightPercent "headerHeightPercent"

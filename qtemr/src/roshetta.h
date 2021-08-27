@@ -46,6 +46,7 @@ private:
     void fillVitals(QTextCursor &c);
     void fillFooter(QTextCursor &c);
     void fillDiet(QTextCursor &c);
+    void fillAltBanner(QTextCursor&c);
     double mWidth;
     double mHeight;
 

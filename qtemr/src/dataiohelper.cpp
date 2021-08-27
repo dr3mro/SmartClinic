@@ -315,3 +315,21 @@ void dataIOhelper::dumpLogoNotExists(bool force){
     src.close();
     dest.close();
 }
+
+void dataIOhelper::dumpBannerTemplate(bool force)
+{
+    QFile dest(BANNERFILE);
+    if(force)
+        dest.remove();
+
+    if(dest.exists())
+        return;
+
+    QFile src("://banner.html");
+    src.open(QIODevice::ReadOnly);
+    dest.open(QIODevice::WriteOnly);
+    QByteArray srcData = src.readAll();
+    dest.write(srcData);
+    src.close();
+    dest.close();
+}

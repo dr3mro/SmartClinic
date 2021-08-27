@@ -78,10 +78,17 @@ private slots:
     void footerHeightPercent_valueChanged(int arg1);
     void header_textChanged();
     void footer_textChanged();
+    void bannerTemplate_textChanged();
     void paperSizeId_activated(const QString &arg1);
     void SignaturePrintedOn_clicked(bool checked);
     void drugsInitDate_clicked(bool checked);
-    void showHeaderFooterLogo_clicked(bool checked);
+
+    void showHeader_clicked(bool checked);
+    void showFooter_clicked(bool checked);
+    void showLogo_clicked(bool checked);
+
+    void bannerStyle_activated(int index);
+
     void showDrugs_clicked(bool checked);
     void showMesurements_clicked(bool checked);
     void showDrugsTableOutline_clicked(bool checked);
@@ -100,6 +107,7 @@ private slots:
     void resetLogo();
     void dietSelected(const QString &_selectedDiet);
     void roshettaEdited(bool b);
+    void resetBannerTemplateClicked();
 
 private:
     void setupPrinter(QPrinter *p);

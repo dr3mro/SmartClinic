@@ -28,8 +28,8 @@
   <property name="windowTitle">
    <string>Print</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
+  <layout class="QGridLayout" name="gridLayout_7">
+   <item row="0" column="0">
     <widget class="QWidget" name="widget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -83,56 +83,8 @@
             <attribute name="title">
              <string>General</string>
             </attribute>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_16">
-               <item>
-                <widget class="QLabel" name="label_32">
-                 <property name="text">
-                  <string>Show Roshetta Header, Footer and Logo</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="Switch" name="showHeaderFooterLogo">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_8">
-               <item>
-                <widget class="QLabel" name="label_19">
-                 <property name="text">
-                  <string>Show prescription banner contains details about patient.</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="Switch" name="showBanner">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
+            <layout class="QGridLayout" name="gridLayout_9">
+             <item row="0" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
                 <widget class="QLabel" name="label_16">
@@ -156,7 +108,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="1" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <item>
                 <widget class="QLabel" name="label_17">
@@ -180,7 +132,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="2" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_7">
                <item>
                 <widget class="QLabel" name="label_18">
@@ -204,7 +156,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="3" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_18">
                <item>
                 <widget class="QLabel" name="label_35">
@@ -228,7 +180,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="4" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_14">
                <item>
                 <widget class="QLabel" name="label_30">
@@ -258,7 +210,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="5" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_17">
                <item>
                 <widget class="QLabel" name="label_34">
@@ -282,7 +234,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="6" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_9">
                <item>
                 <widget class="QLabel" name="label_24">
@@ -306,7 +258,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="7" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_10">
                <item>
                 <widget class="QLabel" name="label_21">
@@ -330,7 +282,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="8" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_12">
                <item>
                 <widget class="QLabel" name="label_23">
@@ -354,7 +306,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="9" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_11">
                <item>
                 <widget class="QLabel" name="label_22">
@@ -378,7 +330,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="10" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_13">
                <item>
                 <widget class="QLabel" name="label_25">
@@ -402,7 +354,7 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="11" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_15">
                <item>
                 <widget class="QLabel" name="label_26">
@@ -426,14 +378,14 @@
                </item>
               </layout>
              </item>
-             <item>
+             <item row="12" column="0">
               <widget class="Line" name="line">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
-             <item>
+             <item row="13" column="0">
               <widget class="QSplitter" name="splitter_12">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -453,7 +405,7 @@
                </widget>
               </widget>
              </item>
-             <item>
+             <item row="14" column="0">
               <widget class="QSplitter" name="splitter_14">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -491,7 +443,27 @@
                </widget>
               </widget>
              </item>
-             <item>
+             <item row="15" column="0">
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>337</width>
+                 <height>191</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="printDrugsFontsTab">
+            <attribute name="title">
+             <string>Fonts</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
               <widget class="QSplitter" name="splitter_3">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -604,7 +576,7 @@
                  <string>...</string>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../res/resources.qrc">
                   <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
                 </property>
                 <property name="checkable">
@@ -616,7 +588,7 @@
                </widget>
               </widget>
              </item>
-             <item>
+             <item row="1" column="0">
               <widget class="QSplitter" name="splitter_10">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -729,7 +701,7 @@
                  <string>...</string>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../res/resources.qrc">
                   <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
                 </property>
                 <property name="checkable">
@@ -741,7 +713,7 @@
                </widget>
               </widget>
              </item>
-             <item>
+             <item row="2" column="0">
               <widget class="QSplitter" name="splitter_11">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -854,7 +826,7 @@
                  <string>...</string>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../res/resources.qrc">
                   <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
                 </property>
                 <property name="checkable">
@@ -866,132 +838,7 @@
                </widget>
               </widget>
              </item>
-             <item>
-              <widget class="QSplitter" name="splitter_13">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <widget class="QLabel" name="label_12">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>80</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Requests Font:</string>
-                </property>
-               </widget>
-               <widget class="mFontComboBox" name="requestsFontName">
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-               </widget>
-               <widget class="QComboBox" name="requestsFontSize">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>7</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>8</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>9</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>10</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>11</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>12</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>13</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>14</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>16</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>18</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>20</string>
-                 </property>
-                </item>
-               </widget>
-               <widget class="QToolButton" name="requestsFontBold">
-                <property name="toolTip">
-                 <string>Bold</string>
-                </property>
-                <property name="text">
-                 <string>...</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </widget>
-             </item>
-             <item>
+             <item row="4" column="0">
               <widget class="QSplitter" name="splitter_15">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1104,7 +951,7 @@
                  <string>...</string>
                 </property>
                 <property name="icon">
-                 <iconset>
+                 <iconset resource="../res/resources.qrc">
                   <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
                 </property>
                 <property name="checkable">
@@ -1116,24 +963,149 @@
                </widget>
               </widget>
              </item>
-             <item>
-              <spacer name="verticalSpacer">
+             <item row="3" column="0">
+              <widget class="QSplitter" name="splitter_13">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <widget class="QLabel" name="label_12">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Requests Font:</string>
+                </property>
+               </widget>
+               <widget class="mFontComboBox" name="requestsFontName">
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="requestsFontSize">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>7</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>9</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>11</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>12</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>13</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>14</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>18</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>20</string>
+                 </property>
+                </item>
+               </widget>
+               <widget class="QToolButton" name="requestsFontBold">
+                <property name="toolTip">
+                 <string>Bold</string>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res/resources.qrc">
+                  <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <spacer name="verticalSpacer_4">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>340</width>
-                 <height>194</height>
+                 <width>20</width>
+                 <height>40</height>
                 </size>
                </property>
               </spacer>
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="printDrugsAdvancedTab">
+           <widget class="QWidget" name="printDrugsPaperTab">
             <attribute name="title">
-             <string>Advanced</string>
+             <string>Paper</string>
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
@@ -1375,89 +1347,6 @@
               </widget>
              </item>
              <item>
-              <layout class="QGridLayout" name="gridLayout_2">
-               <item row="0" column="0">
-                <widget class="QPushButton" name="setLogo">
-                 <property name="text">
-                  <string>Select logo</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QPushButton" name="resetLogo">
-                 <property name="text">
-                  <string>Reset Logo</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="2" rowspan="2">
-                <widget class="QLabel" name="logoPreview">
-                 <property name="maximumSize">
-                  <size>
-                   <width>72</width>
-                   <height>72</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="pixmap">
-                  <pixmap>:/Graphics/Graphics/logo.jpg</pixmap>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>Prescription Header</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="TextEdit" name="Header"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>Prescription Footer</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="TextEdit" name="Footer"/>
-             </item>
-             <item>
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -1469,6 +1358,334 @@
                 </size>
                </property>
               </spacer>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="printDrugsLogoTab">
+            <attribute name="title">
+             <string>Logo</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_12">
+             <item row="0" column="0">
+              <widget class="QGroupBox" name="groupBox_4">
+               <property name="title">
+                <string>Roshetta Logo</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_5">
+                <item row="0" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_21">
+                  <item>
+                   <widget class="QLabel" name="label_38">
+                    <property name="text">
+                     <string>Show Roshetta Logo</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="Switch" name="showLogo">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="0">
+                 <layout class="QGridLayout" name="gridLayout_2">
+                  <item row="0" column="0">
+                   <widget class="QPushButton" name="setLogo">
+                    <property name="text">
+                     <string>Select logo</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QPushButton" name="resetLogo">
+                    <property name="text">
+                     <string>Reset Logo</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2" rowspan="2">
+                   <widget class="QLabel" name="logoPreview">
+                    <property name="maximumSize">
+                     <size>
+                      <width>72</width>
+                      <height>72</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="pixmap">
+                     <pixmap resource="../res/resources.qrc">:/Graphics/Graphics/logo.jpg</pixmap>
+                    </property>
+                    <property name="scaledContents">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <spacer name="horizontalSpacer_2">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <spacer name="verticalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="printDrugsHeaderTab">
+            <attribute name="title">
+             <string>Header</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_14">
+             <item row="0" column="0">
+              <widget class="QGroupBox" name="groupBox_2">
+               <property name="title">
+                <string>Roshetta Header</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_13">
+                <item row="0" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_23">
+                  <item>
+                   <widget class="QLabel" name="label_40">
+                    <property name="text">
+                     <string>Show Roshetta Header</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="Switch" name="showHeader">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="0">
+                 <widget class="TextEdit" name="Header"/>
+                </item>
+                <item row="2" column="0">
+                 <spacer name="verticalSpacer_7">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="printDrugsBannerTab">
+            <attribute name="title">
+             <string>Banner</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_15">
+             <item row="0" column="0">
+              <widget class="QGroupBox" name="groupBox_5">
+               <property name="title">
+                <string>Banner</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="0" colspan="2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_24">
+                  <item>
+                   <widget class="QLabel" name="label_27">
+                    <property name="text">
+                     <string>Show prescription banner contains details about patient.</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="Switch" name="showBanner">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="2" column="0" colspan="2">
+                 <widget class="TextEdit" name="bannerTemplate">
+                  <property name="placeholderText">
+                   <string>banner template</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0" colspan="2">
+                 <widget class="QSplitter" name="resetButtonAndLabel">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <widget class="QLabel" name="label_8">
+                   <property name="text">
+                    <string>Reset banner template to default.</string>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="resetBannerTemplate">
+                   <property name="text">
+                    <string>RESET</string>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <spacer name="verticalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="0" colspan="2">
+                 <widget class="QSplitter" name="splitter_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <widget class="QLabel" name="label_15">
+                   <property name="text">
+                    <string>Banner Style</string>
+                   </property>
+                  </widget>
+                  <widget class="QComboBox" name="BannerStyle">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Below Header</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Replace Logo</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="printDrugsFooterTab">
+            <attribute name="title">
+             <string>Footer</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_17">
+             <item row="0" column="0">
+              <widget class="QGroupBox" name="groupBox_3">
+               <property name="title">
+                <string>Roshetta Footer</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_16">
+                <item row="0" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_25">
+                  <item>
+                   <widget class="QLabel" name="label_41">
+                    <property name="text">
+                     <string>Show Roshetta Footer</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="Switch" name="showFooter">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="0">
+                 <widget class="TextEdit" name="Footer"/>
+                </item>
+                <item row="2" column="0">
+                 <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1515,7 +1732,7 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../res/resources.qrc">
                <normaloff>:/Graphics/refresh</normaloff>:/Graphics/refresh</iconset>
              </property>
              <property name="shortcut">
@@ -1532,7 +1749,7 @@
               <string>...</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../res/resources.qrc">
                <normaloff>:/Graphics/lock</normaloff>:/Graphics/lock</iconset>
              </property>
              <property name="shortcut">
@@ -1580,7 +1797,7 @@
               <string>Print</string>
              </property>
              <property name="icon">
-              <iconset>
+              <iconset resource="../res/resources.qrc">
                <normaloff>:/Graphics/print</normaloff>:/Graphics/print</iconset>
              </property>
              <property name="shortcut">
@@ -1602,7 +1819,7 @@
      </layout>
     </widget>
    </item>
-   <item>
+   <item row="0" column="1">
     <widget class="PagesTextEdit" name="Roshetta">
      <property name="font">
       <font>
@@ -1654,11 +1871,12 @@
   <tabstop>fastPrint</tabstop>
   <tabstop>showInvs</tabstop>
   <tabstop>showDrugs</tabstop>
-  <tabstop>showBanner</tabstop>
   <tabstop>showDrugsTableOutline</tabstop>
   <tabstop>drugsMode</tabstop>
   <tabstop>Roshetta</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../res/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -94,17 +94,16 @@ void Roshetta::stackFrames()
     QTextCursor cursor(mRoshetta);
     cursor.movePosition(QTextCursor::Start);
     cursor.insertTable(1,2,headerFormat);
-    if(roshettaSettings.showPrescriptionHeaderFooterLogo)
-        fillHeader(cursor);
-    else
-        cursor.movePosition(QTextCursor::NextCell);
+
+    fillHeader(cursor);
 
     cursor.movePosition(QTextCursor::NextBlock);
 
     cursor.insertFrame(bannerFrameFormat);
 
 
-    if(roshettaSettings.showBanner)
+    if(roshettaSettings.showBanner
+            && roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader)
         fillBanner(cursor);
     else{
         cursor.movePosition(QTextCursor::NextBlock);
@@ -138,7 +137,7 @@ void Roshetta::makeHeader()
 
 void Roshetta::makeBanner()
 {
-    if(roshettaSettings.showBanner){
+    if(roshettaSettings.showBanner && roshettaSettings.prescriptionBannerStyle==mSettings::bannerStyle::belowHeader){
         bannerFrameFormat.setBorder(1);
         bannerFrameFormat.setBorderBrush(QBrush(Qt::lightGray));
         bannerFrameFormat.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
@@ -147,19 +146,26 @@ void Roshetta::makeBanner()
         bannerFrameFormat.setBorder(0);
         bannerFrameFormat.setBorderBrush(QBrush(Qt::white));
     }
-    bannerFrameFormat.setHeight((mHeight*roshettaSettings.bannerHeightPercent)/100);
+
+    if(roshettaSettings.showBanner &&
+            roshettaSettings.prescriptionBannerStyle==mSettings::bannerStyle::belowHeader){
+        bannerFrameFormat.setHeight((mHeight*roshettaSettings.bannerHeightPercent)/100);
 
 
-    bannerFormat.setAlignment(Qt::AlignCenter);
-    bannerFormat.setWidth(mWidth);
-    bannerFormat.setHeight(44);
-    bannerFormat.setBorder(0);
-    bannerFormat.setLayoutDirection(roshettaSettings.preferArabic? Qt::RightToLeft : Qt::LeftToRight);
+        bannerFormat.setAlignment(Qt::AlignCenter);
+        bannerFormat.setWidth(mWidth);
+        bannerFormat.setHeight(44);
+        bannerFormat.setBorder(0);
+        bannerFormat.setLayoutDirection(roshettaSettings.preferArabic? Qt::RightToLeft : Qt::LeftToRight);
 
-    QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,50)
-                                                         << QTextLength(QTextLength::PercentageLength,18)
-                                                         << QTextLength(QTextLength::PercentageLength,32);
-    bannerFormat.setColumnWidthConstraints(bannertl);
+        QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,50)
+                                                             << QTextLength(QTextLength::PercentageLength,18)
+                                                             << QTextLength(QTextLength::PercentageLength,32);
+        bannerFormat.setColumnWidthConstraints(bannertl);
+    }else{
+        bannerFrameFormat.setHeight(0);
+    }
+
 //    bannerFormat.setMargin(0);
 //    bannerFormat.setPadding(0);
 //    bannerFormat.setCellPadding(0);
@@ -169,7 +175,20 @@ void Roshetta::makeBanner()
 void Roshetta::makeBody()
 {
 
-    double bodyHeight = mHeight - ((roshettaSettings.headerHeightPercent + roshettaSettings.footerHeightPercent + roshettaSettings.bannerHeightPercent)*mHeight)/100;
+    double bodyHeight;
+
+    if(roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader){
+        bodyHeight = mHeight -
+                ((roshettaSettings.headerHeightPercent +
+                  roshettaSettings.footerHeightPercent +
+                  roshettaSettings.bannerHeightPercent)*mHeight)/100;
+    }else{
+        bodyHeight = mHeight -
+                ((roshettaSettings.headerHeightPercent +
+                  roshettaSettings.footerHeightPercent )*mHeight)/100;
+    }
+
+
     //mDebug() << "body" << bodyHeight;
     bodyFormat.setWidth(mWidth);
     bodyFormat.setHeight(bodyHeight);
@@ -229,7 +248,7 @@ void Roshetta::makeFooter()
 {
     footerFormat.setWidth(mWidth);
     footerFormat.setHeight((mHeight*roshettaSettings.footerHeightPercent)/100);
-    footerFormat.setBorder(roshettaSettings.showPrescriptionHeaderFooterLogo);
+    footerFormat.setBorder(roshettaSettings.showPrescriptionFooter);
     footerFormat.setMargin(0);
     footerFormat.setBorderBrush(QBrush(Qt::darkGray));
     footerFormat.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
@@ -237,9 +256,17 @@ void Roshetta::makeFooter()
 
 void Roshetta::fillHeader(QTextCursor &c)
 {
-    c.insertHtml(QString("<img src=\"logo.jpg\" width=%1 alt=\"logo\" >").arg(roshettaSettings.logoSize));
+    if(roshettaSettings.showPrescriptionLogo
+            && roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader)
+        c.insertHtml(QString("<img src=\"logo.jpg\" width=%1 alt=\"logo\" >").arg(roshettaSettings.logoSize));
+    else {//if( roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo){
+        fillAltBanner(c);
+
+    }
     c.movePosition(QTextCursor::NextCell);
-    c.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
+
+    if(roshettaSettings.showPrescriptionHeader)
+        c.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
 }
 
 void Roshetta::fillBanner(QTextCursor &c)
@@ -573,7 +600,7 @@ void Roshetta::fillFooter(QTextCursor &c)
     c.select(QTextCursor::BlockUnderCursor);
     c.setBlockFormat(footerBlockFormat);
 
-    if(roshettaSettings.showPrescriptionHeaderFooterLogo)
+    if(roshettaSettings.showPrescriptionFooter)
         c.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
 }
 
@@ -584,4 +611,31 @@ void Roshetta::fillDiet(QTextCursor &c)
     dietTableFormat.setBorder(0);
     c.insertTable(1,1,dietTableFormat);
     c.insertHtml(roshettaData.diet.contents);
+}
+
+void Roshetta::fillAltBanner(QTextCursor &c)
+{
+    QString altBannerTemplate = QString(dataIOhelper::readFile(BANNERFILE));
+    QLocale loc = roshettaSettings.preferArabic ? QLocale(QLocale::Arabic,QLocale::Egypt):QLocale(QLocale::English,QLocale::UnitedStates);
+    QString datefmt = roshettaSettings.preferArabic ? "ddd yyyy/MM/dd":"ddd dd/MM/yyyy";
+    QString nextDate,visitDate;
+    QString patient_age_sex = QString("%2%1")
+            .arg(roshettaData.sex == mSettings::mSex::male ? "m":"f",
+                 dataHelper::julianToAge(QDate::currentDate().toJulianDay() - roshettaData.age,
+                                         roshettaData.ageStyle));
+    if(roshettaData.caseClosed || roshettaData.printedinDate.date() == roshettaData.nextDate)
+        nextDate = roshettaData.getNextFromJulian(roshettaData.nextDate.toJulianDay());
+    else
+        nextDate = loc.toString(roshettaData.nextDate,datefmt);
+
+
+    visitDate = loc.toString(roshettaData.visitDate,datefmt);
+
+    altBannerTemplate.replace("{name}",roshettaData.name);
+    altBannerTemplate.replace("{age}",patient_age_sex);
+    altBannerTemplate.replace("{visitDate}",visitDate);
+    altBannerTemplate.replace("{diagnosis}",roshettaData.Diagnosis);
+    altBannerTemplate.replace("{code}",roshettaData.ID);
+    altBannerTemplate.replace("{followDate}",nextDate);
+    c.insertHtml(altBannerTemplate);
 }

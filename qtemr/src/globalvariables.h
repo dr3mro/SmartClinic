@@ -34,6 +34,7 @@
 #define PORTABILITYLOCK ".portable"
 #define HEADERFILE "header.html"
 #define FOOTERFILE "footer.html"
+#define BANNERFILE "banner.html"
 #define LOGOFILE "logo.jpg"
 
 #endif // GLOBALVARIABLES

@@ -278,6 +278,7 @@ int main(int argc, char *argv[])
     createFolders();
     QApplication::processEvents();
     dataIOhelper::dumpLogoNotExists();
+    dataIOhelper::dumpBannerTemplate();
     QApplication::processEvents();
     banner->updateprogress(QString("drugs local databse"));
     QApplication::processEvents();

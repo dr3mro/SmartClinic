@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Graphics" lang="english">
+    <qresource lang="english" prefix="/Graphics">
         <file alias="appicon">Graphics/appicon.ico</file>
         <file alias="applogo">Graphics/applogo.png</file>
         <file alias="back">Graphics/chevron-left-8x.png</file>
@@ -113,5 +113,6 @@
     </qresource>
     <qresource prefix="/">
         <file>ionicons/whatsapp.png</file>
+        <file>banner.html</file>
     </qresource>
 </RCC>

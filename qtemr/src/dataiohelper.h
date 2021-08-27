@@ -42,6 +42,7 @@ public:
     static bool makePortable(bool enable);
     static QString PortabilityLockFile();
     static void dumpLogoNotExists(bool force=false);
+    static void dumpBannerTemplate(bool force=false);
 };
 
 #endif // DATAIOHELPER_H

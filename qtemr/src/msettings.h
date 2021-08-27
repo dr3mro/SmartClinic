@@ -443,6 +443,9 @@ public:
     enum drugsPrintMode{
         visitOnly=0,baseOnly=1,both=2
     };
+    enum bannerStyle{
+        belowHeader=0,replaceLogo=1
+    };
     struct prescriptionPrintSettings
     {
         QString paperSizeId="A5";
@@ -454,7 +457,10 @@ public:
         bool showDrugsTableOutline=true;
         drugsPrintMode drugsPrintMode=drugsPrintMode::visitOnly;
         bool showDrugsTitle=true;
-        bool showPrescriptionHeaderFooterLogo=true;
+        bool showPrescriptionHeader=true;
+        bool showPrescriptionFooter=true;
+        bool showPrescriptionLogo=true;
+        bannerStyle prescriptionBannerStyle=belowHeader;
         int logoSize=72;
 
         int headerHeightPercent=10;
@@ -489,7 +495,10 @@ public:
                             showDrugsTableOutline,
                             drugsPrintMode,
                             showDrugsTitle,
-                            showPrescriptionHeaderFooterLogo,
+                            showPrescriptionHeader,
+                            showPrescriptionFooter,
+                            showPrescriptionLogo,
+                            prescriptionBannerStyle,
                             logoSize,
                             headerHeightPercent,
                             footerHeightPercent,
@@ -516,7 +525,10 @@ public:
                         prescriptionprintsettings.showDrugsTableOutline,
                         prescriptionprintsettings.drugsPrintMode,
                         prescriptionprintsettings.showDrugsTitle,
-                        prescriptionprintsettings.showPrescriptionHeaderFooterLogo,
+                        prescriptionprintsettings.showPrescriptionHeader,
+                        prescriptionprintsettings.showPrescriptionFooter,
+                        prescriptionprintsettings.showPrescriptionLogo,
+                        prescriptionprintsettings.prescriptionBannerStyle,
                         prescriptionprintsettings.logoSize,
                         prescriptionprintsettings.headerHeightPercent,
                         prescriptionprintsettings.footerHeightPercent,

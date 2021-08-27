@@ -68,20 +68,25 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->measurementsFontBold,&QToolButton::clicked,this,&printDrugs::measurementsFontBold_clicked,Qt::QueuedConnection);
 
 
-
     connect(ui->headerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::headerHeightPercent_valueChanged,Qt::QueuedConnection);
     connect(ui->bannerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::bannerHeightPercent_valueChanged,Qt::QueuedConnection);
     connect(ui->footerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::footerHeightPercent_valueChanged,Qt::QueuedConnection);
 
     connect(ui->Header,&PagesTextEdit::textChanged,this,&printDrugs::header_textChanged,Qt::QueuedConnection);
     connect(ui->Footer,&PagesTextEdit::textChanged,this,&printDrugs::footer_textChanged,Qt::QueuedConnection);
+    connect(ui->bannerTemplate,&PagesTextEdit::textChanged,this,&printDrugs::bannerTemplate_textChanged,Qt::QueuedConnection);
 
     connect(ui->paperSizeId,&QComboBox::textActivated,this,&printDrugs::paperSizeId_activated,Qt::QueuedConnection);
     connect(ui->paperSizeId,&QComboBox::textHighlighted,this,&printDrugs::paperSizeId_activated,Qt::QueuedConnection);
 
     connect(ui->SignaturePrintedOn,&Switch::clicked,this,&printDrugs::SignaturePrintedOn_clicked,Qt::QueuedConnection);
     connect(ui->drugsInitDate,&Switch::clicked,this,&printDrugs::drugsInitDate_clicked,Qt::QueuedConnection);
-    connect(ui->showHeaderFooterLogo,&Switch::clicked,this,&printDrugs::showHeaderFooterLogo_clicked,Qt::QueuedConnection);
+
+    connect(ui->showHeader,&Switch::clicked,this,&printDrugs::showHeader_clicked,Qt::QueuedConnection);
+    connect(ui->showFooter,&Switch::clicked,this,&printDrugs::showFooter_clicked,Qt::QueuedConnection);
+    connect(ui->showLogo,&Switch::clicked,this,&printDrugs::showLogo_clicked,Qt::QueuedConnection);
+
+
     connect(ui->showDrugs,&Switch::clicked,this,&printDrugs::showDrugs_clicked,Qt::QueuedConnection);
     connect(ui->showMesurements,&Switch::clicked,this,&printDrugs::showMesurements_clicked,Qt::QueuedConnection);
     connect(ui->showDrugsTableOutline,&Switch::clicked,this,&printDrugs::showDrugsTableOutline_clicked,Qt::QueuedConnection);
@@ -107,6 +112,9 @@ printDrugs::printDrugs(QWidget *parent) :
     //connect(ui->diet,&QComboBox::textHighlighted,this,&printDrugs::dietSelected,Qt::QueuedConnection);
 
     connect(m_roshetta,&QTextDocument::modificationChanged,this,&printDrugs::roshettaEdited,Qt::QueuedConnection);
+
+    connect(ui->BannerStyle,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::bannerStyle_activated,Qt::QueuedConnection);
+    connect(ui->resetBannerTemplate,&QPushButton::clicked,this,&printDrugs::resetBannerTemplateClicked);
 
     this->setModal(true);
 }
@@ -166,7 +174,12 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->showDrugsTableOutline->setChecked(printSettings.showDrugsTableOutline);
     ui->drugsMode->setCurrentIndex(printSettings.drugsPrintMode);
     ui->showDrugsTitle->setChecked(printSettings.showDrugsTitle);
-    ui->showHeaderFooterLogo->setChecked(printSettings.showPrescriptionHeaderFooterLogo);
+
+    ui->showHeader->setChecked(printSettings.showPrescriptionHeader);
+    ui->showFooter->setChecked(printSettings.showPrescriptionFooter);
+    ui->showLogo->setChecked(printSettings.showPrescriptionLogo);
+    ui->BannerStyle->setCurrentIndex((int)printSettings.prescriptionBannerStyle);
+
     ui->logoSize->setCurrentText(QString::number(printSettings.logoSize));
     ui->headerHeightPercent->setValue(printSettings.headerHeightPercent);
     ui->footerHeightPercent->setValue(printSettings.footerHeightPercent);
@@ -200,6 +213,9 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->showStartDate->setEnabled(printSettings.showDoseNewLine);
 
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
+    ui->bannerTemplate->setHtml(dataIOhelper::readFile(BANNERFILE));
+    ui->bannerTemplate->setVisible((bool)printSettings.prescriptionBannerStyle);
+    ui->resetButtonAndLabel->setVisible((bool)printSettings.prescriptionBannerStyle);
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
     return printSettings;
 }
@@ -216,7 +232,13 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.showDrugsTableOutline = ui->showDrugsTableOutline->isChecked();
     printSettings.drugsPrintMode = (mSettings::drugsPrintMode) ui->drugsMode->currentIndex();
     printSettings.showDrugsTitle = ui->showDrugsTitle->isChecked();
-    printSettings.showPrescriptionHeaderFooterLogo = ui->showHeaderFooterLogo->isChecked();
+
+    printSettings.showPrescriptionHeader = ui->showHeader->isChecked();
+    printSettings.showPrescriptionFooter = ui->showFooter->isChecked();
+    printSettings.showPrescriptionLogo = ui->showLogo->isChecked();
+
+    printSettings.prescriptionBannerStyle = static_cast<mSettings::bannerStyle>(ui->BannerStyle->currentIndex());
+
     printSettings.logoSize = ui->logoSize->currentText().toInt();
     printSettings.headerHeightPercent = ui->headerHeightPercent->value();
     printSettings.footerHeightPercent = ui->footerHeightPercent->value();
@@ -557,7 +579,7 @@ void printDrugs::footerHeightPercent_valueChanged(int arg1)
 
 void printDrugs::header_textChanged()
 {
-    if(!ui->Header->hasFocus())
+    if(!ui->Header->isVisible())
         return;
     dataIOhelper::saveFile(HEADERFILE,ui->Header->toHtml().toUtf8());
     refreshView();
@@ -565,9 +587,17 @@ void printDrugs::header_textChanged()
 
 void printDrugs::footer_textChanged()
 {
-    if(!ui->Footer->hasFocus())
+    if(!ui->Footer->isVisible())
         return;
     dataIOhelper::saveFile(FOOTERFILE,ui->Footer->toHtml().toUtf8());
+    refreshView();
+}
+
+void printDrugs::bannerTemplate_textChanged()
+{
+    if(!ui->bannerTemplate->isVisible())
+        return;
+    dataIOhelper::saveFile(BANNERFILE,ui->bannerTemplate->toHtml().toUtf8());
     refreshView();
 }
 
@@ -594,9 +624,29 @@ void printDrugs::drugsInitDate_clicked(bool checked)
 }
 
 
-void printDrugs::showHeaderFooterLogo_clicked(bool checked)
+void printDrugs::showHeader_clicked(bool checked)
 {
-    pSettings.showPrescriptionHeaderFooterLogo = checked;
+    pSettings.showPrescriptionHeader = checked;
+    refreshView();
+}
+
+void printDrugs::showFooter_clicked(bool checked)
+{
+    pSettings.showPrescriptionFooter = checked;
+    refreshView();
+}
+
+void printDrugs::showLogo_clicked(bool checked)
+{
+    pSettings.showPrescriptionLogo = checked;
+    refreshView();
+}
+
+void printDrugs::bannerStyle_activated(int index)
+{
+    pSettings.prescriptionBannerStyle = static_cast<mSettings::bannerStyle>(index);
+    ui->bannerTemplate->setVisible((bool)index);
+    ui->resetButtonAndLabel->setVisible((bool)index);
     refreshView();
 }
 
@@ -755,4 +805,18 @@ void printDrugs::dietSelected(const QString & _selectedDiet)
 void printDrugs::roshettaEdited(bool b)
 {
     RoshettaEdited = b;
+}
+
+void printDrugs::resetBannerTemplateClicked()
+{
+    int reply = QMessageBox::question(nullptr,"info",
+                                      "Are you sure that you want to reset Banner template to default,"
+                                      " This cannot be undone!",
+                                      QMessageBox::Yes,
+                                      QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        dataIOhelper::dumpBannerTemplate(true);
+        ui->bannerTemplate->setText(dataIOhelper::readFile(BANNERFILE));
+    }
+
 }

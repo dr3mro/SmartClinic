@@ -188,7 +188,12 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.showDrugsTableOutline = settings.value(_showDrugsTableOutline,QVariant(false)).toBool();
     mPageSettings.drugsPrintMode = (mSettings::drugsPrintMode) settings.value(_drugsPrintMode,QVariant(0)).toInt();
     mPageSettings.showDrugsTitle = settings.value(_showDrugsTitle,QVariant(false)).toBool();
-    mPageSettings.showPrescriptionHeaderFooterLogo = settings.value(_showHeaderFooterLogo,QVariant(false)).toBool();
+
+    mPageSettings.showPrescriptionHeader = settings.value(_showHeader,QVariant(false)).toBool();
+    mPageSettings.showPrescriptionFooter = settings.value(_showFooter,QVariant(false)).toBool();
+    mPageSettings.showPrescriptionLogo = settings.value(_showLogo,QVariant(false)).toBool();
+    mPageSettings.prescriptionBannerStyle = static_cast<mSettings::bannerStyle>(settings.value(_bannerStyle,QVariant(0)).toInt());
+
     mPageSettings.logoSize = settings.value(_logoSize,QVariant(64)).toInt();
 
     mPageSettings.headerHeightPercent = settings.value(_headerHeightPercent,QVariant(10)).toInt();
@@ -242,7 +247,13 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_showDrugsTableOutline,mPageSettings.showDrugsTableOutline);
     settings.setValue(_drugsPrintMode,mPageSettings.drugsPrintMode);
     settings.setValue(_showDrugsTitle,mPageSettings.showDrugsTitle);
-    settings.setValue(_showHeaderFooterLogo,mPageSettings.showPrescriptionHeaderFooterLogo);
+
+    settings.setValue(_showHeader,mPageSettings.showPrescriptionHeader);
+    settings.setValue(_showFooter,mPageSettings.showPrescriptionFooter);
+    settings.setValue(_showLogo,mPageSettings.showPrescriptionLogo);
+
+    settings.setValue(_bannerStyle,mPageSettings.prescriptionBannerStyle);
+
     settings.setValue(_logoSize,mPageSettings.logoSize);
 
     settings.setValue(_headerHeightPercent,mPageSettings.headerHeightPercent);
