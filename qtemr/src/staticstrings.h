@@ -73,7 +73,7 @@
 #define _showDoseNewLine "showDoseNewLine"
 #define _preferArabic "prefereArabic"
 #define _showStartDate "showStartDate"
-#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
+//#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"

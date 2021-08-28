@@ -79,6 +79,7 @@ private:
     QTextTableFormat prefooterFormat;
     QTextFrameFormat footerFormat;
 
+    QTextFrameFormat drawHorizontalLineBelowHeaderFrameFormat;
 
     QTextTable *bannerTable;
     int CurrentDrugRow=0;

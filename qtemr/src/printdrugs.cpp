@@ -103,7 +103,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked,Qt::QueuedConnection);
     connect(ui->preferArabic,&Switch::clicked,this,&printDrugs::preferArabic_clicked,Qt::QueuedConnection);
     connect(ui->showStartDate,&Switch::clicked,this,&printDrugs::showStartDate_clicked,Qt::QueuedConnection);
-    connect(ui->showHorizontalLineBelowHeader,&Switch::clicked,this,&printDrugs::showHorizontalLineBelowHeader_clicked,Qt::QueuedConnection);
+    //connect(ui->showHorizontalLineBelowHeader,&Switch::clicked,this,&printDrugs::showHorizontalLineBelowHeader_clicked,Qt::QueuedConnection);
 
 
     connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged,Qt::QueuedConnection);
@@ -223,16 +223,16 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->preferArabic->setChecked(printSettings.preferArabic);
     ui->showStartDate->setChecked(printSettings.showStartDate);
     ui->showStartDate->setEnabled(printSettings.showDoseNewLine);
-    ui->showHorizontalLineBelowHeader->setChecked(printSettings.showHorizontalLineBelowHeader);
-    ui->showHorizontalLineBelowHeader->setEnabled(printSettings.prescriptionBannerStyle ==
-                                                  mSettings::bannerStyle::replaceLogo);
+    //ui->showHorizontalLineBelowHeader->setChecked(printSettings.showHorizontalLineBelowHeader);
+    //ui->showHorizontalLineBelowHeader->setEnabled(printSettings.prescriptionBannerStyle ==
+    //                                            mSettings::bannerStyle::replaceLogo);
 
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->bannerTemplate->setHtml(dataIOhelper::readFile(BANNERFILE));
     ui->bannerTemplate->setVisible((bool)printSettings.prescriptionBannerStyle);
     ui->resetButtonAndLabel->setVisible((bool)printSettings.prescriptionBannerStyle);
 
-    ui->showHorizontalLineBelowHeader->setEnabled((bool)printSettings.prescriptionBannerStyle);
+    //ui->showHorizontalLineBelowHeader->setEnabled((bool)printSettings.prescriptionBannerStyle);
     ui->showLogo->setDisabled((bool) printSettings.prescriptionBannerStyle);
 
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
@@ -293,7 +293,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.preferArabic = ui->preferArabic->isChecked();
     printSettings.showStartDate = ui->showStartDate->isChecked();
 
-    printSettings.showHorizontalLineBelowHeader = ui->showHorizontalLineBelowHeader->isChecked();
+    //printSettings.showHorizontalLineBelowHeader = ui->showHorizontalLineBelowHeader->isChecked();
 
     return printSettings;
 }
@@ -690,7 +690,7 @@ void printDrugs::bannerStyle_activated(int index)
     pSettings.prescriptionBannerStyle = static_cast<mSettings::bannerStyle>(index);
     ui->bannerTemplate->setVisible((bool)index);
     ui->resetButtonAndLabel->setVisible((bool)index);
-    ui->showHorizontalLineBelowHeader->setEnabled((bool)index);
+    //ui->showHorizontalLineBelowHeader->setEnabled((bool)index);
     ui->showLogo->setDisabled((bool) index);
     refreshView();
 }
@@ -765,7 +765,7 @@ void printDrugs::showStartDate_clicked(bool checked)
 
 void printDrugs::showHorizontalLineBelowHeader_clicked(bool checked)
 {
-    pSettings.showHorizontalLineBelowHeader = checked;
+    //pSettings.showHorizontalLineBelowHeader = checked;
     refreshView();
 }
 

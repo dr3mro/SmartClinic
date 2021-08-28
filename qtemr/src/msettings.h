@@ -484,7 +484,7 @@ public:
 
         bool preferArabic=true;
         bool showStartDate=true;
-        bool showHorizontalLineBelowHeader=false;
+        //bool showHorizontalLineBelowHeader=false;
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
             return std::tie(paperSizeId,
@@ -516,8 +516,8 @@ public:
                             showTradeNamesBold,
                             showDoseNewLine,
                             preferArabic,
-                            showStartDate,
-                            showHorizontalLineBelowHeader
+                            showStartDate/*,
+                            showHorizontalLineBelowHeader*/
                             ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
                         prescriptionprintsettings.pageMargin,
@@ -548,8 +548,8 @@ public:
                         prescriptionprintsettings.showTradeNamesBold,
                         prescriptionprintsettings.showDoseNewLine,
                         prescriptionprintsettings.preferArabic,
-                        prescriptionprintsettings.showStartDate,
-                        prescriptionprintsettings.showHorizontalLineBelowHeader); }
+                        prescriptionprintsettings.showStartDate/*,
+                        prescriptionprintsettings.showHorizontalLineBelowHeader*/); }
     };
     struct lineStyle
     {

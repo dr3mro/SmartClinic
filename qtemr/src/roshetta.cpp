@@ -109,8 +109,8 @@ void Roshetta::stackFrames()
         cursor.movePosition(QTextCursor::NextBlock);
     }
 
-    if(roshettaSettings.showHorizontalLineBelowHeader &&
-            roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo){
+    if(/*roshettaSettings.showHorizontalLineBelowHeader &&
+            */roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo){
         drawHorizontalLineBelowHeader(cursor);
     }
 
@@ -190,7 +190,8 @@ void Roshetta::makeBody()
     }else{
         bodyHeight = mHeight -
                 ((roshettaSettings.headerHeightPercent +
-                  roshettaSettings.footerHeightPercent )*mHeight)/100;
+                  roshettaSettings.footerHeightPercent +
+                  ( roshettaSettings.bannerHeightPercent - 3)/* correction for horizontal line */)*mHeight)/100;
     }
 
 
@@ -647,9 +648,8 @@ void Roshetta::fillAltBanner(QTextCursor &c)
 
 void Roshetta::drawHorizontalLineBelowHeader(QTextCursor &c)
 {
-    QTextFrameFormat frameFormat;
-    frameFormat.setHeight(1);
-    frameFormat.setWidth(mWidth);
-    frameFormat.setBackground(Qt::darkGray);
-    c.insertFrame(frameFormat);
+    drawHorizontalLineBelowHeaderFrameFormat.setHeight(1);
+    drawHorizontalLineBelowHeaderFrameFormat.setWidth(mWidth);
+    drawHorizontalLineBelowHeaderFrameFormat.setBackground(Qt::darkGray);
+    c.insertFrame(drawHorizontalLineBelowHeaderFrameFormat);
 }
