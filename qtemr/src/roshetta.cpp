@@ -259,9 +259,9 @@ void Roshetta::fillHeader(QTextCursor &c)
     if(roshettaSettings.showPrescriptionLogo
             && roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader)
         c.insertHtml(QString("<img src=\"logo.jpg\" width=%1 alt=\"logo\" >").arg(roshettaSettings.logoSize));
-    else {//if( roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo){
+    else if( roshettaSettings.showBanner &&
+            roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo){
         fillAltBanner(c);
-
     }
     c.movePosition(QTextCursor::NextCell);
 
