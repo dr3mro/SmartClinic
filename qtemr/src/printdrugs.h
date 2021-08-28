@@ -73,6 +73,10 @@ private slots:
     void measurementsFontSize_activated(const QString &arg1);
     void measurementsFontBold_clicked(bool checked);
 
+    void signatureFontName_activated(const QString &arg1);
+    void signatureFontSize_activated(const QString &arg1);
+    void signatureFontBold_clicked(bool checked);
+
     void headerHeightPercent_valueChanged(int arg1);
     void bannerHeightPercent_valueChanged(int arg1);
     void footerHeightPercent_valueChanged(int arg1);
@@ -99,6 +103,8 @@ private slots:
     void showDoseNewLine_clicked(bool checked);
     void preferArabic_clicked(bool checked);
     void showStartDate_clicked(bool checked);
+    void showHorizontalLineBelowHeader_clicked(bool checked);
+
     void pageMargin_valueChanged(int arg1);
     void logoSize_activated(const QString &arg1);
     void lockUnlockButton_toggled(bool checked);

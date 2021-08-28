@@ -83,7 +83,7 @@
             <attribute name="title">
              <string>General</string>
             </attribute>
-            <layout class="QGridLayout" name="gridLayout_9">
+            <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_5">
                <item>
@@ -379,13 +379,37 @@
               </layout>
              </item>
              <item row="12" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_16">
+               <item>
+                <widget class="QLabel" name="label_28">
+                 <property name="text">
+                  <string>show a horizontal line below header.</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Switch" name="showHorizontalLineBelowHeader">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="13" column="0">
               <widget class="Line" name="line">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
-             <item row="13" column="0">
+             <item row="14" column="0">
               <widget class="QSplitter" name="splitter_12">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -405,7 +429,7 @@
                </widget>
               </widget>
              </item>
-             <item row="14" column="0">
+             <item row="15" column="0">
               <widget class="QSplitter" name="splitter_14">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -443,7 +467,7 @@
                </widget>
               </widget>
              </item>
-             <item row="15" column="0">
+             <item row="16" column="0">
               <spacer name="verticalSpacer">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -838,131 +862,6 @@
                </widget>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QSplitter" name="splitter_15">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <widget class="QLabel" name="label_13">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>100</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>80</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Measur. Font:</string>
-                </property>
-               </widget>
-               <widget class="mFontComboBox" name="measurementsFontName">
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-               </widget>
-               <widget class="QComboBox" name="measurementsFontSize">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>7</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>8</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>9</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>10</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>11</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>12</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>13</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>14</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>16</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>18</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>20</string>
-                 </property>
-                </item>
-               </widget>
-               <widget class="QToolButton" name="measurementsFontBold">
-                <property name="toolTip">
-                 <string>Bold</string>
-                </property>
-                <property name="text">
-                 <string>...</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../res/resources.qrc">
-                  <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoRaise">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </widget>
-             </item>
              <item row="3" column="0">
               <widget class="QSplitter" name="splitter_13">
                <property name="orientation">
@@ -1088,7 +987,257 @@
                </widget>
               </widget>
              </item>
+             <item row="4" column="0">
+              <widget class="QSplitter" name="splitter_15">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <widget class="QLabel" name="label_13">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Measur. Font:</string>
+                </property>
+               </widget>
+               <widget class="mFontComboBox" name="measurementsFontName">
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="measurementsFontSize">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>7</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>9</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>11</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>12</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>13</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>14</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>18</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>20</string>
+                 </property>
+                </item>
+               </widget>
+               <widget class="QToolButton" name="measurementsFontBold">
+                <property name="toolTip">
+                 <string>Bold</string>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res/resources.qrc">
+                  <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </widget>
+             </item>
              <item row="5" column="0">
+              <widget class="QSplitter" name="splitter_16">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <widget class="QLabel" name="label_14">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Signature Font:</string>
+                </property>
+               </widget>
+               <widget class="mFontComboBox" name="signatureFontName">
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="signatureFontSize">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>7</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>9</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>11</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>12</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>13</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>14</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>18</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>20</string>
+                 </property>
+                </item>
+               </widget>
+               <widget class="QToolButton" name="signatureFontBold">
+                <property name="toolTip">
+                 <string>Bold</string>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res/resources.qrc">
+                  <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item row="6" column="0">
               <spacer name="verticalSpacer_4">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>

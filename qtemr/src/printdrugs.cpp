@@ -67,6 +67,12 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->measurementsFontSize,&QComboBox::textHighlighted,this,&printDrugs::measurementsFontSize_activated,Qt::QueuedConnection);
     connect(ui->measurementsFontBold,&QToolButton::clicked,this,&printDrugs::measurementsFontBold_clicked,Qt::QueuedConnection);
 
+    connect(ui->signatureFontName,&QFontComboBox::textActivated,this,&printDrugs::signatureFontName_activated,Qt::QueuedConnection);
+    connect(ui->signatureFontName,&QFontComboBox::textHighlighted,this,&printDrugs::signatureFontName_activated,Qt::QueuedConnection);
+    connect(ui->signatureFontSize,&QComboBox::textActivated,this,&printDrugs::signatureFontSize_activated,Qt::QueuedConnection);
+    connect(ui->signatureFontSize,&QComboBox::textHighlighted,this,&printDrugs::signatureFontSize_activated,Qt::QueuedConnection);
+    connect(ui->signatureFontBold,&QToolButton::clicked,this,&printDrugs::signatureFontBold_clicked,Qt::QueuedConnection);
+
 
     connect(ui->headerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::headerHeightPercent_valueChanged,Qt::QueuedConnection);
     connect(ui->bannerHeightPercent,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::bannerHeightPercent_valueChanged,Qt::QueuedConnection);
@@ -97,6 +103,8 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked,Qt::QueuedConnection);
     connect(ui->preferArabic,&Switch::clicked,this,&printDrugs::preferArabic_clicked,Qt::QueuedConnection);
     connect(ui->showStartDate,&Switch::clicked,this,&printDrugs::showStartDate_clicked,Qt::QueuedConnection);
+    connect(ui->showHorizontalLineBelowHeader,&Switch::clicked,this,&printDrugs::showHorizontalLineBelowHeader_clicked,Qt::QueuedConnection);
+
 
     connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged,Qt::QueuedConnection);
     connect(ui->logoSize,&QComboBox::textActivated,this,&printDrugs::logoSize_activated,Qt::QueuedConnection);
@@ -202,6 +210,10 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->measurementsFontSize->setCurrentText(QString::number(printSettings.measurementsFont.fontSize));
     ui->measurementsFontBold->setChecked(printSettings.measurementsFont.fontBold);
 
+    ui->signatureFontName->setCurrentFont(QFont(printSettings.signatureFont.fontName));
+    ui->signatureFontSize->setCurrentText(QString::number(printSettings.signatureFont.fontSize));
+    ui->signatureFontBold->setChecked(printSettings.signatureFont.fontBold);
+
     ui->drugsInitDate->setChecked(printSettings.showDrugsInitDate);
     ui->SignaturePrintedOn->setChecked(printSettings.showSignaturePrintedOn);
     ui->showOnlyNewlyModifiedAddedDrugs->setChecked(printSettings.showOnlyNewlyModifiedAddedDrugs);
@@ -211,11 +223,18 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->preferArabic->setChecked(printSettings.preferArabic);
     ui->showStartDate->setChecked(printSettings.showStartDate);
     ui->showStartDate->setEnabled(printSettings.showDoseNewLine);
+    ui->showHorizontalLineBelowHeader->setChecked(printSettings.showHorizontalLineBelowHeader);
+    ui->showHorizontalLineBelowHeader->setEnabled(printSettings.prescriptionBannerStyle ==
+                                                  mSettings::bannerStyle::replaceLogo);
 
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->bannerTemplate->setHtml(dataIOhelper::readFile(BANNERFILE));
     ui->bannerTemplate->setVisible((bool)printSettings.prescriptionBannerStyle);
     ui->resetButtonAndLabel->setVisible((bool)printSettings.prescriptionBannerStyle);
+
+    ui->showHorizontalLineBelowHeader->setEnabled((bool)printSettings.prescriptionBannerStyle);
+    ui->showLogo->setDisabled((bool) printSettings.prescriptionBannerStyle);
+
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
     return printSettings;
 }
@@ -261,6 +280,10 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.measurementsFont.fontSize = ui->measurementsFontSize->currentText().toInt();
     printSettings.measurementsFont.fontBold = ui->measurementsFontBold->isChecked();
 
+    printSettings.signatureFont.fontName = ui->signatureFontName->currentText();;
+    printSettings.signatureFont.fontSize = ui->signatureFontSize->currentText().toInt();
+    printSettings.signatureFont.fontBold = ui->signatureFontBold->isChecked();
+
     printSettings.showDrugsInitDate = ui->drugsInitDate->isChecked();
     printSettings.showSignaturePrintedOn = ui->SignaturePrintedOn->isChecked();
     printSettings.showOnlyNewlyModifiedAddedDrugs = ui->showOnlyNewlyModifiedAddedDrugs->isChecked();
@@ -269,6 +292,8 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
 
     printSettings.preferArabic = ui->preferArabic->isChecked();
     printSettings.showStartDate = ui->showStartDate->isChecked();
+
+    printSettings.showHorizontalLineBelowHeader = ui->showHorizontalLineBelowHeader->isChecked();
 
     return printSettings;
 }
@@ -551,6 +576,24 @@ void printDrugs::measurementsFontBold_clicked(bool checked)
     refreshView();
 }
 
+void printDrugs::signatureFontName_activated(const QString &arg1)
+{
+    pSettings.signatureFont.fontName =arg1;
+    refreshView();
+}
+
+void printDrugs::signatureFontSize_activated(const QString &arg1)
+{
+    pSettings.signatureFont.fontSize =arg1.toInt();
+    refreshView();
+}
+
+void printDrugs::signatureFontBold_clicked(bool checked)
+{
+    pSettings.signatureFont.fontBold =checked;
+    refreshView();
+}
+
 void printDrugs::headerHeightPercent_valueChanged(int arg1)
 {
     if(!ui->headerHeightPercent->hasFocus())
@@ -647,6 +690,8 @@ void printDrugs::bannerStyle_activated(int index)
     pSettings.prescriptionBannerStyle = static_cast<mSettings::bannerStyle>(index);
     ui->bannerTemplate->setVisible((bool)index);
     ui->resetButtonAndLabel->setVisible((bool)index);
+    ui->showHorizontalLineBelowHeader->setEnabled((bool)index);
+    ui->showLogo->setDisabled((bool) index);
     refreshView();
 }
 
@@ -715,6 +760,12 @@ void printDrugs::preferArabic_clicked(bool checked)
 void printDrugs::showStartDate_clicked(bool checked)
 {
     pSettings.showStartDate = checked;
+    refreshView();
+}
+
+void printDrugs::showHorizontalLineBelowHeader_clicked(bool checked)
+{
+    pSettings.showHorizontalLineBelowHeader = checked;
     refreshView();
 }
 

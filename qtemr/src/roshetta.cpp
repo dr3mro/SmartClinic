@@ -109,6 +109,11 @@ void Roshetta::stackFrames()
         cursor.movePosition(QTextCursor::NextBlock);
     }
 
+    if(roshettaSettings.showHorizontalLineBelowHeader &&
+            roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo){
+        drawHorizontalLineBelowHeader(cursor);
+    }
+
     cursor.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
 
     fillBody(cursor);
@@ -502,9 +507,9 @@ void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
 {
     QString printedinDate = QDateTime::currentDateTime().toString("dddd dd/MM/yyyy hh:mm AP");
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
-            .arg(roshettaSettings.roshettaFont.fontName,
-                 QString::number((int)(roshettaSettings.roshettaFont.fontSize - 0.2 *roshettaSettings.roshettaFont.fontSize)),
-                 roshettaSettings.roshettaFont.fontBold? "bold":"normal");
+            .arg(roshettaSettings.signatureFont.fontName,
+                 QString::number(roshettaSettings.signatureFont.fontSize),
+                 roshettaSettings.signatureFont.fontBold? "bold":"normal");
 
     c.insertTable(1,2,prefooterFormat);
 
@@ -638,4 +643,13 @@ void Roshetta::fillAltBanner(QTextCursor &c)
     altBannerTemplate.replace("{code}",roshettaData.ID);
     altBannerTemplate.replace("{followDate}",nextDate);
     c.insertHtml(altBannerTemplate);
+}
+
+void Roshetta::drawHorizontalLineBelowHeader(QTextCursor &c)
+{
+    QTextFrameFormat frameFormat;
+    frameFormat.setHeight(1);
+    frameFormat.setWidth(mWidth);
+    frameFormat.setBackground(Qt::darkGray);
+    c.insertFrame(frameFormat);
 }

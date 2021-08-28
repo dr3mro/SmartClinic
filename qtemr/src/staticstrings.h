@@ -63,6 +63,9 @@
 #define _measurementsFont "measurementsFont"
 #define _measurementsFontSize "measurementsFontSize"
 #define _measurementsFontBold "measurementsFontBold"
+#define _signatureFont "signatureFont"
+#define _signatureFontSize "signatureFontSize"
+#define _signatureFontBold "signatureFontBold"
 #define _showDrugsInitDate "showDrugsInitDate"
 #define _showSignaturePrintedOn "showSignaturePrintedOn"
 #define _showOnlyNewlyModifiedAddedDrugs "showOnlyNewlyModifiedAddedDrugs"
@@ -70,6 +73,7 @@
 #define _showDoseNewLine "showDoseNewLine"
 #define _preferArabic "prefereArabic"
 #define _showStartDate "showStartDate"
+#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"

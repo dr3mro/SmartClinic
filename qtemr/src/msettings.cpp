@@ -220,6 +220,10 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.measurementsFont.fontSize = settings.value(_measurementsFontSize,QVariant(8)).toInt();
     mPageSettings.measurementsFont.fontBold = settings.value(_measurementsFontBold,QVariant(false)).toBool();
 
+    mPageSettings.signatureFont.fontName = settings.value(_signatureFont,QVariant("Tahoma")).toString();
+    mPageSettings.signatureFont.fontSize = settings.value(_signatureFontSize,QVariant(8)).toInt();
+    mPageSettings.signatureFont.fontBold = settings.value(_signatureFontBold,QVariant(false)).toBool();
+
     mPageSettings.showDrugsInitDate = settings.value(_showDrugsInitDate,QVariant(true)).toBool();
     mPageSettings.showSignaturePrintedOn = settings.value(_showSignaturePrintedOn,QVariant(true)).toBool();
 
@@ -229,7 +233,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
 
     mPageSettings.preferArabic = settings.value(_preferArabic,QVariant(true)).toBool();
     mPageSettings.showStartDate = settings.value(_showStartDate,QVariant(true)).toBool();
-
+    mPageSettings.showHorizontalLineBelowHeader = settings.value(_showHorizontalLineBelowHeader,QVariant(false)).toBool();
     settings.endGroup();
     return mPageSettings;
 }
@@ -280,6 +284,10 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_measurementsFontSize,mPageSettings.measurementsFont.fontSize);
     settings.setValue(_measurementsFontBold,mPageSettings.measurementsFont.fontBold);
 
+    settings.setValue(_signatureFont,mPageSettings.signatureFont.fontName);
+    settings.setValue(_signatureFontSize,mPageSettings.signatureFont.fontSize);
+    settings.setValue(_signatureFontBold,mPageSettings.signatureFont.fontBold);
+
     settings.setValue(_showDrugsInitDate,mPageSettings.showDrugsInitDate);
     settings.setValue(_showSignaturePrintedOn,mPageSettings.showSignaturePrintedOn);
 
@@ -289,6 +297,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
 
     settings.setValue(_preferArabic,mPageSettings.preferArabic);
     settings.setValue(_showStartDate,mPageSettings.showStartDate);
+    settings.setValue(_showHorizontalLineBelowHeader,mPageSettings.showHorizontalLineBelowHeader);
 
     settings.endGroup();
 }

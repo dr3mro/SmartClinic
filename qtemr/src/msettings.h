@@ -472,6 +472,7 @@ public:
         struct roshettaFont roshettaFont{10,"Tahoma",false,false};
         struct roshettaFont requestsFont{10,"Tahoma",false,false};
         struct roshettaFont measurementsFont{10,"Tahoma",false,false};
+        struct roshettaFont signatureFont{10,"Tahoma",false,false};
 
 
         bool showDrugsInitDate=true;
@@ -483,7 +484,7 @@ public:
 
         bool preferArabic=true;
         bool showStartDate=true;
-
+        bool showHorizontalLineBelowHeader=false;
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
             return std::tie(paperSizeId,
@@ -508,13 +509,15 @@ public:
                             doseFont,
                             requestsFont,
                             measurementsFont,
+                            signatureFont,
                             showDrugsInitDate,
                             showSignaturePrintedOn,
                             showOnlyNewlyModifiedAddedDrugs,
                             showTradeNamesBold,
                             showDoseNewLine,
                             preferArabic,
-                            showStartDate
+                            showStartDate,
+                            showHorizontalLineBelowHeader
                             ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
                         prescriptionprintsettings.pageMargin,
@@ -538,13 +541,15 @@ public:
                         prescriptionprintsettings.doseFont,
                         prescriptionprintsettings.requestsFont,
                         prescriptionprintsettings.measurementsFont,
+                        prescriptionprintsettings.signatureFont,
                         prescriptionprintsettings.showDrugsInitDate,
                         prescriptionprintsettings.showSignaturePrintedOn,
                         prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
                         prescriptionprintsettings.showTradeNamesBold,
                         prescriptionprintsettings.showDoseNewLine,
                         prescriptionprintsettings.preferArabic,
-                        prescriptionprintsettings.showStartDate); }
+                        prescriptionprintsettings.showStartDate,
+                        prescriptionprintsettings.showHorizontalLineBelowHeader); }
     };
     struct lineStyle
     {

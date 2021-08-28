@@ -47,6 +47,7 @@ private:
     void fillFooter(QTextCursor &c);
     void fillDiet(QTextCursor &c);
     void fillAltBanner(QTextCursor&c);
+    void drawHorizontalLineBelowHeader(QTextCursor &c);
     double mWidth;
     double mHeight;
 
