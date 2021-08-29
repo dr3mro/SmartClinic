@@ -1486,12 +1486,48 @@
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="printDrugsLogoTab">
+           <widget class="QWidget" name="printDrugsHeaderTab">
             <attribute name="title">
-             <string>Logo</string>
+             <string>Header</string>
             </attribute>
-            <layout class="QGridLayout" name="gridLayout_12">
+            <layout class="QGridLayout" name="gridLayout_14">
              <item row="0" column="0">
+              <widget class="QGroupBox" name="groupBox_2">
+               <property name="title">
+                <string>Roshetta Header</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_8">
+                <item row="0" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_23">
+                  <item>
+                   <widget class="QLabel" name="label_40">
+                    <property name="text">
+                     <string>Show Roshetta Header</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="Switch" name="showHeader">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="0">
+                 <widget class="TextEdit" name="Header"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="1" column="0">
               <widget class="QGroupBox" name="groupBox_4">
                <property name="title">
                 <string>Roshetta Logo</string>
@@ -1574,8 +1610,8 @@
                </layout>
               </widget>
              </item>
-             <item row="1" column="0">
-              <spacer name="verticalSpacer_5">
+             <item row="2" column="0">
+              <spacer name="verticalSpacer_7">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -1586,62 +1622,6 @@
                 </size>
                </property>
               </spacer>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="printDrugsHeaderTab">
-            <attribute name="title">
-             <string>Header</string>
-            </attribute>
-            <layout class="QGridLayout" name="gridLayout_14">
-             <item row="0" column="0">
-              <widget class="QGroupBox" name="groupBox_2">
-               <property name="title">
-                <string>Roshetta Header</string>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_13">
-                <item row="0" column="0">
-                 <layout class="QHBoxLayout" name="horizontalLayout_23">
-                  <item>
-                   <widget class="QLabel" name="label_40">
-                    <property name="text">
-                     <string>Show Roshetta Header</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="Switch" name="showHeader">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="1" column="0">
-                 <widget class="TextEdit" name="Header"/>
-                </item>
-                <item row="2" column="0">
-                 <spacer name="verticalSpacer_7">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </widget>
              </item>
             </layout>
            </widget>
@@ -2001,6 +1981,7 @@
   <tabstop>Roshetta</tabstop>
  </tabstops>
  <resources>
+  <include location="../res/resources.qrc"/>
   <include location="../res/resources.qrc"/>
  </resources>
  <connections/>

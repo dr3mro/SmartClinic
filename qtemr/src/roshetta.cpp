@@ -189,9 +189,7 @@ void Roshetta::makeBody()
                   roshettaSettings.bannerHeightPercent)*mHeight)/100;
     }else{
         bodyHeight = mHeight -
-                ((roshettaSettings.headerHeightPercent +
-                  roshettaSettings.footerHeightPercent +
-                  ( roshettaSettings.bannerHeightPercent - 3)/* correction for horizontal line */)*mHeight)/100;
+                ( (roshettaSettings.headerHeightPercent + roshettaSettings.footerHeightPercent + roshettaSettings.bannerHeightPercent  - 3 ) * mHeight )/100;
     }
 
 
