@@ -362,7 +362,10 @@ void printDrugs::setupPrinter(QPrinter *p)
     m_layout.setPageSize(pageSize,QMarginsF(pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin));
     m_layout.setOrientation(QPageLayout::Orientation::Portrait);
     m_layout.setMode(QPageLayout::Mode::StandardMode);
+    p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
+    //p->setFullPage(true);
+
 }
 
 void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
