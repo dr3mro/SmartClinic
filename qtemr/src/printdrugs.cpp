@@ -352,6 +352,13 @@ void printDrugs::showEvent(QShowEvent *e)
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
     reload();
+    QPageLayout m_layout;
+    QPageSize pageSize(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
+    m_layout.setPageSize(pageSize,QMarginsF(pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin));
+    m_layout.setOrientation(QPageLayout::Orientation::Portrait);
+    m_layout.setMode(QPageLayout::Mode::StandardMode);
+    preview->setPageSize(pageSize);
+    preview->setPageLayout(m_layout);
     printDoc(preview,m_roshetta,true);
 }
 
