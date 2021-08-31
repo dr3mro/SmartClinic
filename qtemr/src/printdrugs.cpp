@@ -104,7 +104,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->preferArabic,&Switch::clicked,this,&printDrugs::preferArabic_clicked,Qt::QueuedConnection);
     connect(ui->showStartDate,&Switch::clicked,this,&printDrugs::showStartDate_clicked,Qt::QueuedConnection);
     //connect(ui->showHorizontalLineBelowHeader,&Switch::clicked,this,&printDrugs::showHorizontalLineBelowHeader_clicked,Qt::QueuedConnection);
-
+    connect(ui->enableFullPage,&Switch::clicked,this,&printDrugs::enableFullPage_clicked,Qt::QueuedConnection);
 
     connect(ui->pageMargin,QOverload<int>::of(&QSpinBox::valueChanged),this,&printDrugs::pageMargin_valueChanged,Qt::QueuedConnection);
     connect(ui->logoSize,&QComboBox::textActivated,this,&printDrugs::logoSize_activated,Qt::QueuedConnection);
@@ -227,6 +227,8 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     //ui->showHorizontalLineBelowHeader->setEnabled(printSettings.prescriptionBannerStyle ==
     //                                            mSettings::bannerStyle::replaceLogo);
 
+    ui->enableFullPage->setChecked(printSettings.enableFullPage);
+
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->bannerTemplate->setHtml(dataIOhelper::readFile(BANNERFILE));
     ui->bannerTemplate->setVisible((bool)printSettings.prescriptionBannerStyle);
@@ -294,7 +296,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.showStartDate = ui->showStartDate->isChecked();
 
     //printSettings.showHorizontalLineBelowHeader = ui->showHorizontalLineBelowHeader->isChecked();
-
+    printSettings.enableFullPage = ui->enableFullPage->isChecked();
     return printSettings;
 }
 
@@ -359,6 +361,7 @@ void printDrugs::makePrintPreview(QPrinter *preview)
     m_layout.setMode(QPageLayout::Mode::StandardMode);
     preview->setPageSize(pageSize);
     preview->setPageLayout(m_layout);
+    preview->setFullPage(pSettings.enableFullPage);
     printDoc(preview,m_roshetta,true);
 }
 
@@ -371,8 +374,7 @@ void printDrugs::setupPrinter(QPrinter *p)
     m_layout.setMode(QPageLayout::Mode::StandardMode);
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
-    //p->setFullPage(true);
-
+    p->setFullPage(pSettings.enableFullPage);
 }
 
 void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
@@ -773,11 +775,17 @@ void printDrugs::showStartDate_clicked(bool checked)
     refreshView();
 }
 
-void printDrugs::showHorizontalLineBelowHeader_clicked(bool checked)
+void printDrugs::enableFullPage_clicked(bool checked)
 {
-    //pSettings.showHorizontalLineBelowHeader = checked;
+    pSettings.enableFullPage = checked;
     refreshView();
 }
+
+//void printDrugs::showHorizontalLineBelowHeader_clicked(bool checked)
+//{
+//    //pSettings.showHorizontalLineBelowHeader = checked;
+//    refreshView();
+//}
 
 void printDrugs::pageMargin_valueChanged(int arg1)
 {

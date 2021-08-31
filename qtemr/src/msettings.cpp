@@ -234,6 +234,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.preferArabic = settings.value(_preferArabic,QVariant(true)).toBool();
     mPageSettings.showStartDate = settings.value(_showStartDate,QVariant(true)).toBool();
     //mPageSettings.showHorizontalLineBelowHeader = settings.value(_showHorizontalLineBelowHeader,QVariant(false)).toBool();
+    mPageSettings.enableFullPage = settings.value(_enableFullPage,QVariant(false)).toBool();
     settings.endGroup();
     return mPageSettings;
 }
@@ -298,6 +299,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_preferArabic,mPageSettings.preferArabic);
     settings.setValue(_showStartDate,mPageSettings.showStartDate);
     //settings.setValue(_showHorizontalLineBelowHeader,mPageSettings.showHorizontalLineBelowHeader);
+    settings.setValue(_enableFullPage,mPageSettings.enableFullPage);
 
     settings.endGroup();
 }

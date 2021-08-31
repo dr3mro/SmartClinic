@@ -73,6 +73,7 @@
 #define _showDoseNewLine "showDoseNewLine"
 #define _preferArabic "prefereArabic"
 #define _showStartDate "showStartDate"
+#define _enableFullPage "enableFullPage"
 //#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"
