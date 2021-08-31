@@ -778,6 +778,7 @@ void printDrugs::showStartDate_clicked(bool checked)
 void printDrugs::enableFullPage_clicked(bool checked)
 {
     pSettings.enableFullPage = checked;
+    setupPrinter(printer);
     refreshView();
 }
 

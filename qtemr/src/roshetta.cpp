@@ -641,6 +641,7 @@ void Roshetta::fillAltBanner(QTextCursor &c)
     altBannerTemplate.replace("{diagnosis}",roshettaData.Diagnosis);
     altBannerTemplate.replace("{code}",roshettaData.ID);
     altBannerTemplate.replace("{followDate}",nextDate);
+    altBannerTemplate.replace("{visitIcon}",roshettaData.visitSymbole);
     c.insertHtml(altBannerTemplate);
 }
 
