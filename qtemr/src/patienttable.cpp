@@ -54,7 +54,9 @@ bool patientTable::eventFilter(QObject *o, QEvent *e)
     int _ID,row;
     bool deceased;
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(e);
-    if ( (o == this->viewport() ) && ( e->type() == QEvent::MouseButtonDblClick ) && ( mouseEvent->buttons() == Qt::MiddleButton ))
+    QKeyEvent *keyEvent = static_cast<QKeyEvent*>(e);
+    if ( (o == this->viewport() ) && ( e->type() == QEvent::MouseButtonDblClick ) && ( mouseEvent->buttons() == Qt::MiddleButton ||
+                                                                                     ( mouseEvent->button() == Qt::LeftButton && keyEvent->modifiers() == Qt::ShiftModifier)) )
     {
         QModelIndex cell =  selectionModel()->currentIndex();
         row = cell.row();
@@ -63,6 +65,7 @@ bool patientTable::eventFilter(QObject *o, QEvent *e)
             return QObject::eventFilter(o,e);
         deceased = sqlbase->getDeceasedList().contains(QString::number(_ID));
         sqlbase->toggleDeceased(_ID,(deceased)? 0:1,row);
+        emit clearSelection();
     }
     return QObject::eventFilter(o,e);
 }
@@ -127,7 +130,7 @@ void patientTable::setPatientIcon(bool b,int row)
 {
     QModelIndex cell = selectionModel()->currentIndex().sibling(row,1);
     if (b)
-        proxy_model->setData(cell,QIcon(":/Graphics/redSkull"),Qt::DecorationRole);
+        proxy_model->setData(cell,QIcon(":/Graphics/ionicons/android-star.png"),Qt::DecorationRole);
     else
         proxy_model->setData(selectionModel()->currentIndex().sibling(row,1),QIcon(),Qt::DecorationRole);
 }

@@ -79,7 +79,7 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
             auto mobile_Item = new QStandardItem(info.Mobile);
 
             if ( deceasedList.contains(QString::number(ID)))
-                name_Item->setData(QIcon(":/Graphics/redSkull"),Qt::DecorationRole);
+                name_Item->setData(QIcon(":/Graphics/ionicons/android-star.png"),Qt::DecorationRole);
 
             info.Age = getAge(todayJulian - query->value(3).toInt());
 
@@ -3672,6 +3672,7 @@ QStringList sqlBase::sqlExecList(QString sqlCmd, bool crypt)
     {
         item = crypt? getHumanizedName(query->value(0).toString()):query->value(0).toString();
         list << item;
+        //mDebug() << item;
     }
 
     query->finish();
