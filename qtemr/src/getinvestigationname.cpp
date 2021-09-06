@@ -46,7 +46,7 @@ void getInvestigationName::setPath()
 {
     QFileDialog fileDialog;
     QString desktop = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-    QString selectedImagePath = fileDialog.getOpenFileName(this,"Select Photo Copy",desktop, "*.jpg *.jpeg");
+    QString selectedImagePath = fileDialog.getOpenFileName(this,"Select Photo Copy",desktop, "*.jpg *.jpeg *.png *.pdf");
     ui->Path->setText(selectedImagePath);
 }
 
@@ -64,8 +64,7 @@ void getInvestigationName::on_OK_clicked()
     QString Name = ui->Name->text().simplified();
     QString Path = ui->Path->text().simplified();
     QImage img;
-    if (!img.load(Path))
-    {
+    if (!Path.endsWith(".pdf",Qt::CaseInsensitive) && !img.load(Path) ){
         emit popUpMessage("Error","Invalid File Selected!");
         return;
     }

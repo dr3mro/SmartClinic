@@ -69,25 +69,21 @@ void invesList::on_tableView_activated(const QModelIndex &_index)
     QString mediaFileurl = model->item(_index.row(),3)->text();
     QFile file(mediaFileurl);
     QImage img;
-    if( file.exists()
-        && ( mediaFileurl.endsWith(".jpg",Qt::CaseInsensitive)
-             ||  mediaFileurl.endsWith(".jpeg",Qt::CaseInsensitive) )
-        && img.load(mediaFileurl) )
-    {
-
-        if(settings.isUseNativePhotoViewer())
-        {
+    if(!file.exists()){
+        return;
+    }else if( mediaFileurl.endsWith(".pdf",Qt::CaseInsensitive)){
+        QDesktopServices::openUrl(QUrl::fromLocalFile(mediaFileurl));
+    }else if( ( mediaFileurl.endsWith(".jpg",Qt::CaseInsensitive) ||  mediaFileurl.endsWith(".jpeg",Qt::CaseInsensitive) ||  mediaFileurl.endsWith(".png",Qt::CaseInsensitive))
+              && img.load(mediaFileurl) ){
+        if(settings.isUseNativePhotoViewer()){
             QVector<QVector<QString> > vector =  model->getMediaVector();
             int index = vector.at(1).indexOf(mediaFileurl);
             requestViewer.setRequests(vector,index);
             requestViewer.exec();
-        }
-        else
-        {
+        }else{
             QDesktopServices::openUrl(QUrl::fromLocalFile(mediaFileurl));
         }
     }
-
 }
 
 void invesList::uptodate()
@@ -167,12 +163,20 @@ void invesList::addInvestigation(QString invName, QString selectedImagePath)
 
     QString inv2Name = invName;
     QString localCopyPath = QString ( "data/media/%1/" ).arg(ID);
-    QString localImagePath = QString("%1%2_%3.jpg").arg(localCopyPath).arg(inv2Name.replace(QRegularExpression("[^A-Za-z\\d\\s]"),"_")).arg(dt);
+    QString fileExtension = QFileInfo(selectedImagePath).completeSuffix();
+    QString localImagePath = QString("%1%2_%3.%4").arg(localCopyPath,inv2Name.replace(QRegularExpression("[^A-Za-z\\d\\s]"),"_"),dt,fileExtension);
+
     QImage img;
     QDir mediaDir(localCopyPath);
+
     bool addInvBool = false;
-    if ( img.load(selectedImagePath))
-    {
+
+    if(!fileExtension.compare("pdf",Qt::CaseInsensitive)){
+        mediaDir.mkpath("./");
+        QFile::copy(selectedImagePath,localImagePath);
+        addInvBool = sqlbase->addInvestigation(ID,visitJulianDate,invName,localImagePath,invDate,invTime,invState,invPrice,invResults);
+        load();
+    }else if (img.load(selectedImagePath)){
         mediaDir.mkpath("./");
         QFile::copy(selectedImagePath,localImagePath);
         addInvBool = sqlbase->addInvestigation(ID,visitJulianDate,invName,localImagePath,invDate,invTime,invState,invPrice,invResults);
@@ -182,12 +186,10 @@ void invesList::addInvestigation(QString invName, QString selectedImagePath)
     {
         emit popUpMessge("Error","Invalid Photo Selected.");
     }
-    if ( addInvBool )
-    {
+
+    if ( addInvBool ){
         emit popUpMessge("Message","New Investigation has been added Successfully.");
-    }
-    else
-    {
+    }else{
         QFile f(localImagePath);
         if(f.open(QFile::ReadWrite))
             return;
