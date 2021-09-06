@@ -583,7 +583,7 @@ void Roshetta::fillVitals(QTextCursor &c)
     if(roshettaData.vitals.BP != ""){
         c.insertHtml(QString("<div %1>BP</div>").arg(style));
         c.movePosition(QTextCursor::NextCell);
-        c.insertHtml(QString("<div %2> %1 mmgh</div>").arg(roshettaData.vitals.BP,style));
+        c.insertHtml(QString("<div %2> %1 mmHg</div>").arg(roshettaData.vitals.BP,style));
         c.movePosition(QTextCursor::NextCell);
     }
     if(roshettaData.vitals.T != 0){
