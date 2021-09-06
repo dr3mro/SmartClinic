@@ -11,7 +11,8 @@ invIconHelper::invIconHelper(QObject *parent) : QObject(parent)
 
 QString invIconHelper::getInvestigationTooltip(const QString &path, const QString &name,const int &scale)
 {
-    if(path.endsWith(".jpg",Qt::CaseInsensitive) || path.endsWith(".jpeg",Qt::CaseInsensitive) )
+
+    if(path.endsWith(".jpg",Qt::CaseInsensitive) || path.endsWith(".jpeg",Qt::CaseInsensitive) || path.endsWith(".png",Qt::CaseInsensitive) )
     {
         QByteArray byteArray;
         QBuffer buffer(&byteArray);

@@ -178,41 +178,77 @@ bool investTable::addInvMedia(bool setState)
     if(m_Path.isEmpty())
         m_Path = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
-    QString selectedImagePath = fileDialog.getOpenFileName(this,"Select Photo Copy",m_Path, "Images (*.png *.jpeg *.jpg)");
+    QString selectedFile = fileDialog.getOpenFileName(this,"Select a supported file",m_Path, "*.png *.jpeg *.jpg *.pdf" );
 
-    if (selectedImagePath.isEmpty() || selectedImagePath.isNull())
+    if (selectedFile.isEmpty() || selectedFile.isNull())
         return false;
 
 
-    QString inv2Name = invName;
-    QString localCopyPath = QString ( "data/media/%1/" ).arg(this->ID);
-    QString localImagePath = QString("%1%2_%3.jpg").arg(localCopyPath).arg(inv2Name.replace(" ","_")).arg(dt);
-    QImage mImg;
-    QDir mediaDir(localCopyPath);
 
-    if ( mImg.load(selectedImagePath))
+    QString mFileBaseName = QFileInfo(selectedFile).baseName().replace(" ","_");
+    QString mFileExtention = QFileInfo(selectedFile).completeSuffix();
+
+    QString mCopytoPath = QString ( "data/media/%1/" ).arg(this->ID);
+    QString mLocalFilePath = QString("%1%2_%3.%4").arg(mCopytoPath,invName,dt,mFileExtention);
+
+    QImage mImg;
+    QDir mediaDir(mCopytoPath);
+
+    if ( mFileExtention.compare("pdf",Qt::CaseInsensitive) /* not PDF */ &&  mImg.load(selectedFile) /* image is valid*/)
     {
         mediaDir.mkpath("./");
-        QFile::copy(selectedImagePath,localImagePath);
-        invModel->item(row,3)->setText(localImagePath);
+
+        QFile::copy(selectedFile,mLocalFilePath);
+
+        invModel->item(row,3)->setText(mLocalFilePath);
+
         if ( setState )
             invModel->item(row,6)->setText(QString::number(InvestModel::InvestigationsStates::hasMedia));
+
         invModel->item(row,5)->setText(QString::number(QTime::currentTime().msecsSinceStartOfDay()/1000));
-        invModel->item(row,1)->setToolTip(invIconHelper::getInvestigationTooltip(localImagePath,inv2Name,scale));
+        invModel->item(row,1)->setToolTip(invIconHelper::getInvestigationTooltip(mLocalFilePath,invName,scale));
+
         setModel(invModel);
+
         saveInvestigation(ID,visitJulianDate);
-        emit popUpMessage("Information",QString("Image file has been added to patient's file as [%1].").arg(inv2Name));
-        int reply = msgbox.question(this,"Alert!","Do you Agree to delete source image after adding to patient profile?",QMessageBox::Yes,QMessageBox::No);
+
+        emit popUpMessage("Information",QString("Image file has been added to patient's file as [%1].").arg(invName));
+
+        int reply = msgbox.question(this,"Alert!","Do you Agree to delete source image file after adding to patient profile?",QMessageBox::Yes,QMessageBox::No);
 
         if (reply == QMessageBox::Yes)
-            QFile::remove(selectedImagePath);
+            QFile::remove(selectedFile);
 
-        reg.setValue("lastFolder",QFileInfo(selectedImagePath).path());
+        reg.setValue("lastFolder",QFileInfo(selectedFile).path());
         return true;
-    }
-    else
-    {
-        emit popUpMessage("Warning","Image file selected is invalid format.");
+    }else if (!mFileExtention.compare("pdf",Qt::CaseInsensitive) /* is PDF */){
+        mediaDir.mkpath("./");
+
+        QFile::copy(selectedFile,mLocalFilePath);
+
+        invModel->item(row,3)->setText(mLocalFilePath);
+
+        if ( setState )
+            invModel->item(row,6)->setText(QString::number(InvestModel::InvestigationsStates::hasMedia));
+
+        invModel->item(row,5)->setText(QString::number(QTime::currentTime().msecsSinceStartOfDay()/1000));
+        invModel->item(row,1)->setToolTip(invName);
+
+        setModel(invModel);
+
+        saveInvestigation(ID,visitJulianDate);
+
+        emit popUpMessage("Information",QString("PDF file has been added to patient's file as [%1].").arg(invName));
+
+        int reply = msgbox.question(this,"Alert!","Do you Agree to delete source PDF file after adding to patient profile?",QMessageBox::Yes,QMessageBox::No);
+
+        if (reply == QMessageBox::Yes)
+            QFile::remove(selectedFile);
+
+        reg.setValue("lastFolder",QFileInfo(selectedFile).path());
+        return true;
+    }else{
+        emit popUpMessage("Warning","File selected is invalid format.");
     }
     return false;
 }
@@ -586,7 +622,7 @@ bool investTable::eventFilter(QObject *o, QEvent *e)
                   && keyEvent->modifiers() == Qt::CTRL
                   && keyEvent->modifiers() != Qt::SHIFT
                   && keyEvent->modifiers() != Qt::ALT
-                  && ( mediaURL.endsWith(".jpg",Qt::CaseInsensitive) ||  mediaURL.endsWith(".jpeg",Qt::CaseInsensitive) )
+                  && ( mediaURL.endsWith(".jpg",Qt::CaseInsensitive) ||  mediaURL.endsWith(".jpeg",Qt::CaseInsensitive) ||  mediaURL.endsWith(".png",Qt::CaseInsensitive ))
                   && img.load(mediaURL)
                   && !isReadOnly)
         {
@@ -613,17 +649,15 @@ bool investTable::eventFilter(QObject *o, QEvent *e)
                 ss = true;
             addInvMedia(ss);
         }
-        else if ( (mouseEvent->button() == Qt::LeftButton && keyEvent->modifiers() != Qt::SHIFT )
-                  && ( mediaURL.endsWith(".jpg",Qt::CaseInsensitive) ||  mediaURL.endsWith(".jpeg",Qt::CaseInsensitive) )
-                  && img.load(mediaURL)
+        else if ( (mouseEvent->button() == Qt::LeftButton
+                  && keyEvent->modifiers() != Qt::SHIFT )
                   && keyEvent->modifiers() != Qt::CTRL
                   && keyEvent->modifiers() != Qt::ALT)
         {
-            //QDesktopServices::openUrl(QUrl::fromLocalFile(mediaURL));
-
-            if( ( mediaURL.endsWith(".jpg",Qt::CaseInsensitive) ||  mediaURL.endsWith(".jpeg",Qt::CaseInsensitive) )
-                    && img.load(mediaURL) )
-            {
+            if( ( mediaURL.endsWith(".jpg",Qt::CaseInsensitive) ||
+                  mediaURL.endsWith(".jpeg",Qt::CaseInsensitive)||
+                  mediaURL.endsWith(".png",Qt::CaseInsensitive ))  &&
+                    img.load(mediaURL) ){
                 if(settings.isUseNativePhotoViewer())
                 {
                     QVector<QVector<QString> > vector = invModel->getMediaVector();
@@ -636,7 +670,10 @@ bool investTable::eventFilter(QObject *o, QEvent *e)
                     QDesktopServices::openUrl(QUrl::fromLocalFile(mediaURL));
                 }
 
-            }
+            }else if( mediaURL.endsWith(".pdf",Qt::CaseInsensitive)){
+
+                QDesktopServices::openUrl(QUrl::fromLocalFile(mediaURL));
+                }
 
         }
     }
