@@ -622,8 +622,10 @@ bool investTable::eventFilter(QObject *o, QEvent *e)
                   && keyEvent->modifiers() == Qt::CTRL
                   && keyEvent->modifiers() != Qt::SHIFT
                   && keyEvent->modifiers() != Qt::ALT
-                  && ( mediaURL.endsWith(".jpg",Qt::CaseInsensitive) ||  mediaURL.endsWith(".jpeg",Qt::CaseInsensitive) ||  mediaURL.endsWith(".png",Qt::CaseInsensitive ))
-                  && img.load(mediaURL)
+                  &&  ( ( ( mediaURL.endsWith(".jpg",Qt::CaseInsensitive) ||
+                            mediaURL.endsWith(".jpeg",Qt::CaseInsensitive)||
+                            mediaURL.endsWith(".png",Qt::CaseInsensitive ) ) && img.load(mediaURL) )
+                        || mediaURL.endsWith(".pdf",Qt::CaseInsensitive) )
                   && !isReadOnly)
         {
             bool isService=false;
