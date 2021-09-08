@@ -163,9 +163,9 @@ void Roshetta::makeBanner()
         bannerFormat.setBorder(0);
         bannerFormat.setLayoutDirection(roshettaSettings.preferArabic? Qt::RightToLeft : Qt::LeftToRight);
 
-        QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,50)
+        QVector<QTextLength> bannertl = QVector<QTextLength>() << QTextLength(QTextLength::PercentageLength,48)
                                                              << QTextLength(QTextLength::PercentageLength,18)
-                                                             << QTextLength(QTextLength::PercentageLength,32);
+                                                             << QTextLength(QTextLength::PercentageLength,34);
         bannerFormat.setColumnWidthConstraints(bannertl);
     }else{
         bannerFrameFormat.setHeight(0);
