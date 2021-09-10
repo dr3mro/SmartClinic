@@ -104,6 +104,7 @@ void TextEdit::setFont(QFont font)
     fmt.setFontPointSize(pointSize);
     mergeCurrentCharFormat(fmt);
     isSelectionStyled=true;
+    emit fontFamilyChanged(font.family());
 }
 
 void TextEdit::setFont(QString font)
@@ -114,6 +115,7 @@ void TextEdit::setFont(QString font)
     fmt.setFont(QFont(font,pointSize));
     mergeCurrentCharFormat(fmt);
     isSelectionStyled=true;
+    emit fontFamilyChanged(font);
 }
 
 void TextEdit::setPoint(QString p)
@@ -125,7 +127,7 @@ void TextEdit::setPoint(QString p)
     fmt.setFontPointSize(pointSize);
     mergeCurrentCharFormat(fmt);
     isSelectionStyled=true;
-
+    emit fontPointChanged(p);
 }
 
 void TextEdit::setCurrentSize(int p)
@@ -359,6 +361,7 @@ void TextEdit::setBold(bool normal)
     fmt.setFontWeight( normal ? QFont::Bold:QFont::Normal);
     mergeCurrentCharFormat(fmt);
     isSelectionStyled=true;
+    emit fontBoldChanged(normal);
 }
 
 void TextEdit::setUpper(bool normal)

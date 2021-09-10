@@ -124,6 +124,10 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->BannerStyle,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::bannerStyle_activated,Qt::QueuedConnection);
     connect(ui->resetBannerTemplate,&QPushButton::clicked,this,&printDrugs::resetBannerTemplateClicked);
 
+    connect(ui->bannerTemplate,&TextEdit::fontFamilyChanged,this,&printDrugs::bannerFontName_activated);
+    connect(ui->bannerTemplate,&TextEdit::fontPointChanged,this,&printDrugs::bannerFontSize_activated);
+    connect(ui->bannerTemplate,&TextEdit::fontBoldChanged,this,&printDrugs::bannerFontBold_clicked);
+
     this->setModal(true);
 }
 
@@ -495,12 +499,14 @@ void printDrugs::drugsMode_activated(int index)
 void printDrugs::bannerFontName_activated(const QString &arg1)
 {
     pSettings.bannerFont.fontName =arg1;
+    ui->bannerFontName->setCurrentText(pSettings.bannerFont.fontName);
     refreshView();
 }
 
 void printDrugs::bannerFontSize_activated(const QString &arg1)
 {
     pSettings.bannerFont.fontSize =arg1.toInt();
+    ui->bannerFontSize->setCurrentText(arg1);
     refreshView();
 }
 
@@ -508,6 +514,7 @@ void printDrugs::bannerFontSize_activated(const QString &arg1)
 void printDrugs::bannerFontBold_clicked(bool checked)
 {
     pSettings.bannerFont.fontBold =checked;
+    ui->bannerFontBold->setChecked(checked);
     refreshView();
 }
 

@@ -642,6 +642,11 @@ void Roshetta::fillAltBanner(QTextCursor &c)
     altBannerTemplate.replace("{code}",roshettaData.ID);
     altBannerTemplate.replace("{followDate}",nextDate);
     altBannerTemplate.replace("{visitIcon}",roshettaData.visitSymbole);
+
+    altBannerTemplate.replace(QRegularExpression("font-size: ?\\d{1,2}pt;"),QString("font-size: %1pt;").arg(roshettaSettings.bannerFont.fontSize));
+    altBannerTemplate.replace(QRegularExpression("font-family:\\s*'([^']*)';"),QString("font-family:'%1';").arg(roshettaSettings.bannerFont.fontName));
+    altBannerTemplate.replace(QRegularExpression("font-weight:?\\d{3};"),QString("font-weight:%1;").arg(roshettaSettings.bannerFont.fontBold? 600:400));
+
     c.insertHtml(altBannerTemplate);
 }
 

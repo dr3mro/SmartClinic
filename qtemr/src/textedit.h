@@ -103,6 +103,9 @@ private:
     mSettings& settings = mSettings::instance();
 signals:
     void removeItemFromCompleter(QString,int);
+    void fontFamilyChanged(QString fontName);
+    void fontPointChanged(QString point);
+    void fontBoldChanged(bool isBold);
 };
 
 #endif // TEXTEDIT_H
