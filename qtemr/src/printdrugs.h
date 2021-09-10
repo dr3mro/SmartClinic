@@ -90,6 +90,7 @@ private slots:
     void showHeader_clicked(bool checked);
     void showFooter_clicked(bool checked);
     void showLogo_clicked(bool checked);
+    void enableBodyHeaderSeparator_clicked(bool checked);
 
     void bannerStyle_activated(int index);
 

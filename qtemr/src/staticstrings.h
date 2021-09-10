@@ -74,6 +74,7 @@
 #define _preferArabic "prefereArabic"
 #define _showStartDate "showStartDate"
 #define _enableFullPage "enableFullPage"
+#define _enableBodyHeaderSeparator "enableBodyHeaderSeparator"
 //#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"

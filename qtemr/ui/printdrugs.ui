@@ -1546,6 +1546,30 @@
                  </layout>
                 </item>
                 <item row="1" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_26">
+                  <item>
+                   <widget class="QLabel" name="label_42">
+                    <property name="text">
+                     <string>Show horizontal line between header and body.</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="Switch" name="enableBodyHeaderSeparator">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="2" column="0">
                  <widget class="TextEdit" name="Header"/>
                 </item>
                </layout>

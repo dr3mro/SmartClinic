@@ -235,6 +235,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.showStartDate = settings.value(_showStartDate,QVariant(true)).toBool();
     //mPageSettings.showHorizontalLineBelowHeader = settings.value(_showHorizontalLineBelowHeader,QVariant(false)).toBool();
     mPageSettings.enableFullPage = settings.value(_enableFullPage,QVariant(false)).toBool();
+    mPageSettings.enableBodyHeaderSeparator = settings.value(_enableBodyHeaderSeparator,QVariant(false)).toBool();
     settings.endGroup();
     return mPageSettings;
 }
@@ -300,6 +301,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_showStartDate,mPageSettings.showStartDate);
     //settings.setValue(_showHorizontalLineBelowHeader,mPageSettings.showHorizontalLineBelowHeader);
     settings.setValue(_enableFullPage,mPageSettings.enableFullPage);
+    settings.setValue(_enableBodyHeaderSeparator,mPageSettings.enableBodyHeaderSeparator);
 
     settings.endGroup();
 }

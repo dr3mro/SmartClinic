@@ -654,6 +654,6 @@ void Roshetta::drawHorizontalLineBelowHeader(QTextCursor &c)
 {
     drawHorizontalLineBelowHeaderFrameFormat.setHeight(1);
     drawHorizontalLineBelowHeaderFrameFormat.setWidth(mWidth);
-    drawHorizontalLineBelowHeaderFrameFormat.setBackground(Qt::darkGray);
+    drawHorizontalLineBelowHeaderFrameFormat.setBackground( roshettaSettings.enableBodyHeaderSeparator? Qt::darkGray:Qt::transparent);
     c.insertFrame(drawHorizontalLineBelowHeaderFrameFormat);
 }
