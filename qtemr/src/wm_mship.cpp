@@ -58,7 +58,7 @@ bool wm_mShip::isWhiteListed(QByteArray ba)
     QString rawData = QString(ba);
     QStringList wList = rawData.simplified().split(" ");
 
-    if (wList.at(0) != "smartClinicWhiteList")
+    if (wList.at(0) != "smartClinic3WhiteList")
     {
         return true;
     }
