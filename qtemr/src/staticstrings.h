@@ -75,6 +75,7 @@
 #define _showStartDate "showStartDate"
 #define _enableFullPage "enableFullPage"
 #define _enableBodyHeaderSeparator "enableBodyHeaderSeparator"
+#define _compactMode "compactMode"
 //#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"

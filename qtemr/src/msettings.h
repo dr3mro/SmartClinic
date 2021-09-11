@@ -487,6 +487,8 @@ public:
         //bool showHorizontalLineBelowHeader=false;
         bool enableFullPage=false;
         bool enableBodyHeaderSeparator=false;
+        bool compactMode=true;
+
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
             return std::tie(paperSizeId,
@@ -521,7 +523,8 @@ public:
                             showStartDate/*,
                             showHorizontalLineBelowHeader*/,
                             enableFullPage,
-                            enableBodyHeaderSeparator
+                            enableBodyHeaderSeparator,
+                            compactMode
                             ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
                         prescriptionprintsettings.pageMargin,
@@ -555,7 +558,8 @@ public:
                         prescriptionprintsettings.showStartDate/*,
                         prescriptionprintsettings.showHorizontalLineBelowHeader*/,
                         prescriptionprintsettings.enableFullPage,
-                        prescriptionprintsettings.enableBodyHeaderSeparator); }
+                        prescriptionprintsettings.enableBodyHeaderSeparator,
+                        prescriptionprintsettings.compactMode); }
     };
     struct lineStyle
     {

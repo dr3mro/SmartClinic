@@ -420,6 +420,25 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     QTextTableCellFormat drugsHeaderFormat;
     QTextBlockFormat drugsHeaderBlockFormat;
 
+    uint spacerfactor1=0,spacerfactor2=0;
+    uint paperSize_int = QString(roshettaSettings.paperSizeId.at(1)).toUInt();
+
+    if(!roshettaSettings.compactMode){
+        switch (paperSize_int) {
+        case 4:
+            spacerfactor1 = 9;
+            spacerfactor2 = 5;
+            break;
+        case 5:
+            spacerfactor1 = 7;
+            spacerfactor2 = 4;
+            break;
+        case 6:
+            spacerfactor1 = 5;
+            spacerfactor2 = 3;
+            break;
+        }
+    }
     QString roshettaStyle = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.roshettaFont.fontName,
                  QString::number(roshettaSettings.roshettaFont.fontSize),
@@ -469,6 +488,16 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
             c.insertHtml(QString("<div align=right dir=RTL %2>%1</div>").arg(dose,doseStyle));
         }
 
+
+        if(!roshettaSettings.compactMode)
+        {
+            if(drugs.count() > spacerfactor1 )
+                c.insertHtml("");
+            else if(drugs.count() > spacerfactor2 )
+                c.insertHtml("<br>");
+            else
+                c.insertHtml("<br><br>");
+        }
         c.movePosition(QTextCursor::NextCell);
         CurrentDrugRow++;
     }
