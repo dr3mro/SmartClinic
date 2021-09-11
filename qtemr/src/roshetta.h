@@ -48,9 +48,12 @@ private:
     void fillDiet(QTextCursor &c);
     void fillAltBanner(QTextCursor&c);
     void drawHorizontalLineBelowHeader(QTextCursor &c);
+    void setSpacingFactor();
     double mWidth;
     double mHeight;
 
+    uint spacerfactor1=0,spacerfactor2=0;
+    uint allDrugsCount=0;
     mSettings::Roshetta roshettaData;
     QTextDocument *mRoshetta;
 

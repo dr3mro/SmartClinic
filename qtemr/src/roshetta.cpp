@@ -24,6 +24,9 @@ QTextDocument * Roshetta::createRoshetta(const mSettings::Roshetta &_Roshetta, c
     // set Roshetta Size
     setRoshettaSize();
 
+    // set Spacer factor
+    setSpacingFactor();
+
     // set rootFrame parameters
     setRootFrame();
 
@@ -325,11 +328,13 @@ void Roshetta::fillBody(QTextCursor &c)
             if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
                 rows+= roshettaData.currentAlteredDrugsList.count();
                 rows+= roshettaData.baseAlteredDrugsList.count();
+                allDrugsCount = rows;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentAlteredDrugsList.count() > 0)? 1:0;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseAlteredDrugsList.count() > 0)? 1:0;
             }else{
                 rows+= roshettaData.currentDrugsList.count();
                 rows+= roshettaData.baseDrugsList.count();
+                allDrugsCount = rows;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentDrugsList.count() > 0)? 1:0;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseDrugsList.count() > 0)? 1:0;
 
@@ -338,21 +343,26 @@ void Roshetta::fillBody(QTextCursor &c)
         else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::visitOnly){
             if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
                 rows+= roshettaData.currentAlteredDrugsList.count();
+                allDrugsCount = rows;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentAlteredDrugsList.count() > 0)? 1:0;
             }else{
                 rows+= roshettaData.currentDrugsList.count();
+                allDrugsCount = rows;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.currentDrugsList.count() > 0)? 1:0;
             }
         }
         else if (roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::baseOnly){
             if(roshettaSettings.showOnlyNewlyModifiedAddedDrugs){
                 rows+= roshettaData.baseAlteredDrugsList.count();
+                allDrugsCount = rows;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseAlteredDrugsList.count() > 0)? 1:0;
             }else{
                 rows+= roshettaData.baseDrugsList.count();
+                allDrugsCount = rows;
                 rows+= (roshettaSettings.showDrugsTitle && roshettaData.baseDrugsList.count() > 0)? 1:0;
             }
         }
+
 
 
         if(rows > 0 ){
@@ -420,25 +430,6 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     QTextTableCellFormat drugsHeaderFormat;
     QTextBlockFormat drugsHeaderBlockFormat;
 
-    uint spacerfactor1=0,spacerfactor2=0;
-    uint paperSize_int = QString(roshettaSettings.paperSizeId.at(1)).toUInt();
-
-    if(!roshettaSettings.compactMode){
-        switch (paperSize_int) {
-        case 4:
-            spacerfactor1 = 9;
-            spacerfactor2 = 5;
-            break;
-        case 5:
-            spacerfactor1 = 7;
-            spacerfactor2 = 4;
-            break;
-        case 6:
-            spacerfactor1 = 5;
-            spacerfactor2 = 3;
-            break;
-        }
-    }
     QString roshettaStyle = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.roshettaFont.fontName,
                  QString::number(roshettaSettings.roshettaFont.fontSize),
@@ -491,9 +482,9 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
 
         if(!roshettaSettings.compactMode)
         {
-            if(drugs.count() > spacerfactor1 )
+            if(allDrugsCount > spacerfactor1 )
                 c.insertHtml("");
-            else if(drugs.count() > spacerfactor2 )
+            else if(allDrugsCount > spacerfactor2 )
                 c.insertHtml("<br>");
             else
                 c.insertHtml("<br><br>");
@@ -685,4 +676,26 @@ void Roshetta::drawHorizontalLineBelowHeader(QTextCursor &c)
     drawHorizontalLineBelowHeaderFrameFormat.setWidth(mWidth);
     drawHorizontalLineBelowHeaderFrameFormat.setBackground( roshettaSettings.enableBodyHeaderSeparator? Qt::darkGray:Qt::transparent);
     c.insertFrame(drawHorizontalLineBelowHeaderFrameFormat);
+}
+
+void Roshetta::setSpacingFactor()
+{
+    uint paperSize_int = QString(roshettaSettings.paperSizeId.at(1)).toUInt();
+
+    if(!roshettaSettings.compactMode){
+        switch (paperSize_int) {
+        case 4:
+            spacerfactor1 = 9;
+            spacerfactor2 = 5;
+            break;
+        case 5:
+            spacerfactor1 = 7;
+            spacerfactor2 = 4;
+            break;
+        case 6:
+            spacerfactor1 = 5;
+            spacerfactor2 = 3;
+            break;
+        }
+    }
 }
