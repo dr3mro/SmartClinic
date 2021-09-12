@@ -241,6 +241,18 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 
+    if(qApp->arguments().count()>1){
+        if(qApp->arguments().at(1) == QString("-makeUpdatePackage")){
+            QString changes = qApp->arguments().at(2);
+            squeeze::compact(EXENAME,"updates/sc.pkg");
+            QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile("updates/sc.pkg"),QCryptographicHash::Md5 ).toHex());
+            QByteArray updateData = QString("%1;%2;%3;%4;https://dl.dropboxusercontent.com/s/ldwlrc2nafc67ca/sc.pkg?dl=0;%5;%6").arg(
+                        APPVERSION,BUILD,BUILDDATE,BUILDTIME,md5,changes).toUtf8();
+            dataIOhelper::saveFile("update",updateData);
+        }
+        exit(0);
+    }
+
     qRegisterMetaType<QVector<int> >("QVector<int>");
     qRegisterMetaType<QTextCursor>("QTextCursor");
     qRegisterMetaType<QAbstractSocket::SocketState>();

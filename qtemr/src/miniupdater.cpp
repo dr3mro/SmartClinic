@@ -93,8 +93,8 @@ void miniUpdater::displayVersionInfo()
                                  "Current Build Time : %4 \n")
                          .arg(APPVERSION)
                          .arg(BUILD)
-                         .arg(QDate::currentDate().toString("dd/MM/yyyy"))
-                         .arg(QTime::currentTime().toString("hh:mm AP")));
+                         .arg(BUILDDATE)
+                         .arg(BUILDTIME));
 }
 
 void miniUpdater::applyUpdate()

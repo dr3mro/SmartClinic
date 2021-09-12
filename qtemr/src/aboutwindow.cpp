@@ -23,8 +23,8 @@ AboutWindow::AboutWindow(QWidget *parent) : mDialog(parent),
     ui->label_version->setText(APPVERSION);
     ui->label_developer->setText(DEVELOPER);
     ui->label_buildNbr->setText(BUILD);
-    ui->label_builddate->setText( __DATE__ );
-    ui->label_buildtime->setText( __TIME__ );
+    ui->label_builddate->setText( BUILDDATE );
+    ui->label_buildtime->setText( BUILDTIME );
     ui->label_copyright->setText(QString("copyright © %1 all rights reserved").arg(APPYEAR));
     ui->labelRegistered->hide();
 
