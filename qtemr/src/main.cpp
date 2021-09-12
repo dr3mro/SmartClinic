@@ -261,6 +261,9 @@ int main(int argc, char *argv[])
         QString changes = clParser.positionalArguments().at(0);
         QString pkgUrl = clParser.positionalArguments().at(1);
 
+        if(!QDir("updatePKGs").exists())
+            QDir().mkdir("updatePKGs");
+
         squeeze::compact(EXENAME,"updatePKGs/sc.pkg");
         QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile("updatePKGs/sc.pkg"),QCryptographicHash::Md5 ).toHex());
         QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(

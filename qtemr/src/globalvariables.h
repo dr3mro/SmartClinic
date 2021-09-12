@@ -7,17 +7,17 @@
 
 #define MajorVer 3
 #define MinorVer 8
-#define xVer 19
-#define APPVERSION "3.8.19"
+#define xVer 20
+#define APPVERSION "3.8.20"
 #define APPNAME "Smart Clinic"
-#define APPNAMEVER "Smart Clinic 3.8.19"
+#define APPNAMEVER "Smart Clinic 3.8.20"
 #define singleInstance "com.smartSoft.smartClinic3"
 #define DEVELOPER "AMR OSMAN"
 #define APPYEAR "2021"
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
-#define whiteListUrl "https://dl.dropboxusercontent.com/s/r1wxi96hs07ijwz/wlist?dl=0"
-#define updateInfo "https://dl.dropboxusercontent.com/s/tixvl9d1lo1lf4e/update?dl=0"
+#define whiteListUrl "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/wlist?dl=0"
+#define updateInfo "https://dl.dropboxusercontent.com/s/fy9ork77kzpfkr7/update?dl=0"
 #define updateInfo_ "http://127.0.0.1:8000/update/update"
 #define blockRegKey "Default"
 #define activateRegKey "Activated"
