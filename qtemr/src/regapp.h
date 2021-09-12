@@ -24,7 +24,7 @@ public:
     QString genDeviceID();
     QString generate_serial_number(QString unique_device_id);
     bool save_reg_data(QString enetered_serial_number);
-    QString read_reg_data();
+    QStringList read_reg_data();
     bool compare_reg_data();
     bool check_eval_copy();
     void evaluate();

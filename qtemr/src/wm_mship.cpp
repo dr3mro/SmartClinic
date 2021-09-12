@@ -24,7 +24,7 @@ void wm_mShip::work()
 
     if ( !settings.isDeviceActivated() && !rApp.check_eval_copy() )
     {
-        emit sendMail("New Device Registered",QString("%1 %2").arg(rApp.genDeviceID(),rApp.read_reg_data()));
+        emit sendMail("New Device Registered",QString("%1 %2").arg(rApp.genDeviceID(),rApp.read_reg_data().join(":")));
     }
 }
 
@@ -54,7 +54,7 @@ void wm_mShip::downloadedWhiteList(QByteArray ba)
 
 bool wm_mShip::isWhiteListed(QByteArray ba)
 {
-    QString savedReg = rApp.read_reg_data();
+    QStringList savedRegs = rApp.read_reg_data();
     QString rawData = QString(ba);
     QStringList wList = rawData.simplified().split(" ");
 
@@ -63,16 +63,22 @@ bool wm_mShip::isWhiteListed(QByteArray ba)
         return true;
     }
 
-    if (savedReg == rApp.trialCrypted() || savedReg.isEmpty())
+    if (savedRegs.isEmpty())
     {
         return true;
     }
 
-    foreach(QString s,wList)
-    {
-        if( s == savedReg )
+    foreach(const QString & reg, savedRegs){
+
+        if(reg == rApp.trialCrypted())
+            return true;
+
+        foreach(const QString w,wList)
         {
-            return  true;
+            if( reg == w)
+            {
+                return  true;
+            }
         }
     }
 

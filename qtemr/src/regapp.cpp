@@ -86,9 +86,8 @@ bool regApp::save_reg_data(QString enetered_serial_number)
     return true;
 }
 
-QString regApp::read_reg_data(){
+QStringList regApp::read_reg_data(){
     QStringList reg_data_list;
-    QString reg_data;
     QFile file("./license.key");
     if (file.exists())
     {
@@ -103,25 +102,40 @@ QString regApp::read_reg_data(){
     else
     {
         //evaluate();
-        return trialCrypted();
+        return QStringList() << trialCrypted();
     }
-    reg_data = reg_data_list.at(0);
-    return reg_data;
+    return reg_data_list;
 }
 
 bool regApp::compare_reg_data(){
 
-    QString unique_device_id = this->genDeviceID();
-    QString serial_number = this->generate_serial_number(unique_device_id);
+    QString unique_device_id = genDeviceID();
+    QString serial_number = generate_serial_number(unique_device_id);
     QByteArray serial_number_array = serial_number.split("-").join("").toUtf8();
     QString serial_number_crypted =  md5Crypt(serial_number_array);
-    QString saved_reg_data = this->read_reg_data();
-    return ( (saved_reg_data == serial_number_crypted) || (saved_reg_data == "1702198590490"));
+
+    QStringList saved_reg_data = read_reg_data();
+
+    foreach(const QString & reg,saved_reg_data){
+        if(reg == "1702198590490"){
+            return true; // master liscense
+        }else if(reg == serial_number_crypted){
+            return true;
+        }
+    }
+    return false;
 }
 
 bool regApp::check_eval_copy()
 {
-    return (read_reg_data() == trialCrypted());
+    QStringList regs = read_reg_data();
+    QString trailCrypt = trialCrypted();
+    foreach(const QString & reg,regs){
+        if(reg == trialCrypted()){
+            return true;
+        }
+    }
+    return false;
 }
 void regApp::evaluate()
 {
