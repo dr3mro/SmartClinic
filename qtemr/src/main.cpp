@@ -241,16 +241,31 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 
-    if(qApp->arguments().count()>1){
-        if(qApp->arguments().at(1) == QString("-makeUpdatePackage")){
-            QString changes = qApp->arguments().at(2);
-            QString pkgUrl = qApp->arguments().at(3);
-            squeeze::compact(EXENAME,"updates/sc.pkg");
-            QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile("updates/sc.pkg"),QCryptographicHash::Md5 ).toHex());
-            QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
-                        APPVERSION,BUILD,BUILDDATE,BUILDTIME,pkgUrl,md5,changes).toUtf8();
-            dataIOhelper::saveFile("update",updateData);
-        }
+
+    QCommandLineParser clParser;
+    clParser.setApplicationDescription("Smart Clinic helper");
+    clParser.addHelpOption();
+    clParser.addVersionOption();
+
+    QCommandLineOption makeUpdatePkgOption("makeUpdatePackage", QCoreApplication::translate("main", "make update package"));
+
+    clParser.addOption(makeUpdatePkgOption);
+    clParser.addPositionalArgument("changes", QCoreApplication::translate("main", "Source file to copy."));
+    clParser.addPositionalArgument("url", QCoreApplication::translate("main", "Destination directory."));
+
+    clParser.process(a);
+
+    bool makeUpdatePKG = clParser.isSet(makeUpdatePkgOption);
+
+    if(makeUpdatePKG){
+        QString changes = clParser.positionalArguments().at(0);
+        QString pkgUrl = clParser.positionalArguments().at(1);
+
+        squeeze::compact(EXENAME,"updatePKGs/sc.pkg");
+        QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile("updatePKGs/sc.pkg"),QCryptographicHash::Md5 ).toHex());
+        QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
+                    APPVERSION,BUILD,BUILDDATE,BUILDTIME,pkgUrl,md5,changes).toUtf8();
+        dataIOhelper::saveFile("updateInfo",updateData);
         exit(0);
     }
 
