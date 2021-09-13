@@ -16,8 +16,20 @@
 #define APPYEAR "2021"
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
-#define whiteListUrl "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/wlist?dl=0"
-#define updateInfo "https://dl.dropboxusercontent.com/s/fy9ork77kzpfkr7/update?dl=0"
+#define whiteListUrl "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/validKeys?dl=0"
+
+#define updatePackageDir "updatePKGs"
+
+#ifdef __GNUC__
+#define updateInfo "https://dl.dropboxusercontent.com/s/e3uv38igk8ahry2/updateInfo7?dl=0"
+#define updatePacakgeFile "updatePKGs/sc7.pkg"
+#define updateInfoFile "updateInfo7"
+#elif _MSC_VER
+#define updateInfo "https://dl.dropboxusercontent.com/s/fy9ork77kzpfkr7/updateInfo?dl=0"
+#define updatePacakgeFile "updatePKGs/sc.pkg"
+#define updateInfoFile "updateInfo"
+#endif
+
 #define updateInfo_ "http://127.0.0.1:8000/update/update"
 #define blockRegKey "Default"
 #define activateRegKey "Activated"

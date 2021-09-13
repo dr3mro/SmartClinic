@@ -261,14 +261,14 @@ int main(int argc, char *argv[])
         QString changes = clParser.positionalArguments().at(0);
         QString pkgUrl = clParser.positionalArguments().at(1);
 
-        if(!QDir("updatePKGs").exists())
-            QDir().mkdir("updatePKGs");
+        if(!QDir(updatePackageDir).exists())
+            QDir().mkdir(updatePackageDir);
 
-        squeeze::compact(EXENAME,"updatePKGs/sc.pkg");
-        QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile("updatePKGs/sc.pkg"),QCryptographicHash::Md5 ).toHex());
+        squeeze::compact(EXENAME,updatePacakgeFile);
+        QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile(updatePacakgeFile),QCryptographicHash::Md5 ).toHex());
         QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
                     APPVERSION,BUILD,BUILDDATE,BUILDTIME,pkgUrl,md5,changes).toUtf8();
-        dataIOhelper::saveFile("updateInfo",updateData);
+        dataIOhelper::saveFile(updateInfoFile,updateData);
         exit(0);
     }
 
