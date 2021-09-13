@@ -36,7 +36,7 @@ else()
     set(VLDLIB  "")
     set(OPENSSL_USE_STATIC_LIBS true)
     set(OPENSSL_MSVC_STATIC_RT true)
-    #set(OPENSSL_ROOT_DIR "C:\\Qt\\Tools\\OpenSSL\\OpenSSL1.1.1j_MINGW81")
+    set(OPENSSL_ROOT_DIR "C:\\Qt\\Tools\\OpenSSL\\Win_x86")
     set(CMAKE_EXE_LINKER_FLAGS " -static")
 endif()
 
