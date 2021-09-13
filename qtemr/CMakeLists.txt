@@ -28,11 +28,16 @@ if(MSVC)
     set(ZLIB ${PROJECT_SOURCE_DIR}/libs/zlib/msvc2019/zlib.lib)
     include_directories("C:\\Program Files (x86)\\Visual Leak Detector\\include")
     set(VLDLIB  "C:\\Program Files (x86)\\Visual Leak Detector\\lib\\Win32\\vld.lib")
+    set(OPENSSL_USE_STATIC_LIBS true)
     set(OPENSSL_MSVC_STATIC_RT true)
 
 else()
     set(ZLIB ${PROJECT_SOURCE_DIR}/libs/zlib/mingw730/libz.a)
     set(VLDLIB  "")
+    set(OPENSSL_USE_STATIC_LIBS true)
+    set(OPENSSL_MSVC_STATIC_RT true)
+    set(OPENSSL_ROOT_DIR "C:\\Qt\\Tools\\OpenSSL\\OpenSSL1.1.1j_MINGW81")
+    set(CMAKE_EXE_LINKER_FLAGS " -static")
 endif()
 
 
@@ -47,7 +52,7 @@ find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 find_package(Qt5Printsupport REQUIRED)
 
-
+#message(${OPENSSL_INCLUDE_DIR})
 
 include_directories("src/")
 include_directories("ui/")
@@ -69,17 +74,32 @@ add_executable(${TARGET_NAME} WIN32 ${UI} ${SOURCES} ${HEADERS} ${APP_ICON_RESOU
 set_property(TARGET ${TARGET_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 target_precompile_headers(${TARGET_NAME} PRIVATE src/pch.h)
-
-target_link_libraries(${TARGET_NAME}
-    Qt5::Widgets
-    Qt5::Network
-    Qt5::Multimedia
-    Qt5::Sql
-    Qt5::Concurrent
-    Qt5::Xml
-    Qt5::PrintSupport
-    ${ZLIB}
-    ${VLDLIB}
-    ${OPENSSL_LIBRARIES}
-    )
-
+if(MSVC)
+    target_link_libraries(${TARGET_NAME}
+        Qt5::Widgets
+        Qt5::Network
+        Qt5::Multimedia
+        Qt5::Sql
+        Qt5::Concurrent
+        Qt5::Xml
+        Qt5::PrintSupport
+        ${ZLIB}
+        ${VLDLIB}
+        ${OPENSSL_LIBRARIES}
+        )
+else()
+    target_link_libraries(${TARGET_NAME}
+        Qt5::Widgets
+        Qt5::Network
+        Qt5::Multimedia
+        Qt5::Sql
+        Qt5::Concurrent
+        Qt5::Xml
+        Qt5::PrintSupport
+        ${ZLIB}
+        ${VLDLIB}
+        ${OPENSSL_LIBRARIES}
+        -static-libgcc
+        -static-libstdc++
+        )
+endif()
