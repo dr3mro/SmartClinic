@@ -24,6 +24,18 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_WIN32_EXECUTABLE ON)
 
+get_filename_component(DIR_ONE_ABOVE ../ ABSOLUTE)
+#message(STATUS ${DIR_ONE_ABOVE})
+
+
+set(CMAKE_CURRENT_BINARY_DIR "${DIR_ONE_ABOVE}/build/${CMAKE_CXX_COMPILER_ID}")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+
+
+
 if(MSVC)
     set(ZLIB ${PROJECT_SOURCE_DIR}/libs/zlib/msvc2019/zlib.lib)
     include_directories("C:\\Program Files (x86)\\Visual Leak Detector\\include")
@@ -36,7 +48,7 @@ else()
     set(VLDLIB  "")
     set(OPENSSL_USE_STATIC_LIBS true)
     set(OPENSSL_MSVC_STATIC_RT true)
-    set(OPENSSL_ROOT_DIR "C:\\Qt\\Tools\\OpenSSL\\Win_x86")
+    set(OPENSSL_ROOT_DIR "C:\\Qt\\Tools\\OpenSSL\\MinGW_x86")
     set(CMAKE_EXE_LINKER_FLAGS " -static")
 endif()
 
@@ -56,7 +68,7 @@ find_package(Qt5Printsupport REQUIRED)
 
 include_directories("src/")
 include_directories("ui/")
-
+#include_directories("${DIR_ONE_ABOVE}/build/${CMAKE_CXX_COMPILER_ID}")
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE HEADERS src/*.h)
