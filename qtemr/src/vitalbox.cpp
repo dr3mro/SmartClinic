@@ -196,8 +196,9 @@ void vitalBox::makeEditable(bool b)
 
 void vitalBox::mousePressEvent(QMouseEvent *event)
 {
-    if ( event->button() == Qt::MiddleButton)
+    if ( !this->isReadOnly() && event->button() == Qt::MiddleButton)
         setText(this->placeholderText());
+
     QLineEdit::mousePressEvent(event);
 }
 
