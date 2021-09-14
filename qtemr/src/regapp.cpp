@@ -73,14 +73,13 @@ QString regApp::generate_serial_number(QString unique_device_id)
 bool regApp::save_reg_data(QString enetered_serial_number)
 {
     QFile file("./license.key");
-    if ( file.open(QIODevice::WriteOnly | QIODevice::Text))
+    if ( file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
         {
             QTextStream out(&file);
             QByteArray enetered_serial_number_array = enetered_serial_number.toUtf8();
             QString enetered_serial_number_crypted =  md5Crypt(enetered_serial_number_array);
-            out << enetered_serial_number_crypted;
+            out << '\n' << enetered_serial_number_crypted;
             file.close();
-
         }
 
     return true;

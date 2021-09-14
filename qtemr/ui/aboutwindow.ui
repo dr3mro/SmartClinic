@@ -154,6 +154,12 @@
      </item>
      <item row="5" column="0">
       <widget class="QLineEdit" name="serialNumber">
+       <property name="font">
+        <font>
+         <family>Consolas</family>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string/>
        </property>
