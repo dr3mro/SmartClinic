@@ -20,10 +20,13 @@ microUpdater::microUpdater(QObject *parent) : QObject(parent),
 bool microUpdater::isUpdateAvailable(QByteArray ba)
 {
     QStringList info = QString(ba).split(";");
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    QString ignoredVersion = reg.value("skip_update").toString();
     if (info.length() < 7 )
         return false;
     latestVersion = QString(info.at(0)).toUtf8();
-    if ( QVersionNumber::fromString(latestVersion) > QVersionNumber::fromString(APPVERSION) )
+
+    if ( latestVersion != ignoredVersion && QVersionNumber::fromString(latestVersion) > QVersionNumber::fromString(APPVERSION) )
         return true;
     else
         return false;
@@ -55,13 +58,29 @@ void microUpdater::notifyUser(QByteArray ba)
 
     if ( isUpdateAvailable(ba) && parent()->objectName() == "MainWindow")
     {
-        int reply = QMessageBox::question(0,
-                              "Update",
-                              QString("New Update is available to version: %1, Do you want to update now?")
-                              .arg(latestVersion)
-                              ,QMessageBox::Yes,QMessageBox::No);
-        if (reply == QMessageBox::Yes)
-            emit launchMiniUpdater();
+        QMessageBox msgBox;
+
+        msgBox.setText(QString("New Update is available to version: %1, Do you want to update now?")
+                          .arg(latestVersion));
+
+        QAbstractButton* pButtonYes    =  msgBox.addButton(tr("Yes"), QMessageBox::YesRole);
+        QAbstractButton* pButtonNo     =  msgBox.addButton(tr("No"), QMessageBox::NoRole);
+        QAbstractButton* pButtonIgnore =  msgBox.addButton(tr("Skip"),QMessageBox::RejectRole);
+
+        msgBox.exec();
+
+        if (msgBox.clickedButton()==pButtonYes)
+           emit launchMiniUpdater();
+        else if (msgBox.clickedButton()==pButtonNo)
+            return;
+        else if (msgBox.clickedButton()==pButtonIgnore)
+            skipUpdate(latestVersion);
     }
     emit deleteMe();
+}
+
+void microUpdater::skipUpdate(QString version)
+{
+    QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
+    reg.setValue("skip_update",version);
 }

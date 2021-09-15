@@ -10,7 +10,7 @@ fileGrabber::fileGrabber(bool _save, QUrl _url, QObject *parent) : QObject(paren
 {
     connect(&manager, SIGNAL(finished(QNetworkReply*)),SLOT(downloadFinished(QNetworkReply*)));
 
-    t.setInterval(1000);
+    t.setInterval(100);
     connect(&t,SIGNAL(timeout()),SLOT(processData()));
 }
 
@@ -22,7 +22,7 @@ void fileGrabber::doDownload(const QUrl &_url)
     reply = manager.get(request);
     if (save)
     {
-        reply->setReadBufferSize(256000);
+        reply->setReadBufferSize(4096000);
         connect(reply,SIGNAL(downloadProgress(qint64,qint64)),this,SIGNAL(downloadProgress(qint64,qint64)));
         t.start();
     }

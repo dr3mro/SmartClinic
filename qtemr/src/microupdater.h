@@ -34,6 +34,7 @@ public slots:
 private slots:
     void notifyUser(QByteArray ba);
 private:
+    void skipUpdate(QString version);
     internet *inet;
     QTimer *timer;
     fileGrabber *updateInfoGraber;
