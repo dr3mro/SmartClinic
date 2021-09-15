@@ -5,10 +5,11 @@
 #include "miniupdater.h"
 #include "ui_miniupdater.h"
 
-miniUpdater::miniUpdater(QWidget *parent) :
+miniUpdater::miniUpdater(QWidget *parent,bool _autoUpate) :
     QDialog(parent),
     ui(new Ui::miniUpdater),
-    timeOut(new QTimer(this))
+    timeOut(new QTimer(this)),
+    autoUpdate(_autoUpate)
 {
       ui->setupUi(this);
       setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -16,6 +17,8 @@ miniUpdater::miniUpdater(QWidget *parent) :
       displayVersionInfo();
       ui->progressBar->hide();
       ui->speed->hide();
+      ui->restartButton->hide();
+      ui->doButton->setHidden(autoUpdate);
       ui->textEdit->append("Checking update server ...");
       microupdater = new microUpdater(this);
       connect(microupdater,SIGNAL(isConnected()),this,SLOT(connected()));
@@ -57,8 +60,6 @@ void miniUpdater::on_doButton_clicked()
     timeOut->start(15000);
     updateFileGraber->run();
     ui->textEdit->append("<html><p style='color:blue;'><b>Downloading Update, Please Wait!</b></p></html>");
-
-
 }
 
 void miniUpdater::viewDownloadedData(QByteArray ba)
@@ -104,9 +105,11 @@ void miniUpdater::applyUpdate()
     dataIOhelper::renameFile(EXENAME,exeBackUp);
     squeeze::expand(updatePath,EXENAME);
     dataIOhelper::deleteFile(updatePath);
+    ui->restartButton->setHidden(false);
+    ui->doButton->setHidden(true);
     ui->textEdit->append(QString("<b>%1</b> was updated Successfully to Version (%2),"
-                                 " you will enjoy the update at next restart!, you may close this window now.").arg(APPNAME).arg(latestVersion));
-    ui->closeButton->setText("Close");
+                                 " you will enjoy the update at next restart!,please click restart now.").arg(APPNAME).arg(latestVersion));
+    ui->closeButton->setText("Restart later");
 }
 
 QString miniUpdater::humanizeUpdateData(QByteArray ba)
@@ -155,9 +158,13 @@ void miniUpdater::verifyUpdate(QString path)
 void miniUpdater::enableUpdating(bool b)
 {
     QString msg = (b)? "<html><p style='color:green;'><b>New Update is available.</b></p></html>"
-                     :"<html><p style='color:blue;'><b>Already had the latest version.</b></p></html>";
+                     :"<html><p style='color:blue;'><b>Already uptodate.</b></p></html>";
     ui->textEdit->append(msg);
     ui->doButton->setEnabled(b);
+
+    if(b && autoUpdate){
+        on_doButton_clicked();
+    }
 }
 
 void miniUpdater::closeEvent(QCloseEvent *e)
@@ -207,3 +214,10 @@ void miniUpdater::connectionTimeOut()
     ui->speed->hide();
     ui->progressBar->hide();
 }
+
+void miniUpdater::on_restartButton_clicked()
+{
+    qApp->quit();
+    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+}
+

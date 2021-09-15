@@ -14,14 +14,7 @@
    <string>Feedback</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="2">
-    <widget class="QPushButton" name="sendEmail">
-     <property name="text">
-      <string>Send Email</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
+   <item row="4" column="0" colspan="3">
     <widget class="QListWidget" name="attachments">
      <property name="maximumSize">
       <size>
@@ -31,17 +24,37 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="3">
+   <item row="5" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0" colspan="3">
     <widget class="QTextEdit" name="texteditor">
      <property name="textInteractionFlags">
       <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
      <property name="placeholderText">
-      <string>issue details</string>
+      <string>Describe your issue here ... </string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="3">
+   <item row="5" column="2">
+    <widget class="QPushButton" name="sendEmail">
+     <property name="text">
+      <string>Send</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label_3">
@@ -75,64 +88,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="addAttachment">
-       <property name="minimumSize">
-        <size>
-         <width>97</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>97</width>
-         <height>16777215</height>
-        </size>
-       </property>
+      <widget class="QToolButton" name="addAttachment">
        <property name="text">
-        <string>Add File</string>
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../res/resources.qrc">
+         <normaloff>:/ionicons/add</normaloff>:/ionicons/add</iconset>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="4" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="1" column="0" colspan="3">
+    <widget class="QLineEdit" name="subject">
+     <property name="placeholderText">
+      <string>Subject ...</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="0" colspan="3">
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_10">
-       <property name="minimumSize">
-        <size>
-         <width>81</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>81</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Issue subject</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="subject"/>
-     </item>
-    </layout>
+    </widget>
    </item>
   </layout>
  </widget>

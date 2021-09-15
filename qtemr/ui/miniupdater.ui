@@ -111,6 +111,13 @@
      </property>
     </spacer>
    </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="restartButton">
+     <property name="text">
+      <string>restart</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

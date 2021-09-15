@@ -29,7 +29,7 @@ class miniUpdater : public QDialog
     Q_OBJECT
 
 public:
-    explicit miniUpdater(QWidget *parent = nullptr);
+    explicit miniUpdater(QWidget *parent = nullptr,bool autoupdate=false);
     ~miniUpdater();
 private slots:
     void connected();
@@ -40,6 +40,8 @@ private slots:
     void downloadProgress(qint64 x, qint64 t);
     void on_closeButton_clicked();
     void connectionTimeOut();
+
+    void on_restartButton_clicked();
 
 public slots:
     void verifyUpdate(QString path);
@@ -58,7 +60,7 @@ private:
     void enableUpdating(bool b);
     void closeEvent(QCloseEvent *e);
     void keyPressEvent(QKeyEvent *e);
-
+    bool autoUpdate=false;
 };
 
 #endif // MINIUPDATER_H

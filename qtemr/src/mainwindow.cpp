@@ -168,7 +168,9 @@ void MainWindow::boot()
     if (settings.isUpdateNotify())
     {
         microupdater = new microUpdater(this);
-        connect( microupdater,SIGNAL(launchMiniUpdater()),this,SLOT(show_update_win()));
+        connect( microupdater,&microUpdater::launchMiniUpdater,this,[=]{
+            show_update_win(true);
+        });
         connect( microupdater,SIGNAL(deleteMe()),microupdater,SLOT(deleteLater()));
     }
 
@@ -1609,9 +1611,9 @@ void MainWindow::show_backup_win()
     removeBlurEffect();
 }
 
-void MainWindow::show_update_win()
+void MainWindow::show_update_win(bool autoupdate)
 {
-    miniupdater = new miniUpdater(this);
+    miniupdater = new miniUpdater(this,autoupdate);
     emit toggleTrayMenuActions(false);
     miniupdater->exec();
     emit toggleTrayMenuActions(true);

@@ -95,7 +95,7 @@ public slots:
     void show_listEdit_win();
     void show_favouritesDrugs_win();
     void show_backup_win();
-    void show_update_win();
+    void show_update_win(bool autoupdate=false);
     void show_commonConditionsEdit();
     void showMergedlg();
     void updateSettings();

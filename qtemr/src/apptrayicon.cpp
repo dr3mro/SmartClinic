@@ -139,6 +139,7 @@ void appTrayIcon::toggleActions(bool b)
     a_listEdit->setEnabled(b);
     a_favourites->setEnabled(b);
     a_miniUpdate->setEnabled(b);
+    a_feedback->setEnabled(b);
     a_conEdit->setEnabled(b);
     a_exit->setEnabled(b);
     a_toggle->setEnabled(b);
