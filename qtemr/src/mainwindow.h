@@ -63,7 +63,7 @@
 #include "remoteassist.h"
 #include "netserver.h"
 #include "m_ClickableLabel.h"
-
+#include "3rdparty/feedback/feedback.h"
 #ifdef __GNUC__
 #define NO_RETURN __attribute__((noreturn))
 #elif __clang__
@@ -117,6 +117,7 @@ public slots:
     void removeItemFromCompleter(QString item,QString table);
     void removeItemFromDictionary(QString item, int row);
     void on_PatientSelected(int _id );
+    void show_feedback_win();
 
 private slots:
     void reloadMainWindow();
@@ -260,6 +261,7 @@ private:
     QVBoxLayout *WA_vLayout;
     QLabel *WA_title;
     visitsBox::mPatientBasicDetails patientBasicDetails;
+    FeedBack fb;
 
 };
 #endif // MAINWINDOW_H

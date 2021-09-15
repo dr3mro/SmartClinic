@@ -1269,6 +1269,18 @@ void MainWindow::on_PatientSelected(int _id )
 
 }
 
+void MainWindow::show_feedback_win()
+{
+    if(fb.isVisible()){
+        fb.setWindowState(Qt::WindowState::WindowActive);
+        return;
+    }
+
+    fb.clear();
+
+    fb.show();
+}
+
 void MainWindow::closeDataBase()
 {
     sqlbase->optimize();

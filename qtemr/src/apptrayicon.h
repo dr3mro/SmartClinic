@@ -32,6 +32,7 @@ private:
     QAction *a_conEdit;
     QAction *a_dietsEdit;
     QAction *a_merge;
+    QAction *a_feedback;
     QMenu *trayMenu;
     QMenu *dbSubMenu;
     QMenu *easySubMenu;

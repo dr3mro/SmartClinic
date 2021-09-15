@@ -73,6 +73,11 @@ appTrayIcon::appTrayIcon(QObject *parent) : QSystemTrayIcon(parent)
     connect(a_miniUpdate,SIGNAL(triggered()),parent,SLOT(show_update_win()));
     a_miniUpdate->setIcon(QIcon(":/ionicons/earth"));
 
+    a_feedback = new QAction("&Feedback",this);
+    connect(a_feedback,SIGNAL(triggered()),parent,SLOT(show_feedback_win()));
+    a_feedback->setIcon(QIcon(":/ionicons/message"));
+
+
     a_conEdit = new QAction("&Conditions",this);
     connect(a_conEdit,SIGNAL(triggered()),parent,SLOT(show_commonConditionsEdit()));
     a_conEdit->setIcon(QIcon(":/Graphics/puzle"));
@@ -85,7 +90,7 @@ appTrayIcon::appTrayIcon(QObject *parent) : QSystemTrayIcon(parent)
     QList<QAction*> actionsList;
     QList<QAction*> dbList;
     QList<QAction*> easyList;
-    actionsList  << a_settings << a_miniUpdate << a_about << a_exit;
+    actionsList  << a_settings << a_miniUpdate << a_feedback << a_about << a_exit;
     dbList << a_CompactDataBase << a_genRec << a_backup << a_exportPatientList << a_merge;
     easyList << a_listEdit << a_favourites << a_expander << a_dietsEdit << a_conEdit ;
 
@@ -114,6 +119,7 @@ appTrayIcon::~appTrayIcon()
     delete a_exportPatientList;
     delete a_CompactDataBase;
     delete a_miniUpdate;
+    delete a_feedback;
     delete a_merge;
     delete dbSubMenu;
     delete easySubMenu;
