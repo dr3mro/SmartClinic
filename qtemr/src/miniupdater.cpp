@@ -218,6 +218,6 @@ void miniUpdater::connectionTimeOut()
 void miniUpdater::on_restartButton_clicked()
 {
     qApp->quit();
-    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+    QProcess::startDetached(EXENAME,QStringList());
 }
 
