@@ -41,6 +41,7 @@ class FeedBack : public QWidget
 public:
     explicit FeedBack(QWidget *parent = nullptr);
     void clear();
+    const bool & get_isBusy();
     ~FeedBack();
 
 private Q_SLOTS:
@@ -48,13 +49,13 @@ private Q_SLOTS:
     void on_sendEmail_clicked();
     void sendMailAsync(const MimeMessage &msg);
     void on_attachments_itemClicked(QListWidgetItem *item);
-
     void on_deleteButton_clicked();
 
 private:
     std::vector<Server *> m_aServers;
     Ui::FeedBack *ui;
     void errorMessage(const QString & message);
+    bool isBusy=false;
 };
 
 #endif // FEEDBACK_H

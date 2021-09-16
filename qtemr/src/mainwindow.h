@@ -143,7 +143,7 @@ private slots:
     void on_buttonPatientList_clicked();
     void loadThisPatient(int ID);
     void on_ButtonRefresh_clicked();
-    NO_RETURN void quitApp();
+    ///*NO_RETURN*/ void quitApp();
     void registeration();
     bool appLocked();
     void toggleEditMODE(bool pEditMODE);
@@ -262,6 +262,7 @@ private:
     QLabel *WA_title;
     visitsBox::mPatientBasicDetails patientBasicDetails;
     FeedBack fb;
+    const bool & isBusy = fb.get_isBusy();
 
 };
 #endif // MAINWINDOW_H

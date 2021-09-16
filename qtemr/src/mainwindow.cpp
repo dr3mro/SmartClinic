@@ -728,6 +728,12 @@ void MainWindow::show_about_win()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    if(isBusy){
+        popUpMessage("Information","Busy sending feedback please try again later");
+        event->ignore();
+        return;
+    }
+
     int reply;
 
     if ( !appLocked() &&
@@ -750,6 +756,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
             if(save())
             {
                 event->accept();
+                deleteLockFile();
+                trayIcon->hide();
                 qApp->quit();
                 return;
             }
@@ -757,6 +765,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
         if (reply == QMessageBox::No)
         {
             event->accept();
+            deleteLockFile();
+            trayIcon->hide();
             qApp->quit();
             return;
         }
@@ -772,6 +782,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
         if (reply == QMessageBox::Yes)
         {
             event->accept();
+            deleteLockFile();
+            trayIcon->hide();
             qApp->quit();
             return;
 
@@ -1123,11 +1135,15 @@ void MainWindow::on_ButtonRefresh_clicked()
     toggleEditMODE(true);
 }
 
-void MainWindow::quitApp(){
-    deleteLockFile();
-    trayIcon->hide();
-    exit(0);
-}
+//void MainWindow::quitApp(){
+//    if(true){
+//        popUpMessage("Information","Busy sending feedback please try again later");
+//    }else{
+//        deleteLockFile();
+//        trayIcon->hide();
+//        exit(0);
+//    }
+//}
 
 void MainWindow::registeration()
 {
@@ -1511,7 +1527,7 @@ void MainWindow::passwordPopup()
     if ( sqlbase->isPasswordSet() )
     {
         userpass *upass = new userpass(this);
-        connect ( upass ,SIGNAL ( quitme() ),this,SLOT(quitApp()) );
+        connect ( upass ,SIGNAL ( quitme() ),this,SLOT(close()) );
         connect ( upass ,SIGNAL ( newMessage(QString,QString) ),this,SLOT(popUpMessage(QString,QString)) );
         upass->exec();
         delete upass;
@@ -1604,7 +1620,7 @@ void MainWindow::show_backup_win()
     connect (&b,SIGNAL(loadFirstPatient()),this,SLOT(loadFirstPatient()));
     connect (&b,SIGNAL(closeDataBase()),this,SLOT(closeDataBase()));
     connect (&b,SIGNAL(reOpenDataBase()),this,SLOT(reOpenDataBase()));
-    connect (&b,&backup::quit_app,this,&MainWindow::quitApp);
+    connect (&b,&backup::quit_app,this,&MainWindow::close);
     sqlbase->WAL_CheckPoint(QString("TRUNCATE"));
     sqlextra->WAL_CheckPoint(QString("TRUNCATE"));
     b.exec();

@@ -41,6 +41,12 @@ void FeedBack::clear()
     ui->attachments->addItem("license.key");
     ui->attachments->addItem("settings.ini");
     ui->deleteButton->setEnabled(false);
+    isBusy = false;
+}
+
+const bool &FeedBack::get_isBusy()
+{
+    return isBusy;
 }
 
 FeedBack::~FeedBack()
@@ -80,6 +86,7 @@ void FeedBack::on_sendEmail_clicked()
 
 void FeedBack::sendMailAsync(const MimeMessage &msg)
 {
+    isBusy = true;
     const QString host = "smtp.gmail.com";
     const quint16 port(465);
     const Server::ConnectionType ct = SimpleMail::Server::SslConnection;
@@ -118,6 +125,7 @@ void FeedBack::sendMailAsync(const MimeMessage &msg)
             okMessage.setText(QLatin1String("The email was succesfully sent:\n") + reply->responseText());
             okMessage.exec();
         }
+        isBusy = false;
     });
     this->close();
 }
