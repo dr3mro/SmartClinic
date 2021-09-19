@@ -139,6 +139,9 @@
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tab&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
