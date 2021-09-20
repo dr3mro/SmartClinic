@@ -210,7 +210,8 @@ void visitsBox::on_ButtonNew_clicked()
     //    save(visit,false);
 
     visitindex = 0;
-    double visitPrice = settings.getVisitPrice(visitindex);
+//    double visitPrice = settings.getVisitPrice(visitindex);
+    double visitPrice = VisitsType::getVisitPrice(visitindex);
     sqlbase->createNewVisit(patientBasicDetails.ID,
                             visit.visitDateTime,
                             datetime,
@@ -606,19 +607,20 @@ void visitsBox::on_ButtonVisit_clicked()
     if (vEditMode)
         save(visit,false);
 
-    if ( visitindex < maxFollows )
-    {
-        if(suggestedVisitType==0)
-            visitindex +=1;
-        else
-            visitindex = suggestedVisitType;
-    }
-    else if ( visitindex == maxFollows && autoSetNewAfterMaxFollow)
-    {
-        visitindex = 0;
-    }
+//    if ( visitindex < maxFollows )
+//    {
+//        if(suggestedVisitType==0)
+//            visitindex +=1;
+//        else
+//            visitindex = suggestedVisitType;
+//    }
+//    else if ( visitindex == maxFollows && autoSetNewAfterMaxFollow)
+//    {
+//        visitindex = 0;
+//    }
 
-    double visitPrice = settings.getVisitPrice(visitindex);
+    visitindex = (suggestedVisitType==0)? VisitsType::advance(visitindex):suggestedVisitType;
+    double visitPrice = VisitsType::getVisitPrice(visitindex);
     ui->comboVisitType->setCurrentIndex(visitindex);
 
     sqlbase->createNewVisit(patientBasicDetails.ID,
@@ -1477,7 +1479,7 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
     visitData.visitDate = visitDateTime2JulianDate();
     visitData.drugsModel = ui->vDrugsTable->getDrugsModel();
     visitData.invModel = ui->InvestigationsTable->getInvestigationsModel();
-    visitData.visitPrice = settings.getVisitPrice(visit.visitType.toInt());
+    visitData.visitPrice = VisitsType::getVisitPrice(visit.visitType.toInt());
     if (threading)
     {
         visitSaverWorker->setVisitData(visitData);

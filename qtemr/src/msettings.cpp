@@ -112,36 +112,36 @@ QString mSettings::themeMaker()
     return styler.getStyleSheet();
 }
 
-double mSettings::getVisitPrice(int visitType)
-{
-    double price = 0;
-    clinicPrices prices = getClinicPrices();
+//double mSettings::getVisitPrice(int visitType)
+//{
+//    double price = 0;
+//    clinicPrices prices = getClinicPrices();
 
-    if ( visitType > getMaxFollowUpsPerProblem())
-        return 0;
+//    if ( visitType > getMaxFollowUpsPerProblem())
+//        return 0;
 
-    switch (visitType)
-    {
-    case 0:
-        price = prices.newVisit;
-        break;
-    case 1:
-        price = prices.followUp1;
-        break;
-    case 2:
-        price = prices.followUp2;
-        break;
-    case 3:
-        price = prices.followUp3;
-        break;
-    case 4:
-        price = prices.followUp4;
-        break;
-    default:
-        break;
-    }
-    return price;
-}
+//    switch (visitType)
+//    {
+//    case 0:
+//        price = prices.newVisit;
+//        break;
+//    case 1:
+//        price = prices.followUp1;
+//        break;
+//    case 2:
+//        price = prices.followUp2;
+//        break;
+//    case 3:
+//        price = prices.followUp3;
+//        break;
+//    case 4:
+//        price = prices.followUp4;
+//        break;
+//    default:
+//        break;
+//    }
+//    return price;
+//}
 
 mSettings::clinicPrices mSettings::getClinicPrices()
 {

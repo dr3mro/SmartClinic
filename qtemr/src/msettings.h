@@ -571,7 +571,7 @@ public:
     void saveSettings(const pSettings &psets);
     pSettings readSettings();
     QString themeMaker();
-    double getVisitPrice(int visitType);
+    //double getVisitPrice(int visitType);
     mSettings::clinicPrices getClinicPrices();
     checkout getCheckout();
     void setCheckout(qint64 date, qint64 time);

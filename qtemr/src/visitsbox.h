@@ -38,7 +38,7 @@
 #include "wm_add2completer.h"
 #include "mdialog.h"
 #include "datahelper.h"
-
+#include "visitsType.h"
 namespace Ui {
 class visitsBox;
 }
@@ -226,10 +226,10 @@ private:
 
 protected:
     void closeEvent(QCloseEvent *event) override;
-    void keyPressEvent(QKeyEvent *e);
-    void keyReleaseEvent(QKeyEvent *e);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *e)override;
+    void keyReleaseEvent(QKeyEvent *e)override;
+    void mousePressEvent(QMouseEvent *event)override;
+    void mouseMoveEvent(QMouseEvent *event)override;
     int m_nMouseClick_X_Coordinate;
     int m_nMouseClick_Y_Coordinate;
 
