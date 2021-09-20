@@ -780,7 +780,7 @@ sqlBase::Visit sqlBase::getPatientVisitDataPre287(int ID, QString dateTimeString
         visit.visitNotes = query->value(19).toString();
         visit.visitDateTime = query->value(20).toString();
         visit.followDate = query->value(21).toString();
-        visit.visitType = query->value(22).toString();
+        visit.visitType = query->value(22).toInt();
         visit.checkButtonCaseClose = query->value(23).toString();
         visit.LMPDATE = query->value(26).toInt();
         visit.ObstUS = query->value(27).toString();
@@ -820,7 +820,7 @@ sqlBase::Visit sqlBase::getPatientVisitData(const int &ID, const QString &dateTi
         visit.visitNotes = query->value(11).toString();
         visit.visitDateTime = query->value(12).toString();
         visit.followDate = query->value(13).toString();
-        visit.visitType = query->value(14).toString();
+        visit.visitType = query->value(14).toInt();
         visit.checkButtonCaseClose = query->value(15).toString();
         visit.LMPDATE = query->value(18).toInt();
         visit.ObstUS = query->value(19).toString();
@@ -3129,18 +3129,20 @@ int sqlBase::getVisitType(int ID,int visitJulianDate)
     return eVisitType;
 }
 
-QList<QBrush> sqlBase::getVisitColors()
-{
-    QList<QBrush> brushes;
+//QList<QBrush> sqlBase::getVisitColors()
+//{
+//    QList<QBrush> brushes;
 
-    brushes.append(QBrush(QColor::fromRgb(204,229,255)));
-    brushes.append(QBrush(QColor::fromRgb(255,255,204)));
-    brushes.append(QBrush(QColor::fromRgb(229,255,204)));
-    brushes.append(QBrush(QColor::fromRgb(204,255,204)));
-    brushes.append(QBrush(QColor::fromRgb(204,255,229)));
-    brushes.append(QBrush(QColor::fromRgb(255,255,255)));
-    return brushes;
-}
+//    brushes.append(QBrush(QColor::fromRgb(204,229,255)));
+//    brushes.append(QBrush(QColor::fromRgb(255,255,204)));
+//    brushes.append(QBrush(QColor::fromRgb(229,255,204)));
+//    brushes.append(QBrush(QColor::fromRgb(204,255,204)));
+//    brushes.append(QBrush(QColor::fromRgb(204,255,229)));
+//    brushes.append(QBrush(QColor::fromRgb(255,255,255)));
+//    brushes.append(QBrush(QColor::fromRgb(255,255,255)));
+//    brushes.append(QBrush(QColor::fromRgb(255,255,255)));
+//    return brushes;
+//}
 
 QString sqlBase::getAge(int julianDays,bool printable)
 {
@@ -3163,7 +3165,7 @@ void sqlBase::agendaAttendedLoader(int julianDate,QStandardItemModel *agendaMode
     QStandardItemModel *m = agendaModel;
     int rows = m->rowCount();
 
-    QList<QBrush> brushes = getVisitColors();
+//    QList<QBrush> brushes = getVisitColors();
 
     int _attended = 0;
     percent = 00.00;
@@ -3181,7 +3183,7 @@ void sqlBase::agendaAttendedLoader(int julianDate,QStandardItemModel *agendaMode
             m->item(r,2)->setText(en_US.toString(attended.time,"hh:mm AP"));
             _attended +=1;
             for (int c=0 ; c < m->columnCount(); c++) {
-                m->item(r,c)->setBackground(brushes.at(attended.visitType));
+                m->item(r,c)->setBackground(VisitsType::getVisitColor((VisitsType::n_visitsType)attended.visitType));
                 //qApp->processEvents();
             }
         }else {
@@ -3189,7 +3191,7 @@ void sqlBase::agendaAttendedLoader(int julianDate,QStandardItemModel *agendaMode
             for (int c=0 ; c < m->columnCount(); c++) {
                 m->item(r,c)->setBackground(( attended.visitType ==1
                                               && julianDate < QDate::currentDate().toJulianDay() )?
-                                                QBrush(QColor::fromRgb(255,204,255)):brushes.at(attended.visitType));
+                                                QBrush(QColor::fromRgb(255,204,255)):VisitsType::getVisitColor((VisitsType::n_visitsType)attended.visitType));
                 //qApp->processEvents();
             }
         }
@@ -3292,38 +3294,38 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
     if (newVisitCOUNT > 0)
     {
         QStandardItem *newItem = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::NewVisit));
-        newItem->setBackground(getVisitColors().at(0));
+        newItem->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::NewVisit));
         QStandardItem *newCOUNT = new QStandardItem(QString::number(newVisitCOUNT));
-        newCOUNT->setBackground(getVisitColors().at(0));
+        newCOUNT->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::NewVisit));
         newCOUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         QStandardItem *newSUBTOTAL = new QStandardItem(QString::number(subTotalNewVisits,'f',2));
         newSUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        newSUBTOTAL->setBackground(getVisitColors().at(0));
+        newSUBTOTAL->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::NewVisit));
         calcModel->appendRow(QList<QStandardItem*>() << newItem << newCOUNT << newSUBTOTAL);
     }
 
     if (requestsVisitCOUNT > 0)
     {
         QStandardItem *requestsItem = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Requests));
-        requestsItem->setBackground(getVisitColors().at(0));
+        requestsItem->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Requests));
         QStandardItem *requestsCOUNT = new QStandardItem(QString::number(requestsVisitCOUNT));
-        requestsCOUNT->setBackground(getVisitColors().at(0));
+        requestsCOUNT->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Requests));
         requestsCOUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         QStandardItem *requestSUBTOTAL = new QStandardItem(QString::number(subTotalRequests,'f',2));
         requestSUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        requestSUBTOTAL->setBackground(getVisitColors().at(0));
+        requestSUBTOTAL->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Requests));
         calcModel->appendRow(QList<QStandardItem*>() << requestsItem << requestsCOUNT << requestSUBTOTAL);
     }
 
     if (follow1VisitCOUNT > 0 )
     {
         QStandardItem *followItem1 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow1));
-        followItem1->setBackground(getVisitColors().at(1));
+        followItem1->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow1));
         QStandardItem *follow1COUNT = new QStandardItem(QString::number(follow1VisitCOUNT));
-        follow1COUNT->setBackground(getVisitColors().at(1));
+        follow1COUNT->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow1));
         follow1COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         QStandardItem *follow1SUBTOTAL = new QStandardItem(QString::number(subTotalFollow1Visits,'f',2));
-        follow1SUBTOTAL->setBackground(getVisitColors().at(1));
+        follow1SUBTOTAL->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow1));
         follow1SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         calcModel->appendRow(QList<QStandardItem*>() << followItem1 << follow1COUNT << follow1SUBTOTAL );
     }
@@ -3332,12 +3334,12 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
     if (maxFollowsPerProblem > 1 && follow2VisitCOUNT > 0 )
     {
         QStandardItem *followItem2 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow2));
-        followItem2->setBackground(getVisitColors().at(2));
+        followItem2->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow2));
         QStandardItem *follow2COUNT = new QStandardItem(QString::number(follow2VisitCOUNT));
-        follow2COUNT->setBackground(getVisitColors().at(2));
+        follow2COUNT->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow2));
         follow2COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         QStandardItem *follow2SUBTOTAL = new QStandardItem(QString::number(subTotalFollow2Visits,'f',2));
-        follow2SUBTOTAL->setBackground(getVisitColors().at(2));
+        follow2SUBTOTAL->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow2));
         follow2SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         calcModel->appendRow(QList<QStandardItem*>() << followItem2 << follow2COUNT << follow2SUBTOTAL );
     }
@@ -3345,38 +3347,38 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
     if (maxFollowsPerProblem > 2 && follow3VisitCOUNT > 0 )
     {
         QStandardItem *followItem3 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow3));
-        followItem3->setBackground(getVisitColors().at(3));
+        followItem3->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow3));
         QStandardItem *follow3COUNT = new QStandardItem(QString::number(follow3VisitCOUNT));
-        follow3COUNT->setBackground(getVisitColors().at(3));
+        follow3COUNT->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow3));
         follow3COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         QStandardItem *follow3SUBTOTAL = new QStandardItem(QString::number(subTotalFollow3Visits,'f',2));
         follow3SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        follow3SUBTOTAL->setBackground(getVisitColors().at(3));
+        follow3SUBTOTAL->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow3));
         calcModel->appendRow(QList<QStandardItem*>() << followItem3 << follow3COUNT << follow3SUBTOTAL );
     }
 
     if (maxFollowsPerProblem > 3 && follow4VisitCOUNT > 0 )
     {
         QStandardItem *followItem4 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow4));
-        followItem4->setBackground(getVisitColors().at(4));
+        followItem4->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow4));
         QStandardItem *follow4COUNT = new QStandardItem(QString::number(follow4VisitCOUNT));
         follow4COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        follow4COUNT->setBackground(getVisitColors().at(4));
+        follow4COUNT->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow4));
         QStandardItem *follow4SUBTOTAL = new QStandardItem(QString::number(subTotalFollow4Visits,'f',2));
         follow4SUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
-        follow4SUBTOTAL->setBackground(getVisitColors().at(4));
+        follow4SUBTOTAL->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Follow4));
         calcModel->appendRow(QList<QStandardItem*>() << followItem4 << follow4COUNT << follow4SUBTOTAL );
     }
 
     if (freeVisitCOUNT > 0)
     {
         QStandardItem *freeItem = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Free));
-        freeItem->setBackground(getVisitColors().at(5));
+        freeItem->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Free));
         QStandardItem *freeCOUNT = new QStandardItem(QString::number(freeVisitCOUNT));
-        freeCOUNT->setBackground(getVisitColors().at(5));
+        freeCOUNT->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Free));
         freeCOUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         QStandardItem *freeSUBTOTAL = new QStandardItem(QString::number(subTotalFree,'f',2));
-        freeSUBTOTAL->setBackground(getVisitColors().at(5));
+        freeSUBTOTAL->setBackground(VisitsType::getVisitColor(VisitsType::n_visitsType::Free));
         freeSUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
         calcModel->appendRow(QList<QStandardItem*>() << freeItem << freeCOUNT << freeSUBTOTAL );
     }
@@ -3493,7 +3495,7 @@ void sqlBase::createNewVisit(int ID,
     visit.ID = ID;
     visit.visitDateTime = englishDateTime;
     visit.followDate = QString::number(settings.isRemmberlastFollowupDate()? static_cast<int>(lastSelectedFollowupDate.toJulianDay()):nextDateJulian);
-    visit.visitType = QString::number(visitType);
+    visit.visitType = visitType;
 
     visitData vdata;
     vdata.ID = ID;
@@ -4101,7 +4103,7 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     int todayJulian = static_cast<int>(QDate::currentDate().toJulianDay());
     double price;
     int julianDate,timeMS;
-    QList<QBrush> brushes = getVisitColors();
+    //QList<QBrush> brushes = getVisitColors();
     patientInfo info;
 
     while(query->next())
@@ -4123,13 +4125,13 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
 
         QStandardItem *idItem = new QStandardItem;
         idItem->setData(QVariant(QString("%1").arg(_id,5,10,QLatin1Char('0'))), Qt::DisplayRole);
-        idItem->setBackground(brushes.at(visitType));
+        idItem->setBackground(VisitsType::getVisitColor(visitType));
 
         QStandardItem *nameItem = new QStandardItem(info.Name);
-        nameItem->setBackground(brushes.at(visitType));
+        nameItem->setBackground(VisitsType::getVisitColor(visitType));
 
         QStandardItem *visitTypeItem = new QStandardItem(VisitsType::getVisitType(visitType));
-        visitTypeItem->setBackground(brushes.at(visitType));
+        visitTypeItem->setBackground(VisitsType::getVisitColor(visitType));
 
         QStandardItem *dateTimeItem = new QStandardItem(QString("%1%2").arg(julianDate).arg(timeMS));
         QStandardItem *dateItem = new QStandardItem(QString::number(julianDate));

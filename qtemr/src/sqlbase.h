@@ -250,15 +250,7 @@ public:
         QString presentation;
         QString presentationAnalysis;
         QString diagnosis;
-        //QString investigations;
         QString invResults;
-        //QString drugList;
-        //QString pulse;
-        //QString rr;
-        //QString temp;
-        //QString bp;
-        //QString weight;
-        //QString length;
         QString headCir;
         QString exGeneral;
         QString exChestHeart;
@@ -267,7 +259,7 @@ public:
         QString visitNotes;
         QString visitDateTime;
         QString followDate;
-        QString visitType;
+        int visitType;
         QString checkButtonCaseClose;
         int LMPDATE;
         QString ObstUS;
@@ -281,8 +273,9 @@ public:
             visitAge = presentation = presentationAnalysis = diagnosis = "";
             /*investigations = drugList = pulse = rr = temp = bp = */invResults = "";
             /*weight = length = */headCir = exGeneral = exChestHeart = exAbdback = "";
-            exLL = visitNotes = visitDateTime = followDate = visitType = checkButtonCaseClose = "";
+            exLL = visitNotes = visitDateTime = followDate = checkButtonCaseClose = "";
             ObstUS = Antenatal = pelvicExam="";
+            visitType = -1 ;
             LMPDATE = static_cast<int>(QDate::currentDate().toJulianDay());
             vitals.clear();
         }
@@ -798,7 +791,7 @@ private:
     SimpleCrypt crypto;
     bool encryptionEnabled;
     int getVisitType(int ID, int visitJulianDate);
-    QList<QBrush> getVisitColors();
+    //QList<QBrush> getVisitColors();
 
 
 };

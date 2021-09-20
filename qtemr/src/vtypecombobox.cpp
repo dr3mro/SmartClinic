@@ -15,6 +15,8 @@ void vTypeComboBox::fillContent(int maxFollow)
 
     QList<VisitsType::t_visitsType> visitsList = VisitsType::getVisitTypes();
     for(const VisitsType::t_visitsType &_vt:visitsList){
+//        if(_vt.id != VisitsType::n_visitsType::Undefined)
+//
         addItem(_vt.name);
     }
 }

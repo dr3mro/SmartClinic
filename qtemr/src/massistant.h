@@ -95,9 +95,9 @@ private:
 
 
 protected:
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
-    void showEvent(QShowEvent *e);
+    void keyPressEvent(QKeyEvent *event)override;
+    void keyReleaseEvent(QKeyEvent *event)override;
+    void showEvent(QShowEvent *e)override;
     void closeEvent(QCloseEvent *e) override;
 
 };

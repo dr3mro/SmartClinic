@@ -261,7 +261,7 @@ sqlBase::Visit visitsBox::grabVisit()
     visit.exLL = ui->patientLL->toHtml();
     visit.visitDateTime = comboSelectedDataTime;
     visit.followDate = QString::number(ui->dateFollowUp->date().toJulianDay());
-    visit.visitType = QString::number( ui->comboVisitType->currentIndex());
+    visit.visitType = VisitsType::getVisitTypes().at(ui->comboVisitType->currentIndex()).id;
     visit.invResults = ui->investigationsResults->toHtml();
     visit.visitNotes = ui->plaintextNotes->toHtml();
     visit.checkButtonCaseClose = dataHelper::bool2String( ui->CheckButtonCaseClose->isChecked() );
@@ -290,7 +290,7 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
     ui->patientHeartLungEx->setHtml(visit.exChestHeart);
     ui->patientAbdomentBack->setHtml(visit.exAbdback);
     ui->patientLL->setHtml(visit.exLL);
-    ui->comboVisitType->setCurrentIndex(visit.visitType.split(" ").at(0).toInt() );
+    ui->comboVisitType->setCurrentIndex(VisitsType::getVisitTypeIndex(visit.visitType));
     ui->investigationsResults->setHtml(visit.invResults);
     ui->plaintextNotes->setHtml(visit.visitNotes);
 
@@ -1479,7 +1479,7 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
     visitData.visitDate = visitDateTime2JulianDate();
     visitData.drugsModel = ui->vDrugsTable->getDrugsModel();
     visitData.invModel = ui->InvestigationsTable->getInvestigationsModel();
-    visitData.visitPrice = VisitsType::getVisitPrice(visit.visitType.toInt());
+    visitData.visitPrice = VisitsType::getVisitPrice(visit.visitType);
     if (threading)
     {
         visitSaverWorker->setVisitData(visitData);
