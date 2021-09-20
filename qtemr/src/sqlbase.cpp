@@ -3194,7 +3194,8 @@ void sqlBase::agendaAttendedLoader(int julianDate,QStandardItemModel *agendaMode
             }
         }
 
-        m->item(r,2)->setToolTip(dataHelper::getVisitType(attended.visitType,settings));
+        //m->item(r,2)->setToolTip(dataHelper::getVisitType(attended.visitType,settings));
+        m->item(r,2)->setToolTip(VisitsType::getVisitType(attended.visitType));
         //qApp->processEvents();
     }
 
@@ -3231,6 +3232,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
     QString visitType;
 
     int newVisitCOUNT = 0;
+    int requestsVisitCOUNT = 0;
     int follow1VisitCOUNT = 0;
     int follow2VisitCOUNT = 0;
     int follow3VisitCOUNT = 0;
@@ -3238,41 +3240,48 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
     int freeVisitCOUNT=0;
 
     double subTotalNewVisits = 0;
+    double subTotalRequests = 0;
     double subTotalFollow1Visits = 0;
     double subTotalFollow2Visits = 0;
     double subTotalFollow3Visits = 0;
     double subTotalFollow4Visits = 0;
     double subTotalFree = 0;
 
+
+
     foreach (int currentRow, selectedRows)
     {
         visitType = myRegisterModel->index(currentRow,4).data().toString();
-        if (visitType == "New Visit")
+        if (visitType == VisitsType::getVisitType(VisitsType::n_visitsType::NewVisit))
         {
             newVisitCOUNT+=1;
             subTotalNewVisits += myRegisterModel->index(currentRow,5).data().toDouble();
+        }else if (visitType == VisitsType::getVisitType(VisitsType::n_visitsType::Requests))
+        {
+            requestsVisitCOUNT+=1;
+            subTotalRequests += myRegisterModel->index(currentRow,5).data().toDouble();
         }
-        else if (visitType == "Follow Up1")
+        else if (visitType == VisitsType::getVisitType(VisitsType::n_visitsType::Follow1))
         {
             follow1VisitCOUNT+=1;
             subTotalFollow1Visits += myRegisterModel->index(currentRow,5).data().toDouble();
         }
-        else if (visitType == "Follow Up2")
+        else if (visitType == VisitsType::getVisitType(VisitsType::n_visitsType::Follow2))
         {
             follow2VisitCOUNT+=1;
             subTotalFollow2Visits += myRegisterModel->index(currentRow,5).data().toDouble();
         }
-        else if (visitType == "Follow Up3")
+        else if (visitType == VisitsType::getVisitType(VisitsType::n_visitsType::Follow3))
         {
             follow3VisitCOUNT+=1;
             subTotalFollow3Visits += myRegisterModel->index(currentRow,5).data().toDouble();
         }
-        else if (visitType == "Follow Up4")
+        else if (visitType == VisitsType::getVisitType(VisitsType::n_visitsType::Follow4))
         {
             follow4VisitCOUNT+=1;
             subTotalFollow4Visits += myRegisterModel->index(currentRow,5).data().toDouble();
         }
-        else if (visitType == "Free")
+        else if (visitType == VisitsType::getVisitType(VisitsType::n_visitsType::Free))
         {
             freeVisitCOUNT+=1;
             subTotalFree = 0;
@@ -3282,7 +3291,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
 
     if (newVisitCOUNT > 0)
     {
-        QStandardItem *newItem = new QStandardItem("New Visit");
+        QStandardItem *newItem = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::NewVisit));
         newItem->setBackground(getVisitColors().at(0));
         QStandardItem *newCOUNT = new QStandardItem(QString::number(newVisitCOUNT));
         newCOUNT->setBackground(getVisitColors().at(0));
@@ -3293,9 +3302,22 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
         calcModel->appendRow(QList<QStandardItem*>() << newItem << newCOUNT << newSUBTOTAL);
     }
 
+    if (requestsVisitCOUNT > 0)
+    {
+        QStandardItem *requestsItem = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Requests));
+        requestsItem->setBackground(getVisitColors().at(0));
+        QStandardItem *requestsCOUNT = new QStandardItem(QString::number(requestsVisitCOUNT));
+        requestsCOUNT->setBackground(getVisitColors().at(0));
+        requestsCOUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
+        QStandardItem *requestSUBTOTAL = new QStandardItem(QString::number(subTotalRequests,'f',2));
+        requestSUBTOTAL->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
+        requestSUBTOTAL->setBackground(getVisitColors().at(0));
+        calcModel->appendRow(QList<QStandardItem*>() << requestsItem << requestsCOUNT << requestSUBTOTAL);
+    }
+
     if (follow1VisitCOUNT > 0 )
     {
-        QStandardItem *followItem1 = new QStandardItem("Follow Up1");
+        QStandardItem *followItem1 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow1));
         followItem1->setBackground(getVisitColors().at(1));
         QStandardItem *follow1COUNT = new QStandardItem(QString::number(follow1VisitCOUNT));
         follow1COUNT->setBackground(getVisitColors().at(1));
@@ -3309,7 +3331,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
 
     if (maxFollowsPerProblem > 1 && follow2VisitCOUNT > 0 )
     {
-        QStandardItem *followItem2 = new QStandardItem("Follow Up2");
+        QStandardItem *followItem2 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow2));
         followItem2->setBackground(getVisitColors().at(2));
         QStandardItem *follow2COUNT = new QStandardItem(QString::number(follow2VisitCOUNT));
         follow2COUNT->setBackground(getVisitColors().at(2));
@@ -3322,7 +3344,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
 
     if (maxFollowsPerProblem > 2 && follow3VisitCOUNT > 0 )
     {
-        QStandardItem *followItem3 = new QStandardItem("Follow Up3");
+        QStandardItem *followItem3 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow3));
         followItem3->setBackground(getVisitColors().at(3));
         QStandardItem *follow3COUNT = new QStandardItem(QString::number(follow3VisitCOUNT));
         follow3COUNT->setBackground(getVisitColors().at(3));
@@ -3335,7 +3357,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
 
     if (maxFollowsPerProblem > 3 && follow4VisitCOUNT > 0 )
     {
-        QStandardItem *followItem4 = new QStandardItem("Follow Up4");
+        QStandardItem *followItem4 = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Follow4));
         followItem4->setBackground(getVisitColors().at(4));
         QStandardItem *follow4COUNT = new QStandardItem(QString::number(follow4VisitCOUNT));
         follow4COUNT->setData(Qt::AlignCenter,Qt::TextAlignmentRole);
@@ -3348,7 +3370,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
 
     if (freeVisitCOUNT > 0)
     {
-        QStandardItem *freeItem = new QStandardItem("Free");
+        QStandardItem *freeItem = new QStandardItem(VisitsType::getVisitType(VisitsType::n_visitsType::Free));
         freeItem->setBackground(getVisitColors().at(5));
         QStandardItem *freeCOUNT = new QStandardItem(QString::number(freeVisitCOUNT));
         freeCOUNT->setBackground(getVisitColors().at(5));
@@ -4106,7 +4128,7 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
         QStandardItem *nameItem = new QStandardItem(info.Name);
         nameItem->setBackground(brushes.at(visitType));
 
-        QStandardItem *visitTypeItem = new QStandardItem(dataHelper::getVisitType(visitType,settings));
+        QStandardItem *visitTypeItem = new QStandardItem(VisitsType::getVisitType(visitType));
         visitTypeItem->setBackground(brushes.at(visitType));
 
         QStandardItem *dateTimeItem = new QStandardItem(QString("%1%2").arg(julianDate).arg(timeMS));

@@ -132,19 +132,20 @@ bool dataHelper::doubleEqual(double a, double b)
     return std::abs(a - b) < std::numeric_limits<double>::epsilon();
 }
 
-QString dataHelper::getVisitType(int visitType, mSettings &settings)
-{
-    int maxfollowups = settings.getMaxFollowUpsPerProblem();
+//QString dataHelper::getVisitType(int visitType, mSettings &settings)
+//{
+//    int maxfollowups = settings.getMaxFollowUpsPerProblem();
 
-    if (visitType == 0 ) {
-        return QString("New Visit");
-    }else if(visitType <= maxfollowups){
-        return QString("Follow Up%1").arg(visitType);
-    }else if (visitType == maxfollowups+1) {
-        return QString("Free");
-    }else
-        return QString("Undefined");
-}
+//    if (visitType == 0 ) {
+//        return QString("New Visit");
+//    }else if(visitType <= maxfollowups){
+//        return QString("Follow Up%1").arg(visitType);
+//    }else if (visitType == maxfollowups+1) {
+//        return QString("Free");
+//    }else
+//        return QString("Undefined");
+
+//}
 
 void dataHelper::cleanExpanderHTML(QString &expander)
 {

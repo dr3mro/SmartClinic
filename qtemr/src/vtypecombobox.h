@@ -7,7 +7,9 @@
 
 #include <QObject>
 #include <QComboBox>
-#include "settingsclass.h"
+#include "visitsType.h"
+
+
 class vTypeComboBox : public QComboBox
 {
     Q_OBJECT

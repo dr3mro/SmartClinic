@@ -12,10 +12,11 @@ vTypeComboBox::vTypeComboBox(QWidget* parent):QComboBox(parent)
 void vTypeComboBox::fillContent(int maxFollow)
 {
     clear();
-    addItem("New Visit");
-    for (int x = 1 ; x <= maxFollow; x++)
-        addItem(QString("Follow Up %1").arg(x));
-    addItem("Free");
+
+    QList<VisitsType::t_visitsType> visitsList = VisitsType::getVisitTypes();
+    for(const VisitsType::t_visitsType &_vt:visitsList){
+        addItem(_vt.name);
+    }
 }
 
 void vTypeComboBox::goUp()

@@ -20,6 +20,8 @@
 #include "drugsitemmodel.h"
 #include "msettings.h"
 #include "investmodel.h"
+#include "visitsType.h"
+
 
 class sqlBase : public msql
 {

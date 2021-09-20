@@ -40,7 +40,7 @@ public:
     static void switchToEasternArabic(QString &str);
     static void delay(const int &delay_msec);
     static bool doubleEqual(double a,double b);
-    static QString getVisitType(int visitType,mSettings &settings);
+//    static QString getVisitType(int visitType,mSettings &settings);
     static void cleanExpanderHTML(QString &expander);
     static void cleanDrugName(QString &drug);
     ~dataHelper();
