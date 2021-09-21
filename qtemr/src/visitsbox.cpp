@@ -586,6 +586,7 @@ void visitsBox::on_ButtonVisit_clicked()
         }
     }
     ui->ButtonVisit->setEnabled(false);
+    visitFollowupDate = ui->dateFollowUp->date();
 
     //  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
     sqlBase::Visit visit = grabVisit();
@@ -619,7 +620,7 @@ void visitsBox::on_ButtonVisit_clicked()
 //        visitindex = 0;
 //    }
 
-    visitindex = (suggestedVisitType==0)? VisitsType::advance(visitindex):suggestedVisitType;
+    visitindex = (suggestedVisitType==0)? VisitsType::advance(VisitsType::getVisitTypes().at(visitindex).id):suggestedVisitType;
     double visitPrice = VisitsType::getVisitPrice(visitindex);
     ui->comboVisitType->setCurrentIndex(visitindex);
 
@@ -1193,8 +1194,15 @@ void visitsBox::toggleDateFollowup()
     if(!vEditMode)
         return;
 
+    if ( ui->comboVisitType->currentIndex() == VisitsType::getVisitTypeIndex(VisitsType::n_visitsType::Requests) ){
+        ui->dateFollowUp->setDate(visitFollowupDate);
+        return;
+    }
+
+
     if( lastSelectedFollowupDate == QDate::currentDate())
         return;
+
 
     if(ui->dateFollowUp->date() == QDate::currentDate())
         ui->dateFollowUp->setDate(lastSelectedFollowupDate);
@@ -1380,9 +1388,9 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshetta.nextDate = ui->dateFollowUp->date();
     roshetta.printedinDate = QDateTime::currentDateTime();
     roshetta.caseClosed = ui->CheckButtonCaseClose->isChecked();
-    roshetta.visitSymbole = roshetta.getVisitSymbole(ui->comboVisitType->currentIndex(),
-                                                     maxFollows,ui->CheckButtonCaseClose->isChecked(),
-                                                     roshetta.printedinDate.date() == roshetta.nextDate);
+    roshetta.visitSymbole = VisitsType::getVisitSymbole(ui->comboVisitType->currentIndex(),
+                                                        ui->CheckButtonCaseClose->isChecked(),
+                                                        roshetta.printedinDate.date() == roshetta.nextDate);
 
     if ( settings.userSpeciality() == dataHelper::Speciality::Paediatrics ||
          settings.userSpeciality() == dataHelper::Speciality::FamilyMedicine )

@@ -3982,9 +3982,12 @@ void sqlBase::closeDataBase()
 QStandardItemModel *sqlBase::getAgendaModel(int julianDate,QStandardItemModel *agendaModel)
 {
     query->clear();
-    bool x = query->exec(QString("SELECT * FROM agendaView "
-                                 "WHERE followDate=%1 AND followDate!=visitJulianDate AND checkButtonCaseClose=\"false\"")
+    bool x = query->exec(QString("SELECT * FROM agendaView WHERE followDate=%1 "
+                                 "AND followDate!=visitJulianDate "
+                                 "AND checkButtonCaseClose=\"false\"")
                          .arg(julianDate));
+//    bool x = query->exec(QString("SELECT * FROM agendaView WHERE followDate=%1 AND checkButtonCaseClose=\"false\"")
+//                         .arg(julianDate));
     if ( !x )
     {
         mDebug() << "Failed to load agendaView " << query->lastError().text();

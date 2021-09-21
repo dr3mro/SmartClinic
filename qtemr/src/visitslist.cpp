@@ -69,7 +69,7 @@ void visitsList::addDetails()
     foreach (sqlBase::visitItem item, list)
     {
         if(!_stopLoadingNow){
-            setItemIcon(i,getVisitIcon(item.visitType));
+            setItemIcon(i,VisitsType::getVisitIcon(VisitsType::getVisitTypes().at(item.visitType).id));
             setItemData(i,item.Diagnosis,Qt::ToolTipRole);
             qApp->processEvents();
             i++;
@@ -124,17 +124,6 @@ bool visitsList::eventFilter(QObject *o, QEvent *e)
     return QComboBox::eventFilter(o,e);
 }
 
-QIcon visitsList::getVisitIcon(int visitType) const
-{
-    if( visitType == 0 )
-        return QIcon(":/Graphics/newvisit");
-    else if ( visitType <= maxFollows )
-        return QIcon(":/Graphics/fvisit");
-    else //if ( visitType > maxFollows )
-        return QIcon(":/Graphics/free");
-    
-    return QIcon();
-}
 
 
 void visitsList::wheelEvent(QWheelEvent *e)

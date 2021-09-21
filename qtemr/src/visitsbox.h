@@ -217,12 +217,14 @@ private:
     QString printableAge;
     bool aboutToClose=false;
     QDate lastSelectedFollowupDate=QDate::currentDate();
+    QDate visitFollowupDate=QDate::currentDate();
     int suggestedVisitType=0;//for remote assistant created patient to modify this
     mSettings::Roshetta getRoshetta();
     void roshettaDrugsfiller(QList<mSettings::drug> &drugs, DrugsItemModel *drugsModel, bool alteredDrugsOnly);
     void roshettaVitalsFiller(mSettings::Vitals &vitals);
     void setVitalsPlaceHolderText();
     mPatientBasicDetails patientBasicDetails;
+
 
 protected:
     void closeEvent(QCloseEvent *event) override;

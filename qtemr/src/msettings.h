@@ -111,22 +111,6 @@ public:
     // this is data structure to hold the roshetta for printing
     struct Roshetta
     {
-        QString getVisitSymbole(const int & _i,const int & _maxFollows,const bool &isCaseClosed,const bool & noNextDateSpecified){
-            int index;
-
-            if(isCaseClosed || noNextDateSpecified)
-                index = 0;
-            else if (_i < _maxFollows)
-                index = _i +1;
-            else if(_i == _maxFollows)
-                index = 0;
-            else //if(_i > _maxFollows)
-                index = 5;
-            QStringList _visitSymboleList = QStringList() << "Ⓝ" << "①" << "②" << "③" << "④" << "Ⓕ";
-
-            return _visitSymboleList.at(index);
-        }
-
         QString getNextFromJulian(const qint64& nextDateJulian){
             QVector<QPair<QString,int> > options { {"تمت الإستشارة",0},
                                                    {"أسبوع",1},
