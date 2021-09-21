@@ -355,6 +355,7 @@ void printDrugs::showEvent(QShowEvent *e)
     ui->Roshetta->setReadOnly(true);
     applyPageSizeParamaters();
     setupPrinter(printer);
+    ui->Roshetta->setHtml("Loading...");
     QTimer::singleShot(0,this,&printDrugs::refreshView);
     //refreshView();
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);

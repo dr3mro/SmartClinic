@@ -36,7 +36,7 @@ inline QList<t_visitsType> getVisitTypes(){
     _NewVisit.id = NewVisit;
     _NewVisit.name ="NewVisit";
     _NewVisit.price = prices.newVisit;
-    _NewVisit.color = QBrush(QColor::fromRgb(153,204,255));
+    _NewVisit.color = QBrush(QColor::fromRgb(204,229,255));
 
 
     t_visitsType _Requests;
@@ -49,19 +49,19 @@ inline QList<t_visitsType> getVisitTypes(){
     _Follow1.id = Follow1;
     _Follow1.name ="Follow 1";
     _Follow1.price = prices.followUp1;
-    _Follow1.color = QBrush(QColor::fromRgb(229,255,204));
+    _Follow1.color = QBrush(QColor::fromRgb(255,255,204));
 
     t_visitsType _Follow2;
     _Follow2.id = Follow2;
     _Follow2.name ="Follow 2";
     _Follow2.price = prices.followUp2;
-    _Follow2.color = QBrush(QColor::fromRgb(204,255,204));
+    _Follow2.color = QBrush(QColor::fromRgb(229,255,204));
 
     t_visitsType _Follow3;
     _Follow3.id = Follow3;
     _Follow3.name ="Follow 3";
     _Follow3.price = prices.followUp3;
-    _Follow3.color = QBrush(QColor::fromRgb(204,255,229));
+    _Follow3.color = QBrush(QColor::fromRgb(204,255,204));
 
     t_visitsType _Follow4;
     _Follow4.id = Follow4;
