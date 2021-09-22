@@ -74,6 +74,7 @@ void visitsList::addDetails()
             setItemIcon(i,visitTypes.getVisitTypesByAlgoIndex(item.visitType).icon);
             setItemData(i,item.Diagnosis,Qt::ToolTipRole);
             setItemData(i,visitTypes.getVisitTypesByAlgoIndex(item.visitType).color,Qt::BackgroundRole);
+            model()->setData(model()->index(i, 0), QSize(width(), 30), Qt::SizeHintRole);
             //setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
 //            qApp->processEvents();
             i++;
