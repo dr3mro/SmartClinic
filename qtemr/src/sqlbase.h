@@ -20,7 +20,7 @@
 #include "drugsitemmodel.h"
 #include "msettings.h"
 #include "investmodel.h"
-#include "visitsType.h"
+#include "visittypes.h"
 
 
 class sqlBase : public msql
@@ -791,6 +791,7 @@ private:
     SimpleCrypt crypto;
     bool encryptionEnabled;
     int getVisitType(int ID, int visitJulianDate);
+    VisitTypes & visitTypes = VisitTypes::instance();
     //QList<QBrush> getVisitColors();
 
 

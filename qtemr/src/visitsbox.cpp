@@ -211,7 +211,7 @@ void visitsBox::on_ButtonNew_clicked()
 
     visitindex = 0;
 //    double visitPrice = settings.getVisitPrice(visitindex);
-    double visitPrice = VisitsType::getVisitPrice(visitindex);
+    double visitPrice = visitTypes.getVisitTypesByUiIndex(visitindex).price;
     sqlbase->createNewVisit(patientBasicDetails.ID,
                             visit.visitDateTime,
                             datetime,
@@ -261,7 +261,7 @@ sqlBase::Visit visitsBox::grabVisit()
     visit.exLL = ui->patientLL->toHtml();
     visit.visitDateTime = comboSelectedDataTime;
     visit.followDate = QString::number(ui->dateFollowUp->date().toJulianDay());
-    visit.visitType = VisitsType::getVisitTypes().at(ui->comboVisitType->currentIndex()).id;
+    visit.visitType = static_cast<int> (visitTypes.getVisitTypesByUiIndex(ui->comboVisitType->currentIndex()).id);
     visit.invResults = ui->investigationsResults->toHtml();
     visit.visitNotes = ui->plaintextNotes->toHtml();
     visit.checkButtonCaseClose = dataHelper::bool2String( ui->CheckButtonCaseClose->isChecked() );
@@ -290,7 +290,8 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
     ui->patientHeartLungEx->setHtml(visit.exChestHeart);
     ui->patientAbdomentBack->setHtml(visit.exAbdback);
     ui->patientLL->setHtml(visit.exLL);
-    ui->comboVisitType->setCurrentIndex(VisitsType::getVisitTypeIndex(visit.visitType));
+
+    ui->comboVisitType->setCurrentIndex(visitTypes.getVisitIndexFromId((VisitTypes::n_visitsType&)visit.visitType));
     ui->investigationsResults->setHtml(visit.invResults);
     ui->plaintextNotes->setHtml(visit.visitNotes);
 
@@ -608,20 +609,8 @@ void visitsBox::on_ButtonVisit_clicked()
     if (vEditMode)
         save(visit,false);
 
-//    if ( visitindex < maxFollows )
-//    {
-//        if(suggestedVisitType==0)
-//            visitindex +=1;
-//        else
-//            visitindex = suggestedVisitType;
-//    }
-//    else if ( visitindex == maxFollows && autoSetNewAfterMaxFollow)
-//    {
-//        visitindex = 0;
-//    }
-
-    visitindex = (suggestedVisitType==0)? VisitsType::advance(VisitsType::getVisitTypes().at(visitindex).id):suggestedVisitType;
-    double visitPrice = VisitsType::getVisitPrice(visitindex);
+    visitindex = (suggestedVisitType==0)? visitTypes.advance(visitTypes.getVisitTypesByUiIndex(visitindex).id):suggestedVisitType;
+    double visitPrice = visitTypes.getVisitTypesByAlgoIndex(visitindex).price;
     ui->comboVisitType->setCurrentIndex(visitindex);
 
     sqlbase->createNewVisit(patientBasicDetails.ID,
@@ -1194,7 +1183,7 @@ void visitsBox::toggleDateFollowup()
     if(!vEditMode)
         return;
 
-    if ( ui->comboVisitType->currentIndex() == VisitsType::getVisitTypeIndex(VisitsType::n_visitsType::Requests) ){
+    if ( ui->comboVisitType->currentIndex() == visitTypes.getVisitIndexFromId(VisitTypes::n_visitsType::Requests)){
         ui->dateFollowUp->setDate(visitFollowupDate);
         return;
     }
@@ -1388,7 +1377,7 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshetta.nextDate = ui->dateFollowUp->date();
     roshetta.printedinDate = QDateTime::currentDateTime();
     roshetta.caseClosed = ui->CheckButtonCaseClose->isChecked();
-    roshetta.visitSymbole = VisitsType::getVisitSymbole(ui->comboVisitType->currentIndex(),
+    roshetta.visitSymbole = visitTypes.getVisitSymbole(ui->comboVisitType->currentIndex(),
                                                         ui->CheckButtonCaseClose->isChecked(),
                                                         roshetta.printedinDate.date() == roshetta.nextDate);
 
@@ -1487,7 +1476,7 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
     visitData.visitDate = visitDateTime2JulianDate();
     visitData.drugsModel = ui->vDrugsTable->getDrugsModel();
     visitData.invModel = ui->InvestigationsTable->getInvestigationsModel();
-    visitData.visitPrice = VisitsType::getVisitPrice(visit.visitType);
+    visitData.visitPrice =visitTypes.getVisitTypesByAlgoIndex(visit.visitType).price;
     if (threading)
     {
         visitSaverWorker->setVisitData(visitData);

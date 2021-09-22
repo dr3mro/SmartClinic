@@ -4,7 +4,7 @@
 
 #include "msettings.h"
 #include "datahelper.h"
-#include "visitsType.h"
+
 mSettings &mSettings::instance()
 {
     static mSettings s_instance;

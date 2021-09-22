@@ -38,7 +38,7 @@
 #include "wm_add2completer.h"
 #include "mdialog.h"
 #include "datahelper.h"
-#include "visitsType.h"
+#include "visittypes.h"
 namespace Ui {
 class visitsBox;
 }
@@ -206,6 +206,7 @@ private:
     sqlBase::Visit loadedVisit;
     bool drugsAltered=false;
     mSettings& settings = mSettings::instance();
+    VisitTypes & visitTypes = VisitTypes::instance();
     int visitindex;
     bool vEditMode;
     QString comboSelectedDataTime ;

@@ -12,10 +12,9 @@ vTypeComboBox::vTypeComboBox(QWidget* parent):QComboBox(parent)
 void vTypeComboBox::fillContent(int maxFollow)
 {
     clear();
-
-    QList<VisitsType::t_visitsType> visitsList = VisitsType::getVisitTypes();
-    for(const VisitsType::t_visitsType &_vt:visitsList){
-//        if(_vt.id != VisitsType::n_visitsType::Undefined)
+    QList<VisitTypes::t_visitsType> visitsList = visitTypes.getVisitTypesListByUiIndex();
+    for(const VisitTypes::t_visitsType &_vt:visitsList){
+//        if(_vt.id != VisitTypes::Undefined)
 //
         addItem(_vt.name);
     }

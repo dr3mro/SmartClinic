@@ -13,6 +13,7 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include "wm_visitlistloader.h"
+#include "visittypes.h"
 
 class visitsList : public QComboBox
 {
@@ -46,6 +47,7 @@ private:
     QVector<sqlBase::visitItem> list;
     bool _stopLoadingNow=false;
     QListView *_view;
+    VisitTypes & visitTypes = VisitTypes::instance();
 private slots:
     void addDetails();
 

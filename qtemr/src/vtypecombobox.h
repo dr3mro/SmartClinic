@@ -7,7 +7,7 @@
 
 #include <QObject>
 #include <QComboBox>
-#include "visitsType.h"
+#include "visittypes.h"
 
 
 class vTypeComboBox : public QComboBox
@@ -16,6 +16,8 @@ class vTypeComboBox : public QComboBox
 public:
     explicit vTypeComboBox(QWidget *parent=nullptr);
     void fillContent(int maxFollow);
+private:
+    VisitTypes & visitTypes = VisitTypes::instance();
 public slots:
     void goUp();
     void goDown();

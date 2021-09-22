@@ -69,7 +69,7 @@ void visitsList::addDetails()
     foreach (sqlBase::visitItem item, list)
     {
         if(!_stopLoadingNow){
-            setItemIcon(i,VisitsType::getVisitIcon(VisitsType::getVisitTypes().at(item.visitType).id));
+            setItemIcon(i,visitTypes.getVisitTypesByAlgoIndex(item.visitType).icon);
             setItemData(i,item.Diagnosis,Qt::ToolTipRole);
             qApp->processEvents();
             i++;
