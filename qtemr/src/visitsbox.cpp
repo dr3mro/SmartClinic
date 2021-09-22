@@ -1040,12 +1040,15 @@ void visitsBox::SyncLastVisit()
 
 void visitsBox::on_comboVisitType_currentIndexChanged(int index)
 {
-    if ( index == 0 )
-        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/newvisit"));
-    else if (index <= maxFollows)
-        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/fvisit"));
-    else //if (index > maxFollows)
-        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/free"));
+//    if ( index == 0 )
+//        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/newvisit"));
+//    else if (index <= maxFollows)
+//        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/fvisit"));
+//    else //if (index > maxFollows)
+//        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/free"));
+
+    ui->visitLists->setVisitIcon(visitTypes.getVisitTypesByUiIndex(index).id,
+                                 visitTypes.getVisitTypesByUiIndex(index).icon);
 }
 
 void visitsBox::on_closeButton_clicked()
