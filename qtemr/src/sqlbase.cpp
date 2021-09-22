@@ -3123,8 +3123,7 @@ int sqlBase::getVisitType(int ID,int visitJulianDate)
 
     int eVisitType = sqlExec(sqlCmd).toInt();
 
-    if (eVisitType < settings.getMaxFollowUpsPerProblem()+1 )
-        eVisitType +=1;
+    eVisitType = visitTypes.advance(eVisitType);
 
     return eVisitType;
 }

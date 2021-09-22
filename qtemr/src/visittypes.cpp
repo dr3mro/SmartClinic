@@ -63,7 +63,7 @@ VisitTypes::VisitTypes()
     _Undefined.id = Undefined;
     _Undefined.name ="Undefined";
     _Undefined.price = 0;
-    _Undefined.color = QBrush(QColor::fromRgb(255,255,255));
+    _Undefined.color = QBrush(QColor::fromRgb(255,229,204));
     _Undefined.symbole = "◯";
     _Undefined.icon = QIcon(":/alphaNums/alphaNum/021-u.png");
 
