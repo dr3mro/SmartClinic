@@ -24,18 +24,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout_9">
      <item>
       <widget class="vTypeComboBox" name="comboVisitType">
-       <property name="minimumSize">
-        <size>
-         <width>90</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="font">
         <font>
          <weight>75</weight>
@@ -44,6 +32,9 @@
        </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit Type&lt;/p&gt;&lt;p&gt;F10 &amp;amp; F11 to change&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
        </property>
        <property name="frame">
         <bool>true</bool>
@@ -153,14 +144,8 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>240</width>
+         <width>200</width>
          <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>240</width>
-         <height>16777215</height>
         </size>
        </property>
        <property name="font">
@@ -182,7 +167,7 @@
         <locale language="English" country="UnitedStates"/>
        </property>
        <property name="editable">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="sizeAdjustPolicy">
         <enum>QComboBox::AdjustToContents</enum>

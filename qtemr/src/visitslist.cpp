@@ -16,9 +16,9 @@ visitsList::visitsList(QWidget *parent): QComboBox(parent)
     _view->setLayoutMode(QListView::Batched);
     _view->setBatchSize(10);
     _view->setAlternatingRowColors(false);
-    setEditable(true);
-    lineEdit()->setReadOnly(true);
-    lineEdit()->setAlignment(Qt::AlignCenter);
+    setEditable(false);
+//    lineEdit()->setReadOnly(true);
+//    lineEdit()->setAlignment(Qt::AlignCenter);
 }
 
 
@@ -74,8 +74,8 @@ void visitsList::addDetails()
             setItemIcon(i,visitTypes.getVisitTypesByAlgoIndex(item.visitType).icon);
             setItemData(i,item.Diagnosis,Qt::ToolTipRole);
             setItemData(i,visitTypes.getVisitTypesByAlgoIndex(item.visitType).color,Qt::BackgroundRole);
-            setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
-            qApp->processEvents();
+            //setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
+//            qApp->processEvents();
             i++;
         }
     }

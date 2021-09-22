@@ -6,7 +6,9 @@
 
 vTypeComboBox::vTypeComboBox(QWidget* parent):QComboBox(parent)
 {
-
+    setEditable(false);
+//    lineEdit()->setReadOnly(true);
+//    lineEdit()->setAlignment(Qt::AlignCenter);
 }
 
 void vTypeComboBox::fillContent(int maxFollow)
@@ -16,7 +18,10 @@ void vTypeComboBox::fillContent(int maxFollow)
     QList<VisitTypes::t_visitsType> visitsList = visitTypes.getVisitTypesListByUiIndex();
     for(const VisitTypes::t_visitsType &_vt:visitsList){
         addItem(_vt.name);
+        //setItemIcon(index,visitTypes.getVisitTypesByAlgoIndex(_vt.id).icon);
+        //setItemData(index, Qt::AlignCenter, Qt::TextAlignmentRole);
         setItemData(index++,visitTypes.getVisitTypesByAlgoIndex(_vt.id).color,Qt::BackgroundRole);
+        //index++;
     }
 }
 
