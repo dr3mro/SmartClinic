@@ -80,9 +80,9 @@ void patientTable::keyPressEvent(QKeyEvent *ke)
 void patientTable::updatePatientsCompleted()
 {
     proxy_model->setSourceModel(model);
-
     hideColumn(2);
     selectRow(ID-1);
+    this->setColumnWidth(0,sizeHintForColumn(0));
     emit repaint();
 }
 
@@ -94,7 +94,7 @@ void patientTable::setMyModel()
     this->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     this->horizontalHeader()->setStretchLastSection( true );
-    this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Interactive);
     this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAsNeeded);
@@ -118,6 +118,9 @@ void patientTable::tweaksAfterModelLoadingIsFinished()
 {
     hideColumn(2);
     loadingIsFinished = true;
+    this->horizontalHeader()->setMinimumWidth(55);
+    this->setColumnWidth(0,55);
+    emit repaint();
 }
 
 void patientTable::loadPatient()
