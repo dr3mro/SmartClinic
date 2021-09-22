@@ -8,7 +8,7 @@ VisitTypes::VisitTypes()
     _NewVisit.price = prices.newVisit;
     _NewVisit.color = QBrush(QColor::fromRgb(204,229,255));
     _NewVisit.symbole = "Ⓝ";
-    _NewVisit.icon = QIcon(":/Graphics/newvisit");
+    _NewVisit.icon = QIcon(":/alphaNums/alphaNum/014-n.png");
 
 
     t_visitsType _Requests;
@@ -17,7 +17,7 @@ VisitTypes::VisitTypes()
     _Requests.price = 0;
     _Requests.color = QBrush(QColor::fromRgb(229,204,255));
     _Requests.symbole = "Ⓡ";
-    _Requests.icon = QIcon(":/Graphics/fvisit");
+    _Requests.icon = QIcon(":/alphaNums/alphaNum/018-r.png");
 
     t_visitsType _Follow1;
     _Follow1.id = Follow1;
@@ -25,7 +25,7 @@ VisitTypes::VisitTypes()
     _Follow1.price = prices.followUp1;
     _Follow1.color = QBrush(QColor::fromRgb(255,255,204));
     _Follow1.symbole = "①";
-    _Follow1.icon = QIcon(":/Graphics/fvisit");
+    _Follow1.icon = QIcon(":/alphaNums/alphaNum/028-1.png");
 
     t_visitsType _Follow2;
     _Follow2.id = Follow2;
@@ -33,7 +33,7 @@ VisitTypes::VisitTypes()
     _Follow2.price = prices.followUp2;
     _Follow2.color = QBrush(QColor::fromRgb(229,255,204));
     _Follow2.symbole = "②";
-    _Follow2.icon = QIcon(":/Graphics/fvisit");
+    _Follow2.icon = QIcon(":/alphaNums/alphaNum/029-2.png");
 
     t_visitsType _Follow3;
     _Follow3.id = Follow3;
@@ -41,7 +41,7 @@ VisitTypes::VisitTypes()
     _Follow3.price = prices.followUp3;
     _Follow3.color = QBrush(QColor::fromRgb(204,255,204));
     _Follow3.symbole = "③";
-    _Follow3.icon = QIcon(":/Graphics/fvisit");
+    _Follow3.icon = QIcon(":/alphaNums/alphaNum/030-3.png");
 
     t_visitsType _Follow4;
     _Follow4.id = Follow4;
@@ -49,7 +49,7 @@ VisitTypes::VisitTypes()
     _Follow4.price = prices.followUp4;
     _Follow4.color = QBrush(QColor::fromRgb(204,255,229));
     _Follow4.symbole = "④";
-    _Follow4.icon = QIcon(":/Graphics/fvisit");
+    _Follow4.icon = QIcon(":/alphaNums/alphaNum/031-4.png");
 
     t_visitsType _Free;
     _Free.id = Free;
@@ -57,7 +57,7 @@ VisitTypes::VisitTypes()
     _Free.price = 0;
     _Free.color = QBrush(QColor::fromRgb(255,255,255));
     _Free.symbole = "Ⓕ";
-    _Free.icon = QIcon(":/Graphics/free");
+    _Free.icon = QIcon(":/alphaNums/alphaNum/006-f.png");
 
     t_visitsType _Undefined;
     _Undefined.id = Undefined;
@@ -65,7 +65,7 @@ VisitTypes::VisitTypes()
     _Undefined.price = 0;
     _Undefined.color = QBrush(QColor::fromRgb(255,255,255));
     _Undefined.symbole = "◯";
-    _Undefined.icon = QIcon(":/Graphics/free");
+    _Undefined.icon = QIcon(":/alphaNums/alphaNum/021-u.png");
 
     ui_VisitTypes << _NewVisit << _Requests << _Follow1 << _Follow2 << _Follow3 << _Follow4 << _Free << _Undefined;
     algo_VisitTypes << _NewVisit <<  _Follow1 << _Follow2 << _Follow3 << _Follow4 << _Free << _Requests << _Undefined;

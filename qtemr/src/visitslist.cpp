@@ -15,8 +15,10 @@ visitsList::visitsList(QWidget *parent): QComboBox(parent)
     _view = (QListView *)this->view();
     _view->setLayoutMode(QListView::Batched);
     _view->setBatchSize(10);
-    _view->setAlternatingRowColors(true);
-
+    _view->setAlternatingRowColors(false);
+    setEditable(true);
+    lineEdit()->setReadOnly(true);
+    lineEdit()->setAlignment(Qt::AlignCenter);
 }
 
 
@@ -71,6 +73,8 @@ void visitsList::addDetails()
         if(!_stopLoadingNow){
             setItemIcon(i,visitTypes.getVisitTypesByAlgoIndex(item.visitType).icon);
             setItemData(i,item.Diagnosis,Qt::ToolTipRole);
+            setItemData(i,visitTypes.getVisitTypesByAlgoIndex(item.visitType).color,Qt::BackgroundRole);
+            setItemData(i, Qt::AlignCenter, Qt::TextAlignmentRole);
             qApp->processEvents();
             i++;
         }
@@ -130,4 +134,3 @@ void visitsList::wheelEvent(QWheelEvent *e)
 {
     e->ignore();
 }
-

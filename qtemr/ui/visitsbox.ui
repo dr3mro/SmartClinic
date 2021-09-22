@@ -153,13 +153,13 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>220</width>
+         <width>240</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>220</width>
+         <width>240</width>
          <height>16777215</height>
         </size>
        </property>
@@ -180,6 +180,15 @@
        </property>
        <property name="locale">
         <locale language="English" country="UnitedStates"/>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QComboBox::AdjustToContents</enum>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
