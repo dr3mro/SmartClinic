@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QScreen>
+#include <QWindow>
 #include <QApplication>
 class WindowManager : public QWidget
 {
