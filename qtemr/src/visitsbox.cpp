@@ -1047,6 +1047,9 @@ void visitsBox::on_comboVisitType_currentIndexChanged(int index)
 //    else //if (index > maxFollows)
 //        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/free"));
 
+    if(index < VisitTypes::n_visitsType::NewVisit || index > VisitTypes::n_visitsType::Undefined)
+        return;
+
     ui->visitLists->setVisitIcon(visitTypes.getVisitTypesByUiIndex(index).id,
                                  visitTypes.getVisitTypesByUiIndex(index).icon);
 }
