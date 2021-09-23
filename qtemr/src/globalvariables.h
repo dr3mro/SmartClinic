@@ -5,15 +5,20 @@
 #ifndef GLOBALVARIABLES
 #define GLOBALVARIABLES
 
-#define MajorVer 3
-#define MinorVer 8
-#define xVer 27
-#define APPVERSION "3.8.27"
-#define APPNAME "Smart Clinic"
-#define APPNAMEVER "Smart Clinic 3.8.27"
-#define singleInstance "com.smartSoft.smartClinic3"
+#define STR_IMPL_(x) #x      //stringify argument
+#define STR(x) STR_IMPL_(x)  //indirection to expand argument macros
+
+
+#define BUILDVER 27
+#define MINORVER 8
+#define MAJORVER 3
+
+#define APPNAME "SMARTCLINIC"
+#define APPVERSION STR(MAJORVER) "." STR(MINORVER) "." STR(BUILDVER)
+#define APPNAMEVER APPNAME " " APPVERSION
+#define singleInstance "COM.SMARTSOFT.SMARTCLINIC3"
 #define DEVELOPER "AMR OSMAN"
-#define APPYEAR "2021"
+#define APPYEAR 2022
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
 #define whiteListUrl "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/validKeys?dl=0"
