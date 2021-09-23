@@ -29,8 +29,8 @@ private:
     void moveCenter();
     QRect getScreenRect();
     int centerPos;
-    int horizontalPos;
-    int verticalPos;
+    int horizontalPos=0;
+    int verticalPos=0;
     QTimer miTimer;
     QTimer moTimer;
     QTimer fTimer;
