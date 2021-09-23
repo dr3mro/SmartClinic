@@ -330,7 +330,7 @@ int main(int argc, char *argv[])
     QApplication::processEvents();
     w.boot();
     QApplication::processEvents();
-    QRect screenres = qApp->activeWindow()->screen()->geometry();
+    QRect screenres = qApp->primaryScreen()->geometry();
 
     w.move(QPoint(screenres.x(), screenres.y()));
     w.showMaximized();

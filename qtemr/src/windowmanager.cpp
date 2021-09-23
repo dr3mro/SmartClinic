@@ -29,5 +29,5 @@ void WindowManager::centerOnScreen(QWidget *widget)
 
 QRect WindowManager::getDesktop()
 {
-    return qApp->activeWindow()->screen()->geometry();
+    return qApp->primaryScreen()->geometry();
 }

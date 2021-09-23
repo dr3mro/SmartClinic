@@ -1241,7 +1241,7 @@ bool MainWindow::isErrorLogEmpty()
 
 int MainWindow::getCenterPos()
 {
-    QRect desktop = qApp->activeWindow()->screen()->geometry();
+    QRect desktop = qApp->primaryScreen()->geometry();
     return desktop.width()/2;
 }
 
