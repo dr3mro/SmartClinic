@@ -18,7 +18,7 @@
 #define APPNAMEVER APPNAME " " APPVERSION
 #define singleInstance "COM.SMARTSOFT.SMARTCLINIC3"
 #define DEVELOPER "AMR OSMAN"
-#define APPYEAR 2022
+#define APPYEAR STR(2022)
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
 #define whiteListUrl "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/validKeys?dl=0"
