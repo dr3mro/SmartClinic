@@ -215,24 +215,23 @@ sqlBase::ServiceState sqlBase::isServiceExistsInThisVisit(int ID, int visitDate,
     return serviceState;
 }
 
-sqlBase::Attended sqlBase::isFollowVisitAttended(int ID, int julianDate)
+void sqlBase::isFollowVisitAttended(int ID, int julianDate, Attended & attended )
 {
+    attended.clear();
     QString sql = QString("SELECT visitTime,visitType FROM visits WHERE ID=%1 AND visitJulianDate=%2")
             .arg(ID)
             .arg(julianDate);
-
-    Attended attended;
-    attended.clear();
-
     query->clear();
     if (!query->exec(sql))
     {
         mDebug() << sql << query->lastError().text();
-        return attended;
+        query->finish();
+        return;
     }
     else if (!query->first())
     {
-        return attended;
+        query->finish();
+        return;
     }
     else
     {
@@ -242,7 +241,6 @@ sqlBase::Attended sqlBase::isFollowVisitAttended(int ID, int julianDate)
         attended.visitType = query->value(1).toInt();
     }
     query->finish();
-    return attended;
 }
 
 bool sqlBase::isPatientNameUsed(QString name)
@@ -860,7 +858,7 @@ mSettings::Vitals sqlBase::getPatientVisitVitals(const int &ID, const QString &d
         mVitals.sPo2 = query->value(9).toInt();
         mVitals.RBS = query->value(10).toString();
     }
-   // mDebug() << query->lastQuery();
+    // mDebug() << query->lastQuery();
     query->finish();
     return mVitals;
 }
@@ -1779,18 +1777,18 @@ bool sqlBase::createVisitsVitalsTable()
     query->clear();
 
     bool b = query->exec
-           ("CREATE TABLE IF NOT EXISTS visitVitals("
-            "ID int,"
-            "visitDate int,"
-            "visitTime int,"
-            "pulse int,"
-            "BP varchar,"
-            "RR int,"
-            "T  real,"
-            "weight real,"
-            "height real,"
-            "sPo2 int,"
-            "RBS varchar)");
+            ("CREATE TABLE IF NOT EXISTS visitVitals("
+             "ID int,"
+             "visitDate int,"
+             "visitTime int,"
+             "pulse int,"
+             "BP varchar,"
+             "RR int,"
+             "T  real,"
+             "weight real,"
+             "height real,"
+             "sPo2 int,"
+             "RBS varchar)");
 
     if (!b)
     {
@@ -2727,16 +2725,16 @@ bool sqlBase::migrateConditions()
         condition.varicoseVeins = int(dataHelper::str2bool(p.varicoseVeins));
 
         QString mQuery = QString("INSERT INTO conditions_patients "
-                                "(ID,"
-                                "c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,"
-                                "c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,"
-                                "c21,c22,c23,c24,c25,c26,c27,c28,c29"
-                                ") "
-                                "VALUES "
-                                "(%31,"
-                                "%1,%2,%3,%4,%5,%6,%7,%8,%9,%10,"
-                                "%11,%12,%13,%14,%15,%16,%17,%18,%19,%20,"
-                                "%21,%22,%23,%24,%25,%26,%27,%28,%29,%30)")
+                                 "(ID,"
+                                 "c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,"
+                                 "c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,"
+                                 "c21,c22,c23,c24,c25,c26,c27,c28,c29"
+                                 ") "
+                                 "VALUES "
+                                 "(%31,"
+                                 "%1,%2,%3,%4,%5,%6,%7,%8,%9,%10,"
+                                 "%11,%12,%13,%14,%15,%16,%17,%18,%19,%20,"
+                                 "%21,%22,%23,%24,%25,%26,%27,%28,%29,%30)")
                 .arg(condition.DMePregnancy)
                 .arg(condition.diabetes)
                 .arg(condition.coronaryArteryDisease)
@@ -2921,7 +2919,7 @@ void sqlBase::updateVisitsTable288()
     {
         QStringList mVisitsDatesForID = sqlExecList(QString("SELECT visitDateTime FROM visits_old WHERE ID='%1'").arg(_id));
         foreach (const QString & mVisitDate, mVisitsDatesForID) {
-           addVisit2myDataBase((getPatientVisitDataPre287(_id,mVisitDate)));
+            addVisit2myDataBase((getPatientVisitDataPre287(_id,mVisitDate)));
         }
     }
     sqlExec("DROP TABLE `visits_old`;");
@@ -3115,17 +3113,15 @@ void sqlBase::createAllViews()
     createEddView();
 }
 
-int sqlBase::getVisitType(int ID,int visitJulianDate)
+void sqlBase::getVisitType(int ID,int visitJulianDate,Attended & attended)
 {
     QString sqlCmd = QString("SELECT visitType FROM agendaView where ID=%1 AND followDate=%2;")
             .arg(ID)
             .arg(visitJulianDate);
 
-    int eVisitType = sqlExec(sqlCmd).toInt();
+    attended.visitType = sqlExec(sqlCmd).toInt();
 
-    eVisitType = visitTypes.advance(eVisitType);
-
-    return eVisitType;
+    attended.followVisitType = visitTypes.advance(attended.visitType);
 }
 
 //QList<QBrush> sqlBase::getVisitColors()
@@ -3161,46 +3157,47 @@ void sqlBase::agendaAttendedLoader(int julianDate,QStandardItemModel *agendaMode
 {
     QLocale en_US = QLocale(QLocale::English,QLocale::UnitedStates);
     int ID;
-    QStandardItemModel *m = agendaModel;
-    int rows = m->rowCount();
+    //    QStandardItemModel *m = agendaModel;
+    int rows = agendaModel->rowCount();
 
-//    QList<QBrush> brushes = getVisitColors();
+    //    QList<QBrush> brushes = getVisitColors();
 
     int _attended = 0;
     percent = 00.00;
 
     for ( int r=0;r<rows;r++){
-        ID = m->data(m->index(r,0)).toInt();
+        Attended attended;
+        ID = agendaModel->data(agendaModel->index(r,0)).toInt();
 
         if(ID < 1)
             continue;
 
-        Attended attended = isFollowVisitAttended(ID,julianDate);
-        //qApp->processEvents();
-        if ( attended.state){
-            m->item(r,2)->setCheckState(Qt::CheckState(Qt::Checked));
-            m->item(r,2)->setText(en_US.toString(attended.time,"hh:mm AP"));
+        isFollowVisitAttended(ID,julianDate,attended);
+
+        if (attended.state){
+            agendaModel->item(r,2)->setCheckState(Qt::CheckState(Qt::Checked));
+            agendaModel->item(r,2)->setText(en_US.toString(attended.time,"hh:mm AP"));
             _attended +=1;
-            for (int c=0 ; c < m->columnCount(); c++) {
-                m->item(r,c)->setBackground(visitTypes.getVisitTypesByAlgoIndex(attended.visitType).color);
-                //qApp->processEvents();
+            for (int c=0 ; c < agendaModel->columnCount(); c++) {
+                agendaModel->item(r,c)->setBackground(visitTypes.getVisitTypesByAlgoIndex(attended.visitType).color);
             }
+            agendaModel->item(r,2)->setToolTip(visitTypes.getVisitTypesByAlgoIndex(attended.visitType).name);
         }else {
-            attended.visitType = getVisitType(ID,julianDate);
-            for (int c=0 ; c < m->columnCount(); c++) {
-                m->item(r,c)->setBackground(( attended.visitType ==1
-                                              && julianDate < QDate::currentDate().toJulianDay() )?
-                                                QBrush(QColor::fromRgb(255,204,255)):visitTypes.getVisitTypesByAlgoIndex(attended.visitType).color);
-                //qApp->processEvents();
+            getVisitType(ID,julianDate,attended);
+            for (int c=0 ; c < agendaModel->columnCount(); c++) {
+                if(attended.visitType == VisitTypes::n_visitsType::NewVisit &&
+                        attended.followVisitType == VisitTypes::n_visitsType::Follow1 &&
+                        julianDate < QDate::currentDate().toJulianDay()){
+                    agendaModel->item(r,c)->setBackground(QBrush(QColor::fromRgb(255,204,255)));
+                }else{
+                    agendaModel->item(r,c)->setBackground(visitTypes.getVisitTypesByAlgoIndex(attended.followVisitType).color);
+                }
+                agendaModel->item(r,2)->setToolTip(visitTypes.getVisitTypesByAlgoIndex(attended.followVisitType).name);
             }
         }
-
-        //m->item(r,2)->setToolTip(dataHelper::getVisitType(attended.visitType,settings));
-        m->item(r,2)->setToolTip(visitTypes.getVisitTypesByAlgoIndex(attended.visitType).name);
-        //qApp->processEvents();
     }
 
-    double _total = static_cast<double>(m->rowCount());
+    double _total = static_cast<double>(agendaModel->rowCount());
     if(_total > 0)
         percent = static_cast<double>(_attended / _total) * 100;
 }
@@ -3408,7 +3405,7 @@ QStandardItemModel *sqlBase::getMyRegisterCalcModel(QStandardItemModel *myRegist
             calcModel->appendRow(QList<QStandardItem*>() << itemService << itemCount << itemPrice );
         }
         TOTAL+=subTOTAL;
-    qApp->processEvents();
+        qApp->processEvents();
     }
     calcModel->setHorizontalHeaderLabels(QStringList() << "Service" << "Count" << "SUBTOTAL");
     return calcModel;
@@ -3442,7 +3439,7 @@ void sqlBase::registerServiceLoader(QStandardItemModel *myRegisterModel,sqlExtra
 }
 
 void sqlBase::createNewVisit(int ID,
-                             QString previous, 
+                             QString previous,
                              const QDateTime &datetime,
                              int visitType,
                              double visitPrice,
@@ -3472,12 +3469,12 @@ void sqlBase::createNewVisit(int ID,
         drugsModel->blockSignals(false);
         investModel->blockSignals(false);
 
-//        visit.bp.clear();
-//        visit.pulse.clear();
-//        visit.temp.clear();
-//        visit.rr.clear();
-//        visit.weight.clear();
-//        visit.length.clear();
+        //        visit.bp.clear();
+        //        visit.pulse.clear();
+        //        visit.temp.clear();
+        //        visit.rr.clear();
+        //        visit.weight.clear();
+        //        visit.length.clear();
         visit.vitals.clear();
 
         visit.headCir.clear();
@@ -3985,8 +3982,8 @@ QStandardItemModel *sqlBase::getAgendaModel(int julianDate,QStandardItemModel *a
                                  "AND followDate!=visitJulianDate "
                                  "AND checkButtonCaseClose=\"false\"")
                          .arg(julianDate));
-//    bool x = query->exec(QString("SELECT * FROM agendaView WHERE followDate=%1 AND checkButtonCaseClose=\"false\"")
-//                         .arg(julianDate));
+    //    bool x = query->exec(QString("SELECT * FROM agendaView WHERE followDate=%1 AND checkButtonCaseClose=\"false\"")
+    //                         .arg(julianDate));
     if ( !x )
     {
         mDebug() << "Failed to load agendaView " << query->lastError().text();

@@ -526,11 +526,13 @@ public:
         bool state;
         QTime time;
         int visitType;
+        int followVisitType;
         void clear()
         {
             state = false;
             time = QTime::fromMSecsSinceStartOfDay(0);
-            visitType=-1;
+            visitType=VisitTypes::n_visitsType::Undefined;
+            followVisitType=VisitTypes::n_visitsType::Undefined;
         }
     };
 
@@ -639,7 +641,7 @@ public:
     bool isVisitExists(int ID , QString visitDateTime);
     bool isPatientExists(int ID);
     ServiceState isServiceExistsInThisVisit(int ID, int visitDate, QString ServiceName);
-    sqlBase::Attended isFollowVisitAttended(int ID,int julianDate);
+    void isFollowVisitAttended(int ID,int julianDate, Attended &attended);
     bool isPatientNameUsed(QString name);
     bool updatePatient(int ID , Patient patient);
     bool updateVisit(int ID, QString visitDateTime , const Visit & visit);
@@ -790,7 +792,7 @@ private:
     Visit visit;
     SimpleCrypt crypto;
     bool encryptionEnabled;
-    int getVisitType(int ID, int visitJulianDate);
+    void getVisitType(int ID, int visitJulianDate, Attended &attended);
     VisitTypes & visitTypes = VisitTypes::instance();
     //QList<QBrush> getVisitColors();
 
