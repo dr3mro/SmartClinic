@@ -12,6 +12,7 @@
 #include <QImageReader>
 #include <QRect>
 #include <QApplication>
+#include <QScreen>
 #include "mdebug.h"
 
 class invIconHelper : public QObject

@@ -36,7 +36,7 @@ QString invIconHelper::getInvestigationTooltip(const QString &path, const QStrin
 
 int invIconHelper::getScale()
 {
-    QRect rec = qApp->screenAt(QCursor::pos())->geometry();
+    QRect rec = qApp->topLevelWindows().at(0)->screen()->geometry();
     int height = rec.height();
     return height/3;
 }

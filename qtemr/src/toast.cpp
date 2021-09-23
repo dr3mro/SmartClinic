@@ -92,7 +92,7 @@ void toast::moveCenter()
 
 QRect toast::getScreenRect()
 {
-    return qApp->screenAt(QCursor::pos())->geometry();
+    return qApp->topLevelWindows().at(0)->screen()->geometry();
 }
 
 void toast::mousePressEvent(QMouseEvent *e)
