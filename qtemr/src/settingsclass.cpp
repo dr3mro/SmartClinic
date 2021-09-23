@@ -40,7 +40,7 @@ settingsClass::settingsClass(QWidget *parent) :
 
     setWindowFlags(windowFlags() | Qt::Window | Qt::FramelessWindowHint);
 
-    QRect desktop = qApp->activeWindow()->screen()->geometry();
+    QRect desktop = qApp->primaryScreen()->geometry();
 
     if (desktop.size() == QSize(800,600))
     {

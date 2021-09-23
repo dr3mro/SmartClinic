@@ -10,7 +10,7 @@ mRequestViewer::mRequestViewer(QWidget *parent) :
     ui(new Ui::mRequestViewer)
 {
     ui->setupUi(this);
-    QRect screenres = qApp->activeWindow()->screen()->geometry();
+    QRect screenres = qApp->primaryScreen()->geometry();
     resize(screenres.width(),screenres.height());
     setStyleSheet("background-color: rgba(0, 0, 0, 196);");
     setAttribute(Qt::WA_NoSystemBackground, true);
