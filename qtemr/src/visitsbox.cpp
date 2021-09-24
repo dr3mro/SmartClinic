@@ -104,28 +104,21 @@ void visitsBox::tweakui()
     }
 
 
-    if ( screenMode )
-    {   //setWindowState(this->windowState() | Qt::WindowMaximized);
-        //QDesktopWidget* m = QApplication::desktop();
+    if ( screenMode ){
         QRect dw = qApp->primaryScreen()->geometry();
 
-        if ( dw.size() == QSize(800,600) )
-        {
+        if ( dw.size() == QSize(800,600) ){
             setFixedSize(QSize(800,560));
             move(QPoint(0,0));
-        }
-        else
-        {
+        }else{
             wm.centerOnScreen(this);
         }
         ui->plaintextNotes->hide();
         ui->notesLabel->hide();
-
     }
     else
     {
-        if ( speciality != dataHelper::Speciality::ObGyn  )
-        {
+        if ( speciality != dataHelper::Speciality::ObGyn  ){
             ui->plaintextNotes->show();
             ui->notesLabel->show();
         }
@@ -133,8 +126,7 @@ void visitsBox::tweakui()
         wm.centerOnScreen(this);
     }
 
-    if (simpleExamination)
-    {
+    if (simpleExamination){
         ui->patientHeartLungEx->hide();
         ui->patientAbdomentBack->hide();
         ui->patientLL->hide();
@@ -142,9 +134,7 @@ void visitsBox::tweakui()
         ui->labelHeartnLungs->hide();
         ui->labelAbdomenBack->hide();
         ui->LabelLL->hide();
-    }
-    else
-    {
+    }else{
         ui->patientHeartLungEx->show();
         ui->patientAbdomentBack->show();
         ui->patientLL->show();
@@ -157,7 +147,6 @@ void visitsBox::tweakui()
     ui->dateFollowUp->calendarWidget()->setFirstDayOfWeek(Qt::Saturday);
     ui->comboVisitType->fillContent(maxFollows);
     emit updateTextFont();
-
     toggleVisualEffects(settings.isVisualEffectsEnabled());
 }
 
