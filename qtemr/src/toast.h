@@ -9,7 +9,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QTimer>
-#include <QtMultimedia/QSound>
+#include <QSoundEffect>
 #include <QApplication>
 #include <QMouseEvent>
 #include <QShowEvent>
@@ -36,6 +36,7 @@ private:
     QTimer moTimer;
     QTimer fTimer;
     QTimer wait;
+    QSoundEffect effect;
 protected:
     void mousePressEvent(QMouseEvent *e);
     void showEvent(QShowEvent *e);

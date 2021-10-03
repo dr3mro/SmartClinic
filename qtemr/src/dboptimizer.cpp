@@ -93,7 +93,11 @@ void dbOptimizer::doOptimize()
 
     message("Initializing database integrity check ...");
 
+#if QT_VERSION >= 0x060000
+    future1 = QtConcurrent::run(&optimizer::integrityCheck,&opt);
+#else
     future1 = QtConcurrent::run(&opt,&optimizer::integrityCheck);
+#endif
     while(future1.isRunning())
         qApp->processEvents();
 
@@ -106,7 +110,12 @@ void dbOptimizer::doOptimize()
     if(clean)
     {
         message("Initializing database Optimization ...");
+#if QT_VERSION >= 0x060000
+        future2 = QtConcurrent::run(&optimizer::vacuum,&opt);
+#else
         future2 = QtConcurrent::run(&opt,&optimizer::vacuum);
+#endif
+
         while(future2.isRunning())
            qApp->processEvents();
 

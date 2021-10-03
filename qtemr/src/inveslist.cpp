@@ -225,14 +225,23 @@ void invesList::on_tableView_clicked(const QModelIndex &index)
 void invesList::load()
 {
     worker->setIdJulianDate(ID);
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&wm_invModelLoader::Work,worker);
+#else
     future = QtConcurrent::run(worker,&wm_invModelLoader::Work);
+#endif
     watcher.setFuture(future);
 }
 
 void invesList::createTooltips(InvestModel *m)
 {
     invTooltipWorker->setInvestigationsModel(m);
+#if QT_VERSION >= 0x060000
+    tooltipFuture=QtConcurrent::run(&wm_investTooltipLoader::Work,invTooltipWorker);
+#else
     tooltipFuture=QtConcurrent::run(invTooltipWorker,&wm_investTooltipLoader::Work);
+#endif
+
     tooltipWatcher.setFuture(tooltipFuture);
 }
 

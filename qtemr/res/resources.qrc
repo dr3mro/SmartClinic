@@ -110,11 +110,30 @@
     </qresource>
     <qresource prefix="/Audio">
         <file alias="Notify">audio/Notify.wav</file>
+        <file alias="generic">audio/Windows Notify System Generic.wav</file>
+        <file alias="blocked">audio/Windows Pop-up Blocked.wav</file>
+        <file alias="default">audio/Windows Default.wav</file>
+        <file alias="fore">audio/Windows Foreground.wav</file>
+        <file alias="info">audio/Windows Information Bar.wav</file>
+        <file alias="cal">audio/Windows Notify Calendar.wav</file>
+        <file alias="message">audio/Windows Notify Messaging.wav</file>
+        <file alias="print">audio/Windows Print complete.wav</file>
+        <file alias="unlock">audio/Windows Unlock.wav</file>
     </qresource>
     <qresource prefix="/">
         <file>ionicons/whatsapp.png</file>
         <file>banner.html</file>
         <file>alphaNum/021-u.png</file>
+        <file>audio/Notify.wav</file>
+        <file>audio/Windows Default.wav</file>
+        <file>audio/Windows Foreground.wav</file>
+        <file>audio/Windows Information Bar.wav</file>
+        <file>audio/Windows Notify Calendar.wav</file>
+        <file>audio/Windows Notify Messaging.wav</file>
+        <file>audio/Windows Notify System Generic.wav</file>
+        <file>audio/Windows Pop-up Blocked.wav</file>
+        <file>audio/Windows Print complete.wav</file>
+        <file>audio/Windows Unlock.wav</file>
     </qresource>
     <qresource prefix="/alphaNums">
         <file>alphaNum/006-f.png</file>

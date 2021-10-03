@@ -60,7 +60,12 @@ void investTable::populateInvests(int id, int julianDate)
     ID = id;
     this->julianDate = julianDate;
     worker->setIdJulianDate(id,julianDate);
+#if QT_VERSION >= 0x060000
+    future=QtConcurrent::run(&wm_invModelLoader::Work,worker);
+#else
     future=QtConcurrent::run(worker,&wm_invModelLoader::Work);
+#endif
+
     watcher.setFuture(future);
 }
 
@@ -454,7 +459,11 @@ int investTable::getServicesCount()
 void investTable::createTooltips(InvestModel *m)
 {
     invTooltipWorker->setInvestigationsModel(m);
+#if QT_VERSION >= 0x060000
+    tooltipFuture=QtConcurrent::run(&wm_investTooltipLoader::Work,invTooltipWorker);
+#else
     tooltipFuture=QtConcurrent::run(invTooltipWorker,&wm_investTooltipLoader::Work);
+#endif
     tooltipWatcher.setFuture(tooltipFuture);
 }
 

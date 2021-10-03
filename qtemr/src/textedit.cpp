@@ -91,7 +91,11 @@ bool TextEdit::findRemoveText(QString text)
 
 void TextEdit::setCompleter()
 {
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&wm_texteditCompleterLoader::work,worker);
+#else
     future = QtConcurrent::run(worker,&wm_texteditCompleterLoader::work);
+#endif
     watcher.setFuture(future);
 }
 

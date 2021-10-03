@@ -52,18 +52,31 @@ else()
     set(CMAKE_EXE_LINKER_FLAGS " -static")
 endif()
 
-
 find_package(OpenSSL)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Xml REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5Sql REQUIRED)
-find_package(Qt5Multimedia REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5Printsupport REQUIRED)
+find_package(Qt6 COMPONENTS Core)
 
+if (NOT Qt6_FOUND)
+    find_package(Qt5 COMPONENTS Core REQUIRED)
+    find_package(Qt5 COMPONENTS Widgets REQUIRED)
+    find_package(Qt5 COMPONENTS Core REQUIRED)
+    find_package(Qt5 COMPONENTS Gui REQUIRED)
+    find_package(Qt5 COMPONENTS Xml REQUIRED)
+    find_package(Qt5 COMPONENTS Network REQUIRED)
+    find_package(Qt5 COMPONENTS Multimedia REQUIRED)
+    find_package(Qt5 COMPONENTS Sql REQUIRED)
+    find_package(Qt5 COMPONENTS Concurrent REQUIRED)
+    find_package(Qt5 COMPONENTS Printsupport REQUIRED)
+else()
+    find_package(Qt6 COMPONENTS Widgets REQUIRED)
+    find_package(Qt6 COMPONENTS Core REQUIRED)
+    find_package(Qt6 COMPONENTS Gui REQUIRED)
+    find_package(Qt6 COMPONENTS Xml REQUIRED)
+    find_package(Qt6 COMPONENTS Network REQUIRED)
+    find_package(Qt6 COMPONENTS Multimedia REQUIRED)
+    find_package(Qt6 COMPONENTS Sql REQUIRED)
+    find_package(Qt6 COMPONENTS Concurrent REQUIRED)
+    find_package(Qt6 COMPONENTS Printsupport REQUIRED)
+endif()
 #message(${OPENSSL_INCLUDE_DIR})
 
 include_directories("src/")
@@ -86,28 +99,29 @@ add_executable(${TARGET_NAME} WIN32 ${UI} ${SOURCES} ${HEADERS} ${APP_ICON_RESOU
 set_property(TARGET ${TARGET_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 target_precompile_headers(${TARGET_NAME} PRIVATE src/pch.h)
+
 if(MSVC)
     target_link_libraries(${TARGET_NAME}
-        Qt5::Widgets
-        Qt5::Network
-        Qt5::Multimedia
-        Qt5::Sql
-        Qt5::Concurrent
-        Qt5::Xml
-        Qt5::PrintSupport
+        Qt::Widgets
+        Qt::Network
+        Qt::Multimedia
+        Qt::Sql
+        Qt::Concurrent
+        Qt::Xml
+        Qt::PrintSupport
         ${ZLIB}
         ${VLDLIB}
         ${OPENSSL_LIBRARIES}
         )
 else()
     target_link_libraries(${TARGET_NAME}
-        Qt5::Widgets
-        Qt5::Network
-        Qt5::Multimedia
-        Qt5::Sql
-        Qt5::Concurrent
-        Qt5::Xml
-        Qt5::PrintSupport
+        Qt::Widgets
+        Qt::Network
+        Qt::Multimedia
+        Qt::Sql
+        Qt::Concurrent
+        Qt::Xml
+        Qt::PrintSupport
         ${ZLIB}
         ${VLDLIB}
         ${OPENSSL_LIBRARIES}

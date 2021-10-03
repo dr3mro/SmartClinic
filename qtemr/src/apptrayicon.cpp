@@ -52,7 +52,7 @@ appTrayIcon::appTrayIcon(QObject *parent) : QSystemTrayIcon(parent)
     a_favourites->setIcon(QIcon(":/Graphics/heart"));
 
     a_exit = new QAction("&Exit",this);
-    a_exit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
+    a_exit->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q));
     a_exit->setShortcutContext(Qt::ApplicationShortcut);
     connect(a_exit,SIGNAL(triggered()),parent,SLOT(close()));
     a_exit->setIcon(QIcon(":/Graphics/remove"));

@@ -88,9 +88,9 @@ void Switch::mouseReleaseEvent(QMouseEvent *e)
 //    QAbstractButton::mouseReleaseEvent(e);
 //}
 
-void Switch::enterEvent(QEvent *e) {
+void Switch::mouseMoveEvent(QMouseEvent *e) {
     setCursor(Qt::PointingHandCursor);
-    QAbstractButton::enterEvent(e);
+    QAbstractButton::mouseMoveEvent(e);
 }
 
 QSize Switch::sizeHint() const {

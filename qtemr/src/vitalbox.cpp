@@ -5,7 +5,7 @@
 #include "vitalbox.h"
 
 vitalBox::vitalBox(QWidget *parent):QLineEdit(parent),
-validator(new QRegExpValidator(this))
+validator(new QRegularExpressionValidator(this))
 {
    connect (parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeEditable(bool)));
    connect (parent->window(),SIGNAL(styleVitals(mSettings&)),this,SLOT(createStyles(mSettings&)));
@@ -18,8 +18,8 @@ vitalBox::~vitalBox()
 
 void vitalBox::setRegExpValidator(QString regExpString)
 {
-    QRegExp regExp(regExpString);
-    validator->setRegExp(regExp);
+    QRegularExpression regExp(regExpString);
+    validator->setRegularExpression(regExp);
     setValidator(validator);
 }
 

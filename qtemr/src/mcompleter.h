@@ -15,7 +15,7 @@
 //#include "msettings.h"
 
 class QString;
-class QStringList;
+//class QStringList;
 
 
 class mCompleter : public QCompleter

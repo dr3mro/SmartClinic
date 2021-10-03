@@ -67,7 +67,11 @@ void genericLineEdit::mUpdateCompleter()
 void genericLineEdit::createCompleter()
 {
     worker->setTable(tableName);
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&wm_CompleterLoader::Work,worker);
+#else
     future = QtConcurrent::run(worker,&wm_CompleterLoader::Work);
+#endif
     watcher.setFuture(future);
 }
 

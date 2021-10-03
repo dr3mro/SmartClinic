@@ -18,10 +18,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     mship(new mShip(this)),
     msgbox(new myMessageBox(this)),
     trayIcon(new appTrayIcon(this)),
-    QuitShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this, SLOT(close()))),
+    QuitShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q), this, SLOT(close()))),
     settingsShortcut(new QShortcut(QKeySequence(Qt::Key_F9), this, SLOT(show_settings_win()))),
-    menuShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_M),this)),
-    remoteAssistShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1), this, SLOT(showRemoteAssistWin()))),
+    menuShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_M),this)),
+    remoteAssistShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F1), this, SLOT(showRemoteAssistWin()))),
     blureffect(new QGraphicsBlurEffect(this)),
     rAssistant(new remoteAssist(this)),
     WA_widget(new QWidget(this)),
@@ -1685,7 +1685,12 @@ void MainWindow::addToMyCompleters() //in Thread
 {  
     add2CompleterWorker->setPatientData(patient);
     add2CompleterWorker->setHusband(ui->ObstWidget->getHusbandHtml());
-    QtConcurrent::run(add2CompleterWorker,&wm_add2Completer::pWork);
+#if QT_VERSION >= 0x060000
+    auto f = QtConcurrent::run(&wm_add2Completer::pWork,add2CompleterWorker);
+#else
+    auto f = QtConcurrent::run(add2CompleterWorker,&wm_add2Completer::pWork);
+#endif
+
 }
 
 void MainWindow::appendCheckBoxTextToPastHx(QString text)
@@ -1937,7 +1942,11 @@ void MainWindow::toggleDrugsAlteredStatus(bool b)
 
 void MainWindow::reloadTheme()
 {
+#if QT_VERSION >= 0x060000
+    themeFuture = QtConcurrent::run(&mSettings::themeMaker,&settings);
+#else
     themeFuture = QtConcurrent::run(&settings,&mSettings::themeMaker);
+#endif
     themeFutureWatcher.setFuture(themeFuture);
 }
 

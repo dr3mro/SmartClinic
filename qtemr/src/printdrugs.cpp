@@ -314,7 +314,11 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
 void printDrugs::saveRoshettaAutoComplete()
 {
     QStringList dict = QStringList() << ui->Roshetta->toHtml();
-    QtConcurrent::run(wm_add2completer,&wm_add2Completer::save2Dict,dict);
+#if QT_VERSION >= 0x060000
+    auto f = QtConcurrent::run(&wm_add2Completer::save2Dict,wm_add2completer,dict);
+#else
+    auto f = QtConcurrent::run(wm_add2completer,&wm_add2Completer::save2Dict,dict);
+#endif
 }
 
 void printDrugs::refreshView()

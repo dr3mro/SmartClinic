@@ -182,14 +182,24 @@ void richTextEditor::searchGoogle()
 
 void richTextEditor::mouseMoveEvent(QMouseEvent *event)
 {
+#if QT_VERSION >= 0x060000
+    move( event->globalPosition().x() - x_cord , event->globalPosition().y() - y_cord );
+#else
     move( event->globalX() - x_cord , event->globalY() - y_cord );
+#endif
+
     QWidget::mouseMoveEvent(event);
 }
 
 void richTextEditor::mousePressEvent(QMouseEvent *event)
 {
+#if QT_VERSION >= 0x060000
+    x_cord = event->globalPosition().x();
+    y_cord = event->globalPosition().y();
+#else
     x_cord = event->x();
     y_cord = event->y();
+#endif
     QWidget::mousePressEvent(event);
 }
 

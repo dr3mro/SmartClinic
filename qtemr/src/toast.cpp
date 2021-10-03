@@ -43,19 +43,25 @@ void toast::setMessage(QString title, QString msg)
 void toast::setMessageType(QString title)
 {
     QString c;
-    if (! QString::compare("Message",title,Qt::CaseInsensitive))
+    if (! QString::compare("Message",title,Qt::CaseInsensitive)){
         c = "Aliceblue";
-    else if (! QString::compare("Done",title,Qt::CaseInsensitive))
+        effect.setSource(QUrl("qrc:/Audio/unlock"));
+    }else if (! QString::compare("Done",title,Qt::CaseInsensitive)){
         c = "lightgreen";
-    else if (! QString::compare("Error",title,Qt::CaseInsensitive))
+        effect.setSource(QUrl("qrc:/Audio/default"));
+    }else if (! QString::compare("Error",title,Qt::CaseInsensitive)){
         c = "tomato";
-    else if (! QString::compare("Warning",title,Qt::CaseInsensitive))
+        effect.setSource(QUrl("qrc:/Audio/blocked"));
+    }else if (! QString::compare("Warning",title,Qt::CaseInsensitive)){
         c = "LemonChiffon";
-    else if (! QString::compare("Information",title,Qt::CaseInsensitive))
+        effect.setSource(QUrl("qrc:/Audio/cal"));
+    }else if (! QString::compare("Information",title,Qt::CaseInsensitive)){
         c = "GhostWhite";
-    else
+        effect.setSource(QUrl("qrc:/Audio/info"));
+    }else{
         c = "Orange";
-
+        effect.setSource(QUrl("qrc:/Audio/print"));
+    }
     setStyleSheet(QString("background-color:%1;border:1px solid grey;").arg(c));
 }
 
@@ -108,6 +114,6 @@ void toast::showEvent(QShowEvent *e)
     wait.stop();
     moveCenter();
     QLabel::showEvent(e);
-    QSound::play(":/Audio/Notify");
+    effect.play();
     miTimer.start();
 }

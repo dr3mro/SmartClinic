@@ -1,7 +1,7 @@
 #include "PageMetrics.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
 
 
 namespace {
@@ -10,7 +10,7 @@ namespace {
 
 qreal PageMetrics::mmToPx(qreal _mm, bool _x)
 {
-	return ::mmToInches(_mm) * (_x ? qApp->desktop()->logicalDpiX() : qApp->desktop()->logicalDpiY());
+    return ::mmToInches(_mm) * (_x ? qApp->primaryScreen()->logicalDotsPerInchX() : qApp->primaryScreen()->logicalDotsPerInchY());
 }
 
 QPageSize::PageSizeId PageMetrics::pageSizeIdFromString(const QString& _from)

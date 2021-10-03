@@ -15,11 +15,11 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
     visitSaverWorker(new wm_visitSaver),
     print(new printDrugs(this)),
     //calWidget(new mCalendarWidget(this)),
-    shift_pageUp(new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageUp), this)),
-    shift_pageDown(new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageDown), this)),
-    printShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_P),this)),
-    easyPrintShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O),this)),
-    printPreviewShortcut(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R),this)),
+    shift_pageUp(new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageUp), this)),
+    shift_pageDown(new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageDown), this)),
+    printShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_P),this)),
+    easyPrintShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O),this)),
+    printPreviewShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_R),this)),
     toggleFollowupDate(new QShortcut(Qt::Key_F12,this)),
     vTypeUp(new QShortcut(Qt::Key_F10,this)),
     vTypeDown(new QShortcut(Qt::Key_F11,this))
@@ -199,7 +199,7 @@ void visitsBox::on_ButtonNew_clicked()
     //    save(visit,false);
 
     visitindex = 0;
-//    double visitPrice = settings.getVisitPrice(visitindex);
+    //    double visitPrice = settings.getVisitPrice(visitindex);
     double visitPrice = visitTypes.getVisitTypesByUiIndex(visitindex).price;
     sqlbase->createNewVisit(patientBasicDetails.ID,
                             visit.visitDateTime,
@@ -678,7 +678,7 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
             ui->dateFollowUp->setFocus(Qt::OtherFocusReason);
             break;
         }
-    }else if ( e->modifiers() == Qt::ControlModifier + Qt::ShiftModifier)
+    }else if ( e->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) )
     {
         switch(e->key()){
         case Qt::Key_Percent:
@@ -696,7 +696,7 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
         }
     }
 
-//    mDebug() << e->key();
+    //    mDebug() << e->key();
     mDialog::keyPressEvent(e);
 }
 
@@ -1029,12 +1029,12 @@ void visitsBox::SyncLastVisit()
 
 void visitsBox::on_comboVisitType_currentIndexChanged(int index)
 {
-//    if ( index == 0 )
-//        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/newvisit"));
-//    else if (index <= maxFollows)
-//        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/fvisit"));
-//    else //if (index > maxFollows)
-//        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/free"));
+    //    if ( index == 0 )
+    //        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/newvisit"));
+    //    else if (index <= maxFollows)
+    //        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/fvisit"));
+    //    else //if (index > maxFollows)
+    //        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/free"));
 
     if(index < VisitTypes::n_visitsType::NewVisit || index > VisitTypes::n_visitsType::Undefined)
         return;
@@ -1079,14 +1079,24 @@ void visitsBox::addNewDrug(QString newDrugName)
 
 void visitsBox::mousePressEvent(QMouseEvent *event)
 {
+#if QT_VERSION >= 0x060000
+    m_nMouseClick_X_Coordinate = event->globalPosition().x();
+    m_nMouseClick_Y_Coordinate = event->globalPosition().y();
+#else
     m_nMouseClick_X_Coordinate = event->x();
     m_nMouseClick_Y_Coordinate = event->y();
+#endif
 }
 void visitsBox::mouseMoveEvent(QMouseEvent *event)
 {
     if ( event->modifiers() == Qt::ControlModifier )
     {
-        move(event->globalX()-m_nMouseClick_X_Coordinate,event->globalY()-m_nMouseClick_Y_Coordinate);
+#if QT_VERSION >= 0x060000
+        move(event->globalPosition().x() - m_nMouseClick_X_Coordinate,event->globalPosition().y() - m_nMouseClick_Y_Coordinate);
+#else
+        move(event->globalX() - m_nMouseClick_X_Coordinate,event->globalY() - m_nMouseClick_Y_Coordinate);
+
+#endif
     }
 
 }
@@ -1260,7 +1270,12 @@ void visitsBox::addThisToCompleter(const sqlBase::Visit& visit)
 {
     add2CompleterWorker->setVisitData(visit);
     add2CompleterWorker->setMode(autoCompleteByWord);
-    QtConcurrent::run(add2CompleterWorker,&wm_add2Completer::vWork);
+#if QT_VERSION >= 0x060000
+    auto f = QtConcurrent::run(&wm_add2Completer::vWork,add2CompleterWorker);
+#else
+    auto f = QtConcurrent::run(add2CompleterWorker,&wm_add2Completer::vWork);
+#endif
+
 }
 
 void visitsBox::toggleAntenatal(bool checked)
@@ -1342,7 +1357,7 @@ int visitsBox::followNotify(const QDate &date)
     int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(date,patientBasicDetails.ID)+1;
     if ( selectedDateFollowUps > maxFollowUps && maxFollowUps > 0)
     {
-        newMessage("Message",
+        newMessage("Warning",
                    QString("Warning, Follow up limit exceeded for (%1) , current : %2, limit : %3")
                    .arg(en_US.toString(date,"dd/MM/yyyy"))
                    .arg(selectedDateFollowUps)
@@ -1373,8 +1388,8 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshetta.printedinDate = QDateTime::currentDateTime();
     roshetta.caseClosed = ui->CheckButtonCaseClose->isChecked();
     roshetta.visitSymbole = visitTypes.getVisitSymbole(ui->comboVisitType->currentIndex(),
-                                                        ui->CheckButtonCaseClose->isChecked(),
-                                                        roshetta.printedinDate.date() == roshetta.nextDate);
+                                                       ui->CheckButtonCaseClose->isChecked(),
+                                                       roshetta.printedinDate.date() == roshetta.nextDate);
 
     if ( settings.userSpeciality() == dataHelper::Speciality::Paediatrics ||
          settings.userSpeciality() == dataHelper::Speciality::FamilyMedicine )
@@ -1390,7 +1405,7 @@ mSettings::Roshetta visitsBox::getRoshetta()
     roshettaDrugsfiller(roshetta.currentAlteredDrugsList,ui->vDrugsTable->getDrugsModel(),true);
 
     foreach (QString inv, ui->InvestigationsTable->getInvestigationsList())
-            roshetta.requests << inv;
+        roshetta.requests << inv;
 
     roshettaVitalsFiller(roshetta.vitals);
 
@@ -1475,7 +1490,11 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
     if (threading)
     {
         visitSaverWorker->setVisitData(visitData);
-        QtConcurrent::run(visitSaverWorker,&wm_visitSaver::Work);
+#if QT_VERSION >= 0x060000
+        auto f = QtConcurrent::run(&wm_visitSaver::Work,visitSaverWorker);
+#else
+        auto f = QtConcurrent::run(visitSaverWorker,&wm_visitSaver::Work);
+#endif
         return true;
     }
     else

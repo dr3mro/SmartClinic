@@ -119,9 +119,13 @@ void mAssistant::loadCurrentSelectedAgenda()
 
     ui->agendaTableView->setModel(nullptr);
     int currentDate = static_cast<int>(ui->agendaCalendar->selectedDate().toJulianDay());
+#if QT_VERSION >= 0x060000
+    agendaModelFuture = QtConcurrent::run(&sqlBase::getAgendaModel,sqlbase,currentDate,agendaModel);
+#else
     agendaModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getAgendaModel,currentDate,agendaModel);
-    agendaModelFutureWatcher.setFuture(agendaModelFuture);
+#endif
 
+    agendaModelFutureWatcher.setFuture(agendaModelFuture);
     agendaModelFuture.waitForFinished();
 }
 
@@ -164,7 +168,12 @@ void mAssistant::loadRegister()
     timeFrame.endDate = static_cast<int>(ui->toDate->date().toJulianDay());
     timeFrame.endTime = static_cast<int>(ui->toTime->time().msecsSinceStartOfDay()/1000);
     ui->cashTableView->setModel(nullptr);
-    cashModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getMyRegisterModel,timeFrame,myRegisterModel,sqlextra);
+#if QT_VERSION >= 0x060000
+        cashModelFuture = QtConcurrent::run(&sqlBase::getMyRegisterModel,sqlbase,timeFrame,myRegisterModel,sqlextra);
+#else
+        cashModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getMyRegisterModel,timeFrame,myRegisterModel,sqlextra);
+#endif
+
     cashModelFutureWatcher.setFuture(cashModelFuture);
     cashModelFuture.waitForFinished();
 }
@@ -188,12 +197,24 @@ void mAssistant::doCalcs()
     ui->calcTableView->setModel(nullptr);
     calcModel->clear();
 
-    calcModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getMyRegisterCalcModel,
+#if QT_VERSION >= 0x060000
+    calcModelFuture = QtConcurrent::run(&sqlBase::getMyRegisterCalcModel,
+                                        sqlbase,
                                         myRegisterModel,
                                         calcModel,
                                         sqlextra,
                                         std::ref(selection),
                                         std::ref(TOTAL));
+#else
+    calcModelFuture = QtConcurrent::run(sqlbase,
+                                        &sqlBase::getMyRegisterCalcModel,
+                                        myRegisterModel,
+                                        calcModel,
+                                        sqlextra,
+                                        std::ref(selection),
+                                        std::ref(TOTAL));
+#endif
+
 
     calcModelFuture.waitForFinished();
     ui->calcTableView->setModel(calcModel);
@@ -283,7 +304,12 @@ void mAssistant::loadDeliveries()
                                             .arg(expectedDeliveries.getYear()),"d/M/yyyy");
         qint64 startJulian = startDate.toJulianDay();
         qint64 endJulian = startDate.addMonths(1).toJulianDay();
+#if QT_VERSION >= 0x060000
+        eddModelFuture = QtConcurrent::run(&sqlBase::getEddModel,sqlbase,startJulian,endJulian,eddModel);
+#else
         eddModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getEddModel,startJulian,endJulian,eddModel);
+#endif
+
         eddModelFutureWatcher.setFuture(eddModelFuture);
         eddModelFuture.waitForFinished();
     }
@@ -309,8 +335,11 @@ void mAssistant::onAgendaModelLoaded()
 
 
     int currentDate = static_cast<int>(ui->agendaCalendar->selectedDate().toJulianDay());
-
+#if QT_VERSION >= 0x060000
+    agendaModelAttendedFuture = QtConcurrent::run(&sqlBase::agendaAttendedLoader,sqlbase,currentDate,agendaModel,std::ref(percent));
+#else
     agendaModelAttendedFuture = QtConcurrent::run(sqlbase,&sqlBase::agendaAttendedLoader,currentDate,agendaModel,std::ref(percent));
+#endif
     agendaModelAttendedFuture.waitForFinished();
 
     ui->percentage->setText(QString("%1%").arg(percent,2,'f',2));

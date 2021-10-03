@@ -113,7 +113,12 @@ void errorLogViewer::readLogFromDiskThread()
     if(future.isRunning())
         return;
 
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&errorLogViewer::readLogFromDisk,this);
+#else
     future = QtConcurrent::run(this,&errorLogViewer::readLogFromDisk);
+#endif
+
     watcher.setFuture(future);
 }
 

@@ -44,8 +44,12 @@ void patientTable::updatePatients()
         return;
 
     proxy_model->setSourceModel(nullptr);
-
+#if QT_VERSION >= 0x060000
+    modelFuture = QtConcurrent::run(&sqlBase::getPatientsTableModel,sqlbase);
+#else
     modelFuture = QtConcurrent::run(sqlbase,&sqlBase::getPatientsTableModel);
+#endif
+
     watcher.setFuture(modelFuture);
 }
 
@@ -165,7 +169,12 @@ void patientTable::setConnection(QString conname)
     //qRegisterMetaType<QVector<int> >("QVector<int>");
     connect (sqlbase,SIGNAL(patientIconSet(bool,int)),this,SLOT(setPatientIcon(bool,int)));
     connect(this,SIGNAL(modelLoadingFinished()),this,SLOT(tweaksAfterModelLoadingIsFinished()));
+#if QT_VERSION >= 0x060000
+    initModelFuture = QtConcurrent::run(&sqlBase::getPatientsTableModel,sqlbase);
+#else
     initModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getPatientsTableModel);
+#endif
+
     initWatcher.setFuture(initModelFuture);
 }
 

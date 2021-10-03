@@ -420,7 +420,12 @@ void drugsTable::loadPatientDrugsModel(int ID, int julianDate,bool syncLoader)
     drugsModel->blockSignals(true);
     drugsSyncLoadingOperation = syncLoader;
     worker->setIDJulianDate(ID,julianDate);
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&wm_drugModelLoader::Work,worker);
+#else
     future = QtConcurrent::run(worker,&wm_drugModelLoader::Work);
+
+#endif
     watcher.setFuture(future);
 }
 drugsTable::~drugsTable()

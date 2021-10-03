@@ -7,7 +7,7 @@
 
 #include <QObject>
 #include <QLineEdit>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 #include <QString>
 #include <QMouseEvent>
 #include "datahelper.h"
@@ -24,7 +24,7 @@ public:
     void setVitalType(int vt, int sp);
 
 private:
-    QRegExpValidator *validator;
+    QRegularExpressionValidator *validator;
     int speciality;
     int vitaltype;
     mSettings::lineStyle style;

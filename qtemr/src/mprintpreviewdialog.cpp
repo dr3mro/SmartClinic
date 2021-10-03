@@ -17,7 +17,7 @@ mPrintPreviewDialog::mPrintPreviewDialog(QWidget *parent):QPrintPreviewDialog(pa
 
     print->setShortcut(QKeySequence("CTRL+P"));
 
-    printShortcut = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_P),this);
+    printShortcut = new QShortcut(QKeySequence(Qt::ALT | Qt::Key_P),this);
     connect ( printShortcut,SIGNAL(activated()),parent,SLOT(mPrint()));
     connect ( printShortcut,SIGNAL(activated()),this,SLOT(close()));
     setMinimumSize(800,600);

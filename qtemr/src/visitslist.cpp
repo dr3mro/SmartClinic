@@ -26,7 +26,11 @@ void visitsList::populateWithVisitList(const int &_ID)
 {
     this->ID = _ID;
     worker->setID(_ID);
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&wm_visitListLoader::Work,worker);
+#else
     future = QtConcurrent::run(worker,&wm_visitListLoader::Work);
+#endif
     watcher.setFuture(future);
 }
 

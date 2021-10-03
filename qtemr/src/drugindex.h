@@ -18,7 +18,11 @@ class DrugsIndexPriceItemDelegate : public QStyledItemDelegate
 public:
     DrugsIndexPriceItemDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) { }
     QString displayText(const QVariant &value, const QLocale &locale) const {
-        if (value.type() == QVariant::Double) return locale.toString(value.toDouble(), 'f', 2);
+#if QT_VERSION >= 0x060000
+        if ( value.metaType().id() == QMetaType::Double) return locale.toString(value.toDouble(), 'f', 2);
+#else
+        if ( value.type() == QVariant::Double) return locale.toString(value.toDouble(), 'f', 2);
+#endif
         return QStyledItemDelegate::displayText(value, locale);
     }
 };

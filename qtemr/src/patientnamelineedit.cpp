@@ -42,6 +42,10 @@ void patientNameLineEdit::keyPressEvent(QKeyEvent *e)
 
 void patientNameLineEdit::createCompleter()
 {
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&wm_patientnamesCompleterLoader::Work,Worker);
+#else
     future = QtConcurrent::run(Worker,&wm_patientnamesCompleterLoader::Work);
+#endif
     watcher.setFuture(future);
 }

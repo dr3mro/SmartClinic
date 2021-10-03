@@ -191,7 +191,8 @@ void miniUpdater::closeEvent(QCloseEvent *e)
 
 void miniUpdater::keyPressEvent(QKeyEvent *e)
 {
-    if ( e->key() == Qt::Key_Escape ||e->key() == Qt::ALT + Qt::Key_F4)
+    if ( e->key() == Qt::Key_Escape ||
+         ( e->key() == Qt::Key_F4 && e->modifiers().testFlag(Qt::KeyboardModifier::AltModifier)))
     {
         e->ignore();
         close();

@@ -10,7 +10,7 @@
 #include <QKeyEvent>
 #include <QIcon>
 #include <QAction>
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 
 class mPatientFilter : public QLineEdit
 {

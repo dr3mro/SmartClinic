@@ -15,7 +15,7 @@ QString dataIOhelper::getTextFileContents(QString filePath)
     QString contents;
     file.open (QFile::ReadOnly | QFile::Text );
     QTextStream in(&file);
-    in.setCodec("UTF-8");
+//    in.setCodec("UTF-8");
     contents = in.readAll();
     file.close();
     return contents;
@@ -28,7 +28,7 @@ QStringList dataIOhelper::getTextFileContentsAsList(QString filePath)
     QString line;
     file.open (QFile::ReadOnly | QFile::Text );
     QTextStream in(&file);
-    in.setCodec("UTF-8");
+//    in.setCodec("UTF-8");
     while(!in.atEnd()) {
         line = in.readLine();
         contents << line;
@@ -54,7 +54,7 @@ QStandardItemModel* dataIOhelper::getBackUpModel(QObject *parent)
     while ( ! xmlread.atEnd() )
     {
         xmlread.readNext();
-        if ( xmlread.name() == "item" )
+        if ( xmlread.name() == QString("item") )
         {
             attributes = xmlread.attributes();
             if ( ! attributes.empty() )
@@ -133,7 +133,7 @@ bool dataIOhelper::writeXMLdoc(QDomDocument doc, QString path)
     else
     {
         QTextStream stream(&file);
-        stream.setCodec("utf8");
+        //stream.setCodec("utf8");
         stream << doc.toString();
         file.close();
         return true;

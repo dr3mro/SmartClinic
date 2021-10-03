@@ -38,5 +38,10 @@ void mShip::sendMail(QString subject, QString body)
 
 void mShip::work()
 {
-    QtConcurrent::run(worker,&wm_mShip::work);
+#if QT_VERSION >= 0x060000
+    auto f = QtConcurrent::run(&wm_mShip::work,worker);
+#else
+    auto f = QtConcurrent::run(worker,&wm_mShip::work);
+#endif
+
 }
