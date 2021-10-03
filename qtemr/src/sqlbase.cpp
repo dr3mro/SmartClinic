@@ -4083,7 +4083,8 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     }
     else
     {
-        myRegisterModel->clear();
+        delete myRegisterModel;
+        myRegisterModel = new QStandardItemModel;
         return myRegisterModel;
     }
 
@@ -4096,7 +4097,9 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
         mDebug() << query->executedQuery();
     }
 
-    myRegisterModel->clear();
+    delete myRegisterModel;
+    myRegisterModel = new QStandardItemModel;
+
     int row = 0;
     int _id;
     int visitType;
@@ -4105,8 +4108,12 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     int julianDate,timeMS;
     //QList<QBrush> brushes = getVisitColors();
 
+    QStringList labels = QStringList() << "ID" << "Name" << "julianDateTime" << "julianDate" << "VisitType" << "price" << sqlextra->getPaidServicesList();
+    int columns = labels.count();
+
     patientInfo info;
     QString toolTip;
+
     while(query->next())
     {
 
@@ -4152,34 +4159,20 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
         myRegisterModel->setItem(row,5,priceItem);
         getPatientTooltip(toolTip,info);
         myRegisterModel->item(row,1)->setToolTip(toolTip);
+
+        for ( int x=6;x<columns;x++)
+        {
+                QStandardItem *item = new QStandardItem(true);
+                item->setCheckable(false);
+                item->setCheckState(Qt::CheckState(Qt::Unchecked));
+                item->setBackground(visitTypes.getVisitTypesByAlgoIndex(visitType).color);
+                myRegisterModel->setItem(row,x,item);
+        }
         row +=1;
     }
     query->finish();
 
-    QStringList labels;
-    QStringList serviceList = sqlextra->getPaidServicesList();
-    labels << "ID" << "Name" << "julianDateTime" << "julianDate" << "VisitType" << "price";
-    labels << serviceList;
-
     myRegisterModel->setHorizontalHeaderLabels(labels);
-
-    int columns = labels.count();
-    QString serviceName;
-    int rows = myRegisterModel->rowCount();
-    for ( int x=6;x<columns;x++)
-    {
-        serviceName = serviceList.at(x-6);
-        for ( int r=0;r<rows;r++)
-        {
-            QStandardItem *item = new QStandardItem(true);
-            item->setCheckable(false);
-            item->setCheckState(Qt::CheckState(Qt::Unchecked));
-            item->setBackground(myRegisterModel->item(r,0)->background());
-            myRegisterModel->setItem(r,x,item);
-        }
-    }
-
-
     return myRegisterModel;
 }
 
