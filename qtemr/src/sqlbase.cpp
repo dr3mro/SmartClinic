@@ -4083,8 +4083,7 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     }
     else
     {
-        delete myRegisterModel;
-        myRegisterModel = new QStandardItemModel;
+        myRegisterModel->clear();
         return myRegisterModel;
     }
 
@@ -4096,9 +4095,7 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
         mDebug() << "Failed to load registerView " << query->lastError().text();
         mDebug() << query->executedQuery();
     }
-
-    delete myRegisterModel;
-    myRegisterModel = new QStandardItemModel;
+    myRegisterModel->clear();
 
     int row = 0;
     int _id;

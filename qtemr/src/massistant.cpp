@@ -412,16 +412,12 @@ void mAssistant::showEvent(QShowEvent *e)
 
 void mAssistant::closeEvent(QCloseEvent *e)
 {
-    ui->calcTableView->setModel(nullptr);
+    myRegisterModel->clear();
+    calcModel->clear();
+    eddModel->clear();
+    agendaModel->clear();
+    qApp->processEvents();
     mDialog::closeEvent(e);
-    delete myRegisterModel;
-    delete calcModel;
-    delete eddModel;
-    delete agendaModel;
-    myRegisterModel = new QStandardItemModel(this);
-    calcModel = new QStandardItemModel(this);
-    eddModel = new QStandardItemModel(this);
-    agendaModel = new QStandardItemModel(this);
 }
 
 void mAssistant::on_closeButton_clicked()
