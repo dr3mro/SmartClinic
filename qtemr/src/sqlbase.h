@@ -640,7 +640,7 @@ public:
     bool addInvestigation(int ID, int visitDate, QString invName, QString invPath, int invDate, QString invTime, int invState, double price , QString invResults );
     bool isVisitExists(int ID , QString visitDateTime);
     bool isPatientExists(int ID);
-    ServiceState isServiceExistsInThisVisit(int ID, int visitDate, QString ServiceName);
+    inline void isServiceExistsInThisVisit(const int &ID, const int &visitDate, const QString &ServiceName, ServiceState &serviceState);
     void isFollowVisitAttended(int ID,int julianDate, Attended &attended);
     bool isPatientNameUsed(QString name);
     bool updatePatient(int ID , Patient patient);
@@ -784,7 +784,7 @@ private:
     void encryptDecryptNames(bool enable);
     QString getHumanizedName(QString rawName);
     QString getComputerizedName(QString rawName);
-    QString getPatientTooltip(const patientInfo &info);
+    inline void getPatientTooltip(QString &tooltip, const patientInfo &info);
     void dropAllViews();
     void createAllViews();
     Patient patient;

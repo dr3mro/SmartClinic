@@ -50,6 +50,8 @@ sqlBase::sqlBase(QObject *parent, QString connectionName, bool createTables) : m
 
 QStandardItemModel *sqlBase::getPatientsTableModel()
 {
+    patientInfo info;
+    QString toolTip;
     encryptionEnabled=isEncryptionEnabled();
     QStringList deceasedList = getDeceasedList();
     query->clear();
@@ -62,8 +64,6 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
     else {
         int todayJulian = static_cast<int>(QDate::currentDate().toJulianDay());
         int row,ID;
-        patientInfo info;
-        QString toolTip;
         patientTableModel->blockSignals(true);
         patientTableModel->removeRows(0,patientTableModel->rowCount());
 
@@ -92,7 +92,7 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
             patientTableModel->setItem(row,1,name_Item);
             patientTableModel->setItem(row,2,mobile_Item);
 
-            toolTip = getPatientTooltip(info);
+            getPatientTooltip(toolTip,info);
             patientTableModel->item(row,0)->setToolTip(toolTip);
             patientTableModel->item(row,1)->setToolTip(toolTip);
         }
@@ -196,7 +196,7 @@ bool sqlBase::isPatientExists(int ID)
     return bool(sqlExec(sqlCmd).toInt());
 }
 
-sqlBase::ServiceState sqlBase::isServiceExistsInThisVisit(int ID, int visitDate, QString ServiceName)
+void sqlBase::isServiceExistsInThisVisit(const int & ID, const int & visitDate, const QString & ServiceName,sqlBase::ServiceState & serviceState)
 {
     QString sqlCmd = QString("SELECT PRICE FROM investigations "
                              "WHERE ID=%1 AND "
@@ -205,14 +205,13 @@ sqlBase::ServiceState sqlBase::isServiceExistsInThisVisit(int ID, int visitDate,
             .arg(ID)
             .arg(ServiceName)
             .arg(visitDate);
-    sqlBase::ServiceState serviceState;
     double price =  sqlExec(sqlCmd).toDouble();
     serviceState.price = price;
     if (dataHelper::doubleEqual(price,0))
         serviceState.state = false;
     else
         serviceState.state = true;
-    return serviceState;
+//    return serviceState;
 }
 
 void sqlBase::isFollowVisitAttended(int ID, int julianDate, Attended & attended )
@@ -3071,9 +3070,9 @@ QString sqlBase::getComputerizedName(QString rawName)
     return encryptionEnabled? getEncryptedName(rawName):rawName;
 }
 
-QString sqlBase::getPatientTooltip(const sqlBase::patientInfo &info)
+void sqlBase::getPatientTooltip(QString & tooltip , const sqlBase::patientInfo &info)
 {
-    return QString("<table>"
+    tooltip = QString("<table>"
                    "<tr>"
                    "<td>Name</td><td>:</td><td><div align=\"left\">%1</div><\td>"
                    "</tr>"
@@ -3097,6 +3096,7 @@ QString sqlBase::getPatientTooltip(const sqlBase::patientInfo &info)
                    "</tr>"
                    "</table>")
             .arg(info.Name,info.Age,info.Gender,info.Residence,info.MaritalStatus,info.Occupation,info.Mobile);
+    //return tooltip;
 }
 
 void sqlBase::dropAllViews()
@@ -3430,7 +3430,7 @@ void sqlBase::registerServiceLoader(QStandardItemModel *myRegisterModel,sqlExtra
             ID = myRegisterModel->data(myRegisterModel->index(r,0)).toInt();
             QStandardItem *item = myRegisterModel->item(r,x);
             item->setCheckable(false);
-            serviceState = isServiceExistsInThisVisit(ID,date,serviceName);
+            isServiceExistsInThisVisit(ID,date,serviceName,serviceState);
             if (!dataHelper::doubleEqual(serviceState.price,0))
                 item->setData(QVariant(serviceState.price),Qt::DisplayRole);
             item->setCheckState(Qt::CheckState((serviceState.state)? Qt::Checked:Qt::Unchecked));
@@ -3996,7 +3996,7 @@ QStandardItemModel *sqlBase::getAgendaModel(int julianDate,QStandardItemModel *a
     int todayJulian = static_cast<int>(QDate::currentDate().toJulianDay());
 
     patientInfo info;
-
+    QString toolTip;
     while(query->next())
     {
         _id = query->value(0).toInt();
@@ -4020,7 +4020,8 @@ QStandardItemModel *sqlBase::getAgendaModel(int julianDate,QStandardItemModel *a
         info.MaritalStatus = query->value(9).toString();
         info.Occupation = query->value(10).toString();
 
-        agendaModel->item(row,1)->setToolTip(getPatientTooltip(info));
+        getPatientTooltip(toolTip,info);
+        agendaModel->item(row,1)->setToolTip(toolTip);
         row +=1;
     }
 
@@ -4103,8 +4104,9 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     double price;
     int julianDate,timeMS;
     //QList<QBrush> brushes = getVisitColors();
-    patientInfo info;
 
+    patientInfo info;
+    QString toolTip;
     while(query->next())
     {
 
@@ -4148,8 +4150,8 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
 
         myRegisterModel->item(row,4)->setToolTip(QString("%1 - %2").arg(date).arg(time));
         myRegisterModel->setItem(row,5,priceItem);
-
-        myRegisterModel->item(row,1)->setToolTip(getPatientTooltip(info));
+        getPatientTooltip(toolTip,info);
+        myRegisterModel->item(row,1)->setToolTip(toolTip);
         row +=1;
     }
     query->finish();
@@ -4205,7 +4207,7 @@ QStandardItemModel *sqlBase::getEddModel(qint64 start, qint64 end, QStandardItem
     int _id;
     qint64 todayJulian = QDate::currentDate().toJulianDay();
     patientInfo info;
-
+    QString toolTip;
     while(query->next())
     {
         _id = query->value(QString("ID")).toInt();
@@ -4233,7 +4235,8 @@ QStandardItemModel *sqlBase::getEddModel(qint64 start, qint64 end, QStandardItem
         eddModel->setItem(row,3,mobileItem);
         eddModel->setItem(row,4,gpaItem);
         eddModel->setItem(row,5,eddItem);
-        eddModel->item(row,1)->setToolTip(getPatientTooltip(info));
+        getPatientTooltip(toolTip,info);
+        eddModel->item(row,1)->setToolTip(toolTip);
         row +=1;
     }
 

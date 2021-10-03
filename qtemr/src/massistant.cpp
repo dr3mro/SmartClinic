@@ -380,12 +380,30 @@ void mAssistant::showEvent(QShowEvent *e)
 }
 
 void mAssistant::closeEvent(QCloseEvent *e)
-{   labelMsg.show();
-    myRegisterModel->clear();
-    calcModel->clear();
-    eddModel->clear();
-    agendaModel->clear();
+{
+    labelMsg.show();
+    QFuture<void> j1,j2,j3,j4;
+
+    j1 = QtConcurrent::run(myRegisterModel,&QStandardItemModel::clear);
+    //myRegisterModel->clear();
+
+    j2 = QtConcurrent::run(calcModel,&QStandardItemModel::clear);
+    //calcModel->clear();
+
+    j3 = QtConcurrent::run(eddModel,&QStandardItemModel::clear);
+    //eddModel->clear();
+
+    j4 = QtConcurrent::run(agendaModel,&QStandardItemModel::clear);
+    //agendaModel->clear();
+
+    //this->hide();
     labelMsg.hide();
+
+    j1.waitForFinished();
+    j2.waitForFinished();
+    j3.waitForFinished();
+    j4.waitForFinished();
+
     mDialog::closeEvent(e);
 }
 
