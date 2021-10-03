@@ -11,10 +11,10 @@ mAssistant::mAssistant(mLabelMsg &_labelMsg, QWidget *parent,bool& eMode) :
     editingMode(eMode),
     sqlbase(new sqlBase(this,"qt_sql_base_mAssist",false)),
     sqlextra(new sqlExtra(this,"qt_sql_extra_mAssist",false)),
-    calcModel(new QStandardItemModel(this)),
-    agendaModel(new QStandardItemModel(this)),
-    myRegisterModel ( new QStandardItemModel(this)),
-    eddModel ( new QStandardItemModel(this)),
+    calcModel(new QStandardItemModel),
+    agendaModel(new QStandardItemModel),
+    myRegisterModel ( new QStandardItemModel),
+    eddModel ( new QStandardItemModel),
     ui(new Ui::mAssistant),
     fromCalWidget(new mCalendarWidget(this)),
     toCalWidget(new mCalendarWidget(this))
@@ -54,7 +54,7 @@ mAssistant::mAssistant(mLabelMsg &_labelMsg, QWidget *parent,bool& eMode) :
             this,&mAssistant::onAgendaModelLoaded);
     connect(&cashModelFutureWatcher,&QFutureWatcher<QStandardItemModel*>::finished,
             this,&mAssistant::onCashModelLoaded);
-    connect(&registerServiceLoaderFutureWatcher,&QFutureWatcher<void>::finished,this,&mAssistant::doCalcs);
+    //connect(&registerServiceLoaderFutureWatcher,&QFutureWatcher<void>::finished,this,&mAssistant::doCalcs);
     connect(ui->cashTableView,&mCashTableView::doCalculations,this,&mAssistant::doCalcs);
     ui->agendaTableView->setToolTip("<html>"
                                     "<table>"
@@ -85,7 +85,7 @@ mAssistant::~mAssistant()
     agendaModelFuture.waitForFinished();
     agendaModelAttendedFuture.waitForFinished();
     cashModelFuture.waitForFinished();
-    registerServiceLoaderFuture.waitForFinished();
+    //registerServiceLoaderFuture.waitForFinished();
     calcModelFuture.waitForFinished();
 
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
@@ -147,7 +147,7 @@ void mAssistant::tweakRegisterTable()
 
 void mAssistant::loadRegister()
 {
-    if(cashModelFuture.isRunning() || calcModelFuture.isRunning() || registerServiceLoaderFuture.isRunning())
+    if(cashModelFuture.isRunning() || calcModelFuture.isRunning() /*|| registerServiceLoaderFuture.isRunning()*/)
         return;
 
     ui->goButton->setEnabled(false);
@@ -163,6 +163,7 @@ void mAssistant::loadRegister()
     timeFrame.startTime = static_cast<int>(ui->fromTime->time().msecsSinceStartOfDay()/1000);
     timeFrame.endDate = static_cast<int>(ui->toDate->date().toJulianDay());
     timeFrame.endTime = static_cast<int>(ui->toTime->time().msecsSinceStartOfDay()/1000);
+    ui->cashTableView->setModel(nullptr);
     cashModelFuture = QtConcurrent::run(sqlbase,&sqlBase::getMyRegisterModel,timeFrame,myRegisterModel,sqlextra);
     cashModelFutureWatcher.setFuture(cashModelFuture);
     cashModelFuture.waitForFinished();
@@ -321,9 +322,10 @@ void mAssistant::onCashModelLoaded()
     myRegisterModel = cashModelFuture.result();
     ui->cashTableView->setModel(myRegisterModel);
     tweakRegisterTable();
-    registerServiceLoaderFuture = QtConcurrent::run(sqlbase,&sqlBase::registerServiceLoader,myRegisterModel,sqlextra);
-    registerServiceLoaderFutureWatcher.setFuture(registerServiceLoaderFuture);
-    registerServiceLoaderFuture.waitForFinished();
+    doCalcs();
+//    registerServiceLoaderFuture = QtConcurrent::run(sqlbase,&sqlBase::registerServiceLoader,myRegisterModel,sqlextra);
+//    registerServiceLoaderFutureWatcher.setFuture(registerServiceLoaderFuture);
+//    registerServiceLoaderFuture.waitForFinished();
 }
 
 void mAssistant::goExpectedDeliveriesTab()
@@ -381,6 +383,7 @@ void mAssistant::showEvent(QShowEvent *e)
 
 void mAssistant::closeEvent(QCloseEvent *e)
 {
+    ui->calcTableView->setModel(nullptr);
     mDialog::closeEvent(e);
     delete myRegisterModel;
     delete calcModel;

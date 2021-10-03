@@ -74,8 +74,8 @@ private:
     QFuture<QStandardItemModel*> agendaModelFuture;
     QFutureWatcher<QStandardItemModel*> agendaModelFutureWatcher;
     QFuture<void> agendaModelAttendedFuture;
-    QFuture<void> registerServiceLoaderFuture;
-    QFutureWatcher<void> registerServiceLoaderFutureWatcher;
+//    QFuture<void> registerServiceLoaderFuture;
+//    QFutureWatcher<void> registerServiceLoaderFutureWatcher;
     QFuture<QStandardItemModel*> calcModelFuture;
     QFuture<QStandardItemModel*> cashModelFuture;
     QFutureWatcher<QStandardItemModel*> cashModelFutureWatcher;

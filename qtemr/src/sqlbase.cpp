@@ -205,7 +205,7 @@ void sqlBase::isServiceExistsInThisVisit(const int & ID, const int & visitDate, 
             .arg(ID)
             .arg(ServiceName)
             .arg(visitDate);
-    double price =  sqlExec(sqlCmd).toDouble();
+    double price =  sqlExec2(sqlCmd).toDouble();
     serviceState.price = price;
     if (dataHelper::doubleEqual(price,0))
         serviceState.state = false;
@@ -4109,11 +4109,13 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     //QList<QBrush> brushes = getVisitColors();
 
     QStringList labels = QStringList() << "ID" << "Name" << "julianDateTime" << "julianDate" << "VisitType" << "price" << sqlextra->getPaidServicesList();
+
     int columns = labels.count();
 
     patientInfo info;
     QString toolTip;
-
+    sqlBase::ServiceState serviceState;
+    QString serviceName;
     while(query->next())
     {
 
@@ -4162,11 +4164,15 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
 
         for ( int x=6;x<columns;x++)
         {
-                QStandardItem *item = new QStandardItem(true);
-                item->setCheckable(false);
-                item->setCheckState(Qt::CheckState(Qt::Unchecked));
-                item->setBackground(visitTypes.getVisitTypesByAlgoIndex(visitType).color);
-                myRegisterModel->setItem(row,x,item);
+            serviceName = labels.at(x);
+            QStandardItem *item = new QStandardItem(true);
+            item->setCheckable(false);
+            item->setBackground(visitTypes.getVisitTypesByAlgoIndex(visitType).color);
+            isServiceExistsInThisVisit(_id,julianDate,serviceName,serviceState);
+            if (!dataHelper::doubleEqual(serviceState.price,0))
+                item->setData(QVariant(serviceState.price),Qt::DisplayRole);
+            item->setCheckState(Qt::CheckState((serviceState.state)? Qt::Checked:Qt::Unchecked));
+            myRegisterModel->setItem(row,x,item);
         }
         row +=1;
     }

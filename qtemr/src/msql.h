@@ -15,6 +15,7 @@ class msql : public QObject
 public:
     explicit msql(QObject *parent = nullptr);
     inline QString sqlExec(QString sqlCmd);
+    QString sqlExec2(QString sqlCmd);
     bool createConnection(QString connectionName, QString path);
     bool integrityCheck(bool quick);
     bool vacuum();
@@ -36,6 +37,7 @@ protected:
     void setPragmas();
     QSqlDatabase db;
     QSqlQuery *query;
+    QSqlQuery *query2;
     QString ConnectionName;
     mSettings& settings=mSettings::instance();
 

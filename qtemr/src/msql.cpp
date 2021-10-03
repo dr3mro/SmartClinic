@@ -33,6 +33,28 @@ QString msql::sqlExec(QString sqlCmd)
     return value;
 }
 
+QString msql::sqlExec2(QString sqlCmd)
+{
+    query2->clear();
+    QString value2;
+
+    if (!query2->exec(sqlCmd))
+    {
+        mDebug() << sqlCmd << query2->lastError().text();
+
+    }
+    else if (!query2->first())
+    {
+        return "";
+    }
+    else
+    {
+        value2 = query2->value(0).toString();
+    }
+    query2->finish();
+    return value2;
+}
+
 msql::~msql()
 {
    // mDebug() << "stop:" <<ConnectionName;
@@ -40,6 +62,7 @@ msql::~msql()
     db.commit();
     db.close();
     delete query;
+    delete query2;
 }
 
 void msql::killLoopFlag(bool flag)
@@ -78,6 +101,7 @@ bool msql::createConnection(QString connectionName, QString path)
     bool b =  db.open();
 
     query = new QSqlQuery(db);
+    query2 = new QSqlQuery(db);
     setPragmas();
     return b;
 }
