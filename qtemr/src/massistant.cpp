@@ -412,12 +412,23 @@ void mAssistant::showEvent(QShowEvent *e)
 
 void mAssistant::closeEvent(QCloseEvent *e)
 {
-    myRegisterModel->clear();
-    calcModel->clear();
-    eddModel->clear();
-    agendaModel->clear();
-    qApp->processEvents();
+#if QT_VERSION >= 0x060000
+    auto f1 = QtConcurrent::run(&QStandardItemModel::clear,myRegisterModel);
+    auto f2 = QtConcurrent::run(&QStandardItemModel::clear,calcModel);
+    auto f3 = QtConcurrent::run(&QStandardItemModel::clear,eddModel);
+    auto f4 = QtConcurrent::run(&QStandardItemModel::clear,agendaModel);
+#else
+    auto f1 = QtConcurrent::run(myRegisterModel,&QStandardItemModel::clear);
+    auto f2 = QtConcurrent::run(calcModel,&QStandardItemModel::clear);
+    auto f3 = QtConcurrent::run(eddModel,&QStandardItemModel::clear);
+    auto f4 = QtConcurrent::run(agendaModel,&QStandardItemModel::clear);
+#endif
     mDialog::closeEvent(e);
+    f4.waitForFinished();
+    f3.waitForFinished();
+    f2.waitForFinished();
+    f1.waitForFinished();
+
 }
 
 void mAssistant::on_closeButton_clicked()
