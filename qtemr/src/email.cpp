@@ -15,7 +15,7 @@ void email::sendEmail(QString subject, QString messageText)
     //auto server = std::make_unique<SimpleMail::Server>();
 
     auto server(new SimpleMail::Server(this));
-    connect(server, &SimpleMail::Server::Disconnected,this,[=]{
+    connect(server, &SimpleMail::Server::disconnected,this,[=]{
         emit mDisconnected();
     });
 

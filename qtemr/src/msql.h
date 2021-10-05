@@ -14,9 +14,8 @@ class msql : public QObject
     Q_OBJECT
 public:
     explicit msql(QObject *parent = nullptr);
-    inline QString sqlExec(QString sqlCmd);
-    QString sqlExec2(QString sqlCmd);
-    bool createConnection(QString connectionName, QString path);
+    inline QString sqlExec(const QString & sqlCmd,bool alt=false);
+    bool createConnection(const QString & connectionName, QString path);
     bool integrityCheck(bool quick);
     bool vacuum();
     bool optimize();

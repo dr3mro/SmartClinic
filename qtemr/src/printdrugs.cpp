@@ -392,6 +392,7 @@ void printDrugs::setupPrinter(QPrinter *p)
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
     p->setFullPage(pSettings.enableFullPage);
+    //p->setOutputFormat(QPrinter::NativeFormat);
 }
 
 void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)

@@ -22,10 +22,11 @@
 #include "mimepart.h"
 #include "mimefile.h"
 
+#include "smtpexports.h"
 
 namespace SimpleMail {
 
-class MimeAttachment : public MimeFile
+class  MimeAttachment : public MimeFile
 {
 public:
     MimeAttachment(QFile *file);

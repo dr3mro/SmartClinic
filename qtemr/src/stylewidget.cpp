@@ -83,9 +83,12 @@ bool StyleWidget::save()
     return false;
 }
 
-void StyleWidget::on_Styles_activated(const QString &arg1)
+void StyleWidget::on_Styles_activated(int index)
 {
-    selected_theme = arg1;
+    if(index < 0 || index > ui->Styles->count() -1)
+        return;
+
+    selected_theme = ui->Styles->itemText(index);
     putStyle(styler.getStyle(selected_theme));
 }
 

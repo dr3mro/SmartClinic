@@ -33,10 +33,10 @@ richTextEditor::richTextEditor(QWidget *parent) :
     connect(cp2,SIGNAL(newColor(const QColor&)),ui->backgroundColor,SLOT(setColor(const QColor&)));
 
     connect(ui->fontComboBox,SIGNAL(currentFontChanged(QFont)),parent,SLOT(setFont(QFont)));
-    connect(ui->fontComboBox,SIGNAL(highlighted(QString)),parent,SLOT(setFont(QString)));
+    connect(ui->fontComboBox,SIGNAL(textHighlighted(const QString &)),parent,SLOT(setFont(const QString &)));
     connect(ui->fontComboBox,SIGNAL(activated(int)),this,SLOT(reGainFocus()));
     connect(ui->point,SIGNAL(currentTextChanged(QString)),parent,SLOT(setPoint(QString)));
-    connect(ui->point,SIGNAL(highlighted(QString)),parent,SLOT(setPoint(QString)));
+    connect(ui->point,SIGNAL(textHighlighted(QString)),parent,SLOT(setPoint(QString)));
     connect(ui->point,SIGNAL(activated(int)),this,SLOT(reGainFocus()));
     connect(ui->bold,SIGNAL(toggled(bool)),parent,SLOT(setBold(bool)));
     connect(ui->toUpper,SIGNAL(toggled(bool)),parent,SLOT(setUpper(bool)));

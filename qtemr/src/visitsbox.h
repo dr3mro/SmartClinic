@@ -86,7 +86,7 @@ private slots:
     void on_ButtonNew_clicked();
     void on_ButtonSave_clicked();
     void on_ButtonDel_clicked();
-    void on_visitLists_currentIndexChanged(const QString &arg1);
+    void on_visitLists_currentIndexChanged(int index);
     void on_buttonAddDrug_clicked();
     void on_buttonRemoveDrug_clicked();
     void on_drugLine_returnPressed();

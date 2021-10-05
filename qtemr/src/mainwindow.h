@@ -118,6 +118,7 @@ public slots:
     void removeItemFromDictionary(QString item, int row);
     void on_PatientSelected(int _id );
     void show_feedback_win();
+    void quit_after_restore();
 
 private slots:
     void reloadMainWindow();

@@ -1299,6 +1299,12 @@ void MainWindow::show_feedback_win()
     fb.show();
 }
 
+void MainWindow::quit_after_restore(){
+    deleteLockFile();
+    trayIcon->hide();
+    exit(0);
+}
+
 void MainWindow::closeDataBase()
 {
     sqlbase->optimize();
@@ -1312,7 +1318,8 @@ void MainWindow::closeDataBase()
     delete sqlcore;
     QSqlDatabase::removeDatabase("qt_sql_base_MainWin_connection");
     QSqlDatabase::removeDatabase("qt_sql_extra_MainWin_connection");
-    QSqlDatabase::removeDatabase("qt_sql_core_MainWin_connection");
+    QSqlDatabase::removeDatabase("qt_sql_core_MainWin_connection"); 
+
     ui->searchWidgetx->closeDatabase();
     delete visitsbox;
 }
@@ -1620,7 +1627,7 @@ void MainWindow::show_backup_win()
     connect (&b,SIGNAL(loadFirstPatient()),this,SLOT(loadFirstPatient()));
     connect (&b,SIGNAL(closeDataBase()),this,SLOT(closeDataBase()));
     connect (&b,SIGNAL(reOpenDataBase()),this,SLOT(reOpenDataBase()));
-    connect (&b,&backup::quit_app,this,&MainWindow::close);
+    connect (&b,&backup::quit_app,this,&MainWindow::quit_after_restore);
     sqlbase->WAL_CheckPoint(QString("TRUNCATE"));
     sqlextra->WAL_CheckPoint(QString("TRUNCATE"));
     b.exec();

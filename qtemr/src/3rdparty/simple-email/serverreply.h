@@ -18,10 +18,12 @@
 
 #include <QObject>
 
+#include "smtpexports.h"
+
 namespace SimpleMail {
 
 class ServerReplyPrivate;
-class ServerReply : public QObject
+class  ServerReply : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(ServerReply)

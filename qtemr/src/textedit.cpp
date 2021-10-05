@@ -99,7 +99,7 @@ void TextEdit::setCompleter()
     watcher.setFuture(future);
 }
 
-void TextEdit::setFont(QFont font)
+void TextEdit::setFont(const QFont &font)
 {
     QTextCharFormat fmt;
     QTextCursor cursor = textCursor();
@@ -111,7 +111,7 @@ void TextEdit::setFont(QFont font)
     emit fontFamilyChanged(font.family());
 }
 
-void TextEdit::setFont(QString font)
+void TextEdit::setFont(const QString &font)
 {
     QTextCharFormat fmt;
     QTextCursor cursor = textCursor();
@@ -122,7 +122,7 @@ void TextEdit::setFont(QString font)
     emit fontFamilyChanged(font);
 }
 
-void TextEdit::setPoint(QString p)
+void TextEdit::setPoint(const QString &p)
 {
     pointSize = p.toInt();
     QTextCharFormat fmt;

@@ -355,12 +355,13 @@ void visitsBox::clearVisit()
     ui->dateFollowUp->setEnabled(true);
 }
 
-void visitsBox::on_visitLists_currentIndexChanged(const QString &arg1)
+void visitsBox::on_visitLists_currentIndexChanged(int index)
 {
-    if(arg1.isEmpty())
+    if(index < 0 || index > ui->visitLists->count()-1)
         return;
+
     clearVisit();
-    comboSelectedDataTime = arg1;
+    comboSelectedDataTime = ui->visitLists->itemText(index);
     updateVisitAge();
     if (sqlbase->isVisitExists(patientBasicDetails.ID,comboSelectedDataTime) )
     {
@@ -731,6 +732,7 @@ visitsBox::~visitsBox()
     delete sqlextra;
     QSqlDatabase::removeDatabase("qt_sql_base_visitbox_connection");
     QSqlDatabase::removeDatabase("qt_sql_extra_visitbox_connection");
+
     delete msgbox;
     delete autoSaveTimer;
     delete shift_pageUp;

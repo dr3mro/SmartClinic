@@ -21,13 +21,15 @@
 #include "mimepart.h"
 #include "emailaddress.h"
 
+#include "smtpexports.h"
+
 #include <QSharedDataPointer>
 
 class QIODevice;
 namespace SimpleMail {
 
 class MimeMessagePrivate;
-class MimeMessage
+class  MimeMessage
 {
 public:
     explicit MimeMessage(bool createAutoMimeConent = true);

@@ -253,8 +253,12 @@ void backup::onButtonRestore_clicked()
         ui->progressBar->setValue(100);
         Working = false;
         QMessageBox::information(nullptr,"Warning","Press OK to close Application now to avoid data loss.",QMessageBox::Ok);
+        QSqlDatabase::removeDatabase("qt_sql_extra_printdrugs_connection");
+        QSqlDatabase::removeDatabase("qt_sql_base_visitbox_connection");
+        QSqlDatabase::removeDatabase("qt_sql_extra_visitbox_connection");
+        QSqlDatabase::removeDatabase("qt_sql_base_invstTable");
+        QSqlDatabase::removeDatabase("qt_sql_extra_invstTable");
         emit quit_app();
-
     }
     else
     {

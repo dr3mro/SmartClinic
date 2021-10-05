@@ -21,11 +21,13 @@
 #include <QObject>
 #include <QtNetwork/QSslSocket>
 
+#include "smtpexports.h"
+
 namespace SimpleMail {
 
 class MimeMessage;
 class SenderPrivate;
-class Sender : public QObject
+class  Sender : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Sender)

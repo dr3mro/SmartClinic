@@ -16,9 +16,9 @@
 #include "server_p.h"
 #include "serverreply.h"
 
-#include <QtNetwork/QSslSocket>
-#include <QtNetwork/QTcpSocket>
-#include <QtNetwork/QHostInfo>
+#include <QSslSocket>
+#include <QTcpSocket>
+#include <QHostInfo>
 #include <QMessageAuthenticationCode>
 #include <QLoggingCategory>
 
@@ -36,7 +36,6 @@ Server::Server(QObject *parent)
 
 Server::~Server()
 {
-    //mDebug() << "server deleted";
     delete d_ptr;
 }
 
@@ -224,11 +223,11 @@ void ServerPrivate::createSocket()
             state = Closing;
         } else if (sockState == QAbstractSocket::UnconnectedState) {
             state = Disconnected;
-            emit q->Disconnected();
+            emit q->disconnected();
 //            if (!queue.isEmpty()) {
-//                    q->connectToServer();
-//                }
-            }
+//                q->connectToServer();
+//            }
+        }
     });
 
     q->connect(socket, &QTcpSocket::connected, q, [=] () {

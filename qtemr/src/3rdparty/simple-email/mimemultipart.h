@@ -22,10 +22,11 @@
 
 #include "mimepart.h"
 
+#include "smtpexports.h"
 
 namespace SimpleMail {
 
-class MimeMultiPart : public MimePart
+class  MimeMultiPart : public MimePart
 {
 public:
     enum MultiPartType {

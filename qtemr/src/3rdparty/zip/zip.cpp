@@ -50,7 +50,7 @@
 #include <qplatformdefs.h>
 #include <qendian.h>
 #include <qdir.h>
-#include "zlib.h"
+#include "QtZlib/zlib.h"
 #include "../../mdebug.h"
 
 

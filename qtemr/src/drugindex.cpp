@@ -154,9 +154,9 @@ void drugIndex::load()
     ui->indexTable->hideColumn(5);
     ui->indexTable->setWordWrap(false);
     ui->indexTable->setItemDelegate(new DrugsIndexPriceItemDelegate(this));
-    connect(ui->categories,SIGNAL(currentIndexChanged(QString)),this,SLOT(setCategory(QString)));
-    connect(ui->manufacturer,SIGNAL(currentIndexChanged(QString)),this,SLOT(setManufacturer(QString)));
-    connect(ui->form,SIGNAL(currentIndexChanged(QString)),this,SLOT(setForm(QString)));
+    connect(ui->categories,SIGNAL(currentTextChanged(QString)),this,SLOT(setCategory(QString)));
+    connect(ui->manufacturer,SIGNAL(currentTextChanged(QString)),this,SLOT(setManufacturer(QString)));
+    connect(ui->form,SIGNAL(currentTextChanged(QString)),this,SLOT(setForm(QString)));
     connect(proxy_model,SIGNAL(rowsRemoved(QModelIndex,int,int)),this,SLOT(setResultsCount(QModelIndex,int,int)));
     connect(proxy_model,SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(setResultsCount(QModelIndex,int,int)));
     toggleResetButton();

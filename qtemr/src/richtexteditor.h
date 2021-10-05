@@ -15,6 +15,7 @@
 #include "colorpicker.h"
 #include "msettings.h"
 
+
 namespace Ui {
 class richTextEditor;
 }

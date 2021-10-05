@@ -20,10 +20,11 @@
 
 #include <QByteArray>
 
+#include "smtpexports.h"
 
 namespace SimpleMail {
 
-class MimeContentFormatter
+class  MimeContentFormatter
 {
 public:
     explicit MimeContentFormatter(int max_length = 76);

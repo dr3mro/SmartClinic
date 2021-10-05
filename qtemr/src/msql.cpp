@@ -9,50 +9,35 @@ msql::msql(QObject *parent) : QObject(parent)
      options = settings.readDbOptions();
 }
 
-QString msql::sqlExec(QString sqlCmd)
+QString msql::sqlExec(const QString &sqlCmd, bool alt)
 {
-    query->clear();
+    QSqlQuery* q;
+
+    if(alt)
+        q = query2;
+    else
+        q = query;
+
+    q->clear();
     QString value;
 
-    if (!query->exec(sqlCmd))
+    if (!q->exec(sqlCmd))
     {
-        mDebug() << sqlCmd << query->lastError().text();
+        mDebug() << sqlCmd << q->lastError().text();
 
     }
-    else if (!query->first())
+    else if (!q->first())
     {
-//        mDebug() << "not valid query: " << sqlCmd << query->isSelect();
-//        mDebug() << query->lastError().text();
+//        mDebug() << "not valid query: " << sqlCmd << q->isSelect();
+//        mDebug() << q->lastError().text();
         return "";
     }
     else
     {
-        value = query->value(0).toString();
+        value = q->value(0).toString();
     }
-    query->finish();
+    q->finish();
     return value;
-}
-
-QString msql::sqlExec2(QString sqlCmd)
-{
-    query2->clear();
-    QString value2;
-
-    if (!query2->exec(sqlCmd))
-    {
-        mDebug() << sqlCmd << query2->lastError().text();
-
-    }
-    else if (!query2->first())
-    {
-        return "";
-    }
-    else
-    {
-        value2 = query2->value(0).toString();
-    }
-    query2->finish();
-    return value2;
 }
 
 msql::~msql()
@@ -84,7 +69,7 @@ void msql::setPragmas()
 
 }
 
-bool msql::createConnection(QString connectionName, QString path)
+bool msql::createConnection(const QString &connectionName, QString path)
 {
     ConnectionName = connectionName;
     //mDebug() << "start:"<< ConnectionName;

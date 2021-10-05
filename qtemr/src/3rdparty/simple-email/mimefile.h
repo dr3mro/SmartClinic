@@ -21,13 +21,15 @@
 #include "mimepart.h"
 #include <QFile>
 
+#include "smtpexports.h"
 
 namespace SimpleMail {
 
-class MimeFile : public MimePart
+class  MimeFile : public MimePart
 {
 public:
     MimeFile(const QByteArray &stream, const QString &fileName);
+    MimeFile(const QByteArray &stream, const QString &fileName, const QByteArray &mimeType);
     MimeFile(QFile *f);
     virtual ~MimeFile();
 };

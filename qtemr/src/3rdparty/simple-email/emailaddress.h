@@ -21,6 +21,8 @@
 #include <QtCore/QSharedDataPointer>
 #include <QString>
 
+#include "smtpexports.h"
+
 namespace SimpleMail {
 
 class EmailAddressPrivate;

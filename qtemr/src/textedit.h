@@ -43,9 +43,9 @@ protected:
 public slots:
     void setCompleter();
     void updateCompleter();
-    void setFont(QFont font);
-    void setFont(QString font);
-    void setPoint(QString p);
+    void setFont(const QFont & font);
+    void setFont(const QString &font);
+    void setPoint(const QString &p);
     void setCurrentSize(int p);
     void setBold(bool normal);
     void setUpper(bool normal);

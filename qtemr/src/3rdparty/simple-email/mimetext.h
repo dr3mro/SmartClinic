@@ -20,9 +20,11 @@
 
 #include "mimepart.h"
 
+#include "smtpexports.h"
+
 namespace SimpleMail {
 
-class MimeText : public MimePart
+class  MimeText : public MimePart
 {
 public:
     MimeText(const QString &text = QString());

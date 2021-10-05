@@ -20,9 +20,11 @@
 
 #include <QByteArray>
 
+#include "smtpexports.h"
+
 namespace SimpleMail {
 
-class QuotedPrintable
+class  QuotedPrintable
 {
 public:
     static QByteArray encode(const QByteArray &input, bool rfc2047, int *printable = nullptr, int *encoded = nullptr);

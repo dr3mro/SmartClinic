@@ -18,13 +18,15 @@
 
 #include <QObject>
 
+#include "smtpexports.h"
+
 class QSslError;
 namespace SimpleMail {
 
 class MimeMessage;
 class ServerReply;
 class ServerPrivate;
-class Server : public QObject
+class  Server : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Server)
@@ -180,7 +182,7 @@ public:
 Q_SIGNALS:
     void smtpError(SmtpError e, const QString &description);
     void sslErrors(const QList<QSslError> &sslErrorList);
-    void Disconnected();
+    void disconnected();
 
 private:
     ServerPrivate *d_ptr;

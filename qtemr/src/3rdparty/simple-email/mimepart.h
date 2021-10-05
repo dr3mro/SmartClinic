@@ -23,11 +23,13 @@
 
 #include "mimecontentformatter.h"
 
+#include "smtpexports.h"
+
 class QIODevice;
 namespace SimpleMail {
 
 class MimePartPrivate;
-class MimePart
+class  MimePart
 {
 public:
     enum Encoding {        

@@ -125,10 +125,10 @@
 #include <QSqlQueryModel>
 
 
-#include "3rdparty/zip/zconf.h"
+#include <QtZlib/zconf.h>
 #include "3rdparty/zip/zipreader.h"
 #include "3rdparty/zip/zipwriter.h"
-#include "3rdparty/zip/zlib.h"
+#include <QtZlib/zlib.h>
 #include "windowmanager.h"
 #include "mdebug.h"
 #include "mdialog.h"

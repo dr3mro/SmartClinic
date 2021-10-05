@@ -205,7 +205,7 @@ void sqlBase::isServiceExistsInThisVisit(const int & ID, const int & visitDate, 
             .arg(ID)
             .arg(ServiceName)
             .arg(visitDate);
-    double price =  sqlExec2(sqlCmd).toDouble();
+    double price =  sqlExec(sqlCmd,true).toDouble();
     serviceState.price = price;
     if (dataHelper::doubleEqual(price,0))
         serviceState.state = false;

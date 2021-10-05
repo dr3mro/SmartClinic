@@ -42,7 +42,7 @@ private:
 protected:
 
 private slots:
-    void on_Styles_activated(const QString &arg1);
+    void on_Styles_activated(int index);
     void themesListMaker(QModelIndex, int, int);
     void on_Styles_currentTextChanged(const QString &arg1);
     void on_btn_save_as_clicked();

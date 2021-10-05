@@ -37,22 +37,22 @@ set(CMAKE_WIN32_EXECUTABLE ON)
 
 
 if(MSVC)
-    set(ZLIB ${PROJECT_SOURCE_DIR}/libs/zlib/msvc2019/zlib.lib)
+    #set(ZLIB ${PROJECT_SOURCE_DIR}/libs/zlib/msvc2019/zlib.lib)
     include_directories("C:\\Program Files (x86)\\Visual Leak Detector\\include")
     set(VLDLIB  "C:\\Program Files (x86)\\Visual Leak Detector\\lib\\Win32\\vld.lib")
-    set(OPENSSL_USE_STATIC_LIBS true)
-    set(OPENSSL_MSVC_STATIC_RT true)
+    #set(OPENSSL_USE_STATIC_LIBS true)
+    #set(OPENSSL_MSVC_STATIC_RT true)
 
 else()
-    set(ZLIB ${PROJECT_SOURCE_DIR}/libs/zlib/mingw730/libz.a)
+    #set(ZLIB ${PROJECT_SOURCE_DIR}/libs/zlib/mingw730/libz.a)
     set(VLDLIB  "")
-    set(OPENSSL_USE_STATIC_LIBS true)
-    set(OPENSSL_MSVC_STATIC_RT true)
-    set(OPENSSL_ROOT_DIR "C:\\Qt\\Tools\\OpenSSL\\MinGW_x86")
+    #set(OPENSSL_USE_STATIC_LIBS true)
+    #set(OPENSSL_MSVC_STATIC_RT true)
+    #set(OPENSSL_ROOT_DIR "C:\\Qt\\Tools\\OpenSSL\\MinGW_x86")
     set(CMAKE_EXE_LINKER_FLAGS " -static")
 endif()
 
-find_package(OpenSSL)
+#find_package(OpenSSL)
 find_package(Qt6 COMPONENTS Core)
 
 if (NOT Qt6_FOUND)
@@ -109,9 +109,9 @@ if(MSVC)
         Qt::Concurrent
         Qt::Xml
         Qt::PrintSupport
-        ${ZLIB}
+        #${ZLIB}
         ${VLDLIB}
-        ${OPENSSL_LIBRARIES}
+        #${OPENSSL_LIBRARIES}
         )
 else()
     target_link_libraries(${TARGET_NAME}
@@ -122,9 +122,9 @@ else()
         Qt::Concurrent
         Qt::Xml
         Qt::PrintSupport
-        ${ZLIB}
+        #${ZLIB}
         ${VLDLIB}
-        ${OPENSSL_LIBRARIES}
+        #${OPENSSL_LIBRARIES}
         -static-libgcc
         -static-libstdc++
         )
