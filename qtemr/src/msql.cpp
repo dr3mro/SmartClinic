@@ -9,37 +9,6 @@ msql::msql(QObject *parent) : QObject(parent)
      options = settings.readDbOptions();
 }
 
-QString msql::sqlExec(const QString &sqlCmd, bool alt)
-{
-    QSqlQuery* q;
-
-    if(alt)
-        q = query2;
-    else
-        q = query;
-
-    q->clear();
-    QString value;
-
-    if (!q->exec(sqlCmd))
-    {
-        mDebug() << sqlCmd << q->lastError().text();
-
-    }
-    else if (!q->first())
-    {
-//        mDebug() << "not valid query: " << sqlCmd << q->isSelect();
-//        mDebug() << q->lastError().text();
-        return "";
-    }
-    else
-    {
-        value = q->value(0).toString();
-    }
-    q->finish();
-    return value;
-}
-
 msql::~msql()
 {
    // mDebug() << "stop:" <<ConnectionName;
