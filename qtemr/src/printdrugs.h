@@ -22,6 +22,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QPageLayout>
 #include "sqlextra.h"
+#include <QPrinterInfo>
 
 namespace Ui {
 class printDrugs;

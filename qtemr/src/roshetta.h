@@ -1,6 +1,12 @@
 #ifndef ROSHETTA_H
 #define ROSHETTA_H
 
+#if defined __GNUC__
+#define GNUINLINE __attribute__((__always_inline__))
+#elif defined _MSC_VER
+#define GNUINLINE
+#endif
+
 #include <QObject>
 #include <QTextDocument>
 #include <QTextCursor>
@@ -38,9 +44,9 @@ private:
     void fillHeader(QTextCursor &c);
     void fillBanner(QTextCursor &c);
     void fillBody(QTextCursor &c);
-    void fillCurrentDrugs(QTextCursor &c, const QString &title);
-    void fillBaseDrugs(QTextCursor &c, const QString &title);
-    void fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs, const QString &title);
+    inline void fillCurrentDrugs(QTextCursor &c, const QString &title) GNUINLINE;
+    inline void fillBaseDrugs(QTextCursor &c, const QString &title) GNUINLINE;
+    inline void fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs, const QString &title) GNUINLINE;
     void fillRequests(QTextCursor &c);
     void fillSignaturePrintedOn(QTextCursor &c);
     void fillVitals(QTextCursor &c);

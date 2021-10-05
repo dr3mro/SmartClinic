@@ -81,25 +81,20 @@ void mLineEdit::onTextChanged()
 
 void mLineEdit::setDefaultFont()
 {
-    QStringList list = QStringList() << "patientResidence"
-                                     << "patientName"
-                                     << "patientPlaceBirth"
-                                     << "patientOccupation";
+    font = settings.getTextboxFont();
+    QFont mFont = QFont(font.fontName);
+    double mFontSize = font.fontSize;
+    bool mFontBold = font.fontBold;
 
-    defaultfont = settings.getDefaultFont();
-
-    QFont defaultFont = QFont(defaultfont.fontName);
-    double defaultFontSize = defaultfont.fontSize;
-    bool defaultFontBold = ( list.contains( this->objectName() ) ) ? true:defaultfont.fontBold;
+    mFont.setBold(mFontBold);
+    mFont.setPointSize(mFontSize);
 
     setStyleSheet(QString("QLineEdit{font:%1 %2pt \"%3\";}")
-                  .arg(defaultFontBold? "bold":"")
-                  .arg(defaultFontSize)
-                  .arg(defaultFont.toString()));
-    defaultFont.setBold(defaultFontBold);
-    defaultFont.setPointSize(defaultFontSize);
-    setFont(defaultFont);
-    //emit updateCompleterFont();
+                  .arg(mFontBold? "bold":"")
+                  .arg(mFontSize)
+                  .arg(font.fontName));
+
+    setFont(mFont);
 }
 
 
