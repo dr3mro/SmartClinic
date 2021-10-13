@@ -4034,6 +4034,8 @@ QStandardItemModel *sqlBase::getAgendaModel(int julianDate,QStandardItemModel *a
 
 QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStandardItemModel *myRegisterModel, sqlExtra *sqlextra)
 {
+    mRegisterMutex.lock();
+    myRegisterModel->blockSignals(true);
     QLocale en_US = QLocale(QLocale::English,QLocale::UnitedStates);
     encryptionEnabled=isEncryptionEnabled();
     query->clear();
@@ -4084,6 +4086,8 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     else
     {
         myRegisterModel->clear();
+        mRegisterMutex.unlock();
+        myRegisterModel->blockSignals(false);
         return myRegisterModel;
     }
 
@@ -4176,6 +4180,8 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     query->finish();
 
     myRegisterModel->setHorizontalHeaderLabels(labels);
+    myRegisterModel->blockSignals(false);
+    mRegisterMutex.unlock();
     return myRegisterModel;
 }
 

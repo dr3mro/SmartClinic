@@ -794,6 +794,7 @@ private:
     bool encryptionEnabled;
     void getVisitType(int ID, int visitJulianDate, Attended &attended);
     VisitTypes & visitTypes = VisitTypes::instance();
+    QMutex mRegisterMutex;
     //QList<QBrush> getVisitColors();
 
 
