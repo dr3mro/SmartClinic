@@ -467,7 +467,7 @@ public:
         bool showDoseNewLine=true;
 
         bool preferArabic=true;
-        bool showStartDate=true;
+        //bool showStartDate=true;
         //bool showHorizontalLineBelowHeader=false;
         bool enableFullPage=false;
         bool enableBodyHeaderSeparator=false;
@@ -503,8 +503,8 @@ public:
                             showOnlyNewlyModifiedAddedDrugs,
                             showTradeNamesBold,
                             showDoseNewLine,
-                            preferArabic,
-                            showStartDate/*,
+                            preferArabic/*,
+                            showStartDate,
                             showHorizontalLineBelowHeader*/,
                             enableFullPage,
                             enableBodyHeaderSeparator,
@@ -538,8 +538,8 @@ public:
                         prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
                         prescriptionprintsettings.showTradeNamesBold,
                         prescriptionprintsettings.showDoseNewLine,
-                        prescriptionprintsettings.preferArabic,
-                        prescriptionprintsettings.showStartDate/*,
+                        prescriptionprintsettings.preferArabic/*,
+                        prescriptionprintsettings.showStartDate,
                         prescriptionprintsettings.showHorizontalLineBelowHeader*/,
                         prescriptionprintsettings.enableFullPage,
                         prescriptionprintsettings.enableBodyHeaderSeparator,

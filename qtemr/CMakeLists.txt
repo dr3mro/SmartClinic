@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
-
+#set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 set(OPENSSL_USE_STATIC_LIBS true)
 
 #set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
@@ -11,6 +11,7 @@ if (MSVC)
     #add_compile_definitions(/MP)
 else()
     add_compile_options()
+    set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -Wall -O2")
 endif()
 
 set(TARGET_NAME "smartClinic3")

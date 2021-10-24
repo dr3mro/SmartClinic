@@ -72,7 +72,7 @@
 #define _showTradeNamesBold "showTradeNamesBold"
 #define _showDoseNewLine "showDoseNewLine"
 #define _preferArabic "prefereArabic"
-#define _showStartDate "showStartDate"
+//#define _showStartDate "showStartDate"
 #define _enableFullPage "enableFullPage"
 #define _enableBodyHeaderSeparator "enableBodyHeaderSeparator"
 #define _compactMode "compactMode"

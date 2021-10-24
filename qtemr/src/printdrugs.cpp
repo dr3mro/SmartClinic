@@ -107,7 +107,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked,Qt::QueuedConnection);
     connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked,Qt::QueuedConnection);
     connect(ui->preferArabic,&Switch::clicked,this,&printDrugs::preferArabic_clicked,Qt::QueuedConnection);
-    connect(ui->showStartDate,&Switch::clicked,this,&printDrugs::showStartDate_clicked,Qt::QueuedConnection);
+    //connect(ui->showStartDate,&Switch::clicked,this,&printDrugs::showStartDate_clicked,Qt::QueuedConnection);
     //connect(ui->showHorizontalLineBelowHeader,&Switch::clicked,this,&printDrugs::showHorizontalLineBelowHeader_clicked,Qt::QueuedConnection);
     connect(ui->enableFullPage,&Switch::clicked,this,&printDrugs::enableFullPage_clicked,Qt::QueuedConnection);
 
@@ -226,14 +226,15 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->signatureFontBold->setChecked(printSettings.signatureFont.fontBold);
 
     ui->drugsInitDate->setChecked(printSettings.showDrugsInitDate);
+    ui->drugsInitDate->setEnabled(printSettings.showDoseNewLine);
     ui->SignaturePrintedOn->setChecked(printSettings.showSignaturePrintedOn);
     ui->showOnlyNewlyModifiedAddedDrugs->setChecked(printSettings.showOnlyNewlyModifiedAddedDrugs);
     ui->showTradeNamesBold->setChecked(printSettings.showTradeNamesBold);
     ui->showDoseNewLine->setChecked(printSettings.showDoseNewLine);
 
     ui->preferArabic->setChecked(printSettings.preferArabic);
-    ui->showStartDate->setChecked(printSettings.showStartDate);
-    ui->showStartDate->setEnabled(printSettings.showDoseNewLine);
+    //ui->showStartDate->setChecked(printSettings.showStartDate);
+    //ui->showStartDate->setEnabled(printSettings.showDoseNewLine);
     //ui->showHorizontalLineBelowHeader->setChecked(printSettings.showHorizontalLineBelowHeader);
     //ui->showHorizontalLineBelowHeader->setEnabled(printSettings.prescriptionBannerStyle ==
     //                                            mSettings::bannerStyle::replaceLogo);
@@ -307,7 +308,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.showDoseNewLine = ui->showDoseNewLine->isChecked();
 
     printSettings.preferArabic = ui->preferArabic->isChecked();
-    printSettings.showStartDate = ui->showStartDate->isChecked();
+    //printSettings.showStartDate = ui->showStartDate->isChecked();
 
     //printSettings.showHorizontalLineBelowHeader = ui->showHorizontalLineBelowHeader->isChecked();
     printSettings.enableFullPage = ui->enableFullPage->isChecked();
@@ -797,7 +798,8 @@ void printDrugs::showTradeNamesBold_clicked(bool checked)
 void printDrugs::showDoseNewLine_clicked(bool checked)
 {
     pSettings.showDoseNewLine = checked;
-    ui->showStartDate->setEnabled(checked);
+    //ui->showStartDate->setEnabled(checked);
+    ui->drugsInitDate->setEnabled(checked);
     refreshView();
 }
 
@@ -807,11 +809,11 @@ void printDrugs::preferArabic_clicked(bool checked)
     refreshView();
 }
 
-void printDrugs::showStartDate_clicked(bool checked)
-{
-    pSettings.showStartDate = checked;
-    refreshView();
-}
+//void printDrugs::showStartDate_clicked(bool checked)
+//{
+//    pSettings.showStartDate = checked;
+//    refreshView();
+//}
 
 void printDrugs::enableFullPage_clicked(bool checked)
 {
