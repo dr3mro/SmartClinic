@@ -8,9 +8,11 @@ add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
 if (MSVC)
     add_compile_definitions(MEMLEAK=0)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox")
+
     #add_compile_definitions(/MP)
 else()
-    add_compile_options()
+    #add_compile_options()
     set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -Wall -O2")
 endif()
 
