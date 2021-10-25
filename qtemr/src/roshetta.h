@@ -58,7 +58,7 @@ private:
     double mWidth;
     double mHeight;
 
-    uint spacerfactor1=0,spacerfactor2=0;
+    uint spacerfactor1=0,spacerfactor2=0,spacerfactor3=0;
     uint allDrugsCount=0;
     mSettings::Roshetta roshettaData;
     QTextDocument *mRoshetta;

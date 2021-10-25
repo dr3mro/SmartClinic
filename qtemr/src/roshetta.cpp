@@ -488,8 +488,10 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
                 c.insertHtml("");
             else if(allDrugsCount > spacerfactor2 )
                 c.insertHtml("<br>");
-            else
+            else if(allDrugsCount > spacerfactor3 )
                 c.insertHtml("<br><br>");
+            else
+                c.insertHtml("<br><br><br>");
         }
         c.movePosition(QTextCursor::NextCell);
         CurrentDrugRow++;
@@ -687,16 +689,19 @@ void Roshetta::setSpacingFactor()
     if(!roshettaSettings.compactMode){
         switch (paperSize_int) {
         case 4:
-            spacerfactor1 = 9;
-            spacerfactor2 = 5;
+            spacerfactor1 = 10;
+            spacerfactor2 = 8;
+            spacerfactor3 = 6;
             break;
         case 5:
-            spacerfactor1 = 7;
-            spacerfactor2 = 4;
+            spacerfactor1 = 8;
+            spacerfactor2 = 6;
+            spacerfactor3 = 4;
             break;
         case 6:
-            spacerfactor1 = 5;
-            spacerfactor2 = 3;
+            spacerfactor1 = 6;
+            spacerfactor2 = 4;
+            spacerfactor3 = 2;
             break;
         }
     }
