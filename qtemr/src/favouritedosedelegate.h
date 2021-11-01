@@ -21,9 +21,8 @@ public:
 private:
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
-    sqlExtra *sqlextra;
     QString connectionName;
-    
+    sqlExtra *sqlextra;
 };
 
 #endif // FAVOURITEDOSEDELEGATE_H
