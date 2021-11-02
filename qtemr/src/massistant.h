@@ -92,6 +92,7 @@ private:
     void loadAgenda();
     void setTimePeriod();
     void setcheckoutTooltip();
+    bool ignoreKeyEvents=false;
 
 
 protected:

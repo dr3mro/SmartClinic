@@ -364,6 +364,11 @@ void mAssistant::goExpectedDeliveriesTab()
 
 void mAssistant::keyPressEvent(QKeyEvent *event)
 {
+    if(ignoreKeyEvents){
+        mDialog::keyPressEvent(event);
+        return;
+    }
+
     if ( event->key() == Qt::Key_F1)
         ui->mAssistantTabWidget->setCurrentIndex(0);
     else if ( event->key() == Qt::Key_F2)
@@ -408,10 +413,12 @@ void mAssistant::showEvent(QShowEvent *e)
     int height = static_cast<int>(wm.getDesktop().height() *0.9);
     resize(width,height);
     mDialog::showEvent(e);
+    ignoreKeyEvents=false;
 }
 
 void mAssistant::closeEvent(QCloseEvent *e)
 {
+    ignoreKeyEvents = true;
 #if QT_VERSION >= 0x060000
     auto f1 = QtConcurrent::run(&QStandardItemModel::clear,myRegisterModel);
     auto f2 = QtConcurrent::run(&QStandardItemModel::clear,calcModel);
