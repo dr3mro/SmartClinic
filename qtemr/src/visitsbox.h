@@ -175,6 +175,7 @@ private:
     QShortcut *toggleFollowupDate;
     QShortcut *vTypeUp;
     QShortcut *vTypeDown;
+    QShortcut *visitAsRequest;
     int visitDateTime2JulianDate();
     void connectSignals(QWidget *parent);
     //void initializeVariables();

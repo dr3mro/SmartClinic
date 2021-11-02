@@ -3444,6 +3444,7 @@ void sqlBase::createNewVisit(int ID,
                              int visitType,
                              double visitPrice,
                              const QDate &lastSelectedFollowupDate,
+                             bool visitIsRequest,
                              DrugsItemModel *drugsModel,
                              InvestModel *investModel,
                              sqlExtra *sqlextra)
@@ -3469,12 +3470,6 @@ void sqlBase::createNewVisit(int ID,
         drugsModel->blockSignals(false);
         investModel->blockSignals(false);
 
-        //        visit.bp.clear();
-        //        visit.pulse.clear();
-        //        visit.temp.clear();
-        //        visit.rr.clear();
-        //        visit.weight.clear();
-        //        visit.length.clear();
         visit.vitals.clear();
 
         visit.headCir.clear();
@@ -3490,7 +3485,12 @@ void sqlBase::createNewVisit(int ID,
 
     visit.ID = ID;
     visit.visitDateTime = englishDateTime;
-    visit.followDate = QString::number(settings.isRemmberlastFollowupDate()? static_cast<int>(lastSelectedFollowupDate.toJulianDay()):nextDateJulian);
+
+
+    visit.followDate = QString::number( ( settings.isRemmberlastFollowupDate() || visitIsRequest )? static_cast<int>(lastSelectedFollowupDate.toJulianDay()):nextDateJulian);
+
+
+
     visit.visitType = visitType;
 
     visitData vdata;

@@ -708,7 +708,7 @@ public:
     QStandardItemModel *getMyRegisterCalcModel(QStandardItemModel *myRegisterModel, QStandardItemModel *calcModel, sqlExtra *sqlextra, const QModelIndexList &selection, double &TOTAL);
     QStandardItemModel* getMyRegisterModel(RegisterRange timeFrame, QStandardItemModel *myRegisterModel, sqlExtra *sqlextra);
     void registerServiceLoader(QStandardItemModel *myRegisterModel,sqlExtra *sqlextra);
-    void createNewVisit(int ID, QString previous ,const QDateTime &datetime, int visitType, double visitPrice, const QDate &lastSelectedFollowupDate, DrugsItemModel *drugsModel, InvestModel *investModel, sqlExtra *sqlextra);
+    void createNewVisit(int ID, QString previous , const QDateTime &datetime, int visitType, double visitPrice, const QDate &lastSelectedFollowupDate, bool visitIsRequest, DrugsItemModel *drugsModel, InvestModel *investModel, sqlExtra *sqlextra);
     QSqlTableModel *getConditionsModel();
     bool addCondition(QString name,int _id);
     QList<QPair<int,QString> > getConditions();

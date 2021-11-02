@@ -22,7 +22,8 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
     printPreviewShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_R),this)),
     toggleFollowupDate(new QShortcut(Qt::Key_F12,this)),
     vTypeUp(new QShortcut(Qt::Key_F10,this)),
-    vTypeDown(new QShortcut(Qt::Key_F11,this))
+    vTypeDown(new QShortcut(Qt::Key_F11,this)),
+    visitAsRequest(new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F3),this))
 
 {
     ui->setupUi(this);
@@ -207,6 +208,7 @@ void visitsBox::on_ButtonNew_clicked()
                             visitindex,
                             visitPrice,
                             lastSelectedFollowupDate,
+                            false,
                             ui->vDrugsTable->getDrugsModel(),
                             ui->InvestigationsTable->getInvestigationsModel(),
                             sqlextra);
@@ -562,6 +564,7 @@ void visitsBox::on_ButtonVisit_clicked()
     if(newVisitCreationInProgress||aboutToClose)
         return;
     newVisitCreationInProgress=true;
+    bool visitIsRequest = QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier);
     visitindex = ui->comboVisitType->currentIndex();
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     QDateTime datetime = QDateTime::currentDateTime();
@@ -599,7 +602,11 @@ void visitsBox::on_ButtonVisit_clicked()
     if (vEditMode)
         save(visit,false);
 
-    visitindex = (suggestedVisitType==0)? visitTypes.advance(visitTypes.getVisitTypesByUiIndex(visitindex).id):suggestedVisitType;
+    if(visitIsRequest)
+        visitindex = VisitTypes::n_visitsType::Requests;
+    else
+        visitindex = (suggestedVisitType==0)? visitTypes.advance(visitTypes.getVisitTypesByUiIndex(visitindex).id):suggestedVisitType;
+
     double visitPrice = visitTypes.getVisitTypesByAlgoIndex(visitindex).price;
     ui->comboVisitType->setCurrentIndex(visitindex);
 
@@ -608,7 +615,8 @@ void visitsBox::on_ButtonVisit_clicked()
                             datetime,
                             visitindex,
                             visitPrice,
-                            lastSelectedFollowupDate,
+                            visitIsRequest? visitFollowupDate:lastSelectedFollowupDate,
+                            visitIsRequest,
                             ui->vDrugsTable->getDrugsModel(),
                             ui->InvestigationsTable->getInvestigationsModel(),
                             sqlextra);
@@ -1253,6 +1261,7 @@ void visitsBox::connectSignals(QWidget *parent)
     connect ( toggleFollowupDate,&QShortcut::activated,this,&visitsBox::toggleDateFollowup);
     connect ( vTypeUp,&QShortcut::activated,ui->comboVisitType,&vTypeComboBox::goUp);
     connect ( vTypeDown,&QShortcut::activated,ui->comboVisitType,&vTypeComboBox::goDown);
+    connect ( visitAsRequest,&QShortcut::activated,this,&visitsBox::on_ButtonVisit_clicked);
 }
 
 //void visitsBox::initializeVariables()
