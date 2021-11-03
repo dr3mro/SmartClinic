@@ -190,7 +190,7 @@ void visitsBox::on_ButtonNew_clicked()
 
     }
 
-    //  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
+    ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
     ui->dateFollowUp->setMinimumDate(QDate::currentDate());
     ui->lmpDate->setDate(QDate::currentDate());
 
@@ -584,7 +584,7 @@ void visitsBox::on_ButtonVisit_clicked()
 
     //  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
     sqlBase::Visit visit = grabVisit();
-    if ( dtJulian != visit.followDate.toInt())
+    if ( dtJulian != visit.followDate.toInt() && !visitIsRequest)
     {
         int reply = msgbox->question(this,"Warning","<center>You are creating a new follow up visit in a date that differs from the squeduled date in last visit, do you want to set today as the follow up date for the last visit? ( <b>yes</b> or <b>No</b>) \n <b> Note: THIS CANNOT BE UNDONE!</b></center>",QMessageBox::Yes,QMessageBox::No,QMessageBox::Cancel);
         if ( reply == QMessageBox::Yes)

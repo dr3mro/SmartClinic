@@ -1116,7 +1116,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Remmber Last Selected followup date</string>
+            <string>Auto set Follow up date for new visits only. [Manually by pressing F12] </string>
            </property>
           </widget>
          </item>
