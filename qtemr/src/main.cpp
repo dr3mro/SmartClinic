@@ -18,6 +18,9 @@
 #include "dataiohelper.h"
 #include "msettings.h"
 
+#ifndef GITMESSAGE
+#define GITMESSAGE ""
+#endif
 
 //#define VLD_FORCE_ENABLE
 //#include <vld.h>
@@ -250,25 +253,18 @@ int main(int argc, char *argv[])
     QCommandLineOption makeUpdatePkgOption("makeUpdatePackage", QCoreApplication::translate("main", "make update package"));
 
     clParser.addOption(makeUpdatePkgOption);
-    clParser.addPositionalArgument("changes", QCoreApplication::translate("main", "Source file to copy."));
-    clParser.addPositionalArgument("url", QCoreApplication::translate("main", "Destination directory."));
-
     clParser.process(a);
-
     bool makeUpdatePKG = clParser.isSet(makeUpdatePkgOption);
-
     if(makeUpdatePKG){
-        QString changes = clParser.positionalArguments().at(0);
-        QString pkgUrl = clParser.positionalArguments().at(1);
-
         if(!QDir(updatePackageDir).exists())
             QDir().mkdir(updatePackageDir);
 
         squeeze::compact(EXENAME,updatePacakgeFile);
         QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile(updatePacakgeFile),QCryptographicHash::Md5 ).toHex());
         QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
-                    APPVERSION,BUILD,BUILDDATE,BUILDTIME,pkgUrl,md5,changes).toUtf8();
+                    APPVERSION,BUILD,BUILDDATE,BUILDTIME,pkgUrl,md5,GITMESSAGE).toUtf8();
         dataIOhelper::saveFile(updateInfoFile,updateData);
+//        qDebug() << updateData;
         exit(0);
     }
 

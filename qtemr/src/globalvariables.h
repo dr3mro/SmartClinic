@@ -9,7 +9,7 @@
 #define STR(x) STR_IMPL_(x)  //indirection to expand argument macros
 
 
-#define BUILDVER 30
+#define BUILDVER 31
 #define MINORVER 8
 #define MAJORVER 3
 
@@ -29,10 +29,12 @@
 #define updateInfo "https://dl.dropboxusercontent.com/s/e3uv38igk8ahry2/updateInfo7?dl=0"
 #define updatePacakgeFile "updatePKGs/sc7.pkg"
 #define updateInfoFile "updateInfo7"
+#define pkgUrl "https://dl.dropboxusercontent.com/s/5ryt5gg0e2cr2ac/sc7.pkg?dl=0"
 #elif _MSC_VER
 #define updateInfo "https://dl.dropboxusercontent.com/s/fy9ork77kzpfkr7/updateInfo?dl=0"
 #define updatePacakgeFile "updatePKGs/sc.pkg"
 #define updateInfoFile "updateInfo"
+#define pkgUrl "https://dl.dropboxusercontent.com/s/kz0zb1ich48aolq/sc.pkg?dl=0"
 #endif
 
 #define updateInfo_ "http://127.0.0.1:8000/update/update"

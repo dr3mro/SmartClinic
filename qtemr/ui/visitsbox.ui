@@ -67,7 +67,7 @@
      <item>
       <widget class="QToolButton" name="ButtonVisit">
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a follow up visit&lt;/p&gt;&lt;p&gt;F3&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a follow up visit&lt;/p&gt;&lt;p&gt;F3 to add followup &lt;/p&gt;&lt;p&gt;Shift + F3 to add as a request visit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
         <string>...</string>

@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.19)
 project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
 #set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+execute_process(COMMAND CMD /c git log -1 --pretty=%B
+    OUTPUT_VARIABLE CMD_OUTPUT
+    ERROR_VARIABLE CMD_STATUS
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 set(OPENSSL_USE_STATIC_LIBS true)
 
 #set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
@@ -8,11 +14,13 @@ add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
 if (MSVC)
     add_compile_definitions(MEMLEAK=0)
+    add_compile_definitions(GITMESSAGE="${CMD_OUTPUT}")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ox")
 
     #add_compile_definitions(/MP)
 else()
     #add_compile_options()
+    add_compile_definitions(GITMESSAGE="${CMD_OUTPUT}")
     set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -Wall -O2")
 endif()
 
