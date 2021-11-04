@@ -65,7 +65,8 @@ void miniUpdater::on_doButton_clicked()
 void miniUpdater::viewDownloadedData(QByteArray ba)
 {
     ui->textEdit->append(humanizeUpdateData(ba));
-    enableUpdating(microupdater->isUpdateAvailable(ba));
+    updateAvailable = microupdater->isUpdateAvailable(ba);
+    enableUpdating(updateAvailable);
 }
 
 void miniUpdater::downloadingFinished(double size)
@@ -191,6 +192,9 @@ void miniUpdater::closeEvent(QCloseEvent *e)
 
 void miniUpdater::keyPressEvent(QKeyEvent *e)
 {
+    if ( e->modifiers().testFlag(Qt::ControlModifier)){
+        ui->doButton->setEnabled(true);
+    }
     if ( e->key() == Qt::Key_Escape ||
          ( e->key() == Qt::Key_F4 && e->modifiers().testFlag(Qt::KeyboardModifier::AltModifier)))
     {
@@ -199,6 +203,12 @@ void miniUpdater::keyPressEvent(QKeyEvent *e)
     }
     else
         QWidget::keyPressEvent(e);
+}
+
+void miniUpdater::keyReleaseEvent(QKeyEvent *e)
+{
+    ui->doButton->setEnabled(updateAvailable);
+    QWidget::keyReleaseEvent(e);
 }
 
 

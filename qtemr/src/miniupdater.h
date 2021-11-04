@@ -60,7 +60,9 @@ private:
     void enableUpdating(bool b);
     void closeEvent(QCloseEvent *e);
     void keyPressEvent(QKeyEvent *e);
+    void keyReleaseEvent(QKeyEvent *e);
     bool autoUpdate=false;
+    bool updateAvailable=false;
 };
 
 #endif // MINIUPDATER_H

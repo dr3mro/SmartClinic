@@ -57,6 +57,9 @@
        <height>0</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CTRL to force enable&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Update Now</string>
      </property>
