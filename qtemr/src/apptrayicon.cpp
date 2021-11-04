@@ -106,6 +106,11 @@ appTrayIcon::appTrayIcon(QObject *parent) : QSystemTrayIcon(parent)
     connect (this,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),parent,SLOT(toggleWindow(QSystemTrayIcon::ActivationReason)));
 }
 
+bool appTrayIcon::childWindowsActive()
+{
+    return _mChildWindowActive;
+}
+
 appTrayIcon::~appTrayIcon()
 {
     delete a_about;
@@ -146,6 +151,7 @@ void appTrayIcon::toggleActions(bool b)
     a_CompactDataBase->setEnabled(b);
     dbSubMenu->setEnabled(b);
     easySubMenu->setEnabled(b);
+    _mChildWindowActive = !b;
 
 }
 

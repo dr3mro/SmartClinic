@@ -1338,18 +1338,15 @@ void MainWindow::reOpenDataBase()
 
 void MainWindow::toggleWindow(QSystemTrayIcon::ActivationReason reason)
 {
-    if ( reason != QSystemTrayIcon::DoubleClick )
-    {
+    if ( trayIcon->childWindowsActive()){
+        popUpMessage("Message",QString("Please close active window first."));
         return;
-    }
-
-    if( this->isHidden())
-    {
+    }else if ( reason != QSystemTrayIcon::DoubleClick ){
+        return;
+    }else if( this->isHidden()){
         this->show();
         this->setWindowState(Qt::WindowMaximized);
-    }
-    else
-    {
+    }else{
         this->hide();
         popUpMessage("Message",QString("%1 %2 is now Minimized to tray!").arg(APPNAME).arg(APPVERSION));
     }

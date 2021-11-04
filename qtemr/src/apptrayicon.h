@@ -15,6 +15,7 @@ class appTrayIcon : public QSystemTrayIcon
     Q_OBJECT
 public:
     explicit appTrayIcon(QObject *parent = nullptr);
+    bool childWindowsActive();
     ~appTrayIcon();
 private:
     QAction *a_about;
@@ -36,6 +37,7 @@ private:
     QMenu *trayMenu;
     QMenu *dbSubMenu;
     QMenu *easySubMenu;
+    bool _mChildWindowActive=false;
 signals:
 
 public slots:
