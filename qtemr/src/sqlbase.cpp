@@ -3485,13 +3485,10 @@ void sqlBase::createNewVisit(int ID,
 
     visit.ID = ID;
     visit.visitDateTime = englishDateTime;
-
-
-    visit.followDate = QString::number( ( settings.isRemmberlastFollowupDate() || visitIsRequest )? static_cast<int>(lastSelectedFollowupDate.toJulianDay()):nextDateJulian);
-
-
-
     visit.visitType = visitType;
+
+    visit.followDate = QString::number( ( (settings.isRemmberlastFollowupDate() && visit.visitType == VisitTypes::NewVisit)|| visitIsRequest )? static_cast<int>(lastSelectedFollowupDate.toJulianDay()):nextDateJulian);
+
 
     visitData vdata;
     vdata.ID = ID;
