@@ -93,7 +93,7 @@ void FeedBack::sendMailAsync(const MimeMessage &msg)
 
     Server *server = nullptr;
     for (auto srv : m_aServers) {
-        if (srv->host() == host && srv->port() == port & srv->connectionType() == ct) {
+        if (srv->host() == host && ( (srv->port() == port) & (srv->connectionType() == ct)) ){
             server = srv;
             break;
         }

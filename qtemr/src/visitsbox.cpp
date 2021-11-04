@@ -282,7 +282,7 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
     ui->patientAbdomentBack->setHtml(visit.exAbdback);
     ui->patientLL->setHtml(visit.exLL);
 
-    ui->comboVisitType->setCurrentIndex(visitTypes.getVisitIndexFromId((VisitTypes::n_visitsType&)visit.visitType));
+    ui->comboVisitType->setCurrentIndex(visitTypes.getVisitIndexFromId(static_cast<VisitTypes::n_visitsType>(visit.visitType)));
     ui->investigationsResults->setHtml(visit.invResults);
     ui->plaintextNotes->setHtml(visit.visitNotes);
 

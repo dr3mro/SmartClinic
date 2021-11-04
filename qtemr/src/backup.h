@@ -49,12 +49,12 @@ private:
     QString ZipName;
     QStandardItemModel *model;
     QString selectedZip,savedMD5;
-    int MaxBackUP;
-    bool Working;
-    myMessageBox msg;
     sqlBase *sqlbase;
     double databaseVersion;
+    int MaxBackUP;
+    bool Working;
     int indexLENGTH;
+    myMessageBox msg;
 
 signals:
     void closeDataBase();
