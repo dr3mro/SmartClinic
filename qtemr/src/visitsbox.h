@@ -218,7 +218,11 @@ private:
     bool drugLoadCompleted=false;
     QString printableAge;
     bool aboutToClose=false;
+    //////////////////////////////////
     QDate lastSelectedFollowupDate;
+    QDate lastFollowupDate;
+    QDate lastVisitDate;
+    //////////////////////////////////
     int suggestedVisitType=0;//for remote assistant created patient to modify this
     mSettings::Roshetta getRoshetta();
     void roshettaDrugsfiller(QList<mSettings::drug> &drugs, DrugsItemModel *drugsModel, bool alteredDrugsOnly);

@@ -24,8 +24,11 @@ public:
 
     Q_DECLARE_FLAGS(WorkDays,WorkDay)
     explicit VisitHelper(QObject *parent = nullptr);
-    static QDate makeFollowDate(const QDate &fd,
-                         QDate &lastSelected,
+    static QDate makeFollowDate(
+                         const QDate & visitDate,
+                         const QDate & lastFollowDate,
+                         const QDate & currentFollowDate,
+                         QDate &lastSelectedFollowDate,
                          bool isAutoSet,
                          const VisitTypes::n_visitsType visitType,
                          const WorkDays &wd,
