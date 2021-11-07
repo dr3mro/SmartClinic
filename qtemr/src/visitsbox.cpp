@@ -26,8 +26,7 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
     vTypeUp(new QShortcut(Qt::Key_F10,this)),
     vTypeDown(new QShortcut(Qt::Key_F11,this)),
     visitAsRequest(new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F3),this)),
-    lastSelectedFollowupDate(QDate::fromJulianDay(settings.getLastSelectedFollowUpDate())),
-    visitFollowupDate(QDate::currentDate())
+    lastSelectedFollowupDate(QDate::fromJulianDay(settings.getLastSelectedFollowUpDate()))
 
 {
     ui->setupUi(this);
@@ -1231,11 +1230,8 @@ void visitsBox::toggleDateFollowup()
     if(!vEditMode)
         return;
 
-    if ( ui->comboVisitType->currentIndex() == visitTypes.getVisitIndexFromId(VisitTypes::n_visitsType::Requests)){
-        ui->dateFollowUp->setDate(visitFollowupDate);
+    if ( ui->comboVisitType->currentIndex() == visitTypes.getVisitIndexFromId(VisitTypes::n_visitsType::Requests))
         return;
-    }
-
 
     if( lastSelectedFollowupDate == QDate::currentDate())
         return;
@@ -1248,13 +1244,12 @@ void visitsBox::toggleDateFollowup()
                                                      (VisitHelper::WorkDays) settings.getWorkingDays(),
                                                      settings.getMaxFollowUps(),
                                                      sqlbase,
-                                                     patientBasicDetails.ID,
-                                                     true);
+                                                     patientBasicDetails.ID,true);
 
 
     if(ui->dateFollowUp->date() == QDate::currentDate())
         ui->dateFollowUp->setDate(lastSelectedFollowupDate);
-    else if (ui->dateFollowUp->date() == lastSelectedFollowupDate)
+    else //if (ui->dateFollowUp->date() == lastSelectedFollowupDate)
         ui->dateFollowUp->setDate(QDate::currentDate());
     QDate cd = ui->dateFollowUp->date();//currentdate
     int selectedDateFollowUps = followNotify(cd);
