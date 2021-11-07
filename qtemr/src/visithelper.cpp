@@ -11,8 +11,10 @@ QDate VisitHelper::makeFollowDate(const QDate &fd, QDate &lastSelected, bool isA
         while (true){
             if( (( 1 << lastSelected.dayOfWeek() ) & wd)  && (sqlbase->getFollowUpsCountForThisDate(lastSelected,ID) < maxFollowupsDay) ){
                 return lastSelected;
-            }else{
+            }else if (maxFollowupsDay > 0){
                 lastSelected = lastSelected.addDays(1);
+            }else{
+                return QDate::currentDate();
             }
         }
     }
@@ -23,10 +25,12 @@ QDate VisitHelper::makeFollowDate(const QDate &fd, QDate &lastSelected, bool isA
     if(visitType == VisitTypes::n_visitsType::NewVisit){
 
         while (true){
-            if( (( 1 << lastSelected.dayOfWeek() ) & wd)  && (sqlbase->getFollowUpsCountForThisDate(lastSelected,ID) < maxFollowupsDay) ){
+            if( (( 1 << lastSelected.dayOfWeek() ) & wd)  &&(sqlbase->getFollowUpsCountForThisDate(lastSelected,ID) < maxFollowupsDay) ){
                 return lastSelected;
-            }else{
+            }else if (maxFollowupsDay > 0){
                 lastSelected = lastSelected.addDays(1);
+            } else {
+                return QDate::currentDate();
             }
         }
     }

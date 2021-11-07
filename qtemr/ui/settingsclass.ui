@@ -873,7 +873,11 @@
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QSpinBox" name="maxFollowUps"/>
+          <widget class="QSpinBox" name="maxFollowUps">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+          </widget>
          </item>
          <item row="3" column="1">
           <spacer name="horizontalSpacer_6">
