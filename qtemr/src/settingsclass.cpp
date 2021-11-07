@@ -119,22 +119,29 @@ mSettings::pSettings settingsClass::getValuesFromUI()
     _settings.remmberLastFollowupDate = ui->remmberLastFollowupDate->isChecked();
 
 
-    _settings.workingdays = 1;
-    if(ui->saturday->isChecked())
-        _settings.workingdays |= VisitHelper::Saturday;
-    if(ui->sunday->isChecked())
-        _settings.workingdays |= VisitHelper::Sunday;
+    _settings.workingdays = 0;
+
     if(ui->monday->isChecked())
         _settings.workingdays |= VisitHelper::Monday;
+//    mDebug() <<_settings.workingdays;
     if(ui->tuesday->isChecked())
         _settings.workingdays |= VisitHelper::Tuesday;
+//    mDebug() <<_settings.workingdays;
     if(ui->wednesday->isChecked())
         _settings.workingdays |= VisitHelper::Wednesday;
+//    mDebug() <<_settings.workingdays;
     if(ui->thursday->isChecked())
         _settings.workingdays |= VisitHelper::Thrusday;
+//    mDebug() <<_settings.workingdays;
     if(ui->friday->isChecked())
         _settings.workingdays |= VisitHelper::Friday;
-
+//    mDebug() <<_settings.workingdays;
+    if(ui->saturday->isChecked())
+        _settings.workingdays |= VisitHelper::Saturday;
+//    mDebug() <<_settings.workingdays;
+    if(ui->sunday->isChecked())
+        _settings.workingdays |= VisitHelper::Sunday;
+//    mDebug() <<_settings.workingdays;
     return _settings;
 }
 

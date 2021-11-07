@@ -174,7 +174,7 @@ void visitsBox::on_ButtonNew_clicked()
         QString visitDate = dt.toString("dd/MM/yyyy");
         if ( englishDate == visitDate )
         {
-            msgbox->information(this,"Message","You Can't Add more than one visit for the same patient within a 24 hours period, Sorry!");
+            msgbox->information(this,"Warning","You Can't Add more than one visit for the same patient within a 24 hours period, Sorry!");
             ui->ButtonNew->setEnabled(true);
             newVisitCreationInProgress=false;
             return;
@@ -183,7 +183,7 @@ void visitsBox::on_ButtonNew_clicked()
     int reply;
 
     QString msgText = "This will clear the current fields, Are you Sure?";
-    reply = msgbox->question(this, "Message",msgText,
+    reply = msgbox->question(this, "Warning",msgText,
                              QMessageBox::Yes,QMessageBox::No);
     if (reply == QMessageBox::No)
     {
@@ -396,6 +396,8 @@ void visitsBox::on_visitLists_currentIndexChanged(int index)
 
         ui->dateFollowUp->setDate(followUpDate);
         ui->dateFollowUp->setMinimumDate(QDate::fromString(visitDateString,"dd/MM/yyyy"));
+        int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(followUpDate,patientBasicDetails.ID)+1;
+        setFollowDateTooltip(selectedDateFollowUps,followUpDate);
         ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,visitDateTime2JulianDate());
         ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDateTime2JulianDate());
         if(suggestedVisitType!=0)
@@ -595,7 +597,7 @@ void visitsBox::on_ButtonVisit_clicked()
         int visitJ = static_cast<int>(locale.toDateTime(ui->visitLists->itemText(i),"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
         if ( visitJ == dtJulian )
         {
-            msgbox->information(this,"Message","You Can't Add more than one visit for the same patient within a 24 hours period, Sorry!");
+            msgbox->information(this,"Warning","You Can't Add more than one visit for the same patient within a 24 hours period, Sorry!");
             newVisitCreationInProgress=false;
             return;
         }

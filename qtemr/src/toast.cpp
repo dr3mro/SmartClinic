@@ -31,6 +31,7 @@ void toast::setMessage(QString title, QString msg)
     wait.setInterval(msg.length()*170);
     adjustSize();
     horizontalPos = centerPos - width()/2;
+    effect.play();
     // this to prevent close if message changed & adjust size if msg length changed
     if(wait.isActive())
     {
@@ -45,7 +46,7 @@ void toast::setMessageType(QString title)
     QString c;
     if (! QString::compare("Message",title,Qt::CaseInsensitive)){
         c = "Aliceblue";
-        effect.setSource(QUrl("qrc:/Audio/unlock"));
+        effect.setSource(QUrl("qrc:/Audio/Notify"));
     }else if (! QString::compare("Done",title,Qt::CaseInsensitive)){
         c = "lightgreen";
         effect.setSource(QUrl("qrc:/Audio/default"));
