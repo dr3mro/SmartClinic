@@ -546,5 +546,9 @@ void mSettings::saveLastSelectedFollowUpDate(const QDate &date)
 int mSettings::getLastSelectedFollowUpDate()
 {
     QSettings settings("./settings.ini",QSettings::IniFormat);
-    return settings.value(_lastSelectedFollowUpDate,QVariant(QDate::currentDate().toJulianDay())).toInt();
+    settings.beginGroup(_clinic);
+    int lastSelectedFollowUpDate = settings.value(_lastSelectedFollowUpDate,QVariant(QDate::currentDate().toJulianDay())).toInt();
+    settings.endGroup();
+    return lastSelectedFollowUpDate;
+
 }

@@ -25,7 +25,9 @@ visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
     toggleFollowupDate(new QShortcut(Qt::Key_F12,this)),
     vTypeUp(new QShortcut(Qt::Key_F10,this)),
     vTypeDown(new QShortcut(Qt::Key_F11,this)),
-    visitAsRequest(new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F3),this))
+    visitAsRequest(new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F3),this)),
+    lastSelectedFollowupDate(QDate::fromJulianDay(settings.getLastSelectedFollowUpDate())),
+    visitFollowupDate(QDate::currentDate())
 
 {
     ui->setupUi(this);
@@ -1237,6 +1239,17 @@ void visitsBox::toggleDateFollowup()
 
     if( lastSelectedFollowupDate == QDate::currentDate())
         return;
+
+
+   lastSelectedFollowupDate = VisitHelper::makeFollowDate(ui->dateFollowUp->date(),
+                                                     lastSelectedFollowupDate,
+                                                     settings.isRemmberlastFollowupDate(),
+                                                     visitTypes.getVisitTypesByUiIndex(ui->comboVisitType->currentIndex()).id,
+                                                     (VisitHelper::WorkDays) settings.getWorkingDays(),
+                                                     settings.getMaxFollowUps(),
+                                                     sqlbase,
+                                                     patientBasicDetails.ID,
+                                                     true);
 
 
     if(ui->dateFollowUp->date() == QDate::currentDate())

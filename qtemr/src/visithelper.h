@@ -31,7 +31,9 @@ public:
                          const WorkDays &wd,
                          const int maxFollowupsDay,
                          sqlBase *sqlbase,
-                         const int ID);
+                         const int ID,
+                         bool manual=false);
+
 
 signals:
 
