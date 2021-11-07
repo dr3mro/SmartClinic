@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>505</width>
-    <height>1133</height>
+    <height>697</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -102,7 +102,7 @@
             <x>0</x>
             <y>0</y>
             <width>465</width>
-            <height>1039</height>
+            <height>603</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -715,28 +715,9 @@
       <attribute name="title">
        <string>Clinic</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_6">
+      <layout class="QGridLayout" name="gridLayout_15">
        <item row="10" column="0">
-        <widget class="QTableView" name="servicesTable">
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <attribute name="verticalHeaderMinimumSectionSize">
-          <number>20</number>
-         </attribute>
-         <attribute name="verticalHeaderDefaultSectionSize">
-          <number>20</number>
-         </attribute>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="Line" name="line_12">
+        <widget class="Line" name="line_19">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -749,74 +730,223 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_36">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Paid Services&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="labelSpecial">
+       <item row="4" column="0">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Select Speciality:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>Auto set Follow up date for new visits only. [Manually by pressing F12] </string>
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QComboBox" name="comboBoxSpeciality">
-           <item>
-            <property name="text">
-             <string>Internal Medicine</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Pediatrics</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Orthopaedics</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Surgery</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Ob/Gyn</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Family Medicine</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Physical Therapy</string>
-            </property>
-           </item>
+         <item row="0" column="1">
+          <widget class="Switch" name="remmberLastFollowupDate">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item row="7" column="0">
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="3" column="2">
-          <widget class="QDoubleSpinBox" name="doubleSpinBoxFollow1">
-           <property name="maximum">
-            <double>9999.000000000000000</double>
+       <item row="12" column="0">
+        <widget class="QWidget" name="widget_2" native="true">
+         <layout class="QGridLayout" name="gridLayout_12">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_36">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Paid Services&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <spacer name="horizontalSpacer_11">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>Enter a SERVICE :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="serviceLine"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="buttonAddService">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../res/resources.qrc">
+                <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="buttonDeleteService">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../res/resources.qrc">
+                <normaloff>:/Graphics/remove</normaloff>:/Graphics/remove</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QTableView" name="servicesTable">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <attribute name="verticalHeaderMinimumSectionSize">
+             <number>20</number>
+            </attribute>
+            <attribute name="verticalHeaderDefaultSectionSize">
+             <number>20</number>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="2" column="0" rowspan="2">
+          <widget class="QLabel" name="label_25">
+           <property name="text">
+            <string>Maximum Number of follow ups per Problem</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QDoubleSpinBox" name="newVisitDoubleSpinBox">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_24">
+           <property name="text">
+            <string>Maximum Number of follow ups in a Single Day</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QSpinBox" name="maxFollowUps"/>
+         </item>
+         <item row="3" column="1">
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="2" rowspan="2">
+          <widget class="QSpinBox" name="maxFollowUpsPerProblem">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>4</number>
+           </property>
+           <property name="value">
+            <number>4</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" rowspan="2">
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="label_40">
+           <property name="text">
+            <string>Automatically set a visit as a new visit after max follow Ups is reached.</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Switch" name="checkBoxAutoNewVisit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="9" column="0">
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="3" column="2">
+          <widget class="QDoubleSpinBox" name="doubleSpinBoxFollow1">
            <property name="maximum">
             <double>9999.000000000000000</double>
            </property>
@@ -835,28 +965,8 @@
            </property>
           </spacer>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="newVisitLabel">
-           <property name="text">
-            <string>New Visit</string>
-           </property>
-          </widget>
-         </item>
          <item row="5" column="1">
           <spacer name="horizontalSpacer_43">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="2" column="1">
-          <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -916,13 +1026,6 @@
          </item>
          <item row="3" column="3">
           <widget class="QLabel" name="label_31">
-           <property name="text">
-            <string>L.E.</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QLabel" name="label_30">
            <property name="text">
             <string>L.E.</string>
            </property>
@@ -1004,58 +1107,22 @@
            </property>
           </spacer>
          </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="2" column="0" rowspan="2">
-          <widget class="QLabel" name="label_25">
-           <property name="text">
-            <string>Maximum Number of follow ups per Problem</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_24">
-           <property name="text">
-            <string>Maximum Number of follow ups in a Single Day</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QSpinBox" name="maxFollowUps"/>
-         </item>
-         <item row="3" column="1">
-          <spacer name="horizontalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="2" column="2" rowspan="2">
-          <widget class="QSpinBox" name="maxFollowUpsPerProblem">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
+         <item row="2" column="6">
+          <widget class="QDoubleSpinBox" name="newVisitDoubleSpinBox">
            <property name="maximum">
-            <number>4</number>
-           </property>
-           <property name="value">
-            <number>4</number>
+            <double>9999.000000000000000</double>
            </property>
           </widget>
          </item>
-         <item row="1" column="1" rowspan="2">
-          <spacer name="horizontalSpacer_5">
+         <item row="2" column="7">
+          <widget class="QLabel" name="label_30">
+           <property name="text">
+            <string>L.E.</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="4">
+          <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1067,113 +1134,170 @@
            </property>
           </spacer>
          </item>
-        </layout>
-       </item>
-       <item row="11" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <item>
-          <widget class="QLabel" name="label_21">
+         <item row="2" column="5">
+          <widget class="QLabel" name="newVisitLabel">
            <property name="text">
-            <string>Enter a SERVICE :</string>
+            <string>New Visit</string>
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QLineEdit" name="serviceLine"/>
-         </item>
-         <item>
-          <widget class="QToolButton" name="buttonAddService">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../res/resources.qrc">
-             <normaloff>:/Graphics/add</normaloff>:/Graphics/add</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="buttonDeleteService">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../res/resources.qrc">
-             <normaloff>:/Graphics/remove</normaloff>:/Graphics/remove</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="4" column="0">
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Auto set Follow up date for new visits only. [Manually by pressing F12] </string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="Switch" name="remmberLastFollowupDate">
+         <item row="2" column="0" colspan="5">
+          <widget class="QLabel" name="label_6">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
            <property name="text">
-            <string/>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Specify your prices below&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item row="3" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QLabel" name="label_40">
+          <widget class="QLabel" name="labelSpecial">
            <property name="text">
-            <string>Automatically set a visit as a new visit after max follow Ups is reached.</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Select Speciality:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="Switch" name="checkBoxAutoNewVisit">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
+          <widget class="QComboBox" name="comboBoxSpeciality">
+           <item>
+            <property name="text">
+             <string>Internal Medicine</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Pediatrics</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Orthopaedics</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Surgery</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Ob/Gyn</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Family Medicine</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Physical Therapy</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>
        </item>
        <item row="6" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Specify your prices below&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <widget class="QWidget" name="WorkingDaysWidget" native="true">
+         <layout class="QGridLayout" name="gridLayout_14">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="thursday">
+            <property name="text">
+             <string>Thursday</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QCheckBox" name="saturday">
+            <property name="text">
+             <string>Saturday</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QCheckBox" name="friday">
+            <property name="text">
+             <string>Friday</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="monday">
+            <property name="text">
+             <string>Monday</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="daysLabel">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Working Days</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="sunday">
+            <property name="text">
+             <string>Sunday</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="tuesday">
+            <property name="text">
+             <string>Tuesday</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QCheckBox" name="wednesday">
+            <property name="text">
+             <string>Wednesday</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="Line" name="line_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
-        <widget class="Line" name="line_19">
+       <item row="7" column="0">
+        <widget class="Line" name="line_22">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -1814,7 +1938,6 @@
   <tabstop>comboBoxSpeciality</tabstop>
   <tabstop>maxFollowUps</tabstop>
   <tabstop>maxFollowUpsPerProblem</tabstop>
-  <tabstop>newVisitDoubleSpinBox</tabstop>
   <tabstop>doubleSpinBoxFollow1</tabstop>
   <tabstop>doubleSpinBoxFollow2</tabstop>
   <tabstop>doubleSpinBoxFollow3</tabstop>

@@ -28,6 +28,8 @@
 #define _followVisitprice2 "followVisitprice2"
 #define _followVisitprice3 "followVisitprice3"
 #define _followVisitprice4 "followVisitprice4"
+#define _workingDays "workingDays"
+#define _lastSelectedFollowUpDate "lastSelectedFollowUpDate"
 
 //print settings
 #define _paperSizeId "paperSizeId"

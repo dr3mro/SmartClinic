@@ -5,6 +5,8 @@
 #include "visitsbox.h"
 #include "ui_visitsbox.h"
 
+#include "visithelper.h"
+
 visitsBox::visitsBox(QWidget *parent) : mDialog(parent),
     ui(new Ui::visitsBox),
     msgbox(new myMessageBox(this)),
@@ -190,29 +192,36 @@ void visitsBox::on_ButtonNew_clicked()
 
     }
 
-    ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
     ui->dateFollowUp->setMinimumDate(QDate::currentDate());
     ui->lmpDate->setDate(QDate::currentDate());
 
     sqlBase::Visit visit = grabVisit();
 
-    //  if (vEditMode)
-    //    save(visit,false);
+    QDate followUpDate = VisitHelper::makeFollowDate(ui->dateFollowUp->date(),
+                                                     lastSelectedFollowupDate,
+                                                     settings.isRemmberlastFollowupDate(),
+                                                     VisitTypes::n_visitsType::NewVisit,
+                                                     (VisitHelper::WorkDays) settings.getWorkingDays(),
+                                                     maxFollowUps,
+                                                     sqlbase,
+                                                     patientBasicDetails.ID);
 
+
+    ui->dateFollowUp->setDate(followUpDate);
     visitindex = 0;
-    //    double visitPrice = settings.getVisitPrice(visitindex);
+
     double visitPrice = visitTypes.getVisitTypesByUiIndex(visitindex).price;
     sqlbase->createNewVisit(patientBasicDetails.ID,
                             visit.visitDateTime,
                             datetime,
+                            followUpDate,
                             visitindex,
                             visitPrice,
-                            lastSelectedFollowupDate,
-                            false,
                             ui->vDrugsTable->getDrugsModel(),
                             ui->InvestigationsTable->getInvestigationsModel(),
                             sqlextra);
     ui->visitLists->populateWithVisitList(patientBasicDetails.ID);
+
     updateVisitAge();
     vEditMode = true;
     enableEditMode(vEditMode);
@@ -316,6 +325,7 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
     ui->dateFollowUp->setMinimumDate(locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd").date());
 
     QDate fd = QDate::fromJulianDay(visit.followDate.toInt());
+
     ui->dateFollowUp->setDate(fd);
     int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(fd,patientBasicDetails.ID)+1;
     setFollowDateTooltip(selectedDateFollowUps,fd);
@@ -374,7 +384,16 @@ void visitsBox::on_visitLists_currentIndexChanged(int index)
         //fillVisit(loadedVisit); // useless as it is already cleared.
         ui->presentation->setFocus();
         QString visitDateString = comboSelectedDataTime.left(10);
-        ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::fromString(visitDateString,"dd/MM/yyyy")); //.addDays(7));
+        QDate followUpDate = VisitHelper::makeFollowDate(ui->dateFollowUp->date(),
+                                                         lastSelectedFollowupDate,
+                                                         settings.isRemmberlastFollowupDate(),
+                                                         VisitTypes::n_visitsType::NewVisit,
+                                                         (VisitHelper::WorkDays) settings.getWorkingDays(),
+                                                         maxFollowUps,
+                                                         sqlbase,
+                                                         patientBasicDetails.ID);
+
+        ui->dateFollowUp->setDate(followUpDate);
         ui->dateFollowUp->setMinimumDate(QDate::fromString(visitDateString,"dd/MM/yyyy"));
         ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,visitDateTime2JulianDate());
         ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDateTime2JulianDate());
@@ -458,6 +477,7 @@ void visitsBox::closeEvent(QCloseEvent *event)
 
         save(grabVisit(),false);
     }
+    settings.saveLastSelectedFollowUpDate(lastSelectedFollowupDate);
     autoSaveTimer->stop();
     aboutToClose=true;
     mDialog::closeEvent(event);
@@ -580,7 +600,6 @@ void visitsBox::on_ButtonVisit_clicked()
         }
     }
     ui->ButtonVisit->setEnabled(false);
-    visitFollowupDate = ui->dateFollowUp->date();
 
     //  ui->dateFollowUp->setDate(settings.isRemmberlastFollowupDate()? lastSelectedFollowupDate:QDate::currentDate());
     sqlBase::Visit visit = grabVisit();
@@ -610,13 +629,24 @@ void visitsBox::on_ButtonVisit_clicked()
     double visitPrice = visitTypes.getVisitTypesByAlgoIndex(visitindex).price;
     ui->comboVisitType->setCurrentIndex(visitindex);
 
+    QDate followUpDate = VisitHelper::makeFollowDate(ui->dateFollowUp->date(),
+                                                     lastSelectedFollowupDate,
+                                                     settings.isRemmberlastFollowupDate(),
+                                                     (VisitTypes::n_visitsType)visitindex,
+                                                     (VisitHelper::WorkDays) settings.getWorkingDays(),
+                                                     maxFollowUps,
+                                                     sqlbase,
+                                                     patientBasicDetails.ID);
+
+
+
+
     sqlbase->createNewVisit(patientBasicDetails.ID,
                             visit.visitDateTime,
                             datetime,
+                            followUpDate,
                             visitindex,
                             visitPrice,
-                            visitIsRequest? visitFollowupDate:lastSelectedFollowupDate,
-                            visitIsRequest,
                             ui->vDrugsTable->getDrugsModel(),
                             ui->InvestigationsTable->getInvestigationsModel(),
                             sqlextra);
@@ -1126,6 +1156,7 @@ void visitsBox::followUpDateChanged(const QDate &date)
     int selectedDateFollowUps = followNotify(date);
     setFollowDateTooltip(selectedDateFollowUps,date);
     lastSelectedFollowupDate = date;
+    settings.saveLastSelectedFollowUpDate(date);
 }
 
 void visitsBox::onShift_pageUp()

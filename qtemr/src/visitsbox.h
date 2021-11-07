@@ -218,7 +218,7 @@ private:
     bool drugLoadCompleted=false;
     QString printableAge;
     bool aboutToClose=false;
-    QDate lastSelectedFollowupDate=QDate::currentDate();
+    QDate lastSelectedFollowupDate=QDate::fromJulianDay(settings.getLastSelectedFollowUpDate());
     QDate visitFollowupDate=QDate::currentDate();
     int suggestedVisitType=0;//for remote assistant created patient to modify this
     mSettings::Roshetta getRoshetta();

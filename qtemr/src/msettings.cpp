@@ -38,6 +38,7 @@ void mSettings::saveSettings(const mSettings::pSettings &psets)
     settings.setValue(_maxFollowUps,psettings.maxFollowUps);
     settings.setValue(_maxFollowUpsPerProblem,psettings.maxFollowUpsPerProblem);
     settings.setValue(_autoSetnewAfterMaxPerProblemIsReached,psettings.autoSetnewAfterMaxPerProblemIsReached);
+    settings.setValue(_workingDays,psettings.workingdays);
     settings.endGroup();
 
     settings.beginGroup(_Prices);
@@ -84,6 +85,8 @@ mSettings::pSettings mSettings::readSettings()
     psettings.maxFollowUps = settings.value(_maxFollowUps,QVariant(7)).toInt();
     psettings.maxFollowUpsPerProblem = settings.value(_maxFollowUpsPerProblem,QVariant(4)).toInt();
     psettings.autoSetnewAfterMaxPerProblemIsReached = settings.value(_autoSetnewAfterMaxPerProblemIsReached,QVariant(false)).toBool();
+    psettings.workingdays = settings.value(_workingDays,QVariant(222)).toInt();//friday
+
     settings.endGroup();
 
     settings.beginGroup(_Prices);
@@ -374,7 +377,12 @@ bool mSettings::isUseNativePhotoViewer()
 
 bool mSettings::isRemmberlastFollowupDate()
 {
-  return  psettings.remmberLastFollowupDate;
+    return  psettings.remmberLastFollowupDate;
+}
+
+int mSettings::getWorkingDays() const
+{
+    return psettings.workingdays;
 }
 
 int mSettings::getAutoSaveInterval()
@@ -525,4 +533,18 @@ mSettings::lineStyle mSettings::getLineStylesheet()
     linestyle.normalStylesheet = QString("QLineEdit{background-color: %1; color:%2;}").arg(normalBackgroundColor).arg(normalTextColor);
 
     return linestyle;
+}
+
+void mSettings::saveLastSelectedFollowUpDate(const QDate &date)
+{
+    QSettings settings("./settings.ini",QSettings::IniFormat);
+    settings.beginGroup(_clinic);
+    settings.setValue(_lastSelectedFollowUpDate,date.toJulianDay());
+    settings.endGroup();
+}
+
+int mSettings::getLastSelectedFollowUpDate()
+{
+    QSettings settings("./settings.ini",QSettings::IniFormat);
+    return settings.value(_lastSelectedFollowUpDate,QVariant(QDate::currentDate().toJulianDay())).toInt();
 }

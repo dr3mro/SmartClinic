@@ -15,6 +15,7 @@
 #include "staticstrings.h"
 #include "mstyler.h"
 #include "datahelper.h"
+
 #include <math.h>
 class dataHelper;
 
@@ -259,6 +260,8 @@ public:
         double followVisitprice3;
         double followVisitprice4;
 
+        int workingdays;
+
         QString selectedTheme;
         QString defaultFont;
         double defaultFontSize;
@@ -271,7 +274,7 @@ public:
         int maxFollowUpsPerProblem;
         bool autoSetnewAfterMaxPerProblemIsReached;
         bool remmberLastFollowupDate;
-
+        int lastSelectedFollowUpDate;
 
         bool operator==(const pSettings& psettings) const
         {
@@ -289,6 +292,7 @@ public:
                         followVisitprice2,
                         followVisitprice3,
                         followVisitprice4,
+                        workingdays,
                         autosaveinterval,
                         autoSave ,
                         minimizeToTray,
@@ -307,7 +311,8 @@ public:
                         updateNotify,
                         useToast,
                         usePhotoViewer,
-                        remmberLastFollowupDate) ==
+                        remmberLastFollowupDate,
+                        lastSelectedFollowUpDate) ==
                     std::tie(psettings.speciality,
                              psettings.autoCompleteByWord,
                              psettings.showChronicConditions,
@@ -321,6 +326,7 @@ public:
                              psettings.followVisitprice2,
                              psettings.followVisitprice3,
                              psettings.followVisitprice4,
+                             psettings.workingdays,
                              psettings.autosaveinterval,
                              psettings.autoSave ,
                              psettings.minimizeToTray,
@@ -339,7 +345,8 @@ public:
                              psettings.updateNotify,
                              psettings.useToast,
                              psettings.usePhotoViewer,
-                             psettings.remmberLastFollowupDate);
+                             psettings.remmberLastFollowupDate,
+                             psettings.lastSelectedFollowUpDate);
         }
 
     };
@@ -575,6 +582,7 @@ public:
     bool isUseToast();
     bool isUseNativePhotoViewer();
     bool isRemmberlastFollowupDate();
+    int  getWorkingDays()const;
     int getAutoSaveInterval();
     QString getSelectedTheme();
     bool isInLinePatientList();
@@ -590,6 +598,8 @@ public:
     void saveDbOptions(const dbOptions &options);
     mStyler::Style &getStyle();
     lineStyle getLineStylesheet();
+    void saveLastSelectedFollowUpDate(const QDate  & date);
+    int getLastSelectedFollowUpDate();
 
 public slots:
     void setSelectedTheme(QString t);

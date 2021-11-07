@@ -824,7 +824,6 @@ sqlBase::Visit sqlBase::getPatientVisitData(const int &ID, const QString &dateTi
         visit.Antenatal = query->value(20).toString();
         visit.pelvicExam = query->value(21).toString();
     }
-
     query->finish();
     visit.vitals = getPatientVisitVitals(ID,dateTimeString);
     return visit;
@@ -3441,10 +3440,9 @@ void sqlBase::registerServiceLoader(QStandardItemModel *myRegisterModel,sqlExtra
 void sqlBase::createNewVisit(int ID,
                              QString previous,
                              const QDateTime &datetime,
+                             const QDate &followUpDate,
                              int visitType,
                              double visitPrice,
-                             const QDate &lastSelectedFollowupDate,
-                             bool visitIsRequest,
                              DrugsItemModel *drugsModel,
                              InvestModel *investModel,
                              sqlExtra *sqlextra)
@@ -3487,8 +3485,7 @@ void sqlBase::createNewVisit(int ID,
     visit.visitDateTime = englishDateTime;
     visit.visitType = visitType;
 
-    visit.followDate = QString::number( ( (settings.isRemmberlastFollowupDate() && visit.visitType == VisitTypes::NewVisit)|| visitIsRequest )? static_cast<int>(lastSelectedFollowupDate.toJulianDay()):nextDateJulian);
-
+    visit.followDate = QString::number(followUpDate.toJulianDay());
 
     visitData vdata;
     vdata.ID = ID;

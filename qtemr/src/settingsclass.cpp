@@ -5,6 +5,9 @@
 #include "settingsclass.h"
 #include "ui_settingsclass.h"
 
+
+#include "visithelper.h"
+
 settingsClass::settingsClass(QWidget *parent) :
     mDialog(parent),
     ui(new Ui::settingsClass),
@@ -114,6 +117,24 @@ mSettings::pSettings settingsClass::getValuesFromUI()
     _settings.useToast = ui->useToast->isChecked();
     _settings.usePhotoViewer = ui->usePhotoViewer->isChecked();
     _settings.remmberLastFollowupDate = ui->remmberLastFollowupDate->isChecked();
+
+
+    _settings.workingdays = 1;
+    if(ui->saturday->isChecked())
+        _settings.workingdays |= VisitHelper::Saturday;
+    if(ui->sunday->isChecked())
+        _settings.workingdays |= VisitHelper::Sunday;
+    if(ui->monday->isChecked())
+        _settings.workingdays |= VisitHelper::Monday;
+    if(ui->tuesday->isChecked())
+        _settings.workingdays |= VisitHelper::Tuesday;
+    if(ui->wednesday->isChecked())
+        _settings.workingdays |= VisitHelper::Wednesday;
+    if(ui->thursday->isChecked())
+        _settings.workingdays |= VisitHelper::Thrusday;
+    if(ui->friday->isChecked())
+        _settings.workingdays |= VisitHelper::Friday;
+
     return _settings;
 }
 
@@ -154,7 +175,17 @@ void settingsClass::setValuesToUI(const mSettings::pSettings &_settings)
     ui->stylerWidget->setSelectedTheme(_settings.selectedTheme);
     ui->appDir->setText(dataIOhelper::getCurrentFolder());
     ui->encryptionSwitch->setChecked(sqlbase->isEncryptionEnabled());
+
+
+    ui->saturday->setChecked( _settings.workingdays & VisitHelper::Saturday);
+    ui->sunday->setChecked( _settings.workingdays & VisitHelper::Sunday);
+    ui->monday->setChecked( _settings.workingdays & VisitHelper::Monday);
+    ui->tuesday->setChecked( _settings.workingdays & VisitHelper::Tuesday);
+    ui->wednesday->setChecked( _settings.workingdays & VisitHelper::Wednesday);
+    ui->thursday->setChecked( _settings.workingdays & VisitHelper::Thrusday);
+    ui->friday->setChecked( _settings.workingdays & VisitHelper::Friday);
 }
+
 
 void settingsClass::closeEvent(QCloseEvent *event)
 {
