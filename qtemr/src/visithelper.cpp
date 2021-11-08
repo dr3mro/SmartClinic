@@ -1,18 +1,10 @@
 #include "visithelper.h"
 
 
-QDate VisitHelper::makeFollowDate(const QDate &visitDate, const QDate &lastFollowDate, const QDate &currentFollowDate, QDate &lastSelectedFollowDate, bool isAutoSet, const VisitTypes::n_visitsType visitType,
-                                  const WorkDays &wd, const int maxFollowupsDay, sqlBase *sqlbase, const int ID, bool manual)
+QDate VisitHelper::makeFollowDate(const QDate &lastFollowDate, QDate &lastSelectedFollowDate,
+                                  bool isAutoSet, const VisitTypes::n_visitsType visitType,
+                                  const WorkDays &wd, const int maxFollowupsDay, sqlBase *sqlbase, const int ID)
 {
-    qDebug() << visitDate << lastFollowDate << currentFollowDate << lastSelectedFollowDate
-             << isAutoSet << visitType << wd << maxFollowupsDay << ID << manual;
-
-    if(manual){
-        if(currentFollowDate == visitDate )
-            return lastFollowDate;
-        else
-            return visitDate;
-    }
 
     if(visitType == VisitTypes::n_visitsType::Requests)
         return lastFollowDate;

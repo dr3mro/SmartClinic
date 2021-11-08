@@ -219,9 +219,9 @@ private:
     QString printableAge;
     bool aboutToClose=false;
     //////////////////////////////////
-    QDate lastSelectedFollowupDate;
-    QDate lastFollowupDate;
-    QDate lastVisitDate;
+    QDate lastSelectedFollowupDate;//bycalc
+    QDate lastFollowupDate;//onLoad
+    QDate lastVisitDate;//onload
     //////////////////////////////////
     int suggestedVisitType=0;//for remote assistant created patient to modify this
     mSettings::Roshetta getRoshetta();

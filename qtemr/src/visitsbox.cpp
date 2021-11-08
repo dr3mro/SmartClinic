@@ -198,9 +198,7 @@ void visitsBox::on_ButtonNew_clicked()
 
     sqlBase::Visit visit = grabVisit();
 
-    QDate followUpDate = VisitHelper::makeFollowDate(lastVisitDate,
-                                                     lastFollowupDate,
-                                                     ui->dateFollowUp->date(),
+    QDate followUpDate = VisitHelper::makeFollowDate(lastFollowupDate,
                                                      lastSelectedFollowupDate,
                                                      settings.isRemmberlastFollowupDate(),
                                                      VisitTypes::n_visitsType::NewVisit,
@@ -392,8 +390,6 @@ void visitsBox::on_visitLists_currentIndexChanged(int index)
         QString visitDateString = comboSelectedDataTime.left(10);
         lastVisitDate = QDate::fromString(visitDateString,"dd/MM/yyyy");
         QDate followUpDate = VisitHelper::makeFollowDate(lastVisitDate,
-                                                         lastSelectedFollowupDate,
-                                                         ui->dateFollowUp->date(),
                                                          lastSelectedFollowupDate,
                                                          settings.isRemmberlastFollowupDate(),
                                                          VisitTypes::n_visitsType::NewVisit,
@@ -640,9 +636,7 @@ void visitsBox::on_ButtonVisit_clicked()
     double visitPrice = visitTypes.getVisitTypesByAlgoIndex(visitindex).price;
     ui->comboVisitType->setCurrentIndex(visitindex);
 
-    QDate followUpDate = VisitHelper::makeFollowDate(lastVisitDate,
-                                                     lastFollowupDate,
-                                                     ui->dateFollowUp->date(),
+    QDate followUpDate = VisitHelper::makeFollowDate(lastFollowupDate,
                                                      lastSelectedFollowupDate,
                                                      settings.isRemmberlastFollowupDate(),
                                                      (VisitTypes::n_visitsType)visitindex,
@@ -1242,20 +1236,29 @@ void visitsBox::toggleDateFollowup()
     if(!vEditMode)
         return;
 
-    lastSelectedFollowupDate = VisitHelper::makeFollowDate(
-                lastVisitDate,
-                lastFollowupDate,
-                ui->dateFollowUp->date(),
-                lastSelectedFollowupDate,
-                settings.isRemmberlastFollowupDate(),
-                visitTypes.getVisitTypesByUiIndex(ui->comboVisitType->currentIndex()).id,
-                (VisitHelper::WorkDays) settings.getWorkingDays(),
-                settings.getMaxFollowUps(),
-                sqlbase,
-                patientBasicDetails.ID,true);
 
-    int selectedDateFollowUps = followNotify(ui->dateFollowUp->date());
-    setFollowDateTooltip(selectedDateFollowUps,ui->dateFollowUp->date());
+    if(ui->dateFollowUp->date() == lastVisitDate){
+        if(visitTypes.getVisitTypesByUiIndex(ui->comboVisitType->currentIndex()).id != VisitTypes::n_visitsType::Requests){
+            while (true){
+                if( (( 1 << lastSelectedFollowupDate.dayOfWeek() ) & (VisitHelper::WorkDays) settings.getWorkingDays())  &&
+                        (sqlbase->getFollowUpsCountForThisDate(lastSelectedFollowupDate,patientBasicDetails.ID) < settings.getMaxFollowUps()) ){
+                    ui->dateFollowUp->setDate(lastSelectedFollowupDate);
+                    break;
+                }else if (settings.getMaxFollowUps() > 0){
+                    lastSelectedFollowupDate = lastSelectedFollowupDate.addDays(1);
+                }
+            }
+        }else{
+            ui->dateFollowUp->setDate(lastFollowupDate);
+        }
+
+    }else{
+        ui->dateFollowUp->setDate(lastVisitDate);
+    }
+
+
+    int selectedDateFollowUps = followNotify(lastSelectedFollowupDate);
+    setFollowDateTooltip(selectedDateFollowUps,lastSelectedFollowupDate);
 }
 
 void visitsBox::connectSignals(QWidget *parent)
