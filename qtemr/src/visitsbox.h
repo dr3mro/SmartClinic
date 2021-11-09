@@ -222,6 +222,7 @@ private:
     QDate lastSelectedFollowupDate;//bycalc
     QDate lastFollowupDate;//onLoad
     QDate lastVisitDate;//onload
+    QDate lastFollowupDate2;//backup
     //////////////////////////////////
     int suggestedVisitType=0;//for remote assistant created patient to modify this
     mSettings::Roshetta getRoshetta();

@@ -592,6 +592,7 @@ void visitsBox::on_ButtonVisit_clicked()
         return;
     newVisitCreationInProgress=true;
     bool visitIsRequest = QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier);
+    lastFollowupDate2 = ui->dateFollowUp->date();//backup
     visitindex = ui->comboVisitType->currentIndex();
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     QDateTime datetime = QDateTime::currentDateTime();
@@ -628,11 +629,12 @@ void visitsBox::on_ButtonVisit_clicked()
     if (vEditMode)
         save(visit,false);
 
-    if(visitIsRequest)
+    if(visitIsRequest){
         visitindex = VisitTypes::n_visitsType::Requests;
-    else
+        sqlbase->setFollowDate(visit.ID,visit.visitDateTime,dtJulian);
+    }else{
         visitindex = (suggestedVisitType==0)? visitTypes.advance(visitTypes.getVisitTypesByUiIndex(visitindex).id):suggestedVisitType;
-
+    }
     double visitPrice = visitTypes.getVisitTypesByAlgoIndex(visitindex).price;
     ui->comboVisitType->setCurrentIndex(visitindex);
 
@@ -1249,7 +1251,8 @@ void visitsBox::toggleDateFollowup()
                 }
             }
         }else{
-            ui->dateFollowUp->setDate(lastFollowupDate);
+            ui->dateFollowUp->setDate((lastFollowupDate!=lastFollowupDate2)?lastFollowupDate2:lastFollowupDate);
+            //mDebug() << lastFollowupDate << lastFollowupDate2;
         }
 
     }else{
