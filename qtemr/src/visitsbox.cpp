@@ -640,6 +640,7 @@ void visitsBox::on_ButtonVisit_clicked()
     if(visitIsRequest){
         visitindex = VisitTypes::n_visitsType::Requests;
         sqlbase->setFollowDate(visit.ID,visit.visitDateTime,dtJulian);
+        ui->investigationsResults->setFocus(Qt::OtherFocusReason);
     }else{
         visitindex = (suggestedVisitType==0)? visitTypes.advance(visitTypes.getVisitTypesByUiIndex(visitindex).id):suggestedVisitType;
     }
