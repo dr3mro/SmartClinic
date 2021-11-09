@@ -234,6 +234,7 @@ private:
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    //void showEvent(QShowEvent *event) override;
     void keyPressEvent(QKeyEvent *e)override;
     void keyReleaseEvent(QKeyEvent *e)override;
     void mousePressEvent(QMouseEvent *event)override;

@@ -330,6 +330,7 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
 
     lastFollowupDate = QDate::fromJulianDay(visit.followDate.toInt());
 
+
     ui->dateFollowUp->setDate(lastFollowupDate);
     int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(lastFollowupDate,patientBasicDetails.ID)+1;
     setFollowDateTooltip(selectedDateFollowUps,lastFollowupDate);
@@ -489,6 +490,13 @@ void visitsBox::closeEvent(QCloseEvent *event)
     aboutToClose=true;
     mDialog::closeEvent(event);
 }
+
+//void visitsBox::showEvent(QShowEvent *event)
+//{
+//    mDialog::showEvent(event);
+//    lastFollowupDate2 = QDate::currentDate();
+//    mDebug() << lastFollowupDate2;
+//}
 
 void visitsBox::updateVisitAge()
 {
