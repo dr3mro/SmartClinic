@@ -445,6 +445,11 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
                  QString::number(roshettaSettings.doseFont.fontSize),
                  (roshettaSettings.doseFont.fontBold | (roshettaSettings.doseFont.fontBold && roshettaSettings.roshettaFont.fontBold))? "bold":"normal");
 
+
+    if(!roshettaSettings.compactMode && title=="PRESCRIPTION")
+        c.insertHtml("<br>");
+
+
     if(roshettaSettings.showDrugsTitle){
         drugsHeaderFormat.setBackground(QBrush(QColor(176, 196, 222)));
         //drugsHeaderFormat.setTopPadding(3);
@@ -517,8 +522,8 @@ void Roshetta::fillRequests(QTextCursor &c)
 
     c.movePosition(QTextCursor::NextCell);
 
+    c.setBlockFormat(requestsBlockFormat);
     foreach (const QString & req, roshettaData.requests) {
-        c.setBlockFormat(requestsBlockFormat);
         c.insertText("✻ ");
         c.insertHtml(QString("<div %1>%2</div>").arg(style,req));
         c.movePosition(QTextCursor::NextCell);
