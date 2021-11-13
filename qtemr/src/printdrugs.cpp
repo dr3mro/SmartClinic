@@ -135,6 +135,8 @@ printDrugs::printDrugs(QWidget *parent) :
 
     connect(ui->enableBodyHeaderSeparator,&Switch::clicked,this,&printDrugs::enableBodyHeaderSeparator_clicked);
     connect(ui->compactMode,&Switch::clicked,this,&printDrugs::compactMode_clicked);
+    connect(ui->clearDuplicateDrugs,&Switch::clicked,this,&printDrugs::clearDuplicateDrugs_clicked);
+
     this->setModal(true);
 }
 
@@ -243,6 +245,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
 
     ui->enableBodyHeaderSeparator->setChecked(printSettings.enableBodyHeaderSeparator);
     ui->compactMode->setChecked(printSettings.compactMode);
+    ui->clearDuplicateDrugs->setChecked(printSettings.clearDuplicateDrugs);
 
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->bannerTemplate->setHtml(dataIOhelper::readFile(BANNERFILE));
@@ -314,6 +317,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.enableFullPage = ui->enableFullPage->isChecked();
     printSettings.enableBodyHeaderSeparator = ui->enableBodyHeaderSeparator->isChecked();
     printSettings.compactMode = ui->compactMode->isChecked();
+    printSettings.clearDuplicateDrugs = ui->clearDuplicateDrugs->isChecked();
     return printSettings;
 }
 
@@ -733,6 +737,12 @@ void printDrugs::enableBodyHeaderSeparator_clicked(bool checked)
 void printDrugs::compactMode_clicked(bool checked)
 {
     pSettings.compactMode = checked;
+    refreshView();
+}
+
+void printDrugs::clearDuplicateDrugs_clicked(bool checked)
+{
+    pSettings.clearDuplicateDrugs = checked;
     refreshView();
 }
 

@@ -322,6 +322,9 @@ void Roshetta::fillBody(QTextCursor &c)
     CurrentDrugRow =0; // to follow filling of table current row
 
     if(roshettaSettings.showDrugs){
+
+        parsedDrugsList.clear();
+
         int rows=0;
 
         if(roshettaSettings.drugsPrintMode == mSettings::drugsPrintMode::both){
@@ -446,7 +449,7 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
                  (roshettaSettings.doseFont.fontBold | (roshettaSettings.doseFont.fontBold && roshettaSettings.roshettaFont.fontBold))? "bold":"normal");
 
 
-    if(!roshettaSettings.compactMode && title=="PRESCRIPTION")
+    if(!roshettaSettings.compactMode && parsedDrugsList.isEmpty()) // no drugs is printed
         c.insertHtml("<br>");
 
 
@@ -463,6 +466,12 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
 
     CurrentDrugRow++;
     foreach (const mSettings::drug & d, drugs) {
+
+        if(roshettaSettings.clearDuplicateDrugs && parsedDrugsList.contains(d.TradeName))
+            continue;
+
+        parsedDrugsList << d.TradeName;
+
         QString dose = d.Dose;
 
         if(roshettaSettings.preferArabic)

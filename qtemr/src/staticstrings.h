@@ -78,6 +78,7 @@
 #define _enableFullPage "enableFullPage"
 #define _enableBodyHeaderSeparator "enableBodyHeaderSeparator"
 #define _compactMode "compactMode"
+#define _clearDuplicateDrugs "clearDuplicateDrugs"
 //#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"

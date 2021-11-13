@@ -57,6 +57,7 @@ private:
     void setSpacingFactor();
     double mWidth;
     double mHeight;
+    QStringList parsedDrugsList;
 
     uint spacerfactor1=0,spacerfactor2=0,spacerfactor3=0;
     uint allDrugsCount=0;

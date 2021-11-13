@@ -93,6 +93,7 @@ private slots:
     void showLogo_clicked(bool checked);
     void enableBodyHeaderSeparator_clicked(bool checked);
     void compactMode_clicked(bool checked);
+    void clearDuplicateDrugs_clicked(bool checked);
 
     void bannerStyle_activated(int index);
 
