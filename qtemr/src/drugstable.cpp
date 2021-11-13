@@ -1305,6 +1305,7 @@ void drugsTable::showExpanderEasyEdit()
 
     if(save){
         drugsModel->item(cell.row(),1)->setText(expanderContents);
+        drugsModel->item(cell.row(),3)->setText(QString::number(QDate::currentDate().toJulianDay()));
         if(setDefault)
             sqlextra->saveExpand(expanderShortcut,expanderContents);
         emit drugTableItemChanged();
