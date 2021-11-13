@@ -781,6 +781,7 @@ void printDrugs::showDrugsTableOutline_clicked(bool checked)
 void printDrugs::showDrugsTitle_clicked(bool checked)
 {
     pSettings.showDrugsTitle = checked;
+    ui->clearDuplicateDrugs->setEnabled(!checked);
     refreshView();
 }
 

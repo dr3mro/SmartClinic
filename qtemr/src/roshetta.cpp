@@ -449,7 +449,7 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
                  (roshettaSettings.doseFont.fontBold | (roshettaSettings.doseFont.fontBold && roshettaSettings.roshettaFont.fontBold))? "bold":"normal");
 
 
-    if(!roshettaSettings.compactMode && parsedDrugsList.isEmpty()) // no drugs is printed
+    if(!roshettaSettings.compactMode && parsedDrugsList.isEmpty() && !roshettaSettings.showDrugsTableOutline) // no drugs is printed
         c.insertHtml("<br>");
 
 
@@ -467,17 +467,16 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     CurrentDrugRow++;
     foreach (const mSettings::drug & d, drugs) {
 
-        if(roshettaSettings.clearDuplicateDrugs && parsedDrugsList.contains(d.TradeName))
+        if(!roshettaSettings.showDrugsTitle &&  roshettaSettings.clearDuplicateDrugs && parsedDrugsList.contains(d.TradeName)){
+            c.currentTable()->removeRows(--CurrentDrugRow,1);
             continue;
-
+        }
         parsedDrugsList << d.TradeName;
 
         QString dose = d.Dose;
 
         if(roshettaSettings.preferArabic)
             dataHelper::switchToEasternArabic(dose);
-
-//        mDebug() << roshettaSettings.showDrugsInitDate << roshettaSettings.showDoseNewLine;
 
         if(roshettaSettings.showDrugsInitDate && roshettaSettings.showDoseNewLine){
             c.insertHtml(QString("<div align=left dir=LTR %4>%1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
