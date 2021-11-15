@@ -61,6 +61,11 @@ QTextDocument * Roshetta::createRoshetta(const mSettings::Roshetta &_Roshetta, c
     return mRoshetta;
 }
 
+bool Roshetta::getIsDrugsOutOfRange()
+{
+    return isDrugsOutOfRange;
+}
+
 Roshetta::~Roshetta()
 {
     delete mRoshetta;
@@ -183,20 +188,21 @@ void Roshetta::makeBanner()
 void Roshetta::makeBody()
 {
 
-    double bodyHeight;
+    QFontMetrics fm(QFont(roshettaSettings.signatureFont.fontName,roshettaSettings.signatureFont.fontSize));
 
     if(roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader){
         bodyHeight = mHeight -
                 ((roshettaSettings.headerHeightPercent +
                   roshettaSettings.footerHeightPercent +
-                  roshettaSettings.bannerHeightPercent)*mHeight)/100;
+                  roshettaSettings.bannerHeightPercent) * mHeight)/100;
     }else{
         bodyHeight = mHeight -
-                ( (roshettaSettings.headerHeightPercent + roshettaSettings.footerHeightPercent + roshettaSettings.bannerHeightPercent  - 3 ) * mHeight )/100;
+                ( (roshettaSettings.headerHeightPercent +
+                   roshettaSettings.footerHeightPercent +
+                   roshettaSettings.bannerHeightPercent - 3 ) * mHeight )/100;
     }
 
 
-    //mDebug() << "body" << bodyHeight;
     bodyFormat.setWidth(mWidth);
     bodyFormat.setHeight(bodyHeight);
     bodyFormat.setBorder(0);
@@ -215,6 +221,7 @@ void Roshetta::makeDrugs()
     drugsTableFormat.setBorderStyle(QTextTableFormat::BorderStyle_Inset);
     drugsTableFormat.setBorderBrush(QBrush(Qt::lightGray));
     drugsTableFormat.setWidth(QTextLength(QTextLength::PercentageLength, 70));
+    drugsTableFormat.setPadding(1);
 }
 
 void Roshetta::makeRequests()
@@ -263,6 +270,7 @@ void Roshetta::makeFooter()
 
 void Roshetta::fillHeader(QTextCursor &c)
 {
+    c.beginEditBlock();
     if(roshettaSettings.showPrescriptionLogo
             && roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader)
         c.insertHtml(QString("<img src=\"logo.jpg\" width=%1 alt=\"logo\" >").arg(roshettaSettings.logoSize));
@@ -274,6 +282,7 @@ void Roshetta::fillHeader(QTextCursor &c)
 
     if(roshettaSettings.showPrescriptionHeader)
         c.insertHtml(QString::fromUtf8(dataIOhelper::readFile(HEADERFILE)));
+    c.endEditBlock();
 }
 
 void Roshetta::fillBanner(QTextCursor &c)
@@ -294,12 +303,13 @@ void Roshetta::fillBanner(QTextCursor &c)
 
     visitDate = loc.toString(roshettaData.visitDate,datefmt);
 
-    bannerTable = c.insertTable(2,3,bannerFormat);
+    c.insertTable(2,3,bannerFormat);
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.bannerFont.fontName,
                  QString::number(roshettaSettings.bannerFont.fontSize),
                  roshettaSettings.bannerFont.fontBold? "bold":"normal");
 
+    c.beginEditBlock();
     c.insertHtml(QString("<div %2><b>Nx:</b>%1</div>").arg(roshettaData.name,style));
     c.movePosition(QTextCursor::NextCell);
     c.insertHtml(QString("<div %2><b>ASx:</b>%1</div>").arg(patient_age_sex,style));
@@ -312,6 +322,7 @@ void Roshetta::fillBanner(QTextCursor &c)
     c.insertHtml(QString("<div %3><b>ID:</b>%1</div>").arg(roshettaData.ID,style));
     c.movePosition(QTextCursor::NextCell);
     c.insertHtml(QString("<div %2><b>fDt:</b>%1 %3</div>").arg(nextDate,style,roshettaData.visitSymbole));
+    c.endEditBlock();
 
 }
 
@@ -320,6 +331,8 @@ void Roshetta::fillBody(QTextCursor &c)
     c.insertTable(1,2,bodyFormat);
 
     CurrentDrugRow =0; // to follow filling of table current row
+    mDrugsTableHeight=0;
+    lessExpanded=false;
 
     if(roshettaSettings.showDrugs){
 
@@ -390,6 +403,11 @@ void Roshetta::fillBody(QTextCursor &c)
                     c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
                 }
             }
+
+            int correction = roshettaSettings.showDrugsTableOutline? allDrugsCount*3 : 0;
+
+            isDrugsOutOfRange = (mDrugsTableHeight + correction) > bodyHeight;
+
         }
         else{
             c.movePosition(QTextCursor::NextCell);
@@ -449,8 +467,13 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
                  (roshettaSettings.doseFont.fontBold | (roshettaSettings.doseFont.fontBold && roshettaSettings.roshettaFont.fontBold))? "bold":"normal");
 
 
-    if(!roshettaSettings.compactMode && parsedDrugsList.isEmpty() && !roshettaSettings.showDrugsTableOutline) // no drugs is printed
+    if(!roshettaSettings.compactMode &&
+            parsedDrugsList.isEmpty() &&
+            !roshettaSettings.showDrugsTableOutline &&
+            allDrugsCount <= spacerfactor1 &&
+            !roshettaSettings.showDrugsTitle){
         c.insertHtml("<br>");
+    }
 
 
     if(roshettaSettings.showDrugsTitle){
@@ -461,12 +484,14 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
         c.currentTable()->cellAt(CurrentDrugRow,0).setFormat(drugsHeaderFormat);
         c.currentTable()->cellAt(CurrentDrugRow,0).firstCursorPosition().setBlockFormat(drugsHeaderBlockFormat);
         c.currentTable()->mergeCells(CurrentDrugRow,0,1,2);
+        mDrugsTableHeight += c.block().layout()->boundingRect().height();
         c.movePosition(QTextCursor::NextCell);
     }
 
     CurrentDrugRow++;
-    foreach (const mSettings::drug & d, drugs) {
 
+    foreach (const mSettings::drug & d, drugs) {
+        c.beginEditBlock();
         if(!roshettaSettings.showDrugsTitle &&  roshettaSettings.clearDuplicateDrugs && parsedDrugsList.contains(d.TradeName)){
             c.currentTable()->removeRows(--allDrugsCount,1);
             continue;
@@ -477,6 +502,10 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
 
         if(roshettaSettings.preferArabic)
             dataHelper::switchToEasternArabic(dose);
+
+        int tradeNameLines = d.TradeName.split("<br>").count();
+
+        lessExpanded  = lessExpanded? lessExpanded:tradeNameLines>1;
 
         if(roshettaSettings.showDrugsInitDate && roshettaSettings.showDoseNewLine){
             c.insertHtml(QString("<div align=left dir=LTR %4>%1 %2 <i style=\"font-size:7px\"> %3 </i></div>")
@@ -495,20 +524,30 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
         }
 
 
-        if(!roshettaSettings.compactMode)
+        if(!roshettaSettings.compactMode && !roshettaSettings.showDrugsTableOutline)
         {
-            if(allDrugsCount > spacerfactor1 )
-                c.insertHtml("");
-            else if(allDrugsCount > spacerfactor2 )
-                c.insertHtml("<br>");
-            else if(allDrugsCount > spacerfactor3 )
-                c.insertHtml("<br><br>");
-            else
-                c.insertHtml("<br><br><br>");
+
+            if(allDrugsCount > spacerfactor1 ){
+                spacerFactor = 0;
+            }else if(allDrugsCount > spacerfactor2 ){
+                spacerFactor = 1;
+            }else if(allDrugsCount > spacerfactor3 ){
+                spacerFactor = 2;
+            }else{
+                spacerFactor = 3;
+            }
+
+            if(spacerFactor>0)
+                c.insertHtml(lineBreak.repeated(lessExpanded? spacerFactor-1:spacerFactor));
         }
+
+        c.endEditBlock();
+        mDrugsTableHeight += c.block().layout()->boundingRect().height();
         c.movePosition(QTextCursor::NextCell);
+
         CurrentDrugRow++;
     }
+
 }
 
 void Roshetta::fillRequests(QTextCursor &c)
@@ -523,7 +562,7 @@ void Roshetta::fillRequests(QTextCursor &c)
                  roshettaSettings.requestsFont.fontBold? "bold":"normal");
 
     c.insertTable(roshettaData.requests.count()+1,1,requestsTableFormat);
-
+    c.beginEditBlock();
     c.insertHtml(QString("<div %1><b>REQUESTS</b></div>").arg(style));
     c.currentTable()->cellAt(0,0).setFormat(requestsHeaderFormat);
     c.currentTable()->cellAt(0,0).firstCursorPosition().setBlockFormat(requestsHeaderBlockFormat);
@@ -531,11 +570,13 @@ void Roshetta::fillRequests(QTextCursor &c)
     c.movePosition(QTextCursor::NextCell);
 
     c.setBlockFormat(requestsBlockFormat);
+
     foreach (const QString & req, roshettaData.requests) {
         c.insertText("✻ ");
         c.insertHtml(QString("<div %1>%2</div>").arg(style,req));
         c.movePosition(QTextCursor::NextCell);
     }
+    c.endEditBlock();
     c.movePosition(QTextCursor::NextBlock);
 }
 
@@ -548,7 +589,7 @@ void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
                  roshettaSettings.signatureFont.fontBold? "bold":"normal");
 
     c.insertTable(1,2,prefooterFormat);
-
+    c.beginEditBlock();
     if (roshettaSettings.showSignaturePrintedOn){
         c.insertHtml(QString("<div %2><b>printed on:</b> %1</div>").arg(printedinDate,style));
         c.movePosition(QTextCursor::NextCell);
@@ -556,11 +597,13 @@ void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
     }else{
         c.movePosition(QTextCursor::NextCell);
     }
+    c.endEditBlock();
 
 }
 
 void Roshetta::fillVitals(QTextCursor &c)
 {
+
     int rows = roshettaData.vitals.getRows();
     if(rows ==0){
         c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,2);
@@ -568,7 +611,7 @@ void Roshetta::fillVitals(QTextCursor &c)
     }
 
     c.insertTable(rows+1,2,vitalsTableFormat);
-
+    c.beginEditBlock();
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.measurementsFont.fontName,
                  QString::number(roshettaSettings.measurementsFont.fontSize),
@@ -630,12 +673,14 @@ void Roshetta::fillVitals(QTextCursor &c)
         c.movePosition(QTextCursor::NextCell);
     }
     c.currentTable()->mergeCells(0,0,1,2);
+    c.endEditBlock();
     c.movePosition(QTextCursor::NextBlock,QTextCursor::MoveAnchor,3);
 }
 
 void Roshetta::fillFooter(QTextCursor &c)
 {
     c.insertFrame(footerFormat);
+    c.beginEditBlock();
     QTextBlockFormat footerBlockFormat = c.blockFormat();
     footerBlockFormat.setAlignment(Qt::AlignCenter);
     c.select(QTextCursor::BlockUnderCursor);
@@ -643,6 +688,7 @@ void Roshetta::fillFooter(QTextCursor &c)
 
     if(roshettaSettings.showPrescriptionFooter)
         c.insertHtml(QString(dataIOhelper::readFile(FOOTERFILE)));
+    c.endEditBlock();
 }
 
 void Roshetta::fillDiet(QTextCursor &c)

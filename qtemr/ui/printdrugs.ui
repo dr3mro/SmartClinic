@@ -480,6 +480,23 @@
                </property>
               </spacer>
              </item>
+             <item row="17" column="0">
+              <widget class="QSplitter" name="splitter_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <widget class="QLabel" name="warning">
+                <property name="font">
+                 <font>
+                  <italic>true</italic>
+                 </font>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </widget>
+             </item>
             </layout>
            </widget>
            <widget class="QWidget" name="printDrugsFontsTab">

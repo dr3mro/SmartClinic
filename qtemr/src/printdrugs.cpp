@@ -254,6 +254,8 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
 
     //ui->showHorizontalLineBelowHeader->setEnabled((bool)printSettings.prescriptionBannerStyle);
     ui->showLogo->setDisabled((bool) printSettings.prescriptionBannerStyle);
+    ui->clearDuplicateDrugs->setEnabled(pSettings.showDrugsTitle);
+    ui->compactMode->setEnabled(pSettings.showDrugsTableOutline);
 
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
     return printSettings;
@@ -419,6 +421,17 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
     }
     
 
+    if(roshettaMaker.getIsDrugsOutOfRange()){
+        int reply = QMessageBox::question(NULL,
+                                          "warning",
+                                          "Some drugs seems to be out of printing area, please double check your prescribed drugs before printing.",
+                                          QMessageBox::Ignore,
+                                          QMessageBox::Abort);
+        if(reply == QMessageBox::Abort)
+            return;
+    }
+
+
     if(_doc->pageCount() > 1 ){
 		int reply=0;
         if (roshettaData.diet.printRequired){
@@ -468,6 +481,7 @@ void printDrugs::reload()
     m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
     m_roshetta->setModified(false);
     ui->Roshetta->setDocument(m_roshetta);
+    ui->warning->setText(roshettaMaker.getIsDrugsOutOfRange()?"Warning: There might be some drugs not visible":"");
     RoshettaEdited = false;
 }
 
@@ -774,6 +788,7 @@ void printDrugs::showMesurements_clicked(bool checked)
 void printDrugs::showDrugsTableOutline_clicked(bool checked)
 {
     pSettings.showDrugsTableOutline = checked;
+    ui->compactMode->setEnabled(!checked);
     refreshView();
 }
 
@@ -784,7 +799,6 @@ void printDrugs::showDrugsTitle_clicked(bool checked)
     ui->clearDuplicateDrugs->setEnabled(!checked);
     refreshView();
 }
-
 
 void printDrugs::showBanner_clicked(bool checked)
 {

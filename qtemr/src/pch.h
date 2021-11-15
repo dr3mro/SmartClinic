@@ -128,6 +128,9 @@
 #include <QtZlib/zconf.h>
 #include "3rdparty/zip/zipreader.h"
 #include "3rdparty/zip/zipwriter.h"
+#include "3rdparty/feedback/feedback.h"
+#include "3rdparty/pagedTextEdit/PageMetrics.h"
+#include "3rdparty/pagedTextEdit/PagesTextEdit.h"
 #include <QtZlib/zlib.h>
 #include "windowmanager.h"
 #include "mdebug.h"

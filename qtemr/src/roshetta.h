@@ -27,6 +27,7 @@ public:
     explicit Roshetta(QObject *parent = nullptr);
     void setDocument(QTextDocument *doc);
     QTextDocument * createRoshetta(const mSettings::Roshetta & _Roshetta,const mSettings::prescriptionPrintSettings & _pSettings);
+    bool getIsDrugsOutOfRange();
     ~Roshetta();
 private:
     mSettings & settings = mSettings::instance();
@@ -71,9 +72,10 @@ private:
 
     QTextFrameFormat bannerFrameFormat;
     QTextTableFormat bannerFormat;
+    double bodyHeight;
+    double mDrugsTableHeight;
 
     QTextTableFormat bodyFormat;
-    QTextTableFormat bodyTableFormat;
 
     QTextTableFormat drugsTableFormat;
 
@@ -91,8 +93,11 @@ private:
 
     QTextFrameFormat drawHorizontalLineBelowHeaderFrameFormat;
 
-    QTextTable *bannerTable;
-    int CurrentDrugRow=0;
+    int CurrentDrugRow=0;//not breaks only cells
+    int spacerFactor=0;
+    bool isDrugsOutOfRange=false;
+    bool lessExpanded=false;
+    const QString lineBreak = "<br>";
     mSettings::prescriptionPrintSettings roshettaSettings;
 
 };
