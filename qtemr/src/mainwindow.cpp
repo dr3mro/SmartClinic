@@ -1177,7 +1177,9 @@ bool MainWindow::appLocked()
         popUpMessage("Message","This Application is NOT registered, Thank you!");
         return true;
     }
-    if ( eval_copy && indexLength > regMyApp.eval_max() )
+
+    if ( eval_copy &&
+         (indexLength > regMyApp.eval_max() || QDate::fromString(QString(BUILDDATE),"MMM d yyyy").addDays(14) < QDate::currentDate()) )
     {
         popUpMessage("Message",QString("Trial has Expired!"));
         return true;
