@@ -138,7 +138,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->enableBodyHeaderSeparator,&Switch::clicked,this,&printDrugs::enableBodyHeaderSeparator_clicked);
     connect(ui->compactMode,&Switch::clicked,this,&printDrugs::compactMode_clicked);
     connect(ui->clearDuplicateDrugs,&Switch::clicked,this,&printDrugs::clearDuplicateDrugs_clicked);
-
+    connect(ui->preferRTF,&Switch::clicked,this,&printDrugs::preferRTF_clicked);
     this->setModal(true);
 }
 
@@ -248,6 +248,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->enableBodyHeaderSeparator->setChecked(printSettings.enableBodyHeaderSeparator);
     ui->compactMode->setChecked(printSettings.compactMode);
     ui->clearDuplicateDrugs->setChecked(printSettings.clearDuplicateDrugs);
+    ui->preferRTF->setChecked(printSettings.preferRTFBanner);
 
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->bannerTemplate->setHtml(dataIOhelper::readFile(BANNERFILE));
@@ -256,7 +257,9 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->resetButtonAndLabel->setVisible((bool)printSettings.prescriptionBannerStyle);
 
     ui->bannerFontGroup->setVisible(printSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader);
-    ui->altBannerFontGroup->setVisible((printSettings.prescriptionBannerStyle) == mSettings::bannerStyle::replaceLogo);
+    ui->altBannerFontGroup->setVisible(printSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo &&
+                                       !printSettings.preferRTFBanner);
+    ui->preferRTFGroup->setVisible(printSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo);
 
     ui->enableBodyHeaderSeparator->setEnabled((bool)printSettings.prescriptionBannerStyle);
     ui->showLogo->setDisabled((bool) printSettings.prescriptionBannerStyle);
@@ -332,6 +335,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.enableBodyHeaderSeparator = ui->enableBodyHeaderSeparator->isChecked();
     printSettings.compactMode = ui->compactMode->isChecked();
     printSettings.clearDuplicateDrugs = ui->clearDuplicateDrugs->isChecked();
+    printSettings.preferRTFBanner = ui->preferRTF->isChecked();
     return printSettings;
 }
 
@@ -816,8 +820,9 @@ void printDrugs::bannerStyle_activated(int index)
     ui->enableBodyHeaderSeparator->setEnabled(pSettings.prescriptionBannerStyle);
 
     ui->bannerFontGroup->setVisible(pSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader);
-    ui->altBannerFontGroup->setVisible((pSettings.prescriptionBannerStyle) == mSettings::bannerStyle::replaceLogo);
-
+    ui->altBannerFontGroup->setVisible(pSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo &&
+                                       !pSettings.preferRTFBanner);
+    ui->preferRTFGroup->setVisible(pSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo);
     ui->showLogo->setDisabled((bool) index);
     refreshView();
 }
@@ -883,6 +888,14 @@ void printDrugs::showDoseNewLine_clicked(bool checked)
 void printDrugs::preferArabic_clicked(bool checked)
 {
     pSettings.preferArabic = checked;
+    refreshView();
+}
+
+void printDrugs::preferRTF_clicked(bool checked)
+{
+    pSettings.preferRTFBanner = checked;
+    ui->altBannerFontGroup->setVisible(pSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo &&
+                                       !pSettings.preferRTFBanner);
     refreshView();
 }
 

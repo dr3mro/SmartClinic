@@ -481,6 +481,7 @@ public:
         bool enableBodyHeaderSeparator=false;
         bool compactMode=true;
         bool clearDuplicateDrugs=false;
+        bool preferRTFBanner=true;
 
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
@@ -519,7 +520,8 @@ public:
                             enableFullPage,
                             enableBodyHeaderSeparator,
                             compactMode,
-                            clearDuplicateDrugs
+                            clearDuplicateDrugs,
+                            preferRTFBanner
                             ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
                         prescriptionprintsettings.pageMargin,
@@ -556,7 +558,8 @@ public:
                         prescriptionprintsettings.enableFullPage,
                         prescriptionprintsettings.enableBodyHeaderSeparator,
                         prescriptionprintsettings.compactMode,
-                        prescriptionprintsettings.clearDuplicateDrugs); }
+                        prescriptionprintsettings.clearDuplicateDrugs,
+                        prescriptionprintsettings.preferRTFBanner); }
     };
     struct lineStyle
     {

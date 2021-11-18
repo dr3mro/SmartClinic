@@ -111,6 +111,7 @@ private slots:
     void showTradeNamesBold_clicked(bool checked);
     void showDoseNewLine_clicked(bool checked);
     void preferArabic_clicked(bool checked);
+    void preferRTF_clicked(bool checked);
 //    void showStartDate_clicked(bool checked);
 //    void showHorizontalLineBelowHeader_clicked(bool checked);
     void enableFullPage_clicked(bool checked);

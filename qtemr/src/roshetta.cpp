@@ -729,10 +729,11 @@ void Roshetta::fillAltBanner(QTextCursor &c)
     altBannerTemplate.replace("{followDate}",nextDate);
     altBannerTemplate.replace("{visitIcon}",roshettaData.visitSymbole);
 
-    altBannerTemplate.replace(QRegularExpression("font-size: ?\\d{1,2}pt;"),QString("font-size: %1pt;").arg(roshettaSettings.altBannerFont.fontSize));
-    altBannerTemplate.replace(QRegularExpression("font-family:\\s*'([^']*)';"),QString("font-family:'%1';").arg(roshettaSettings.altBannerFont.fontName));
-    altBannerTemplate.replace(QRegularExpression("font-weight:?\\d{3};"),QString("font-weight:%1;").arg(roshettaSettings.altBannerFont.fontBold? 600:400));
-
+    if(!roshettaSettings.preferRTFBanner){
+        altBannerTemplate.replace(QRegularExpression("font-size: ?\\d{1,2}pt;"),QString("font-size: %1pt;").arg(roshettaSettings.altBannerFont.fontSize));
+        altBannerTemplate.replace(QRegularExpression("font-family:\\s*'([^']*)';"),QString("font-family:'%1';").arg(roshettaSettings.altBannerFont.fontName));
+        altBannerTemplate.replace(QRegularExpression("font-weight:?\\d{3};"),QString("font-weight:%1;").arg(roshettaSettings.altBannerFont.fontBold? 600:400));
+    }
     c.insertHtml(altBannerTemplate);
 }
 

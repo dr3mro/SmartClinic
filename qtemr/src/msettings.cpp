@@ -245,6 +245,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.enableBodyHeaderSeparator = settings.value(_enableBodyHeaderSeparator,QVariant(false)).toBool();
     mPageSettings.compactMode = settings.value(_compactMode,QVariant(true)).toBool();
     mPageSettings.clearDuplicateDrugs = settings.value(_clearDuplicateDrugs,QVariant(false)).toBool();
+    mPageSettings.preferRTFBanner = settings.value(_preferRTFBanner,QVariant(true)).toBool();
     settings.endGroup();
     return mPageSettings;
 }
@@ -317,6 +318,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_enableBodyHeaderSeparator,mPageSettings.enableBodyHeaderSeparator);
     settings.setValue(_compactMode,mPageSettings.compactMode);
     settings.setValue(_clearDuplicateDrugs,mPageSettings.clearDuplicateDrugs);
+    settings.setValue(_preferRTFBanner,mPageSettings.preferRTFBanner);
     settings.endGroup();
 }
 
