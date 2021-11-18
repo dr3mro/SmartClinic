@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>998</width>
-    <height>673</height>
+    <height>692</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -480,23 +480,6 @@
                </property>
               </spacer>
              </item>
-             <item row="17" column="0">
-              <widget class="QSplitter" name="splitter_8">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <widget class="QLabel" name="warning">
-                <property name="font">
-                 <font>
-                  <italic>true</italic>
-                 </font>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </widget>
-             </item>
             </layout>
            </widget>
            <widget class="QWidget" name="printDrugsFontsTab">
@@ -505,7 +488,7 @@
             </attribute>
             <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
-              <widget class="QSplitter" name="splitter_3">
+              <widget class="QSplitter" name="bannerFontGroup">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -529,7 +512,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>Banner Font</string>
+                 <string>Banner Font[1]</string>
                 </property>
                </widget>
                <widget class="mFontComboBox" name="bannerFontName">
@@ -630,6 +613,131 @@
               </widget>
              </item>
              <item row="1" column="0">
+              <widget class="QSplitter" name="altBannerFontGroup">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <widget class="QLabel" name="label_9">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>80</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Banner Font[2]</string>
+                </property>
+               </widget>
+               <widget class="mFontComboBox" name="altBannerFontName">
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+               </widget>
+               <widget class="QComboBox" name="altBannerFontSize">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>7</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>9</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>11</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>12</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>13</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>14</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>16</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>18</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>20</string>
+                 </property>
+                </item>
+               </widget>
+               <widget class="QToolButton" name="altBannerFontBold">
+                <property name="toolTip">
+                 <string>Bold</string>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../res/resources.qrc">
+                  <normaloff>:/Graphics/bold</normaloff>:/Graphics/bold</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="autoRaise">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </widget>
+             </item>
+             <item row="2" column="0">
               <widget class="QSplitter" name="splitter_10">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -754,7 +862,7 @@
                </widget>
               </widget>
              </item>
-             <item row="2" column="0">
+             <item row="3" column="0">
               <widget class="QSplitter" name="splitter_11">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -879,7 +987,7 @@
                </widget>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="4" column="0">
               <widget class="QSplitter" name="splitter_13">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1004,7 +1112,7 @@
                </widget>
               </widget>
              </item>
-             <item row="4" column="0">
+             <item row="5" column="0">
               <widget class="QSplitter" name="splitter_15">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1129,7 +1237,7 @@
                </widget>
               </widget>
              </item>
-             <item row="5" column="0">
+             <item row="6" column="0">
               <widget class="QSplitter" name="splitter_16">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1254,7 +1362,7 @@
                </widget>
               </widget>
              </item>
-             <item row="6" column="0">
+             <item row="7" column="0">
               <spacer name="verticalSpacer_4">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -1882,6 +1990,23 @@
               </widget>
              </item>
             </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSplitter" name="splitter_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <widget class="QLabel" name="warning">
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
            </widget>
           </widget>
          </item>

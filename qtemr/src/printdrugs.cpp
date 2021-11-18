@@ -14,16 +14,10 @@ printDrugs::printDrugs(QWidget *parent) :
     ui(new Ui::printDrugs)
 {
     ui->setupUi(this);
-//    qDebug()<<"List of printers";
-//    QList<QPrinterInfo> printerList=QPrinterInfo::availablePrinters();
-//    foreach (QPrinterInfo printerInfo, printerList) {
-//        qDebug()<<printerInfo.printerName();
-//    }
     m_roshetta = ui->Roshetta->document();
     roshettaMaker.setDocument(m_roshetta);
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
     setMinimumSize(800,600);
-
     ui->fastPrint->setFocus(Qt::OtherFocusReason);
 
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
@@ -47,6 +41,14 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->bannerFontSize,&QComboBox::textActivated,this,&printDrugs::bannerFontSize_activated,Qt::QueuedConnection);
     connect(ui->bannerFontSize,&QComboBox::textHighlighted,this,&printDrugs::bannerFontSize_activated,Qt::QueuedConnection);
     connect(ui->bannerFontBold,&QToolButton::clicked,this,&printDrugs::bannerFontBold_clicked,Qt::QueuedConnection);
+
+
+    connect(ui->altBannerFontName,&QFontComboBox::textActivated,this,&printDrugs::altBannerFontName_activated,Qt::QueuedConnection);
+    connect(ui->altBannerFontName,&QFontComboBox::textHighlighted,this,&printDrugs::altBannerFontName_activated,Qt::QueuedConnection);
+    connect(ui->altBannerFontSize,&QComboBox::textActivated,this,&printDrugs::altBannerFontSize_activated,Qt::QueuedConnection);
+    connect(ui->altBannerFontSize,&QComboBox::textHighlighted,this,&printDrugs::altBannerFontSize_activated,Qt::QueuedConnection);
+    connect(ui->altBannerFontBold,&QToolButton::clicked,this,&printDrugs::altBannerFontBold_clicked,Qt::QueuedConnection);
+
 
     connect(ui->roshettaFontName,&QFontComboBox::textActivated,this,&printDrugs::roshettaFontName_activated,Qt::QueuedConnection);
     connect(ui->roshettaFontName,&QFontComboBox::textHighlighted,this,&printDrugs::roshettaFontName_activated,Qt::QueuedConnection);
@@ -129,9 +131,9 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->BannerStyle,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::bannerStyle_activated,Qt::QueuedConnection);
     connect(ui->resetBannerTemplate,&QPushButton::clicked,this,&printDrugs::resetBannerTemplateClicked);
 
-    connect(ui->bannerTemplate,&TextEdit::fontFamilyChanged,this,&printDrugs::bannerFontName_activated);
-    connect(ui->bannerTemplate,&TextEdit::fontPointChanged,this,&printDrugs::bannerFontSize_activated);
-    connect(ui->bannerTemplate,&TextEdit::fontBoldChanged,this,&printDrugs::bannerFontBold_clicked);
+    connect(ui->bannerTemplate,&TextEdit::fontFamilyChanged,this,&printDrugs::altBannerFontName_activated);
+    connect(ui->bannerTemplate,&TextEdit::fontPointChanged,this,&printDrugs::altBannerFontSize_activated);
+    connect(ui->bannerTemplate,&TextEdit::fontBoldChanged,this,&printDrugs::altBannerFontBold_clicked);
 
     connect(ui->enableBodyHeaderSeparator,&Switch::clicked,this,&printDrugs::enableBodyHeaderSeparator_clicked);
     connect(ui->compactMode,&Switch::clicked,this,&printDrugs::compactMode_clicked);
@@ -208,6 +210,11 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->bannerFontName->setCurrentFont(QFont(printSettings.bannerFont.fontName));
     ui->bannerFontSize->setCurrentText(QString::number(printSettings.bannerFont.fontSize));
     ui->bannerFontBold->setChecked(printSettings.bannerFont.fontBold);
+
+    ui->altBannerFontName->setCurrentFont(QFont(printSettings.altBannerFont.fontName));
+    ui->altBannerFontSize->setCurrentText(QString::number(printSettings.altBannerFont.fontSize));
+    ui->altBannerFontBold->setChecked(printSettings.altBannerFont.fontBold);
+
     ui->roshettaFontName->setCurrentFont(QFont(printSettings.roshettaFont.fontName));
     ui->roshettaFontSize->setCurrentText(QString::number(printSettings.roshettaFont.fontSize));
     ui->roshettaFontBold->setChecked(printSettings.roshettaFont.fontBold);
@@ -235,11 +242,6 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->showDoseNewLine->setChecked(printSettings.showDoseNewLine);
 
     ui->preferArabic->setChecked(printSettings.preferArabic);
-    //ui->showStartDate->setChecked(printSettings.showStartDate);
-    //ui->showStartDate->setEnabled(printSettings.showDoseNewLine);
-    //ui->showHorizontalLineBelowHeader->setChecked(printSettings.showHorizontalLineBelowHeader);
-    //ui->showHorizontalLineBelowHeader->setEnabled(printSettings.prescriptionBannerStyle ==
-    //                                            mSettings::bannerStyle::replaceLogo);
 
     ui->enableFullPage->setChecked(printSettings.enableFullPage);
 
@@ -249,15 +251,20 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
 
     ui->Header->setHtml(dataIOhelper::readFile(HEADERFILE));
     ui->bannerTemplate->setHtml(dataIOhelper::readFile(BANNERFILE));
+
     ui->bannerTemplate->setVisible((bool)printSettings.prescriptionBannerStyle);
     ui->resetButtonAndLabel->setVisible((bool)printSettings.prescriptionBannerStyle);
 
-    //ui->showHorizontalLineBelowHeader->setEnabled((bool)printSettings.prescriptionBannerStyle);
+    ui->bannerFontGroup->setVisible(printSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader);
+    ui->altBannerFontGroup->setVisible((printSettings.prescriptionBannerStyle) == mSettings::bannerStyle::replaceLogo);
+
+    ui->enableBodyHeaderSeparator->setEnabled((bool)printSettings.prescriptionBannerStyle);
     ui->showLogo->setDisabled((bool) printSettings.prescriptionBannerStyle);
     ui->clearDuplicateDrugs->setEnabled(pSettings.showDrugsTitle);
     ui->compactMode->setEnabled(pSettings.showDrugsTableOutline);
 
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
+    setTabWidth();
     return printSettings;
 }
 
@@ -287,6 +294,11 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.bannerFont.fontName = ui->bannerFontName->currentText();
     printSettings.bannerFont.fontSize = ui->bannerFontSize->currentText().toInt();
     printSettings.bannerFont.fontBold = ui->bannerFontBold->isChecked();
+
+    printSettings.altBannerFont.fontName = ui->altBannerFontName->currentText();
+    printSettings.altBannerFont.fontSize = ui->altBannerFontSize->currentText().toInt();
+    printSettings.altBannerFont.fontBold = ui->altBannerFontBold->isChecked();
+
     printSettings.roshettaFont.fontName = ui->roshettaFontName->currentText();;
     printSettings.roshettaFont.fontSize = ui->roshettaFontSize->currentText().toInt();
     printSettings.roshettaFont.fontBold = ui->roshettaFontBold->isChecked();
@@ -499,6 +511,15 @@ bool printDrugs::modificationsOK()
     return true;
 }
 
+void printDrugs::setTabWidth()
+{
+    const int tabStop = 20;
+    ui->bannerTemplate->setTabStopDistance(tabStop);
+    ui->Roshetta->setTabStopDistance(tabStop);
+    ui->Header->setTabStopDistance(tabStop);
+    ui->Footer->setTabStopDistance(tabStop);
+}
+
 void printDrugs::closeEvent(QCloseEvent *e)
 {
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
@@ -555,6 +576,30 @@ void printDrugs::bannerFontBold_clicked(bool checked)
 {
     pSettings.bannerFont.fontBold =checked;
     ui->bannerFontBold->setChecked(checked);
+    refreshView();
+}
+
+void printDrugs::altBannerFontName_activated(const QString &arg1)
+{
+    pSettings.altBannerFont.fontName =arg1;
+    ui->altBannerFontName->setCurrentText(pSettings.altBannerFont.fontName);
+    setTabWidth();
+    refreshView();
+}
+
+void printDrugs::altBannerFontSize_activated(const QString &arg1)
+{
+    pSettings.altBannerFont.fontSize =arg1.toInt();
+    ui->altBannerFontSize->setCurrentText(arg1);
+    setTabWidth();
+    refreshView();
+}
+
+void printDrugs::altBannerFontBold_clicked(bool checked)
+{
+    pSettings.altBannerFont.fontBold =checked;
+    ui->altBannerFontBold->setChecked(checked);
+    setTabWidth();
     refreshView();
 }
 
@@ -699,6 +744,7 @@ void printDrugs::bannerTemplate_textChanged()
 {
     if(!ui->bannerTemplate->isVisible())
         return;
+
     dataIOhelper::saveFile(BANNERFILE,ui->bannerTemplate->toHtml().toUtf8());
     refreshView();
 }
@@ -767,7 +813,11 @@ void printDrugs::bannerStyle_activated(int index)
     pSettings.prescriptionBannerStyle = static_cast<mSettings::bannerStyle>(index);
     ui->bannerTemplate->setVisible((bool)index);
     ui->resetButtonAndLabel->setVisible((bool)index);
-    //ui->showHorizontalLineBelowHeader->setEnabled((bool)index);
+    ui->enableBodyHeaderSeparator->setEnabled(pSettings.prescriptionBannerStyle);
+
+    ui->bannerFontGroup->setVisible(pSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader);
+    ui->altBannerFontGroup->setVisible((pSettings.prescriptionBannerStyle) == mSettings::bannerStyle::replaceLogo);
+
     ui->showLogo->setDisabled((bool) index);
     refreshView();
 }
@@ -952,7 +1002,7 @@ void printDrugs::resetBannerTemplateClicked()
                                       QMessageBox::Yes,
                                       QMessageBox::No);
     if(reply == QMessageBox::Yes){
-        dataIOhelper::dumpBannerTemplate(true);
+        dataIOhelper::dumpBannerTemplate();
         ui->bannerTemplate->setText(dataIOhelper::readFile(BANNERFILE));
     }
 

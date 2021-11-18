@@ -460,6 +460,7 @@ public:
 
         struct roshettaFont doseFont{10,"Tahoma",false,false};
         struct roshettaFont bannerFont{10,"Tahoma",false,false};
+        struct roshettaFont altBannerFont{10,"Tahoma",false,false};
         struct roshettaFont roshettaFont{10,"Tahoma",false,false};
         struct roshettaFont requestsFont{10,"Tahoma",false,false};
         struct roshettaFont measurementsFont{10,"Tahoma",false,false};
@@ -501,6 +502,7 @@ public:
                             footerHeightPercent,
                             bannerHeightPercent,
                             bannerFont,
+                            altBannerFont,
                             roshettaFont,
                             doseFont,
                             requestsFont,
@@ -537,6 +539,7 @@ public:
                         prescriptionprintsettings.footerHeightPercent,
                         prescriptionprintsettings.bannerHeightPercent,
                         prescriptionprintsettings.bannerFont,
+                        prescriptionprintsettings.altBannerFont,
                         prescriptionprintsettings.roshettaFont,
                         prescriptionprintsettings.doseFont,
                         prescriptionprintsettings.requestsFont,

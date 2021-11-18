@@ -316,14 +316,12 @@ void dataIOhelper::dumpLogoNotExists(bool force){
     dest.close();
 }
 
-void dataIOhelper::dumpBannerTemplate(bool force)
+void dataIOhelper::dumpBannerTemplate()
 {
     QFile dest(BANNERFILE);
-    if(force)
-        dest.remove();
 
     if(dest.exists())
-        return;
+        dest.remove();
 
     QFile src("://banner.html");
     src.open(QIODevice::ReadOnly);
@@ -332,4 +330,27 @@ void dataIOhelper::dumpBannerTemplate(bool force)
     dest.write(srcData);
     src.close();
     dest.close();
+}
+void dataIOhelper::dumpTemplates()
+{
+    QList<QPair<QString,QString> > templates{
+        {BANNERFILE,"://banner.html"},
+        {HEADERFILE,"://header.html"},
+        {FOOTERFILE,"://footer.html"}
+    };
+
+    for (auto t:templates){
+        QFile dest(t.first);
+        if(dest.exists())
+            continue;
+
+        QFile src(t.second);
+        src.open(QIODevice::ReadOnly);
+        dest.open(QIODevice::WriteOnly);
+        QByteArray srcData = src.readAll();
+        dest.write(srcData);
+        src.close();
+        dest.close();
+    }
+
 }

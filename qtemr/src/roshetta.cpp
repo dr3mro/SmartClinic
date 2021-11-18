@@ -36,6 +36,9 @@ QTextDocument * Roshetta::createRoshetta(const mSettings::Roshetta &_Roshetta, c
     // set banner Format parameters
     makeBanner();
 
+    // set signature printted on parameters
+    makeSignaturePrintedOn();
+
     // set footer Format parameters
     makeFooter();
 
@@ -47,9 +50,6 @@ QTextDocument * Roshetta::createRoshetta(const mSettings::Roshetta &_Roshetta, c
 
     // set requests parameter
     makeRequests();
-
-    // set signature printted on parameters
-    makeSignaturePrintedOn();
 
     //set vitals parameters
     makeVitals();
@@ -128,7 +128,8 @@ void Roshetta::stackFrames()
 
     cursor.movePosition(QTextCursor::NextBlock);
 
-    fillSignaturePrintedOn(cursor);
+    if(roshettaSettings.showSignaturePrintedOn)
+        fillSignaturePrintedOn(cursor);
 
     cursor.movePosition(QTextCursor::NextBlock);
 
@@ -167,7 +168,7 @@ void Roshetta::makeBanner()
 
         bannerFormat.setAlignment(Qt::AlignCenter);
         bannerFormat.setWidth(mWidth);
-        bannerFormat.setHeight(44);
+        bannerFormat.setHeight(bannerFrameFormat.height().rawValue());
         bannerFormat.setBorder(0);
         bannerFormat.setLayoutDirection(roshettaSettings.preferArabic? Qt::RightToLeft : Qt::LeftToRight);
 
@@ -187,22 +188,23 @@ void Roshetta::makeBanner()
 
 void Roshetta::makeBody()
 {
+    bodyHeight = mHeight;
 
-    QFontMetrics fm(QFont(roshettaSettings.signatureFont.fontName,roshettaSettings.signatureFont.fontSize));
+    const int CORRECTIONFACTOR = 1;
 
-    if(roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader){
-        bodyHeight = mHeight -
-                ((roshettaSettings.headerHeightPercent +
-                  roshettaSettings.footerHeightPercent +
-                  roshettaSettings.bannerHeightPercent) * mHeight)/100;
-    }else{
-        bodyHeight = mHeight -
-                ( (roshettaSettings.headerHeightPercent +
-                   roshettaSettings.footerHeightPercent +
-                   roshettaSettings.bannerHeightPercent - 3 ) * mHeight )/100;
-    }
+    if(roshettaSettings.showBanner && roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::belowHeader)
+        bodyHeight -= bannerFrameFormat.height().rawValue() + CORRECTIONFACTOR;
+    else if(roshettaSettings.prescriptionBannerStyle == mSettings::bannerStyle::replaceLogo)
+        bodyHeight -= prefooterFormat.height().rawValue() + CORRECTIONFACTOR;
 
-    bodyHeight -= PageMetrics::mmToPx(roshettaSettings.pageMargin);
+    if(roshettaSettings.showSignaturePrintedOn)
+        bodyHeight -= prefooterFormat.height().rawValue() + CORRECTIONFACTOR;
+
+    if(roshettaSettings.enableBodyHeaderSeparator)
+        bodyHeight -= drawHorizontalLineBelowHeaderFrameFormat.height().rawValue();
+
+    bodyHeight -= headerFormat.height().rawValue() + CORRECTIONFACTOR;
+    bodyHeight -= footerFormat.height().rawValue() + CORRECTIONFACTOR;
 
     bodyFormat.setWidth(mWidth);
     bodyFormat.setHeight(bodyHeight);
@@ -262,7 +264,7 @@ void Roshetta::makeSignaturePrintedOn()
 void Roshetta::makeFooter()
 {
     footerFormat.setWidth(mWidth);
-    footerFormat.setHeight((mHeight*roshettaSettings.footerHeightPercent/100) - PageMetrics::mmToPx(roshettaSettings.pageMargin));
+    footerFormat.setHeight((mHeight*roshettaSettings.footerHeightPercent/100));
     footerFormat.setBorder(roshettaSettings.showPrescriptionFooter);
     footerFormat.setMargin(0);
     footerFormat.setBorderBrush(QBrush(Qt::darkGray));
@@ -405,7 +407,7 @@ void Roshetta::fillBody(QTextCursor &c)
                 }
             }
 
-            int correction = roshettaSettings.showDrugsTableOutline? allDrugsCount*3 : 0;
+            int correction = roshettaSettings.showDrugsTableOutline? allDrugsCount*4 : 0;
 
             isDrugsOutOfRange = (mDrugsTableHeight + correction) > bodyHeight;
 
@@ -727,9 +729,9 @@ void Roshetta::fillAltBanner(QTextCursor &c)
     altBannerTemplate.replace("{followDate}",nextDate);
     altBannerTemplate.replace("{visitIcon}",roshettaData.visitSymbole);
 
-    altBannerTemplate.replace(QRegularExpression("font-size: ?\\d{1,2}pt;"),QString("font-size: %1pt;").arg(roshettaSettings.bannerFont.fontSize));
-    altBannerTemplate.replace(QRegularExpression("font-family:\\s*'([^']*)';"),QString("font-family:'%1';").arg(roshettaSettings.bannerFont.fontName));
-    altBannerTemplate.replace(QRegularExpression("font-weight:?\\d{3};"),QString("font-weight:%1;").arg(roshettaSettings.bannerFont.fontBold? 600:400));
+    altBannerTemplate.replace(QRegularExpression("font-size: ?\\d{1,2}pt;"),QString("font-size: %1pt;").arg(roshettaSettings.altBannerFont.fontSize));
+    altBannerTemplate.replace(QRegularExpression("font-family:\\s*'([^']*)';"),QString("font-family:'%1';").arg(roshettaSettings.altBannerFont.fontName));
+    altBannerTemplate.replace(QRegularExpression("font-weight:?\\d{3};"),QString("font-weight:%1;").arg(roshettaSettings.altBannerFont.fontBold? 600:400));
 
     c.insertHtml(altBannerTemplate);
 }

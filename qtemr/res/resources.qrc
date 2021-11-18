@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Graphics" lang="english">
+    <qresource lang="english" prefix="/Graphics">
         <file alias="appicon">Graphics/appicon.ico</file>
         <file alias="applogo">Graphics/applogo.png</file>
         <file alias="back">Graphics/chevron-left-8x.png</file>
@@ -134,6 +134,8 @@
         <file>audio/Windows Pop-up Blocked.wav</file>
         <file>audio/Windows Print complete.wav</file>
         <file>audio/Windows Unlock.wav</file>
+        <file>footer.html</file>
+        <file>header.html</file>
     </qresource>
     <qresource prefix="/alphaNums">
         <file>alphaNum/006-f.png</file>
@@ -144,5 +146,9 @@
         <file>alphaNum/029-2.png</file>
         <file>alphaNum/030-3.png</file>
         <file>alphaNum/031-4.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file alias="ConcoNextBold">Fonts/CoconNextArabic-Bold.ttf</file>
+        <file alias="CoconNextLight">Fonts/CoconNextArabic-Light.ttf</file>
     </qresource>
 </RCC>

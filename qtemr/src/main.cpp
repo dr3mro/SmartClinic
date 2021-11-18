@@ -244,6 +244,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 
+    QFontDatabase::addApplicationFont(":/fonts/CoconNextLight");
+    QFontDatabase::addApplicationFont(":/fonts/ConcoNextBold");
 
     QCommandLineParser clParser;
     clParser.setApplicationDescription("Smart Clinic helper");
@@ -305,7 +307,7 @@ int main(int argc, char *argv[])
     createFolders();
     QApplication::processEvents();
     dataIOhelper::dumpLogoNotExists();
-    dataIOhelper::dumpBannerTemplate();
+    dataIOhelper::dumpTemplates();
     QApplication::processEvents();
     banner->updateprogress(QString("drugs local databse"));
     QApplication::processEvents();

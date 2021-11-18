@@ -207,6 +207,10 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     mPageSettings.bannerFont.fontSize = settings.value(_bannerFontSize,QVariant(8)).toInt();
     mPageSettings.bannerFont.fontBold = settings.value(_bannerFontBold,QVariant(false)).toBool();
 
+    mPageSettings.altBannerFont.fontName = settings.value(_altBannerFont,QVariant("Tahoma")).toString();
+    mPageSettings.altBannerFont.fontSize = settings.value(_altBannerFontSize,QVariant(8)).toInt();
+    mPageSettings.altBannerFont.fontBold = settings.value(_altBannerFontBold,QVariant(false)).toBool();
+
     mPageSettings.roshettaFont.fontName = settings.value(_roshettaFont,QVariant("Tahoma")).toString();
     mPageSettings.roshettaFont.fontSize = settings.value(_roshettaFontSize,QVariant(8)).toInt();
     mPageSettings.roshettaFont.fontBold = settings.value(_roshettaFontBold,QVariant(false)).toBool();
@@ -274,6 +278,10 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     settings.setValue(_bannerFont,mPageSettings.bannerFont.fontName);
     settings.setValue(_bannerFontSize,mPageSettings.bannerFont.fontSize);
     settings.setValue(_bannerFontBold,mPageSettings.bannerFont.fontBold);
+
+    settings.setValue(_altBannerFont,mPageSettings.altBannerFont.fontName);
+    settings.setValue(_altBannerFontSize,mPageSettings.altBannerFont.fontSize);
+    settings.setValue(_altBannerFontBold,mPageSettings.altBannerFont.fontBold);
 
     settings.setValue(_roshettaFont,mPageSettings.roshettaFont.fontName);
     settings.setValue(_roshettaFontSize,mPageSettings.roshettaFont.fontSize);

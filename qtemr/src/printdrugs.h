@@ -59,6 +59,11 @@ private slots:
     void bannerFontName_activated(const QString &arg1);
     void bannerFontSize_activated(const QString &arg1);
     void bannerFontBold_clicked(bool checked);
+
+    void altBannerFontName_activated(const QString &arg1);
+    void altBannerFontSize_activated(const QString &arg1);
+    void altBannerFontBold_clicked(bool checked);
+
     void roshettaFontName_activated(const QString &arg1);
     void roshettaFontSize_activated(const QString &arg1);
     void roshettaFontBold_clicked(bool checked);
@@ -126,6 +131,7 @@ private:
     void applyPageSizeParamaters();
     void reload();
     bool modificationsOK();
+    inline void setTabWidth();
     QPrinter *printer;
     QPrintDialog *dlg;
     mSettings& settings = mSettings::instance();
