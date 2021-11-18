@@ -202,6 +202,7 @@ void Roshetta::makeBody()
                    roshettaSettings.bannerHeightPercent - 3 ) * mHeight )/100;
     }
 
+    bodyHeight -= PageMetrics::mmToPx(roshettaSettings.pageMargin);
 
     bodyFormat.setWidth(mWidth);
     bodyFormat.setHeight(bodyHeight);
@@ -261,7 +262,7 @@ void Roshetta::makeSignaturePrintedOn()
 void Roshetta::makeFooter()
 {
     footerFormat.setWidth(mWidth);
-    footerFormat.setHeight((mHeight*roshettaSettings.footerHeightPercent)/100);
+    footerFormat.setHeight((mHeight*roshettaSettings.footerHeightPercent/100) - PageMetrics::mmToPx(roshettaSettings.pageMargin));
     footerFormat.setBorder(roshettaSettings.showPrescriptionFooter);
     footerFormat.setMargin(0);
     footerFormat.setBorderBrush(QBrush(Qt::darkGray));
@@ -582,7 +583,7 @@ void Roshetta::fillRequests(QTextCursor &c)
 
 void Roshetta::fillSignaturePrintedOn(QTextCursor &c)
 {
-    QString printedinDate = QDateTime::currentDateTime().toString("dddd dd/MM/yyyy hh:mm AP");
+    QString printedinDate = QDateTime::currentDateTime().toString("ddd dd/MM/yyyy hh:mm AP");
     QString style = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.signatureFont.fontName,
                  QString::number(roshettaSettings.signatureFont.fontSize),
