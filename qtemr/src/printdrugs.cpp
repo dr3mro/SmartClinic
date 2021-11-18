@@ -478,11 +478,13 @@ void printDrugs::applyPageSizeParamaters()
 
 void printDrugs::reload()
 {
+    ui->Roshetta->setUpdatesEnabled(false);
     m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
     m_roshetta->setModified(false);
     ui->Roshetta->setDocument(m_roshetta);
     ui->warning->setText(roshettaMaker.getIsDrugsOutOfRange()?"Warning: There might be some drugs not visible":"");
     RoshettaEdited = false;
+    ui->Roshetta->setUpdatesEnabled(true);
 }
 
 bool printDrugs::modificationsOK()
