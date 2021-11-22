@@ -1298,7 +1298,7 @@ void visitsBox::connectSignals(QWidget *parent)
     connect ( ui->vDrugsTable,SIGNAL(syncDrugs(QList<QStringList>,bool)),this,SIGNAL(syncDrugs(QList<QStringList>,bool)));
     connect ( ui->InvestigationsTable,SIGNAL(selectLastInvRow()),this,SLOT(selectLastInvRow()) );
     connect ( ui->vDrugsTable,SIGNAL(showRxCost(double,bool)),this,SLOT(showCosts(double,bool)));
-    connect ( print,SIGNAL(add2AutoComplete(QString)),this,SLOT(add2RoshettaAutoComplete(QString)));
+    //connect ( print,SIGNAL(add2AutoComplete(QString)),this,SLOT(add2RoshettaAutoComplete(QString)));
     //connect ( print,SIGNAL(refreshRoshetta(mSettings::prescriptionPrintSettings,QString,int)),this,SLOT(genRoshettaHTML(mSettings::prescriptionPrintSettings,QString,int)));
     connect ( print,SIGNAL(message(QString,QString)),this,SIGNAL(newMessage(QString,QString)));
     connect ( ui->lockUnlockButton,SIGNAL(clicked()),this,SLOT(toggleEditMode()));

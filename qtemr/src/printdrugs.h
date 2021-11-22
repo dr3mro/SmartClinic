@@ -152,7 +152,7 @@ private:
 
 
 signals:
-    void add2AutoComplete(QString w);
+    //void add2AutoComplete(QString w);
     QString refreshRoshetta(mSettings::prescriptionPrintSettings,QString,int);
     void loadCompleters();
     void message(QString title,QString message);
