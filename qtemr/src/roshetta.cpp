@@ -523,6 +523,15 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
             c.insertHtml(QString("<div align=left dir=RTL %2>%1</div>").arg(dose,doseStyle));
         }else{
             c.movePosition(QTextCursor::NextCell);
+
+            if(!roshettaSettings.compactMode &&
+                    parsedDrugsList.count() < 2 &&
+                    !roshettaSettings.showDrugsTableOutline &&
+                    allDrugsCount <= spacerfactor1 &&
+                    !roshettaSettings.showDrugsTitle){
+                c.insertHtml("<br>");
+            }
+
             c.insertHtml(QString("<div align=right dir=RTL %2>%1</div>").arg(dose,doseStyle));
         }
 
