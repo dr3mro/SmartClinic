@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.21)
 project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
 #set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 

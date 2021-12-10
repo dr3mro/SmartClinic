@@ -14,6 +14,7 @@ printDrugs::printDrugs(QWidget *parent) :
     ui(new Ui::printDrugs)
 {
     ui->setupUi(this);
+    //mDebug() << QPrinterInfo::availablePrinters();
     m_roshetta = ui->Roshetta->document();
     roshettaMaker.setDocument(m_roshetta);
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
