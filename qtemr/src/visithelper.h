@@ -6,12 +6,12 @@
 #include "visittypes.h"
 #include "sqlbase.h"
 
-class VisitHelper : public QObject
+class VisitHelper
 {
-    Q_OBJECT
+
 public:
 
-   enum WorkDay{
+   enum WorkDay: unsigned int {
        Monday    = 1 << 1,
        Tuesday   = 1 << 2,
        Wednesday = 1 << 3,
