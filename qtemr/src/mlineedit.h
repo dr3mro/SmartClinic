@@ -56,7 +56,7 @@ protected:
     char delimeter;
     mCompleter *mcompleter=nullptr;
     QString tableName;
-    mSettings::textboxFont font;
+    mSettings::defaultFont font;
     QFuture<QStringList> future;
     QFutureWatcher<QStringList> watcher;
 };

@@ -81,7 +81,7 @@ void mLineEdit::onTextChanged()
 
 void mLineEdit::setDefaultFont()
 {
-    font = settings.getTextboxFont();
+    font = settings.getDefaultFont();
     QFont mFont = QFont(font.fontName);
     double mFontSize = font.fontSize;
     bool mFontBold = font.fontBold;
