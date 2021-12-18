@@ -416,6 +416,7 @@ void visitsBox::on_visitLists_currentIndexChanged(int index)
 
     }
     toggleContollers();
+    drugsAltered = false;
 }
 
 void visitsBox::on_ButtonDel_clicked()
@@ -461,6 +462,7 @@ void visitsBox::on_ButtonDel_clicked()
 
 void visitsBox::closeEvent(QCloseEvent *event)
 {
+    //mDebug() << drugsAltered;
     if (!visitLoaded)
         event->ignore();
 
@@ -842,6 +844,7 @@ void visitsBox::finishedSavingVisit(bool state)
 {
     QString msg = state? "Visit Data was Saved Successfuly":"Sorry, Visit Data was NOT Saved";
     emit newMessage("Information",msg);
+    drugsAltered = !state;
     saving=false;
     autoSaveTimer->start();
 }
@@ -1562,15 +1565,16 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
 #else
         auto f = QtConcurrent::run(visitSaverWorker,&wm_visitSaver::Work);
 #endif
+        drugsAltered = true;
         return true;
     }
     else
     {
         bool b = sqlbase->saveVisitData(visitData);
         saving = false;
+        drugsAltered = !b;
         return b;
     }
-
 }
 void visitsBox::toggleSyncPrintButtons()
 {
