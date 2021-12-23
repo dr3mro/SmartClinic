@@ -1431,7 +1431,7 @@ int visitsBox::followNotify(const QDate &date, bool isRequest)
         {
             newMessage("Warning",
                        QString("Warning, Follow up limit exceeded for (%1) , current : %2, limit : %3")
-                       .arg(en_US.toString(date,"dd/MM/yyyy"))
+                       .arg(en_US.toString(date,"dddd dd/MM/yyyy"))
                        .arg(selectedDateFollowUps)
                        .arg(maxFollowUps));
         }
@@ -1439,10 +1439,14 @@ int visitsBox::followNotify(const QDate &date, bool isRequest)
         {
             newMessage("Message",
                        QString("The date (%1) currently has %2/%3 follow ups")
-                       .arg(en_US.toString(date,"dd/MM/yyyy"))
+                       .arg(en_US.toString(date,"dddd dd/MM/yyyy"))
                        .arg(selectedDateFollowUps)
                        .arg(maxFollowUps));
         }
+    }else{
+        newMessage("Message",
+                   QString("The follow up was set to %1")
+                   .arg(en_US.toString(date,"dddd dd/MM/yyyy")));
     }
 
     return  selectedDateFollowUps;
