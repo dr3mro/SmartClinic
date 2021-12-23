@@ -189,7 +189,7 @@ private:
     void goLastVisit();
     void goPreviousVisit();
     void goNextVisit();
-    int followNotify(const QDate &date);
+    int followNotify(const QDate &date, bool isRequest=false);
     bool visitLoaded=false;
     bool alwaysSave;
     bool autoSave;

@@ -1250,9 +1250,9 @@ void visitsBox::toggleDateFollowup()
     if(!vEditMode)
         return;
 
-
+    bool isRequest = visitTypes.getVisitTypesByUiIndex(ui->comboVisitType->currentIndex()).id == VisitTypes::n_visitsType::Requests;
     if(ui->dateFollowUp->date() == lastVisitDate){
-        if(visitTypes.getVisitTypesByUiIndex(ui->comboVisitType->currentIndex()).id != VisitTypes::n_visitsType::Requests){
+        if(!isRequest){
             while (true){
                 if( (( 1 << lastSelectedFollowupDate.dayOfWeek() ) & (VisitHelper::WorkDays) settings.getWorkingDays())  &&
                         (sqlbase->getFollowUpsCountForThisDate(lastSelectedFollowupDate,patientBasicDetails.ID) < settings.getMaxFollowUps()) ){
@@ -1272,7 +1272,7 @@ void visitsBox::toggleDateFollowup()
     }
 
 
-    int selectedDateFollowUps = followNotify(lastSelectedFollowupDate);
+    int selectedDateFollowUps = followNotify(lastSelectedFollowupDate,isRequest);
     setFollowDateTooltip(selectedDateFollowUps,lastSelectedFollowupDate);
 }
 
@@ -1420,27 +1420,31 @@ void visitsBox::goNextVisit()
     goSaveVisit(currentIndex);
 }
 
-int visitsBox::followNotify(const QDate &date)
+int visitsBox::followNotify(const QDate &date, bool isRequest)
 {
     QLocale en_US = QLocale(QLocale::English,QLocale::UnitedStates);
 
     int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(date,patientBasicDetails.ID)+1;
-    if ( selectedDateFollowUps > maxFollowUps && maxFollowUps > 0)
-    {
-        newMessage("Warning",
-                   QString("Warning, Follow up limit exceeded for (%1) , current : %2, limit : %3")
-                   .arg(en_US.toString(date,"dd/MM/yyyy"))
-                   .arg(selectedDateFollowUps)
-                   .arg(maxFollowUps));
+
+    if(!isRequest){
+        if ( selectedDateFollowUps > maxFollowUps && maxFollowUps > 0)
+        {
+            newMessage("Warning",
+                       QString("Warning, Follow up limit exceeded for (%1) , current : %2, limit : %3")
+                       .arg(en_US.toString(date,"dd/MM/yyyy"))
+                       .arg(selectedDateFollowUps)
+                       .arg(maxFollowUps));
+        }
+        else if ( maxFollowUps > 0)
+        {
+            newMessage("Message",
+                       QString("The date (%1) currently has %2/%3 follow ups")
+                       .arg(en_US.toString(date,"dd/MM/yyyy"))
+                       .arg(selectedDateFollowUps)
+                       .arg(maxFollowUps));
+        }
     }
-    else if ( maxFollowUps > 0)
-    {
-        newMessage("Message",
-                   QString("The date (%1) currently has %2/%3 follow ups")
-                   .arg(en_US.toString(date,"dd/MM/yyyy"))
-                   .arg(selectedDateFollowUps)
-                   .arg(maxFollowUps));
-    }
+
     return  selectedDateFollowUps;
 }
 
