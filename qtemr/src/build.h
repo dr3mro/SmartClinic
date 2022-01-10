@@ -13,7 +13,10 @@
   QDate build_date = enUS.toDate(QString(BUILDDATE).simplified(),"MMM d yyyy");\
   QTime build_time = enUS.toTime(QString(BUILDTIME).simplified(),"hh:mm:ss");\
   QString build_nr;\
-  build_nr.setNum(build_date.toString("yyMMdd").toInt()*10000 + build_time.toString("hhmm").toInt(),36);\
+  unsigned long int left = build_date.toString("yyMMdd").toInt() *10000;\
+  unsigned long int right =build_time.toString("hhmm").toInt();\
+  unsigned long int left_right = left + right;\
+  build_nr.setNum(left_right,36);\
   return build_nr.toUpper();\
   }())
 #endif // BUILD_H

@@ -9,7 +9,7 @@
 #define STR(x) STR_IMPL_(x)  //indirection to expand argument macros
 
 
-#define BUILDVER 38
+#define BUILDVER 39
 #define MINORVER 8
 #define MAJORVER 3
 
@@ -49,7 +49,7 @@
 #define dbVersion 2.88
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
-#define drugsDatabaseVer 210129
+#define drugsDatabaseVer 211023
 #define PORTABILITYLOCK ".portable"
 #define HEADERFILE "header.html"
 #define FOOTERFILE "footer.html"
