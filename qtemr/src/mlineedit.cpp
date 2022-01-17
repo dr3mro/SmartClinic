@@ -124,6 +124,8 @@ void mLineEdit::keyPressEvent(QKeyEvent *e)
     {
     case Qt::Key_Left:
     case Qt::Key_Right:
+    case Qt::Key_PageUp:
+    case Qt::Key_PageDown:
         mcompleter->popup()->hide();
         break;
     default:

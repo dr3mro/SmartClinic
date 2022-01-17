@@ -1382,12 +1382,19 @@ void visitsBox::setFollowDateTooltip(const int & selectedDateFollowUps, const QD
 
 void visitsBox::goSaveVisit(int index)
 {
+    if (ui->investigationsLine->completer()->popup()->isVisible() ||  ui->drugLine->completer()->popup()->isVisible())
+        return;
+
     if ( vEditMode && isVisitModified())
     {
         save(grabVisit(),false);
         emit newMessage("Information","Visit Data was Saved");
     }
     ui->visitLists->setCurrentIndex(index);
+//    ui->drugLine->completer()->popup()->hide();
+//    ui->drugLine->clear();
+//    ui->investigationsLine->completer()->popup()->hide();
+//    ui->investigationsLine->clear();
 }
 
 void visitsBox::goFirstVisit()
