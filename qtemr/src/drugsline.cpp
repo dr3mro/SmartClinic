@@ -12,6 +12,7 @@ drugsLine::drugsLine(QWidget *parent):genericLineEdit(parent)
     connect (parent->window(),SIGNAL(reloadCompleter()),this,SLOT(mUpdateCompleter()),Qt::UniqueConnection);
     connect (parent->window(),SIGNAL(loadCompleters()),this,SLOT(loadCompleter()),Qt::UniqueConnection);
     connect (this,SIGNAL(updateDrugsCompleter()),this,SLOT(loadCompleter()),Qt::UniqueConnection);
+
 }
 
 void drugsLine::loadCompleter()

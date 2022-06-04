@@ -35,6 +35,8 @@ private:
     QStringListModel *model;
     mSettings& settings=mSettings::instance();
 
+
+
 private slots:
     void onTextChanged();
     void setDefaultFont();
@@ -59,6 +61,7 @@ protected:
     mSettings::defaultFont font;
     QFuture<QStringList> future;
     QFutureWatcher<QStringList> watcher;
+    mSettings::lineStyle style;
 };
 
 #endif // MLINEEDIT_H

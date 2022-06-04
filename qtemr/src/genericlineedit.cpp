@@ -30,6 +30,15 @@ genericLineEdit::genericLineEdit(QWidget *parent):mLineEdit(parent),
         connect (this,SIGNAL(removeItemFromCompleter(QString,QString)),parent->window(),SLOT(removeItemFromCompleter(QString,QString)));
         connect (parent->window(),SIGNAL(insertUniqueItem(QString,QString)),this,SLOT(addUniqueItem2Model(QString,QString)),Qt::QueuedConnection);
     }
+    setStyleSheet("mLineEdit{ color:#808080;}");
+
+    connect(this, &QLineEdit::textChanged, [=]{
+        if(text().length() == 0){
+            setStyleSheet("mLineEdit{ color:#808080;}");
+        }else{
+            setStyleSheet(style.normalStylesheet);
+        }
+    });
 }
 
 genericLineEdit::~genericLineEdit()
@@ -79,7 +88,7 @@ void genericLineEdit::loadCompleter()
 {
     char delimterNone[] = "";
     char delimterSpace[] = " ";
-    bool autocompleteByWord = isAutoCompleteByWord();
+    bool autocompleteByWord = emit isAutoCompleteByWord();
 
     if (objectName() == "patientName")
     {

@@ -31,22 +31,43 @@ void vitalBox::setVitalType(int vt,int sp)
     {
     case(0):
         connect(this,SIGNAL(textChanged(QString)),this,SLOT(pulseRate(QString)));
-        setStyleSheet(style.normalStylesheet);
+
+        if(text().length() == 0){
+            setStyleSheet("QLineEdit{ color:#808080;}");
+        }else{
+            setStyleSheet(style.normalStylesheet);
+        }
+
         setRegExpValidator("^([0-9][0-9]|[1-3][0-9][0-9]?)$");
         break;
     case(1):
         connect(this,SIGNAL(textChanged(QString)),this,SLOT(bloodpressure(QString)));
-        setStyleSheet(style.normalStylesheet);
+
+        if(text().length() == 0){
+            setStyleSheet("QLineEdit{ color:#808080;}");
+        }else{
+            setStyleSheet(style.normalStylesheet);
+        }
         setRegExpValidator("^([1-9][0-9]|[1-2][0-9][0-9]|300?)\\/([1-9][0-9]|[1-2][0-9][0-9]?)$");
         break;
     case(2):
         connect(this,SIGNAL(textChanged(QString)),this,SLOT(respiratoryRate(QString)));
-        setStyleSheet(style.normalStylesheet);
+
+        if(text().length() == 0){
+            setStyleSheet("QLineEdit{ color:#808080;}");
+        }else{
+            setStyleSheet(style.normalStylesheet);
+        }
         setRegExpValidator("^(100|[1-9]?[0-9])$");
         break;
     case(3):
         connect(this,SIGNAL(textChanged(QString)),this,SLOT(temperature(QString)));
-        setStyleSheet(style.normalStylesheet);
+
+        if(text().length() == 0){
+            setStyleSheet("QLineEdit{ color:#808080;}");
+        }else{
+            setStyleSheet(style.normalStylesheet);
+        }
         setRegExpValidator("^3[5-9][.][0-9]|^4[0-2][.][0-9]$");
         break;
     case(4)://weight
@@ -73,6 +94,12 @@ void vitalBox::pulseRate(QString pulserate)
     if ( speciality != dataHelper::Speciality::InternalMedicine )
         return;
     int pulseRate  = pulserate.toInt();
+
+    if(text().length() == 0){
+        setStyleSheet("QLineEdit{ color:#808080;}");
+        return;
+    }
+
     if ( pulseRate == 0 )
     {
         setStyleSheet(style.normalStylesheet);
@@ -99,6 +126,11 @@ void vitalBox::bloodpressure(QString bloodpressure)
 {
     if ( speciality != dataHelper::Speciality::InternalMedicine )
         return;
+
+    if(text().length() == 0){
+        setStyleSheet("QLineEdit{ color:#808080;}");
+        return;
+    }
 
     if ( bloodpressure.split("/").count() != 2 )
     {
@@ -146,6 +178,12 @@ void vitalBox::respiratoryRate(QString respiratoryrate)
     if ( speciality != dataHelper::Speciality::InternalMedicine )
         return;
     int respRate  = respiratoryrate.toInt();
+
+    if(text().length() == 0){
+        setStyleSheet("QLineEdit{ color:#808080;}");
+        return;
+    }
+
     if ( respRate == 0 )
     {
         setStyleSheet(style.normalStylesheet);
@@ -166,6 +204,11 @@ void vitalBox::respiratoryRate(QString respiratoryrate)
 void vitalBox::temperature(QString temperature)
 {
     double temp = temperature.toDouble();
+
+    if(text().length() == 0){
+        setStyleSheet("QLineEdit{ color:#808080;}");
+        return;
+    }
 
     if ( (temp >= 36.8 && temp <= 37.2) || dataHelper::doubleEqual(temp,0) )
     {

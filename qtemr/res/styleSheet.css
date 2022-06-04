@@ -257,7 +257,7 @@ QLineEdit
 border-radius:input_border_radiuspx;
 border:input_border_widthpx solid input_border_color_normal;
 background-color:input_color_normal;
-color:inputText_color_normal;
+/*color:inputText_color_normal;*/
 padding:1px;
 height:18px;
 }

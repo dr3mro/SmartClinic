@@ -11,6 +11,17 @@ mLineEdit::mLineEdit(QWidget *parent):QLineEdit(parent),
 {
 
     connect(&watcher,SIGNAL(finished()),this,SLOT(completerLoader()));
+
+    setStyleSheet("QLineEdit{ color:#808080;}");
+
+    connect(this, &QLineEdit::textChanged, [=]{
+        if(text().length() == 0){
+            setStyleSheet("QLineEdit{ color:#808080;}");
+        }else{
+            setStyleSheet(style.normalStylesheet);
+        }
+    });
+
 }
 
 void mLineEdit::makeEditable(bool b)
