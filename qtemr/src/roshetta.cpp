@@ -494,11 +494,12 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     CurrentDrugRow++;
 
     foreach (const mSettings::drug & d, drugs) {
-        c.beginEditBlock();
+
         if(!roshettaSettings.showDrugsTitle &&  roshettaSettings.clearDuplicateDrugs && parsedDrugsList.contains(d.TradeName)){
             c.currentTable()->removeRows(--allDrugsCount,1);
             continue;
         }
+        c.beginEditBlock();
         parsedDrugsList << d.TradeName;
 
         QString dose = d.Dose;
