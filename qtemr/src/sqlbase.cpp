@@ -355,6 +355,7 @@ bool sqlBase::saveVisitData(sqlBase::visitData vdata)
     if ( !v || !d || !i )
     {
         mDebug() << v << d <<i ;
+        emit showMessage("Error","Failed to save visit data");
         db.rollback();
         return false;
     }
