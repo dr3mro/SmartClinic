@@ -354,6 +354,7 @@ bool sqlBase::saveVisitData(sqlBase::visitData vdata)
     bool i = saveInvestigationsModel(vdata.ID,vdata.visitDate,vdata.invModel);
     if ( !v || !d || !i )
     {
+        mDebug() << v << d <<i ;
         db.rollback();
         return false;
     }

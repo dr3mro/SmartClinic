@@ -1,4 +1,4 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -462,7 +462,7 @@ void visitsBox::on_ButtonDel_clicked()
 
 void visitsBox::closeEvent(QCloseEvent *event)
 {
-    //mDebug() << drugsAltered;
+    mDebug() << drugsAltered;
     if (!visitLoaded)
         event->ignore();
 
@@ -1306,7 +1306,7 @@ void visitsBox::connectSignals(QWidget *parent)
     connect ( print,SIGNAL(message(QString,QString)),this,SIGNAL(newMessage(QString,QString)));
     connect ( ui->lockUnlockButton,SIGNAL(clicked()),this,SLOT(toggleEditMode()));
     connect ( ui->InvestigationsTable,SIGNAL(toggleRemoveInvButton(bool)),ui->buttonRemoveInvestigations,SLOT(setEnabled(bool)));
-    connect ( ui->vDrugsTable,SIGNAL(drugsHasBeenAltered(bool)),this,SLOT(toggleDrugsAlteredStatus(bool)));
+    connect ( ui->vDrugsTable,SIGNAL(drugsHasBeenAltered(bool)),this,SLOT(toggleDrugsAlteredStatus(bool)),Qt::QueuedConnection);
     connect ( add2CompleterWorker,SIGNAL(finished()),this,SIGNAL(reloadCompleter()));
     connect ( add2CompleterWorker,SIGNAL(finished()),this,SIGNAL(reloadMWCompleter()));
     connect ( visitSaverWorker,SIGNAL(finishedSavingState(bool)),this,SLOT(finishedSavingVisit(bool)));
