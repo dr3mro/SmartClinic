@@ -1,8 +1,4 @@
-﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
-#include "visitsbox.h"
+﻿#include "visitsbox.h"
 #include "ui_visitsbox.h"
 
 #include "visithelper.h"
@@ -462,7 +458,7 @@ void visitsBox::on_ButtonDel_clicked()
 
 void visitsBox::closeEvent(QCloseEvent *event)
 {
-    mDebug() << drugsAltered;
+    //mDebug() << drugsAltered;
     if (!visitLoaded)
         event->ignore();
 
