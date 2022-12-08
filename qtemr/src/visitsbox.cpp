@@ -1519,7 +1519,8 @@ void visitsBox::roshettaDrugsfiller(QList<mSettings::drug> &drugs,DrugsItemModel
         }else{
             dataHelper::cleanDrugName(drug.TradeName);
         }
-        drug.TradeName.insert(0,"℞  ");
+        drug.TradeName.insert(0," "); // add space
+        drug.TradeName.insert(0,PRESCRIPTIONSYMBOL); //"℞"
         drug.Dose = drugsModel->item(i,2)->text();
         drug.StartDate = QDate::fromJulianDay(drugsModel->item(i,3)->text().toInt()).toString("dd/MM/yyyy");
         drugs<< drug;

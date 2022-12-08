@@ -230,7 +230,7 @@ private:
     void roshettaVitalsFiller(mSettings::Vitals &vitals);
     void setVitalsPlaceHolderText();
     mPatientBasicDetails patientBasicDetails;
-
+    const wchar_t PRESCRIPTIONSYMBOL = L'\u211E';
 
 protected:
     void closeEvent(QCloseEvent *event) override;
