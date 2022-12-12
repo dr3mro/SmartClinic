@@ -63,9 +63,15 @@ QDate visitsList::getParentVisitDate(int index)
 
 void visitsList::setVisitIcon(int type, QIcon icon)
 {
-    setItemIcon(currentIndex(),icon);
-    if (list.length()!=0)
-        list[currentIndex()].visitType = type;
+    int index = currentIndex();
+    int count = list.count();
+
+    //mDebug() << index << count;
+
+    if (count > 0 && index < count && index != -1)
+        list[index].visitType = type;
+
+    setItemIcon(index,icon);
 }
 
 void visitsList::addDetails()

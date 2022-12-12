@@ -264,7 +264,14 @@ int main(int argc, char *argv[])
         squeeze::compact(EXENAME,updatePacakgeFile);
         QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile(updatePacakgeFile),QCryptographicHash::Md5 ).toHex());
         QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
-                    APPVERSION,BUILD,BUILDDATE,BUILDTIME,pkgUrl,md5,GITMESSAGE).toUtf8();
+                    APPVERSION,
+                    BUILD,
+                    BUILDDATE,
+                    BUILDTIME,
+                    pkgUrl,
+                    md5,
+                    GITMESSAGE)
+                .toUtf8();
         dataIOhelper::saveFile(updateInfoFile,updateData);
 //        qDebug() << updateData;
         exit(0);

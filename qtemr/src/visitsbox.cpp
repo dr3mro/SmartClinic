@@ -1086,13 +1086,6 @@ void visitsBox::SyncLastVisit()
 
 void visitsBox::on_comboVisitType_currentIndexChanged(int index)
 {
-    //    if ( index == 0 )
-    //        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/newvisit"));
-    //    else if (index <= maxFollows)
-    //        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/fvisit"));
-    //    else //if (index > maxFollows)
-    //        ui->visitLists->setVisitIcon(index,QIcon(":/Graphics/free"));
-
     if(index < VisitTypes::n_visitsType::NewVisit || index > VisitTypes::n_visitsType::Undefined)
         return;
 
