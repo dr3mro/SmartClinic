@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 project(smartClinic3 VERSION 0.1 LANGUAGES CXX)
+
 #set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 execute_process(COMMAND CMD /c git log -1 --pretty=%B
@@ -7,7 +8,7 @@ execute_process(COMMAND CMD /c git log -1 --pretty=%B
     ERROR_VARIABLE CMD_STATUS
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-set(OPENSSL_USE_STATIC_LIBS true)
+# set(OPENSSL_USE_STATIC_LIBS true)
 
 #set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
 add_compile_definitions(QT_DISABLE_DEPRECATED_BEFORE=0x060000)
@@ -106,7 +107,9 @@ qt_add_resources(SOURCES res/resources.qrc)
 
 add_executable(${TARGET_NAME} WIN32 ${UI} ${SOURCES} ${HEADERS} ${APP_ICON_RESOURCE_WINDOWS})
 
-set_property(TARGET ${TARGET_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set_property(TARGET ${TARGET_NAME} PROPERTY MSVC_RUNTIME_LIBRARY  "MultiThreaded")
+
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /VERBOSE:LIB")
 
 target_precompile_headers(${TARGET_NAME} PRIVATE src/pch.h)
 
