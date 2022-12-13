@@ -5,8 +5,7 @@
 #include "miniupdater.h"
 #include "ui_miniupdater.h"
 
-miniUpdater::miniUpdater(QWidget *parent,bool _autoUpate) :
-    QDialog(parent),
+miniUpdater::miniUpdater(QWidget *parent,bool _autoUpate) : QDialog(parent),
     ui(new Ui::miniUpdater),
     timeOut(new QTimer(this)),
     autoUpdate(_autoUpate)
@@ -93,10 +92,7 @@ void miniUpdater::displayVersionInfo()
                                  "Current Build No   : %2 \n"
                                  "Current Build Date : %3 \n"
                                  "Current Build Time : %4 \n")
-                         .arg(APPVERSION)
-                         .arg(BUILD)
-                         .arg(BUILDDATE)
-                         .arg(BUILDTIME));
+                         .arg(APPVERSION,BUILD,BUILDDATE,BUILDTIME));
 }
 
 void miniUpdater::applyUpdate()
@@ -109,7 +105,8 @@ void miniUpdater::applyUpdate()
     ui->restartButton->setHidden(false);
     ui->doButton->setHidden(true);
     ui->textEdit->append(QString("<b>%1</b> was updated Successfully to Version (%2),"
-                                 " you will enjoy the update at next restart!,please click restart now.").arg(APPNAME).arg(latestVersion));
+                                 " you will enjoy the update at next restart!,please click restart now.")
+                         .arg(APPNAME,latestVersion));
     ui->closeButton->setText("Restart later");
 }
 
@@ -131,11 +128,7 @@ QString miniUpdater::humanizeUpdateData(QByteArray ba)
                    "Latest Build Date : %3 \n"
                    "Latest Build Time : %4 \n"
                    "Update Info : %5 \n")
-                             .arg(latestVersion)
-                             .arg(latestBuildNo)
-                             .arg(latestBuildDate)
-                             .arg(latestBuildTime)
-                             .arg(updateMessage);
+                             .arg(latestVersion,latestBuildNo,latestBuildDate,latestBuildTime,updateMessage);
 
 
 }

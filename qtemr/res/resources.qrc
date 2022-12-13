@@ -1,5 +1,5 @@
 <RCC>
-    <qresource lang="english" prefix="/Graphics">
+    <qresource prefix="/Graphics" lang="english">
         <file alias="appicon">Graphics/appicon.ico</file>
         <file alias="applogo">Graphics/applogo.png</file>
         <file alias="back">Graphics/chevron-left-8x.png</file>
@@ -136,6 +136,7 @@
         <file>audio/Windows Unlock.wav</file>
         <file>footer.html</file>
         <file>header.html</file>
+        <file>json/updateManifest.json</file>
     </qresource>
     <qresource prefix="/alphaNums">
         <file>alphaNum/006-f.png</file>
