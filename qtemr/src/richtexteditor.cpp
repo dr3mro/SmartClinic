@@ -174,7 +174,7 @@ void richTextEditor::reGainFocus()
 
 void richTextEditor::searchGoogle()
 {
-    QString selected_text = getSelectedText();
+    QString selected_text = emit getSelectedText();
     QString engineUrl = "https://scholar.google.com.eg/scholar?q=%1";
     QString url = QString(engineUrl).arg(selected_text);
     QDesktopServices::openUrl(QUrl(url));
@@ -182,8 +182,8 @@ void richTextEditor::searchGoogle()
 
 void richTextEditor::mouseMoveEvent(QMouseEvent *event)
 {
-#if QT_VERSION >= 0x060000
-    move( event->globalPosition().x() - x_cord , event->globalPosition().y() - y_cord );
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    move(event->globalPosition().toPoint() - QPoint(x_cord,y_cord));
 #else
     move( event->globalX() - x_cord , event->globalY() - y_cord );
 #endif
@@ -193,9 +193,9 @@ void richTextEditor::mouseMoveEvent(QMouseEvent *event)
 
 void richTextEditor::mousePressEvent(QMouseEvent *event)
 {
-#if QT_VERSION >= 0x060000
-    x_cord = event->globalPosition().x();
-    y_cord = event->globalPosition().y();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    x_cord = event->pos().x();
+    y_cord = event->pos().y();
 #else
     x_cord = event->x();
     y_cord = event->y();
