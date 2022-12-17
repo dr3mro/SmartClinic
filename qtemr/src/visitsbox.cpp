@@ -690,6 +690,11 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
     else if ( e->key() == Qt::Key_F6)
     {
         setWindowOpacity(double(0));
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        grabKeyboard();
+#endif
+
         emit toggleBlur(true);
     }
     else if ( !visitLoaded )
@@ -757,9 +762,14 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
 
 void visitsBox::keyReleaseEvent(QKeyEvent *e)
 {
-    if ( (e->key() == Qt::Key_F6) && !e->isAutoRepeat())
+    if ( (e->key() == Qt::Key_F6) ) // && !e->isAutoRepeat())
     {
         setWindowOpacity(double(1));
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        releaseKeyboard();
+#endif
+
         emit toggleBlur(false);
     }
     else

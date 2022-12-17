@@ -240,7 +240,10 @@ int main(int argc, char *argv[])
     _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
 #endif 
 
-    //QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
+#endif
+
     QApplication a(argc, argv);
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 

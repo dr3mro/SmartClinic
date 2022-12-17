@@ -1766,7 +1766,7 @@ void MainWindow::createVisitBox()
     connect ( visitsbox ,SIGNAL ( newMessage(QString,QString) ),this,SLOT(popUpMessage(QString,QString)) );
     connect ( visitsbox ,SIGNAL ( reloadMWCompleter() ),this,SIGNAL(reloadCompleter()));
     connect ( visitsbox ,SIGNAL ( syncDrugs(QList<QStringList>,bool) ),ui->pDrugsTable,SLOT(DrugSyncWithVisit(QList<QStringList>,bool)));
-    connect ( visitsbox ,SIGNAL ( toggleBlur(bool)),this,SLOT(toggleBlur(bool)));
+    connect ( visitsbox ,SIGNAL ( toggleBlur(bool)),this,SLOT(toggleBlur(bool)),Qt::QueuedConnection);
     connect ( visitsbox ,SIGNAL ( syncLMPDateWithPatients(QDate)),ui->ObstWidget,SLOT(syncLMPDateWithVisit(QDate)));
     connect ( visitsbox ,SIGNAL ( insertDrug2Patient(QString,QString)),this,SIGNAL(insertUniqueItem(QString,QString)));
     connect ( this ,SIGNAL ( insertDrug2Visit(QString,QString)),visitsbox,SIGNAL(insertUniqueItem(QString,QString)));
