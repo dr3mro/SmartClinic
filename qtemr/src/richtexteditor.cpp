@@ -21,58 +21,58 @@ richTextEditor::richTextEditor(QWidget *parent) :
     ui->textColor->setColor(Qt::black);
     ui->backgroundColor->setColor(Qt::white);
 
-    connect(ui->textColor,SIGNAL(leftButtonClicked()),cp1,SLOT(show()));
-    connect(ui->textColor,SIGNAL(midButtonClicked(const QColor&)),this,SLOT(setForegroundColor(const QColor&)));
-    connect(ui->backgroundColor,SIGNAL(leftButtonClicked()),cp2,SLOT(show()));
-    connect(ui->backgroundColor,SIGNAL(midButtonClicked(const QColor&)),this,SLOT(setBackgroundColor(const QColor&)));
+    connect(ui->textColor,SIGNAL(leftButtonClicked()),cp1,SLOT(show()),Qt::QueuedConnection);
+    connect(ui->textColor,SIGNAL(midButtonClicked(const QColor&)),this,SLOT(setForegroundColor(const QColor&)),Qt::QueuedConnection);
+    connect(ui->backgroundColor,SIGNAL(leftButtonClicked()),cp2,SLOT(show()),Qt::QueuedConnection);
+    connect(ui->backgroundColor,SIGNAL(midButtonClicked(const QColor&)),this,SLOT(setBackgroundColor(const QColor&)),Qt::QueuedConnection);
 
 
-    connect(cp1,SIGNAL(newColor(const QColor&)),this,SLOT(setForegroundColor(const QColor&)));
-    connect(cp1,SIGNAL(newColor(const QColor&)),ui->textColor,SLOT(setColor(const QColor&)));
-    connect(cp2,SIGNAL(newColor(const QColor&)),this,SLOT(setBackgroundColor(const QColor&)));
-    connect(cp2,SIGNAL(newColor(const QColor&)),ui->backgroundColor,SLOT(setColor(const QColor&)));
+    connect(cp1,SIGNAL(newColor(const QColor&)),this,SLOT(setForegroundColor(const QColor&)),Qt::QueuedConnection);
+    connect(cp1,SIGNAL(newColor(const QColor&)),ui->textColor,SLOT(setColor(const QColor&)),Qt::QueuedConnection);
+    connect(cp2,SIGNAL(newColor(const QColor&)),this,SLOT(setBackgroundColor(const QColor&)),Qt::QueuedConnection);
+    connect(cp2,SIGNAL(newColor(const QColor&)),ui->backgroundColor,SLOT(setColor(const QColor&)),Qt::QueuedConnection);
 
-    connect(ui->fontComboBox,SIGNAL(currentFontChanged(QFont)),parent,SLOT(setFont(QFont)));
-    connect(ui->fontComboBox,SIGNAL(textHighlighted(const QString &)),parent,SLOT(setFont(const QString &)));
-    connect(ui->fontComboBox,SIGNAL(activated(int)),this,SLOT(reGainFocus()));
-    connect(ui->point,SIGNAL(currentTextChanged(QString)),parent,SLOT(setPoint(QString)));
-    connect(ui->point,SIGNAL(textHighlighted(QString)),parent,SLOT(setPoint(QString)));
-    connect(ui->point,SIGNAL(activated(int)),this,SLOT(reGainFocus()));
-    connect(ui->bold,SIGNAL(toggled(bool)),parent,SLOT(setBold(bool)));
-    connect(ui->toUpper,SIGNAL(toggled(bool)),parent,SLOT(setUpper(bool)));
-    connect(ui->italic,SIGNAL(toggled(bool)),parent,SLOT(setItalic(bool)));
-    connect(ui->underline,SIGNAL(toggled(bool)),parent,SLOT(underline(bool)));
-    connect(ui->strike,SIGNAL(toggled(bool)),parent,SLOT(strike(bool)));
-    connect(ui->highlight,SIGNAL(toggled(bool)),parent,SLOT(highLight(bool)));
+    connect(ui->fontComboBox,SIGNAL(currentFontChanged(QFont)),parent,SLOT(setFont(QFont)),Qt::QueuedConnection);
+    connect(ui->fontComboBox,SIGNAL(textHighlighted(const QString &)),parent,SLOT(setFont(const QString &)),Qt::QueuedConnection);
+    connect(ui->fontComboBox,SIGNAL(activated(int)),this,SLOT(reGainFocus()),Qt::QueuedConnection);
+    connect(ui->point,SIGNAL(currentTextChanged(QString)),parent,SLOT(setPoint(QString)),Qt::QueuedConnection);
+    connect(ui->point,SIGNAL(textHighlighted(QString)),parent,SLOT(setPoint(QString)),Qt::QueuedConnection);
+    connect(ui->point,SIGNAL(activated(int)),this,SLOT(reGainFocus()),Qt::QueuedConnection);
+    connect(ui->bold,SIGNAL(toggled(bool)),parent,SLOT(setBold(bool)),Qt::QueuedConnection);
+    connect(ui->toUpper,SIGNAL(toggled(bool)),parent,SLOT(setUpper(bool)),Qt::QueuedConnection);
+    connect(ui->italic,SIGNAL(toggled(bool)),parent,SLOT(setItalic(bool)),Qt::QueuedConnection);
+    connect(ui->underline,SIGNAL(toggled(bool)),parent,SLOT(underline(bool)),Qt::QueuedConnection);
+    connect(ui->strike,SIGNAL(toggled(bool)),parent,SLOT(strike(bool)),Qt::QueuedConnection);
+    connect(ui->highlight,SIGNAL(toggled(bool)),parent,SLOT(highLight(bool)),Qt::QueuedConnection);
 
-    connect(ui->clearFormat,SIGNAL(clicked(bool)),parent,SLOT(reset()));
-    connect(ui->clearFormat,SIGNAL(clicked(bool)),this,SLOT(resetFont()));
-    connect(ui->clear,SIGNAL(clicked(bool)),parent,SLOT(deleteSelectedText()));
-    connect(ui->SelectAll,SIGNAL(clicked(bool)),parent,SLOT(selectAll()));
-    connect(ui->undo,SIGNAL(clicked(bool)),parent,SLOT(undo()));
-    connect(ui->redo,SIGNAL(clicked(bool)),parent,SLOT(redo()));
-    connect(parent,SIGNAL(undoAvailable(bool)),ui->undo,SLOT(setEnabled(bool)));
-    connect(parent,SIGNAL(redoAvailable(bool)),ui->redo,SLOT(setEnabled(bool)));
-    connect(this,SIGNAL(insertChar(QString)),parent,SLOT(insertChar(QString)));
-    connect(ui->cut,SIGNAL(clicked(bool)),parent,SLOT(cut()));
-    connect(ui->copy,SIGNAL(clicked(bool)),parent,SLOT(copy()));
-    connect(ui->paste,SIGNAL(clicked(bool)),parent,SLOT(paste()));
-    connect(this,SIGNAL(deleteText()),parent,SLOT(deleteSelectedText()));
-    connect(ui->alignRight,SIGNAL(clicked(bool)),parent,SLOT(alignRight()));
-    connect(ui->alignCenter,SIGNAL(clicked(bool)),parent,SLOT(alignCenter()));
-    connect(ui->alignLeft,SIGNAL(clicked(bool)),parent,SLOT(alignLeft()));
-    connect(timeout,SIGNAL(timeout()),this,SLOT(fadeout()));
-    connect(timeout,SIGNAL(timeout()),timeout,SLOT(stop()));
+    connect(ui->clearFormat,SIGNAL(clicked(bool)),parent,SLOT(reset()),Qt::QueuedConnection);
+    connect(ui->clearFormat,SIGNAL(clicked(bool)),this,SLOT(resetFont()),Qt::QueuedConnection);
+    connect(ui->clear,SIGNAL(clicked(bool)),parent,SLOT(deleteSelectedText()),Qt::QueuedConnection);
+    connect(ui->SelectAll,SIGNAL(clicked(bool)),parent,SLOT(selectAll()),Qt::QueuedConnection);
+    connect(ui->undo,SIGNAL(clicked(bool)),parent,SLOT(undo()),Qt::QueuedConnection);
+    connect(ui->redo,SIGNAL(clicked(bool)),parent,SLOT(redo()),Qt::QueuedConnection);
+    connect(parent,SIGNAL(undoAvailable(bool)),ui->undo,SLOT(setEnabled(bool)),Qt::QueuedConnection);
+    connect(parent,SIGNAL(redoAvailable(bool)),ui->redo,SLOT(setEnabled(bool)),Qt::QueuedConnection);
+    connect(this,SIGNAL(insertChar(QString)),parent,SLOT(insertChar(QString)),Qt::QueuedConnection);
+    connect(ui->cut,SIGNAL(clicked(bool)),parent,SLOT(cut()),Qt::QueuedConnection);
+    connect(ui->copy,SIGNAL(clicked(bool)),parent,SLOT(copy()),Qt::QueuedConnection);
+    connect(ui->paste,SIGNAL(clicked(bool)),parent,SLOT(paste()),Qt::QueuedConnection);
+    connect(this,SIGNAL(deleteText()),parent,SLOT(deleteSelectedText()),Qt::QueuedConnection);
+    connect(ui->alignRight,SIGNAL(clicked(bool)),parent,SLOT(alignRight()),Qt::QueuedConnection);
+    connect(ui->alignCenter,SIGNAL(clicked(bool)),parent,SLOT(alignCenter()),Qt::QueuedConnection);
+    connect(ui->alignLeft,SIGNAL(clicked(bool)),parent,SLOT(alignLeft()),Qt::QueuedConnection);
+    connect(timeout,SIGNAL(timeout()),this,SLOT(fadeout()),Qt::QueuedConnection);
+    connect(timeout,SIGNAL(timeout()),timeout,SLOT(stop()),Qt::QueuedConnection);
     connect(ui->fontComboBox,SIGNAL(highlighted(int)),this,SLOT(noFadeOut()),Qt::QueuedConnection);
     connect(ui->point,SIGNAL(highlighted(int)),this,SLOT(noFadeOut()),Qt::QueuedConnection);
-    connect(ui->serachOnline,SIGNAL(clicked()),this,SLOT(searchGoogle()));
-    connect(this,SIGNAL(setPointPlusOne()),parent,SLOT(setPointPlusOne()));
-    connect(this,SIGNAL(setPointMinusOne()),parent,SLOT(setPointMinusOne()));
-    connect(this,SIGNAL(redFlagHighLight()),parent,SLOT(redFlagHighLight()));
-    connect(this,SIGNAL(greenFlagHighLight()),parent,SLOT(greenFlagHighLight()));
-    connect(this,SIGNAL(blueFlagHighLight()),parent,SLOT(blueFlagHighLight()));
+    connect(ui->serachOnline,SIGNAL(clicked()),this,SLOT(searchGoogle()),Qt::QueuedConnection);
+    connect(this,SIGNAL(setPointPlusOne()),parent,SLOT(setPointPlusOne()),Qt::QueuedConnection);
+    connect(this,SIGNAL(setPointMinusOne()),parent,SLOT(setPointMinusOne()),Qt::QueuedConnection);
+    connect(this,SIGNAL(redFlagHighLight()),parent,SLOT(redFlagHighLight()),Qt::QueuedConnection);
+    connect(this,SIGNAL(greenFlagHighLight()),parent,SLOT(greenFlagHighLight()),Qt::QueuedConnection);
+    connect(this,SIGNAL(blueFlagHighLight()),parent,SLOT(blueFlagHighLight()),Qt::QueuedConnection);
 
-    connect(fade,SIGNAL(timeout()),this,SLOT(decreaseOpacity()));
+    connect(fade,SIGNAL(timeout()),this,SLOT(decreaseOpacity()),Qt::QueuedConnection);
 
     installEventFilter(this);
 }
@@ -217,7 +217,7 @@ void richTextEditor::keyPressEvent(QKeyEvent *event)
     if(isCTRL)
     {
         event->ignore();
-        emit hide();
+        hide();
         return;
     }
 
@@ -311,7 +311,7 @@ void richTextEditor::keyReleaseEvent(QKeyEvent *event)
     bool isSHIFT = (event->key() == Qt::Key_Shift);
     if(isSHIFT)
     {
-        emit hide();
+        hide();
         emit clearSelection();
     }
     QWidget::keyPressEvent(event);
