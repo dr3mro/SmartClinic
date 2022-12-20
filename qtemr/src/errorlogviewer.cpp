@@ -16,7 +16,7 @@ errorLogViewer::errorLogViewer(QWidget *parent) :
     connect(&fsWatcher,SIGNAL(fileChanged(QString)),this,SLOT(loadLog()));
     connect(&mail,SIGNAL(messageSent()),this,SLOT(messageSent()));
     connect(&mail,SIGNAL(messageFailed()),this,SLOT(messageFailed()));
-    connect(&watcher, SIGNAL(finished()), this, SLOT(loadFromLogFile()));
+    connect(&watcher,&QFutureWatcher<QString>::finished, this,&errorLogViewer::loadFromLogFile,Qt::QueuedConnection);
     connect(&mail,&email::mDisconnected,this,&errorLogViewer::onDisconnect);
     connect(ui->delButton,&QToolButton::clicked,this,&errorLogViewer::onDelButton_clicked);
     connect(ui->playPause,&QToolButton::clicked,this,&errorLogViewer::onPlayPause_clicked);

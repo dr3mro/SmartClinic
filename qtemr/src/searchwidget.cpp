@@ -28,8 +28,8 @@ searchWidget::searchWidget(QWidget *parent) :
     connect(this,SIGNAL(loadPatient()),ui->PatientListTableView,SLOT(loadPatient()));
     connect(this,SIGNAL(updatePatients()),ui->PatientListTableView,SLOT(updatePatients()));
     connect(ui->filterLineEdit,SIGNAL(focusPatientTable()),this,SLOT(focusList()));
-    connect(ui->PatientListTableView,SIGNAL(focusFilterBox()),this,SLOT(focusFilter()));
-    connect(ui->PatientListTableView,SIGNAL(setFilter(int)),this,SLOT(setFilter(int)));
+    connect(ui->PatientListTableView,SIGNAL(focusFilterBox()),this,SLOT(focusFilter()),Qt::QueuedConnection);
+    connect(ui->PatientListTableView,SIGNAL(setFilter(int)),this,SLOT(setFilter(int)),Qt::QueuedConnection);
 
 }
 

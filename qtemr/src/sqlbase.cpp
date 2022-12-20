@@ -98,6 +98,7 @@ QStandardItemModel *sqlBase::getPatientsTableModel()
         }
         query->finish();
     }
+    patientTableModel->blockSignals(false);
     return patientTableModel;
 }
 
@@ -3591,7 +3592,7 @@ bool sqlBase::insertDefaultConditions()
 
     for ( int i =0 ; i < f1.count();i++)
     {
-        query = QString("INSERT INTO conditions (_id,state,name) VALUES(%1,1,\"%2\")").arg(f1.at(i)).arg(f2.at(i));
+        query = QString("INSERT INTO conditions (_id,state,name) VALUES(%1,1,\"%2\")").arg(f1.at(i),f2.at(i));
         queryExec(query);
     }
 
@@ -3793,9 +3794,7 @@ InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int
         mDebug() << "FAILED TO GET INVESTIGATIONS MODEL FOR ID:VISITDATE" << ID << ":" << visitJulianDate <<query->lastError().text();
     }
     QStringList paths;
-    QString name;
     int row = 0;
-    QString path;
     QLocale locale(QLocale::English, QLocale::UnitedStates);
 
     while ( query->next())
@@ -3816,10 +3815,20 @@ InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int
         if ( visitJulianDate == 0 ) // for list not visitbox
         {
             invDateItem->setText(locale.toString(QDate::fromJulianDay(query->value(4).toInt()),"dd/MM/yyyy"));
-            if ( ! paths.contains(query->value(3).toString()))
+            if ( ! paths.contains(query->value(3).toString())){
                 paths << path;
-            else
+            }else{
+                delete IDItem;
+                delete nameItem;
+                delete visitDateItem;
+                delete pathItem;
+                delete invDateItem;
+                delete invTimeItem;
+                delete invStateItem;
+                delete priceItem;
+                delete resultsItem;
                 continue;
+            }
         }
         else
             invDateItem->setText(QString::number(query->value(4).toInt()));
@@ -4154,7 +4163,7 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
         QString date = en_US.toString(QDate::fromJulianDay(julianDate),"dd/MM/yyyy");
         QString time = en_US.toString(QTime::fromMSecsSinceStartOfDay(timeMS*1000),"hh:mm AP");
 
-        myRegisterModel->item(row,4)->setToolTip(QString("%1 - %2").arg(date).arg(time));
+        myRegisterModel->item(row,4)->setToolTip(QString("%1 - %2").arg(date,time));
         myRegisterModel->setItem(row,5,priceItem);
         getPatientTooltip(toolTip,info);
         myRegisterModel->item(row,1)->setToolTip(toolTip);
@@ -4272,10 +4281,7 @@ bool sqlBase::createEmptyPatientProfiles(int maxID)
         }
         //name = crypto.encryptToString(QString("Patient Record #%1").arg(id));
         name = getComputerizedName(QString("Patient Record #%1").arg(id));
-        sqlCMD = QString ("INSERT INTO patients(ID,Name,dateTime)VALUES(%1,\"%2\",\"%3\")")
-                .arg(id)
-                .arg(name)
-                .arg(dateTime);
+        sqlCMD = QString ("INSERT INTO patients(ID,Name,dateTime)VALUES(%1,\"%2\",\"%3\")").arg(QString::number(id),name,dateTime);
         emit emptyProfileProgressbar(id,maxID);
         query->clear();
         b = query->exec(sqlCMD);

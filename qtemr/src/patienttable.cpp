@@ -10,9 +10,9 @@ patientTable::patientTable(QWidget *parent):QTableView(parent)
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     filterColumn =  reg.value("filterColumn").toInt();
     loadingIsFinished = false;
-    connect(&watcher, SIGNAL(finished()), this, SLOT(updatePatientsCompleted()));
-    connect(&initWatcher, SIGNAL(finished()), this, SLOT(setMyModel()));
-    connect (this,SIGNAL(loadSelectedPatient(QModelIndex)),this,SIGNAL(activated(QModelIndex)));
+    connect(&watcher,&QFutureWatcher<QStandardItemModel*>::finished, this, &patientTable::updatePatientsCompleted,Qt::QueuedConnection);
+    connect(&initWatcher,&QFutureWatcher<QStandardItemModel*>::finished, this,&patientTable::setMyModel,Qt::QueuedConnection);
+    connect (this,&patientTable::loadSelectedPatient,this,&patientTable::activated,Qt::QueuedConnection);
     viewport()->installEventFilter(this);
 }
 
@@ -87,7 +87,7 @@ void patientTable::updatePatientsCompleted()
     hideColumn(2);
     selectRow(ID-1);
     this->setColumnWidth(0,sizeHintForColumn(0));
-    emit repaint();
+    repaint();
 }
 
 void patientTable::setMyModel()
@@ -168,7 +168,7 @@ void patientTable::setConnection(QString conname)
     sqlbase->createPatientItemModel();
     //qRegisterMetaType<QVector<int> >("QVector<int>");
     connect (sqlbase,SIGNAL(patientIconSet(bool,int)),this,SLOT(setPatientIcon(bool,int)));
-    connect(this,SIGNAL(modelLoadingFinished()),this,SLOT(tweaksAfterModelLoadingIsFinished()));
+    connect(this,&patientTable::modelLoadingFinished,this,&patientTable::tweaksAfterModelLoadingIsFinished,Qt::QueuedConnection);
 #if QT_VERSION >= 0x060000
     initModelFuture = QtConcurrent::run(&sqlBase::getPatientsTableModel,sqlbase);
 #else
