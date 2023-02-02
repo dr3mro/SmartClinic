@@ -471,7 +471,7 @@ public:
         bool showSignaturePrintedOn=true;
 
         bool showOnlyNewlyModifiedAddedDrugs=false;
-        bool showTradeNamesBold=false;
+        //bool showTradeNamesBold=false;
         bool showDoseNewLine=true;
 
         bool preferArabic=true;
@@ -512,7 +512,7 @@ public:
                             showDrugsInitDate,
                             showSignaturePrintedOn,
                             showOnlyNewlyModifiedAddedDrugs,
-                            showTradeNamesBold,
+                            //showTradeNamesBold,
                             showDoseNewLine,
                             preferArabic/*,
                             showStartDate,
@@ -550,7 +550,7 @@ public:
                         prescriptionprintsettings.showDrugsInitDate,
                         prescriptionprintsettings.showSignaturePrintedOn,
                         prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
-                        prescriptionprintsettings.showTradeNamesBold,
+                        //prescriptionprintsettings.showTradeNamesBold,
                         prescriptionprintsettings.showDoseNewLine,
                         prescriptionprintsettings.preferArabic/*,
                         prescriptionprintsettings.showStartDate,

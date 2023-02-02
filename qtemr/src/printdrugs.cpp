@@ -107,7 +107,7 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->showDrugsTitle,&Switch::clicked,this,&printDrugs::showDrugsTitle_clicked,Qt::QueuedConnection);
     connect(ui->showBanner,&Switch::clicked,this,&printDrugs::showBanner_clicked,Qt::QueuedConnection);
     connect(ui->showOnlyNewlyModifiedAddedDrugs,&Switch::clicked,this,&printDrugs::showOnlyNewlyModifiedAddedDrugs_clicked,Qt::QueuedConnection);
-    connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked,Qt::QueuedConnection);
+    //connect(ui->showTradeNamesBold,&Switch::clicked,this,&printDrugs::showTradeNamesBold_clicked,Qt::QueuedConnection);
     connect(ui->showDoseNewLine,&Switch::clicked,this,&printDrugs::showDoseNewLine_clicked,Qt::QueuedConnection);
     connect(ui->preferArabic,&Switch::clicked,this,&printDrugs::preferArabic_clicked,Qt::QueuedConnection);
     //connect(ui->showStartDate,&Switch::clicked,this,&printDrugs::showStartDate_clicked,Qt::QueuedConnection);
@@ -239,7 +239,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
     ui->drugsInitDate->setEnabled(printSettings.showDoseNewLine);
     ui->SignaturePrintedOn->setChecked(printSettings.showSignaturePrintedOn);
     ui->showOnlyNewlyModifiedAddedDrugs->setChecked(printSettings.showOnlyNewlyModifiedAddedDrugs);
-    ui->showTradeNamesBold->setChecked(printSettings.showTradeNamesBold);
+    //ui->showTradeNamesBold->setChecked(printSettings.showTradeNamesBold);
     ui->showDoseNewLine->setChecked(printSettings.showDoseNewLine);
 
     ui->preferArabic->setChecked(printSettings.preferArabic);
@@ -325,7 +325,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.showDrugsInitDate = ui->drugsInitDate->isChecked();
     printSettings.showSignaturePrintedOn = ui->SignaturePrintedOn->isChecked();
     printSettings.showOnlyNewlyModifiedAddedDrugs = ui->showOnlyNewlyModifiedAddedDrugs->isChecked();
-    printSettings.showTradeNamesBold = ui->showTradeNamesBold->isChecked();
+    //printSettings.showTradeNamesBold = ui->showTradeNamesBold->isChecked();
     printSettings.showDoseNewLine = ui->showDoseNewLine->isChecked();
 
     printSettings.preferArabic = ui->preferArabic->isChecked();
@@ -871,11 +871,11 @@ void printDrugs::showOnlyNewlyModifiedAddedDrugs_clicked(bool checked)
 }
 
 
-void printDrugs::showTradeNamesBold_clicked(bool checked)
-{
-    pSettings.showTradeNamesBold = checked;
-    refreshView();
-}
+//void printDrugs::showTradeNamesBold_clicked(bool checked)
+//{
+//    pSettings.showTradeNamesBold = checked;
+//    refreshView();
+//}
 
 
 void printDrugs::showDoseNewLine_clicked(bool checked)

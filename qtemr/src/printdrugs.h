@@ -108,7 +108,7 @@ private slots:
     void showDrugsTitle_clicked(bool checked);
     void showBanner_clicked(bool checked);
     void showOnlyNewlyModifiedAddedDrugs_clicked(bool checked);
-    void showTradeNamesBold_clicked(bool checked);
+    //void showTradeNamesBold_clicked(bool checked);
     void showDoseNewLine_clicked(bool checked);
     void preferArabic_clicked(bool checked);
     void preferRTF_clicked(bool checked);

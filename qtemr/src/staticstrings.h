@@ -74,7 +74,7 @@
 #define _showDrugsInitDate "showDrugsInitDate"
 #define _showSignaturePrintedOn "showSignaturePrintedOn"
 #define _showOnlyNewlyModifiedAddedDrugs "showOnlyNewlyModifiedAddedDrugs"
-#define _showTradeNamesBold "showTradeNamesBold"
+//#define _showTradeNamesBold "showTradeNamesBold"
 #define _showDoseNewLine "showDoseNewLine"
 #define _preferArabic "prefereArabic"
 //#define _showStartDate "showStartDate"

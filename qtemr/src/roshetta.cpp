@@ -462,7 +462,7 @@ void Roshetta::fillDrugs(QTextCursor &c, QList<mSettings::drug> &drugs,const QSt
     QString tradeNameStyle = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.roshettaFont.fontName,
                  QString::number(roshettaSettings.roshettaFont.fontSize),
-                 (roshettaSettings.roshettaFont.fontBold|roshettaSettings.showTradeNamesBold)? "bold":"normal");
+                 (roshettaSettings.roshettaFont.fontBold/*|roshettaSettings.showTradeNamesBold*/)? "bold":"normal");
 
     QString doseStyle = QString(" style=\"font-family:%1;font-size: %2px;font-weight: %3;\" ")
             .arg(roshettaSettings.doseFont.fontName,
