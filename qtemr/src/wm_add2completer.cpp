@@ -103,6 +103,7 @@ void wm_add2Completer::saveDicts(const QStringList & dicts)
         foreach ( QString w , splitDict(d) )
         {
             //mDebug() <<  w << (w.length() > 2)  << !w.contains(QRegularExpression("^(\\d+)")) << !w.contains(QRegularExpression("(\\d+)$"));
+            w.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"]")));
             if ( w.length() > 2 &&  !w.contains(QRegularExpression("^(\\d+)")) && !w.contains(QRegularExpression("(\\d+)$")))
                 sqlextra->addToAutoComplete("dictionary",w);
         }
