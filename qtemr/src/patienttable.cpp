@@ -3,12 +3,14 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "patienttable.h"
-
+#include <QModelIndexList>
+#include <cstdlib>
 
 patientTable::patientTable(QWidget *parent):QTableView(parent)
 {
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     filterColumn =  reg.value("filterColumn").toInt();
+
     loadingIsFinished = false;
     connect(&watcher,&QFutureWatcher<QStandardItemModel*>::finished, this, &patientTable::updatePatientsCompleted,Qt::QueuedConnection);
     connect(&initWatcher,&QFutureWatcher<QStandardItemModel*>::finished, this,&patientTable::setMyModel,Qt::QueuedConnection);
@@ -85,7 +87,7 @@ void patientTable::updatePatientsCompleted()
 {
     proxy_model->setSourceModel(model);
     hideColumn(2);
-    selectRow(ID-1);
+    mSelectRow(ID-1);
     this->setColumnWidth(0,sizeHintForColumn(0));
     repaint();
 }
@@ -93,6 +95,7 @@ void patientTable::updatePatientsCompleted()
 void patientTable::setMyModel()
 {
     model = initModelFuture.result();
+
     model->setHorizontalHeaderLabels( QStringList() << "ID" << "Name " );
 
     this->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -112,8 +115,9 @@ void patientTable::setMyModel()
     proxy_model->setSourceModel(model);
     proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
     proxy_model->setSortCaseSensitivity(Qt::CaseInsensitive);
+
     setModel(proxy_model);
-    selectRow(0);
+    mSelectRow(0);
     emit setFilter(filterColumn);
     emit modelLoadingFinished();
 }
@@ -148,6 +152,11 @@ void patientTable::setPatientIcon(bool b,int row)
 void patientTable::setID(int id)
 {
     ID=id;
+}
+
+int patientTable::getID()
+{
+    return ID;
 }
 
 int patientTable::getSelectedPatientID(const QModelIndex *index)
@@ -191,6 +200,34 @@ void patientTable::closeDatabase()
 void patientTable::reOpenDatabase()
 {
     setConnection(connectionName);
+}
+
+int mSelectRowCompare(const void* a, const void* b)
+{
+    const int* x = (int*) a;
+    const int* y = (int*) b;
+
+    if (*x < *y)
+        return 1;
+    else if (*x > *y)
+        return -1;
+
+    return 0;
+}
+void patientTable::mSelectRow(int row)
+{
+    if(row <= 0){
+        selectRow(0);
+        return;
+    }
+
+    QModelIndexList indexes = proxy_model->match(model->index(0,0),Qt::MatchExactly,QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0')));
+    if (! indexes.empty()) {
+        std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
+        auto _row = indexes.first().row();
+        selectRow(_row);
+        return;
+    }
 }
 
 patientTable::~patientTable()

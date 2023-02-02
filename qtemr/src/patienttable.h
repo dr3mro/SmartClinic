@@ -31,6 +31,7 @@ public:
     void setConnection(QString conname="qt_sql_base_patientList");
     void closeDatabase();
     void reOpenDatabase();
+    void mSelectRow(int row);
     ~patientTable();
 
 public slots:
@@ -40,6 +41,7 @@ public slots:
     void loadPatient();
     void setPatientIcon(bool b, int row);
     void setID(int id);
+    int getID();
 
 private:
     sqlBase *sqlbase;

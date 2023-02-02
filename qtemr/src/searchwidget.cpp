@@ -22,6 +22,7 @@ searchWidget::searchWidget(QWidget *parent) :
     ui->filtersWidget->hide();
     ui->PatientListTableView->hideColumn(2);
 
+
     //    qRegisterMetaType<QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
     //    qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
 
@@ -35,7 +36,7 @@ searchWidget::searchWidget(QWidget *parent) :
 
 void searchWidget::selectRow(int row)
 {
-    ui->PatientListTableView->selectRow(row);
+    ui->PatientListTableView->mSelectRow(row);
 }
 
 void searchWidget::clearFilter()
@@ -46,15 +47,15 @@ void searchWidget::clearFilter()
 void searchWidget::focusFilter()
 {
     ui->filterLineEdit->setFocus(Qt::OtherFocusReason);
-    int row = ui->PatientListTableView->currentIndex().row();
-    ui->PatientListTableView->selectRow((row >=0)? row:0 );
+    int row = ui->PatientListTableView->getID()-1;
+    ui->PatientListTableView->mSelectRow((row >=0)? row:0);
 }
 
 void searchWidget::focusList()
 {
     ui->PatientListTableView->setFocus(Qt::OtherFocusReason);
-    int row = ui->PatientListTableView->currentIndex().row();
-    ui->PatientListTableView->selectRow((row >=0)? row:0 );
+    int row = ui->PatientListTableView->getID()-1;
+    ui->PatientListTableView->mSelectRow((row >=0)? row:0);
 }
 
 void searchWidget::setID(int ID)
@@ -146,6 +147,7 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
         }
     }
 
+
     if(isFuzzySearchEnabled)
     {
         str.replace(" ","*");
@@ -159,7 +161,7 @@ void searchWidget::on_filterLineEdit_textChanged(const QString &arg1)
 
     //mDebug() << str;
     ui->PatientListTableView->FilterPatients(str);
-    ui->PatientListTableView->selectRow(0);
+    ui->PatientListTableView->mSelectRow(0);
 }
 
 void searchWidget::on_filterByNameRadio_toggled(bool checked)
