@@ -1015,11 +1015,12 @@ bool sqlBase::copyVisit2ID(int fID, int tID, QStringList visitList)
         int julianDate = static_cast<int>(locale.toDateTime(visit,"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
         int visitTime = static_cast<int>(locale.toDateTime(visit,"dd/MM/yyyy hh:mm AP ddd").time().msecsSinceStartOfDay()/1000);
         bool v1 = query->exec(QString("UPDATE visits SET ID=%1 WHERE ID=%2 AND visitJulianDate=%3").arg(tID).arg(fID).arg(julianDate));
-        bool v2 = query->exec(QString("UPDATE investigations SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
-        bool v3 = query->exec(QString("UPDATE drugs SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
-        bool v4 = query->exec(QString("UPDATE visitPrices SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
-        bool v5 = query->exec(QString("UPDATE visitVitals SET ID=%1 WHERE ID=%2 AND VISITDATE=%3 AND VISITTIME='%4'").arg(tID).arg(fID).arg(julianDate).arg(visitTime));
-        b=(v1 && v2 && v3 && v4 && v5);
+        bool v2 = query->exec(QString("UPDATE investigations SET PATH=replace(PATH,'/%1/','/%2/') where ID=%1 AND VISITDATE=%3 AND PATH like '%data/media/%1/%'").arg(fID).arg(tID).arg(julianDate));
+        bool v3 = query->exec(QString("UPDATE investigations SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
+        bool v4 = query->exec(QString("UPDATE drugs SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
+        bool v5 = query->exec(QString("UPDATE visitPrices SET ID=%1 WHERE ID=%2 AND VISITDATE=%3").arg(tID).arg(fID).arg(julianDate));
+        bool v6 = query->exec(QString("UPDATE visitVitals SET ID=%1 WHERE ID=%2 AND VISITDATE=%3 AND VISITTIME='%4'").arg(tID).arg(fID).arg(julianDate).arg(visitTime));
+        b=(v1 && v2 && v3 && v4 && v5 && v6);
 
         if (!b)
         {

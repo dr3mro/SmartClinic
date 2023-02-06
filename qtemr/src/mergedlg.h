@@ -11,7 +11,6 @@
 #include "mdialog.h"
 #include "sqlbase.h"
 #include "mdebug.h"
-#include "windowmanager.h"
 #include "mymessagebox.h"
 #include "msettings.h"
 
@@ -40,6 +39,7 @@ private:
     bool valid=false;
     QStringList getSelectedVisits();
     void loadVisits();
+    void copyPath(QString src, QString dst);
     myMessageBox msgbox;
 signals:
     void loadThisPatient(int);

@@ -66,6 +66,9 @@ void MergeDlg::on_btnApply_clicked()
 
 
     bool state = sqlbase->copyVisit2ID(fromID,toID,getSelectedVisits());
+    if(state)
+        copyPath(QString("data/media/%1").arg(fromID),QString("data/media/%1").arg(toID));
+
     bool onSuccessDelete = ui->cb_delorigin->isChecked();
     bool deleteStatus=false;
 
@@ -124,6 +127,23 @@ void MergeDlg::loadVisits()
     QPair<QString,QString> visit;
     foreach (visit, visitList) {
         ui->visits->addItem(visit.first);
+    }
+}
+
+void MergeDlg::copyPath(QString src, QString dst)
+{
+    QDir dir(src);
+    if (! dir.exists())
+        return;
+
+    foreach (QString d, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
+        QString dst_path = dst + QDir::separator() + d;
+        dir.mkpath(dst_path);
+        copyPath(src+ QDir::separator() + d, dst_path);
+    }
+
+    foreach (QString f, dir.entryList(QDir::Files)) {
+        QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
     }
 }
 
