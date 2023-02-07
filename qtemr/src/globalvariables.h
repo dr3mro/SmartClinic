@@ -46,7 +46,7 @@
 #define selfPass "xgbavzirteiudizs"
 #define devEmail "dr3mro@gmail.com"
 #define exeBackUp "backup/~smartClinic3.exe"
-#define dbVersion 2.88
+#define dbVersion 2.89
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
 #define drugsDatabaseVer 211023

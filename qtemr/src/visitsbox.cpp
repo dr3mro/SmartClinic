@@ -320,8 +320,15 @@ void visitsBox::fillVisit(const sqlBase::Visit &visit)
         enableEditMode(vEditMode);
     }
     updateVisitAge();
-    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,visitDateTime2JulianDate());
-    ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDateTime2JulianDate());
+
+
+    qint64 t_visitJulianDate;
+    qint64 t_visitTime;
+    visitDateTimeSetter(t_visitJulianDate,t_visitTime);
+
+    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,t_visitJulianDate,t_visitTime);
+    ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,t_visitJulianDate,t_visitTime);
+
     ui->dateFollowUp->setMinimumDate(locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd").date());
 
     lastFollowupDate = QDate::fromJulianDay(visit.followDate.toInt());
@@ -399,8 +406,13 @@ void visitsBox::on_visitLists_currentIndexChanged(int index)
         ui->dateFollowUp->setMinimumDate(lastVisitDate);
         int selectedDateFollowUps = sqlbase->getFollowUpsCountForThisDate(followUpDate,patientBasicDetails.ID)+1;
         setFollowDateTooltip(selectedDateFollowUps,followUpDate);
-        ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,visitDateTime2JulianDate());
-        ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDateTime2JulianDate());
+
+        qint64 t_visitJulianDate;
+        qint64 t_visitTime;
+        visitDateTimeSetter(t_visitJulianDate,t_visitTime);
+
+        ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,t_visitJulianDate,t_visitTime);
+        ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,t_visitJulianDate,t_visitTime);
         if(suggestedVisitType!=0)
         {
             ui->comboVisitType->setCurrentIndex(suggestedVisitType);
@@ -555,11 +567,13 @@ void visitsBox::on_buttonRemoveInvestigations_clicked()
 
     int row = ui->InvestigationsTable->selectionModel()->currentIndex().row();
     QString invName = ui->InvestigationsTable->invModel->item(row,1)->text();
-    int visitDate = ui->InvestigationsTable->invModel->item(row,2)->text().toInt();
+    //int visitDate = ui->InvestigationsTable->invModel->item(row,2)->text().toInt();
+    qint64 visitJulianDate = ui->InvestigationsTable->getVisitJulianDate();
+    qint64 visitTime = ui->InvestigationsTable->getVisitTime();
     QString path = ui->InvestigationsTable->invModel->item(row,3)->text();
 
-    sqlbase->deleteInvestigation(patientBasicDetails.ID,visitDate,path,invName);
-    ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitDate);
+    sqlbase->deleteInvestigation(patientBasicDetails.ID,visitJulianDate,visitTime,path,invName);
+    ui->InvestigationsTable->populateInvests(patientBasicDetails.ID,visitJulianDate,visitTime);
     lastInvestigationRow = (row==0)? 0:row-1;
     emit clearInvLine();
 }
@@ -1057,7 +1071,7 @@ void visitsBox::SyncToVisit()
         return;
     }
 
-    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,0,true);
+    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,0,0,true);
 }
 
 void visitsBox::SyncLastVisit()
@@ -1076,7 +1090,9 @@ void visitsBox::SyncLastVisit()
     QString visitDateTime =   ui->visitLists->itemText(idx+1).simplified();
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     QDateTime dt = locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
-    int date = static_cast<int>(dt.date().toJulianDay());
+    qint64 date = dt.date().toJulianDay();
+    qint64 time = dt.time().msecsSinceStartOfDay()/1000;
+
 
     if (!doesHaveDrugsInLastVisit())
     {
@@ -1090,7 +1106,7 @@ void visitsBox::SyncLastVisit()
         emit newMessage("Warning","Visit drugs list should be empty prior filling from last visit drugs.");
         return;
     }
-    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,date,true);
+    ui->vDrugsTable->loadPatientDrugsModel(patientBasicDetails.ID,date,time,true);
 
 }
 
@@ -1112,8 +1128,10 @@ void visitsBox::addNewInvestigation(QString newInvName)
 {
     int state = 0;
     double price = 0;
-    QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
-    int julianDate = static_cast<int>(locale.toDateTime(ui->visitLists->currentText(),"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
+    qint64 julianDate;
+    qint64 visitTime;
+    visitDateTimeSetter(julianDate,visitTime);
+
     QStringList paidServices = sqlextra->getPaidServicesList();
     if ( paidServices.contains(newInvName))
     {
@@ -1123,7 +1141,7 @@ void visitsBox::addNewInvestigation(QString newInvName)
 
     ui->InvestigationsTable->addNewInvest(patientBasicDetails.ID,julianDate,newInvName,state,price);
     emit insertUniqueItem(newInvName,"investigationsLine");
-    ui->InvestigationsTable->saveInvestigation(patientBasicDetails.ID,julianDate);
+    ui->InvestigationsTable->saveInvestigation(patientBasicDetails.ID,julianDate,visitTime);
 }
 
 void visitsBox::addNewDrug(QString newDrugName)
@@ -1161,13 +1179,22 @@ void visitsBox::mouseMoveEvent(QMouseEvent *event)
 
 }
 
-int visitsBox::visitDateTime2JulianDate()
+//int visitsBox::visitDateTime2JulianDate()
+//{
+//    QString visitDateTime =  ui->visitLists->currentText().simplified();
+//    QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
+//    QDateTime dt = locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
+//    int julianDate = static_cast<int>(dt.date().toJulianDay());
+//    return julianDate;
+//}
+
+void visitsBox::visitDateTimeSetter(qint64 &t_visitJulianDate, qint64 &t_visitTime)
 {
     QString visitDateTime =  ui->visitLists->currentText().simplified();
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     QDateTime dt = locale.toDateTime(visitDateTime,"dd/MM/yyyy hh:mm AP ddd");
-    int julianDate = static_cast<int>(dt.date().toJulianDay());
-    return julianDate;
+    t_visitJulianDate = dt.date().toJulianDay();
+    t_visitTime = dt.time().msecsSinceStartOfDay()/1000;
 }
 
 
@@ -1568,7 +1595,7 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
     visitData.ID =  patientBasicDetails.ID;
     visitData.visit = visit;
     visitData.visitDateTime = visit.visitDateTime;
-    visitData.visitDate = visitDateTime2JulianDate();
+    visitDateTimeSetter(visitData.visitDate,visitData.visitTime);
     visitData.drugsModel = ui->vDrugsTable->getDrugsModel();
     visitData.invModel = ui->InvestigationsTable->getInvestigationsModel();
     visitData.visitPrice =visitTypes.getVisitTypesByAlgoIndex(visit.visitType).price;

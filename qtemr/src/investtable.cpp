@@ -3,6 +3,8 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "investtable.h"
+#include "qglobal.h"
+
 
 investTable::investTable(QWidget *parent):zTableView(parent)
 {
@@ -53,13 +55,14 @@ investTable::investTable(QWidget *parent):zTableView(parent)
     connect(invModel,SIGNAL(modelAboutToBeClear()),invTooltipWorker,SLOT(killloop()));
 }
 
-void investTable::populateInvests(int id, int julianDate)
+void investTable::populateInvests(int id, qint64 t_julianDate, qint64 t_visitTime)
 {
     timer->stop();
     working=true;
     ID = id;
-    this->julianDate = julianDate;
-    worker->setIdJulianDate(id,julianDate);
+    this->visitJulianDate = t_julianDate;
+    this->visitTime = t_visitTime;
+    worker->setIdJulianDateTime(id,visitJulianDate,visitTime);
 #if QT_VERSION >= 0x060000
     future=QtConcurrent::run(&wm_invModelLoader::Work,worker);
 #else
@@ -69,10 +72,10 @@ void investTable::populateInvests(int id, int julianDate)
     watcher.setFuture(future);
 }
 
-bool investTable::saveInvestigation(const int &ID, const int &julianDate)
+bool investTable::saveInvestigation(const int &ID, const int &julianDate, const qint64 &visitTime)
 {
     if(!working)
-        return sqlbase->saveInvestigationsModel(ID,julianDate,invModel);
+        return sqlbase->saveInvestigationsModel(ID,julianDate,visitTime,invModel);
 
     return false;
 }
@@ -174,7 +177,8 @@ bool investTable::addInvMedia(bool setState)
     QString invName = invModel->item(row,1)->text().replace(QRegularExpression("[^A-Za-z\\d\\s]"),"_");
     QDateTime dateTime = QDateTime::currentDateTime();
     QString dt = locale.toString(dateTime,"ddMMyyyyHHmmss");
-    int visitJulianDate = invModel->item(0,2)->text().toInt();
+//    int visitJulianDate = invModel->item(0,2)->text().toInt();
+
     QFileDialog fileDialog;
 
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
@@ -215,7 +219,7 @@ bool investTable::addInvMedia(bool setState)
 
         setModel(invModel);
 
-        saveInvestigation(ID,visitJulianDate);
+        saveInvestigation(ID,visitJulianDate,visitTime);
 
         emit popUpMessage("Information",QString("Image file has been added to patient's file as [%1].").arg(invName));
 
@@ -241,7 +245,7 @@ bool investTable::addInvMedia(bool setState)
 
         setModel(invModel);
 
-        saveInvestigation(ID,visitJulianDate);
+        saveInvestigation(ID,visitJulianDate,visitTime);
 
         emit popUpMessage("Information",QString("PDF file has been added to patient's file as [%1].").arg(invName));
 
@@ -337,7 +341,7 @@ void investTable::clearSelection()
 
 void investTable::save()
 {
-    saveInvestigation(ID,julianDate);
+    saveInvestigation(ID,visitJulianDate,visitTime);
 }
 
 void investTable::putToolTip()
@@ -503,8 +507,7 @@ void investTable::keyPressEvent(QKeyEvent *e)
         QDesktopServices::openUrl(QUrl::fromLocalFile(mediaURL));
     }
 
-    else if ( (state != InvestModel::InvestigationsStates::normal ||
-               state !=InvestModel::InvestigationsStates::nonPrintable)
+    else if ( (state != InvestModel::InvestigationsStates::normal || state !=InvestModel::InvestigationsStates::nonPrintable)
               && e->key() == Qt::Key_Delete
               && !isReadOnly)
     {
@@ -581,6 +584,16 @@ bool investTable::printableInvestigationsExists()
 bool investTable::isWorking()
 {
     return working;
+}
+
+const qint64 investTable::getVisitTime()
+{
+    return visitTime;
+}
+
+const qint64 investTable::getVisitJulianDate()
+{
+    return visitJulianDate;
 }
 
 investTable::~investTable()

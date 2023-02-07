@@ -15,7 +15,7 @@ class wm_invModelLoader : public QObject
     Q_OBJECT
 public:
     explicit wm_invModelLoader(QObject *parent = nullptr);
-    void setIdJulianDate(int id,int jdate=0);
+    void setIdJulianDateTime(int id,qint64 jdate,qint64 time);
     void setInvestigationsModel(InvestModel *investModel);
     ~wm_invModelLoader();
 
@@ -25,7 +25,8 @@ public slots:
     InvestModel *Work();
 private:
     int ID;
-    int visitJulianDate;
+    qint64 visitJulianDate;
+    qint64 visitTime;
     sqlBase *sqlbase;
     InvestModel *model;
     int r;

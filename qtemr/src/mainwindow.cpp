@@ -335,7 +335,7 @@ void MainWindow::fillPatient(const sqlBase::Patient &_patient)
     ui->opAdmissionsList->clear();
     allergiesAltered=false;
     opAdAltered=false;
-    ui->pDrugsTable->loadPatientDrugsModel(ID,0);
+    ui->pDrugsTable->loadPatientDrugsModel(ID,0,0);
 
     ui->allergyList->addItems(_patient.allergy.split("|"));
     ui->opAdmissionsList->addItems(_patient.operations.split("|"));
@@ -1679,7 +1679,7 @@ void MainWindow::enableRemoveDrugButton()
 //WHY SAVE DRUGS IS NOT A SIMPLE SIGNAL
 bool MainWindow::saveDrugs()
 {
-    return sqlbase->saveDrugs(patient.ID,0,ui->pDrugsTable->getDrugsModel());
+    return sqlbase->saveDrugs(patient.ID,0,0,ui->pDrugsTable->getDrugsModel());
 }
 
 void MainWindow::on_settingButton_clicked()

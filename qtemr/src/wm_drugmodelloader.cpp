@@ -17,10 +17,11 @@ void wm_drugModelLoader::setDrugsModel(DrugsItemModel *drugsModel)
     model = drugsModel;
 }
 
-void wm_drugModelLoader::setIDJulianDate(int mID, int mJulianDate)
+void wm_drugModelLoader::setIDJulianDate(int mID, qint64 mJulianDate, qint64 mVisitTime)
 {
     ID = mID;
     julianDate = mJulianDate;
+    visitTime = mVisitTime;
 }
 
 wm_drugModelLoader::~wm_drugModelLoader()
@@ -32,6 +33,6 @@ wm_drugModelLoader::~wm_drugModelLoader()
 
 DrugsItemModel* wm_drugModelLoader::Work()
 {
-    return sqlbase->readDrugs(ID,julianDate,model);
+    return sqlbase->readDrugs(ID,julianDate,visitTime,model);
 }
 

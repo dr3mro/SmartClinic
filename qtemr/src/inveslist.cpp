@@ -155,6 +155,7 @@ void invesList::addInvestigation(QString invName, QString selectedImagePath)
     QString dt = locale.toString(dateTime,"ddMMyyyyHHmmss");
 
     int visitJulianDate = 0;
+    qint64 visitTime = 0;
     int invDate = dateTime.date().toJulianDay();
     QString invTime = QString::number(dateTime.time().msecsSinceStartOfDay()/1000);
     int invState = 1;
@@ -174,12 +175,12 @@ void invesList::addInvestigation(QString invName, QString selectedImagePath)
     if(!fileExtension.compare("pdf",Qt::CaseInsensitive)){
         mediaDir.mkpath("./");
         QFile::copy(selectedImagePath,localImagePath);
-        addInvBool = sqlbase->addInvestigation(ID,visitJulianDate,invName,localImagePath,invDate,invTime,invState,invPrice,invResults);
+        addInvBool = sqlbase->addInvestigation(ID,visitJulianDate,visitTime,invName,localImagePath,invDate,invTime,invState,invPrice,invResults);
         load();
     }else if (img.load(selectedImagePath)){
         mediaDir.mkpath("./");
         QFile::copy(selectedImagePath,localImagePath);
-        addInvBool = sqlbase->addInvestigation(ID,visitJulianDate,invName,localImagePath,invDate,invTime,invState,invPrice,invResults);
+        addInvBool = sqlbase->addInvestigation(ID,visitJulianDate,visitTime,invName,localImagePath,invDate,invTime,invState,invPrice,invResults);
         load();
     }
     else
@@ -206,9 +207,9 @@ void invesList::on_ButtonDel_clicked()
     int row = ui->tableView->selectionModel()->currentIndex().row();
     int _ID = model->item(row,0)->text().toInt();
     QString invName = model->item(row,1)->text();
-    int visitDate = model->item(row,2)->text().toInt();
+    //int visitDate = model->item(row,2)->text().toInt();
     QString path = model->item(row,3)->text();
-    sqlbase->deleteInvestigation(_ID,visitDate,path,invName);
+    sqlbase->deleteInvestigation(_ID,0,0,path,invName);
     ui->ButtonDel->setEnabled(false);
     uptodate();
 }
@@ -224,7 +225,7 @@ void invesList::on_tableView_clicked(const QModelIndex &index)
 
 void invesList::load()
 {
-    worker->setIdJulianDate(ID);
+    worker->setIdJulianDateTime(ID,0,0);
 #if QT_VERSION >= 0x060000
     future = QtConcurrent::run(&wm_invModelLoader::Work,worker);
 #else

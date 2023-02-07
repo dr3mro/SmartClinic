@@ -416,12 +416,12 @@ bool drugsTable::isWorking()
     return working;
 }
 
-void drugsTable::loadPatientDrugsModel(int ID, int julianDate,bool syncLoader)
+void drugsTable::loadPatientDrugsModel(int ID, qint64 julianDate, qint64 visitTime, bool syncLoader)
 {
     working = true;
     drugsModel->blockSignals(true);
     drugsSyncLoadingOperation = syncLoader;
-    worker->setIDJulianDate(ID,julianDate);
+    worker->setIDJulianDate(ID,julianDate,visitTime);
 #if QT_VERSION >= 0x060000
     future = QtConcurrent::run(&wm_drugModelLoader::Work,worker);
 #else

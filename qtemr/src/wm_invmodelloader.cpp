@@ -11,11 +11,13 @@ wm_invModelLoader::wm_invModelLoader(QObject *parent) : QObject(parent)
     sqlbase = new sqlBase(this,connectionName,false);
 }
 
-void wm_invModelLoader::setIdJulianDate(int id, int jdate)
+void wm_invModelLoader::setIdJulianDateTime(int id, qint64 jdate, qint64 time)
 {
     visitJulianDate = jdate;
+    visitTime = time;
     ID = id;
 }
+
 
 void wm_invModelLoader::setInvestigationsModel(InvestModel *investModel)
 {
@@ -31,6 +33,6 @@ wm_invModelLoader::~wm_invModelLoader()
 
 InvestModel* wm_invModelLoader::Work()
 {
-    return sqlbase->getInvestigationsModel(model,ID,visitJulianDate);
+    return sqlbase->getInvestigationsModel(model,ID,visitJulianDate,visitTime);
 }
 

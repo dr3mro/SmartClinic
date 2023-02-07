@@ -176,7 +176,8 @@ private:
     QShortcut *vTypeUp;
     QShortcut *vTypeDown;
     QShortcut *visitAsRequest;
-    int visitDateTime2JulianDate();
+    //int visitDateTime2JulianDate();
+    void visitDateTimeSetter(qint64 &t_visitJulianDate, qint64 &t_visitTime);
     void connectSignals(QWidget *parent);
     //void initializeVariables();
     void addThisToCompleter(const sqlBase::Visit& visit);

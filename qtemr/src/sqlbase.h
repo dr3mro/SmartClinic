@@ -11,6 +11,7 @@
 #include <QStandardItem>
 #include <QMessageBox>
 #include <memory>
+#include "qglobal.h"
 #include "sqlextra.h"
 #include "datahelper.h"
 #include "simplecrypt.h"
@@ -351,7 +352,8 @@ public:
     {
         int ID;
         sqlBase::Visit visit;
-        int visitDate;
+        qint64 visitDate;
+        qint64 visitTime;
         QString visitDateTime;
         DrugsItemModel *drugsModel;
         InvestModel  *invModel;
@@ -600,7 +602,9 @@ public:
         int visitType;
         QString visitDateTime;
         QString Diagnosis;
-        int julianDay;
+        qint64 julianDay;
+        qint64 visitTime;
+
     };
 
     struct Sibling
@@ -637,7 +641,7 @@ public:
     bool addPatient2myDataBase(Patient patient);
     bool addVisit2myDataBase(Visit visit);
     bool addSurgicalNote(int ID, QString surgeryID, int julianDate, QString opName, QString opReport);
-    bool addInvestigation(int ID, int visitDate, QString invName, QString invPath, int invDate, QString invTime, int invState, double price , QString invResults );
+    bool addInvestigation(int ID, qint64 visitDate, qint64 visitTime, QString invName, QString invPath, int invDate, QString invTime, int invState, double price , QString invResults );
     bool isVisitExists(int ID , QString visitDateTime);
     bool isPatientExists(int ID);
     inline void isServiceExistsInThisVisit(const int &ID, const int &visitDate, const QString &ServiceName, ServiceState &serviceState);
@@ -649,10 +653,10 @@ public:
     bool saveVisit(int ID, QString visitDateTime , const Visit & visit, double Price);
     bool savePatientData(Patient& patient, DrugsItemModel *drugsModel, QStandardItemModel *siblings, QList<QPair<QString, int> > conditions, development develop, perinatal pnatal, obGyn og);
     bool saveVisitData(visitData vdata);
-    DrugsItemModel *readDrugs(int ID, int visitDate, DrugsItemModel *drugsModel);
+    DrugsItemModel *readDrugs(int ID, qint64 visitDate, qint64 visitTime, DrugsItemModel *drugsModel);
     QStandardItemModel *readSiblings(int ID,QStandardItemModel *model);
     QStandardItemModel *readSurgNotes(int ID,QStandardItemModel *model);
-    bool saveDrugs(int ID, int visitDate, DrugsItemModel *model);
+    bool saveDrugs(int ID, qint64 visitDate, qint64 visitTime, DrugsItemModel *model);
     bool saveSiblings(int ID,QStandardItemModel *model);
     bool updateSurgicalNote(int ID, QString surgeryID, int julianDate, QString opName, QString opReport);
     bool setVisitPrice(int ID, int visitDate,int visitTime,double price);
@@ -683,10 +687,10 @@ public:
     bool haveSameNameWithSameID(int ID , QString name);
     QStandardItemModel *patientTableModel;
     QList< QPair<QString,QString> > getListVisitsType(int ID);
-    InvestModel *getInvestigationsModel(InvestModel *investModel, int ID, int visitJulianDate);
-    bool saveInvestigationsModel(int ID, int visitDate, InvestModel *model);
+    InvestModel *getInvestigationsModel(InvestModel *investModel, int ID, qint64 visitJulianDate, qint64 visitTime);
+    bool saveInvestigationsModel(int ID, qint64 visitDate, qint64 visitTime, InvestModel *model);
     int getInvestigationsCount(int ID);
-    bool deleteInvestigation ( int ID, int visitDate, QString path, QString name);
+    bool deleteInvestigation (int ID, qint64 visitDate, qint64 visitTime, QString path, QString name);
     bool removeMediaUrlNormalizeRequest( int ID, int visitDate, QString path, QString name);
     QStringList investigationsPathListForVisit(int ID, int visitDate);
     void closeDataBase();
@@ -777,6 +781,7 @@ private:
     bool migrateDevelopment();
     bool migrateObGyn();
     void updateVisitsTable288();
+    void updateVisitsTable289();
     bool removePerinatalDevelopmentfromPatientsTable();
     bool removeObgynfromPatientsTable();
     QString getDecryptedName(QString rawName);

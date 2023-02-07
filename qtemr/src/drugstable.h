@@ -50,7 +50,7 @@ public:
     void addDrug2DrugListByStringList(QStringList stringList);
     bool isThereActiveDrugs();
 
-    void loadPatientDrugsModel(int ID, int julianDate, bool syncLoader=false);
+    void loadPatientDrugsModel(int ID, qint64 julianDate, qint64 visitTime,bool syncLoader=false);
     DrugsItemModel *drugsModel;
 
     ~drugsTable();

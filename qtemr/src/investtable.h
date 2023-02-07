@@ -32,8 +32,8 @@ class investTable : public zTableView
 
 public:
     explicit investTable(QWidget *parent= nullptr);
-    void populateInvests(int id, int julianDate);
-    bool saveInvestigation(const int &ID, const int &julianDate);
+    void populateInvests(int id, qint64 t_julianDate, qint64 t_visitTime);
+    bool saveInvestigation(const int &ID, const int &julianDate, const qint64 &visitTime);
     bool addNewInvest(int ID, int julianDate, QString newInvest, int state = 0, double price=0);
     bool addInvMedia(bool setState = true);
     void tweakTable();
@@ -44,6 +44,8 @@ public:
     QStringList getInvestigationsList(); // not services;
     bool printableInvestigationsExists();
     bool isWorking();
+    const qint64 getVisitTime();
+    const qint64 getVisitJulianDate();
     ~investTable();
 
 public slots:
@@ -58,7 +60,8 @@ private:
     QTimer *timer;
     QImage img;
     int ID;
-    int julianDate;
+    qint64 visitJulianDate;
+    qint64 visitTime;
     sqlBase *sqlbase;
     sqlExtra *sqlextra;
     wm_invModelLoader *worker;

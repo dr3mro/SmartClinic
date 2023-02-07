@@ -16,14 +16,15 @@ class wm_drugModelLoader : public QObject
 public:
     explicit wm_drugModelLoader(QObject *parent = nullptr);
     void setDrugsModel(DrugsItemModel *drugsModel);
-    void setIDJulianDate(int mID,int mJulianDate);
+    void setIDJulianDate(int mID, qint64 mJulianDate, qint64 mVisitTime);
     ~wm_drugModelLoader();
 
 signals:
 
 private:
     int ID;
-    int julianDate;
+    qint64 julianDate;
+    qint64 visitTime;
     QString connectionName;
     sqlBase *sqlbase;
     DrugsItemModel *model;

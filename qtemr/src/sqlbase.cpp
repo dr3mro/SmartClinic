@@ -123,7 +123,7 @@ bool sqlBase::addSurgicalNote(int ID,QString surgeryID ,int julianDate, QString 
     return bindAndExecSurgicalNoteQuery(createSurgicalNotesPrepareInsertPhrase(),ID,surgeryID,julianDate,opName,opReport);
 }
 
-bool sqlBase::addInvestigation(int ID,int visitDate, QString invName, QString invPath, int invDate, QString invTime, int invState, double price, QString invResults)
+bool sqlBase::addInvestigation(int ID,qint64 visitDate,qint64 visitTime, QString invName, QString invPath, int invDate, QString invTime, int invState, double price, QString invResults)
 {
     query->clear();
     //db.transaction();
@@ -136,7 +136,8 @@ bool sqlBase::addInvestigation(int ID,int visitDate, QString invName, QString in
                              "INVTIME, "
                              "INVSTATE, "
                              "PRICE, "
-                             "RESULTS) "
+                             "RESULTS,"
+                             "VISITTIME) "
                              "VALUES("
                              ":ID, "
                              ":NAME, "
@@ -146,7 +147,8 @@ bool sqlBase::addInvestigation(int ID,int visitDate, QString invName, QString in
                              ":INVTIME, "
                              ":INVSTATE, "
                              ":PRICE, "
-                             ":RESULTS)");
+                             ":RESULTS,"
+                             ":VISITTIME)");
 
     if (!p)
     {
@@ -162,6 +164,7 @@ bool sqlBase::addInvestigation(int ID,int visitDate, QString invName, QString in
     query->bindValue(":INVSTATE",invState);
     query->bindValue(":PRICE",price);
     query->bindValue(":RESULTS",invResults);
+    query->bindValue(":VISITTIME",visitTime);
 
     bool e = query->exec();
     if ( !e )
@@ -331,7 +334,7 @@ bool sqlBase::savePatientData(Patient& patient,
 {
     db.transaction();
     bool p = savePatient(patient.ID,patient);
-    bool d = saveDrugs(patient.ID,0,drugsModel);
+    bool d = saveDrugs(patient.ID,0,0,drugsModel);
     bool s = saveSiblings(patient.ID,siblings);
     bool c = savePatientConditions(patient.ID,conditions);
     bool dv = saveDevelopment(develop);
@@ -351,8 +354,8 @@ bool sqlBase::saveVisitData(sqlBase::visitData vdata)
 {
     db.transaction();
     bool v = saveVisit(vdata.ID,vdata.visitDateTime,vdata.visit,vdata.visitPrice);
-    bool d = saveDrugs(vdata.ID,vdata.visitDate,vdata.drugsModel);
-    bool i = saveInvestigationsModel(vdata.ID,vdata.visitDate,vdata.invModel);
+    bool d = saveDrugs(vdata.ID,vdata.visitDate,vdata.visitTime,vdata.drugsModel);
+    bool i = saveInvestigationsModel(vdata.ID,vdata.visitDate,vdata.visitTime,vdata.invModel);
     if ( !v || !d || !i )
     {
         mDebug() << "<v:>" << v << " <d:>" << d << " <i:>" <<i ;
@@ -364,14 +367,14 @@ bool sqlBase::saveVisitData(sqlBase::visitData vdata)
     return true;
 }
 
-DrugsItemModel *sqlBase::readDrugs(int ID, int visitDate,DrugsItemModel *drugsModel)
+DrugsItemModel *sqlBase::readDrugs(int ID, qint64 visitDate, qint64 visitTime, DrugsItemModel *drugsModel)
 {
     //    drugsLoaded = true;
     drugsModel->clear();
     //QStandardItem *item1,*item2,*item3,*item4,*item5,*item6,*item7,*item8;
     int x =0;
     query->clear();
-    query->exec(QString("select * from drugs where id=%1 and visitdate=%2").arg(ID).arg(visitDate));
+    query->exec(QString("select * from drugs where id=%1 and visitdate=%2 and visittime=%3").arg(ID).arg(visitDate).arg(visitTime));
     while (query->next())
     {
         auto item1 = new QStandardItem(query->value(0).toString());
@@ -457,14 +460,14 @@ QStandardItemModel *sqlBase::readSurgNotes(int ID, QStandardItemModel *model)
     return model;
 }
 
-bool sqlBase::saveDrugs(int ID, int visitDate, DrugsItemModel *model)
+bool sqlBase::saveDrugs(int ID, qint64 visitDate, qint64 visitTime, DrugsItemModel *model)
 {
     QString tradeName,genericName,dose,form,price;
     int startDate,stopDate,state;
     bool b = false;
 
     QString deletePhrase =
-            QString("DELETE FROM drugs WHERE ID=%1 AND VISITDATE=%2").arg(ID).arg(visitDate);
+            QString("DELETE FROM drugs WHERE ID=%1 AND VISITDATE=%2 AND VISITTIME=%3").arg(ID).arg(visitDate).arg(visitTime);
     //db.transaction();
     queryExec(deletePhrase);
     query->clear();
@@ -483,8 +486,8 @@ bool sqlBase::saveDrugs(int ID, int visitDate, DrugsItemModel *model)
         form = model->item(i,6)->text();
         price = model->item(i,7)->text();
         QString preparePhrase = QString("INSERT INTO "
-                                        "drugs (ID,VISITDATE,STATE,STARTDATE,STOPDATE,TRADENAME,GENERICNAME,FORM,DOSE,PRICE) "
-                                        "VALUES (:ID,:VISITDATE,:STATE,:STARTDATE,:STOPDATE,:TRADENAME,:GENERICNAME,:FORM,:DOSE,:PRICE) ");
+                                        "drugs (ID,VISITDATE,STATE,STARTDATE,STOPDATE,TRADENAME,GENERICNAME,FORM,DOSE,PRICE,VISITTIME) "
+                                        "VALUES (:ID,:VISITDATE,:STATE,:STARTDATE,:STOPDATE,:TRADENAME,:GENERICNAME,:FORM,:DOSE,:PRICE,:VISITTIME) ");
         //
 
         query->prepare(preparePhrase);
@@ -499,6 +502,7 @@ bool sqlBase::saveDrugs(int ID, int visitDate, DrugsItemModel *model)
         query->bindValue(":FORM",form);
         query->bindValue(":DOSE",dose);
         query->bindValue(":PRICE",price);
+        query->bindValue(":VISITTIME",visitTime);
 
         b = query->exec();
         if ( !b )
@@ -927,14 +931,17 @@ QStringList sqlBase::getPatientNameList()
 
 bool sortVisits(const sqlBase::visitItem& item1,const sqlBase::visitItem& item2)
 {
-    return item1.julianDay>item2.julianDay;
+    if(item1.julianDay == item2.julianDay)
+        return (item1.visitTime > item2.visitTime);
+    else
+        return (item1.julianDay > item2.julianDay);
 }
 
 QVector<sqlBase::visitItem> sqlBase::getPatientVisits(int ID)
 {
     query->clear();
     bool b = query->exec(
-                QString("SELECT visitType,visitDateTime,diagnosis,visitJulianDate from visits WHERE ID=%1;").arg(ID));
+                QString("SELECT visitType,visitDateTime,diagnosis,visitJulianDate,visitTime from visits WHERE ID=%1;").arg(ID));
     if(!b)
         mDebug() << "Failed getting visits List" << query->lastError().text();
 
@@ -946,6 +953,7 @@ QVector<sqlBase::visitItem> sqlBase::getPatientVisits(int ID)
         item.visitDateTime = query->value(1).toString();
         item.Diagnosis = query->value(2).toString();
         item.julianDay = query->value(3).toInt();
+        item.visitTime = query->value(4).toInt();
         vector.append(item);
     }
     query->finish();
@@ -1623,7 +1631,8 @@ bool sqlBase::createPatientDrugsTable()
              "FORM   varchar,"
              "ID INTEGER,"
              "VISITDATE INTEGER,"
-             "PRICE INTEGER)");
+             "PRICE INTEGER,"
+             "VISITTIME INTEGER)");
     if (!b)
     {
         mDebug() << query->lastError().text();
@@ -1668,7 +1677,8 @@ bool sqlBase::createInvstTable()
              "INVTIME   varchar,"
              "INVSTATE INTEGER,"
              "PRICE varchar,"
-             "RESULTS varchar)");
+             "RESULTS varchar,"
+             "VISITTIME INTEGER)");
     if (!b)
     {
         mDebug() << "ERROR CREATING INVESTIGATIONS TABLE" << query->lastError().text();
@@ -2310,6 +2320,11 @@ void sqlBase::upgradeDatabase()
         createAllViews();
         setDatabaseVersion(2.88);
     }
+    if ( dataHelper::doubleEqual(getDatabaseVersion(),double(2.88)) )
+    {
+        updateVisitsTable289();
+        setDatabaseVersion(2.89);
+    }
 
 }
 
@@ -2928,6 +2943,17 @@ void sqlBase::updateVisitsTable288()
     mDebug() << "Database updated to V 2.88";
 }
 
+void sqlBase::updateVisitsTable289()
+{
+    sqlExec("ALTER TABLE investigations ADD VISITTIME INTEGER;");
+    sqlExec("ALTER TABLE drugs ADD VISITTIME INTEGER;");
+    sqlExec("UPDATE investigations SET VISITTIME=visits.visitTime FROM visits WHERE visits.ID=investigations.ID AND visits.visitJulianDate=investigations.VISITDATE;");
+    sqlExec("UPDATE drugs SET VISITTIME=visits.visitTime FROM visits WHERE visits.ID=drugs.ID AND visits.visitJulianDate=drugs.VISITDATE;");
+    sqlExec("UPDATE drugs SET visitTime=0 WHERE visitDate=0;");
+
+    mDebug() << "Database updated to V 2.89";
+}
+
 bool sqlBase::removePerinatalDevelopmentfromPatientsTable()
 {
     db.transaction();
@@ -3453,8 +3479,12 @@ void sqlBase::createNewVisit(int ID,
 {
     QLocale locale = QLocale(QLocale::English , QLocale::UnitedStates );
     QString englishDateTime = locale.toString(datetime, "dd/MM/yyyy hh:mm AP ddd");
-    int nextDateJulian = static_cast<int>(datetime.date().toJulianDay());
-    int previousDateJulian = static_cast<int>(locale.toDateTime(previous,"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay());
+
+    qint64 nextDateJulian = locale.toDateTime(englishDateTime,"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay();
+    qint64 nextVisitTime = locale.toDateTime(englishDateTime,"dd/MM/yyyy hh:mm AP ddd").time().msecsSinceStartOfDay()/1000;
+
+    qint64 previousDateJulian = locale.toDateTime(previous,"dd/MM/yyyy hh:mm AP ddd").date().toJulianDay();
+    qint64 previousTime = locale.toDateTime(previous,"dd/MM/yyyy hh:mm AP ddd").time().msecsSinceStartOfDay()/1000;
 
     if (visitType ==0)
     {
@@ -3467,8 +3497,8 @@ void sqlBase::createNewVisit(int ID,
         visit = getPatientVisitData(ID,previous);
         drugsModel->blockSignals(true);
         investModel->blockSignals(true);
-        drugsModel = readDrugs(ID,previousDateJulian,drugsModel);
-        investModel = getInvestigationsModel(investModel,ID,previousDateJulian);
+        drugsModel = readDrugs(ID,previousDateJulian,previousTime,drugsModel);
+        investModel = getInvestigationsModel(investModel,ID,previousDateJulian,previousTime);
         drugsModel->blockSignals(false);
         investModel->blockSignals(false);
 
@@ -3495,6 +3525,7 @@ void sqlBase::createNewVisit(int ID,
     vdata.ID = ID;
     vdata.visit = visit;
     vdata.visitDate = nextDateJulian;
+    vdata.visitTime = nextVisitTime;
     vdata.visitDateTime = englishDateTime;
     vdata.visitPrice = visitPrice;
     vdata.drugsModel = drugsModel;
@@ -3778,15 +3809,15 @@ QList<QPair<QString, QString> > sqlBase::getListVisitsType(int ID)
     return sqlExecPair(sqlPhrase);
 }
 
-InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int visitJulianDate)
+InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,qint64  visitJulianDate,qint64 visitTime)
 {
     investModel->clear();
     QString selectInvestigationQuery;
 
-    if ( visitJulianDate == 0 )
+    if ( visitJulianDate == 0 && visitTime == 0)
         selectInvestigationQuery = QString("SELECT * FROM investigations WHERE ID=%1 AND invState !=0 AND length(PATH) > 8").arg(ID);
     else
-        selectInvestigationQuery = QString("SELECT * FROM investigations WHERE ID=%1 AND VISITDATE=%2").arg(ID).arg(visitJulianDate);
+        selectInvestigationQuery = QString("SELECT * FROM investigations WHERE ID=%1 AND VISITDATE=%2 AND VISITTIME=%3").arg(ID).arg(visitJulianDate).arg(visitTime);
 
     query->clear();
     bool i = query->exec(selectInvestigationQuery);
@@ -3854,7 +3885,7 @@ InvestModel *sqlBase::getInvestigationsModel(InvestModel *investModel,int ID,int
     return investModel;
 }
 
-bool sqlBase::saveInvestigationsModel(int ID, int visitDate, InvestModel *model)
+bool sqlBase::saveInvestigationsModel(int ID, qint64 visitDate, qint64 visitTime, InvestModel *model)
 {
     int rows = model->rowCount();
     bool x = true;
@@ -3870,7 +3901,7 @@ bool sqlBase::saveInvestigationsModel(int ID, int visitDate, InvestModel *model)
 
     query->clear();
 
-    d = query->exec(QString("DELETE FROM investigations WHERE ID=%1 AND VISITDATE=%2").arg(ID).arg(visitDate));
+    d = query->exec(QString("DELETE FROM investigations WHERE ID=%1 AND VISITDATE=%2 AND VISITTIME=%3").arg(ID).arg(visitDate).arg(visitTime));
     if ( !d )
     {
         mDebug() << "Failed to delete investigations" << query->lastError().text();
@@ -3889,7 +3920,7 @@ bool sqlBase::saveInvestigationsModel(int ID, int visitDate, InvestModel *model)
         price = model->item(row,7)->text().toDouble();
         invResults = model->item(row,8)->text();
 
-        e = addInvestigation(ID,visitDate,invName,invPath,invDate,invTime,invState,price,invResults);
+        e = addInvestigation(ID,visitDate,visitTime,invName,invPath,invDate,invTime,invState,price,invResults);
         if (!e)
             x = e;
     }
@@ -3914,15 +3945,17 @@ int sqlBase::getInvestigationsCount(int ID)
     return size;
 }
 
-bool sqlBase::deleteInvestigation(int ID, int visitDate, QString path, QString name)
+bool sqlBase::deleteInvestigation(int ID, qint64 visitDate, qint64 visitTime, QString path, QString name)
 {
     query->clear();
     bool b = query->exec(QString("DELETE FROM investigations"
                                  " WHERE ID=%1 AND"
                                  " VISITDATE=%2 AND"
+                                 " VISITTIME=%3 AND"
                                  " NAME=\"%4\"")
                          .arg(ID)
                          .arg(visitDate)
+                         .arg(visitTime)
                          .arg(name));
     if (!b )
     {
