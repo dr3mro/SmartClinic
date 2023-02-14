@@ -1009,6 +1009,7 @@ void drugsTable::setDose()
         drugsModel->item(cell.row(),3)->setText(QString::number(QDate::currentDate().toJulianDay()));
         genDrugTableToolTip();
         drugDoseAltered=true;
+        emit drugsHasBeenAltered(drugDoseAltered);
     }
 
     QString tradeName = drugsModel->item(cell.row(),0)->text();
@@ -1022,7 +1023,7 @@ void drugsTable::setDose()
 
     le_setDose->clear();
     w_setDose.hide();
-    emit drugsHasBeenAltered(drugDoseAltered);
+
 }
 
 
