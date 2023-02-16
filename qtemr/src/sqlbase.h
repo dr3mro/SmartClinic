@@ -637,7 +637,8 @@ public:
     sqlBase::mPatient getmPatientData(int ID);
     Visit getPatientVisitDataPre287(int ID , QString dateTimeString);
     Visit getPatientVisitData(const int & ID, const QString &dateTimeString);
-    mSettings::Vitals getPatientVisitVitals(const int & ID, const QString &dateTimeString);
+    mSettings::Vitals getPatientVisitVitals(const int &ID, const QString &dateTimeString);
+    mSettings::Vitals getPatientVisitVitalsforPlaceholderText(const int &ID, const int &mVisitDate);
     bool addPatient2myDataBase(Patient patient);
     bool addVisit2myDataBase(Visit visit);
     bool addSurgicalNote(int ID, QString surgeryID, int julianDate, QString opName, QString opReport);
@@ -782,6 +783,7 @@ private:
     bool migrateObGyn();
     void updateVisitsTable288();
     void updateVisitsTable289();
+    void updateVisitsTable290();
     bool removePerinatalDevelopmentfromPatientsTable();
     bool removeObgynfromPatientsTable();
     QString getDecryptedName(QString rawName);

@@ -9,7 +9,7 @@
 #define STR(x) STR_IMPL_(x)  //indirection to expand argument macros
 
 
-#define BUILDVER 42
+#define BUILDVER 43
 #define MINORVER 8
 #define MAJORVER 3
 
@@ -46,7 +46,7 @@
 #define selfPass "xgbavzirteiudizs"
 #define devEmail "dr3mro@gmail.com"
 #define exeBackUp "backup/~smartClinic3.exe"
-#define dbVersion 2.89
+#define dbVersion 2.90
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
 #define drugsDatabaseVer 211023

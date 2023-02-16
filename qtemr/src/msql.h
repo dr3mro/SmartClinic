@@ -53,6 +53,7 @@ public:
         {
             value = q->value(0).toString();
         }
+        //mDebug() << sqlCmd;
         q->finish();
         return value;
     }

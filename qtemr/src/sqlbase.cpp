@@ -3,6 +3,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "sqlbase.h"
+#include "msettings.h"
 
 sqlBase::sqlBase(QObject *parent, QString connectionName, bool createTables) : msql(parent)
 {
@@ -865,6 +866,20 @@ mSettings::Vitals sqlBase::getPatientVisitVitals(const int &ID, const QString &d
     }
     // mDebug() << query->lastQuery();
     query->finish();
+    return mVitals;
+}
+
+mSettings::Vitals sqlBase::getPatientVisitVitalsforPlaceholderText(const int &ID, const int &mVisitDate)
+{
+    mSettings::Vitals mVitals;
+    mVitals.pulse  = sqlExec(QString("SELECT pulse  FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND pulse  > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate)).toInt();
+    mVitals.BP     = sqlExec(QString("SELECT BP     FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND BP     > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate));
+    mVitals.RR     = sqlExec(QString("SELECT RR     FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND RR     > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate)).toInt();
+    mVitals.T      = sqlExec(QString("SELECT T      FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND T      > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate)).toDouble();
+    mVitals.weight = sqlExec(QString("SELECT weight FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND weight > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate)).toDouble();
+    mVitals.height = sqlExec(QString("SELECT height FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND height > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate)).toDouble();
+    mVitals.sPo2   = sqlExec(QString("SELECT sPo2   FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND sPo2   > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate)).toInt();
+    mVitals.RBS    = sqlExec(QString("SELECT RBS    FROM visitVitals WHERE ID = %1 AND visitDate < %2 AND RBS    > 0  ORDER BY visitDate DESC, visitTime DESC limit 1").arg(ID).arg(mVisitDate));
     return mVitals;
 }
 
@@ -2325,6 +2340,12 @@ void sqlBase::upgradeDatabase()
         updateVisitsTable289();
         setDatabaseVersion(2.89);
     }
+    if ( dataHelper::doubleEqual(getDatabaseVersion(),double(2.89)) )
+    {
+        updateVisitsTable290();
+        setDatabaseVersion(2.90);
+    }
+
 
 }
 
@@ -2953,6 +2974,19 @@ void sqlBase::updateVisitsTable289()
 
     mDebug() << "Database updated to V 2.89";
 }
+
+void sqlBase::updateVisitsTable290()
+{
+    sqlExec("UPDATE visitVitals SET pulse   = -1 WHERE pulse    = 0;");
+    sqlExec("UPDATE visitVitals SET RR      = -1 WHERE RR       = 0;");
+    sqlExec("UPDATE visitVitals SET T       = -1 WHERE T        = 0;");
+    sqlExec("UPDATE visitVitals SET weight  = -1 WHERE weight   = 0;");
+    sqlExec("UPDATE visitVitals SET height  = -1 WHERE height   = 0;");
+    sqlExec("UPDATE visitVitals SET BP      = -1 WHERE BP       = '';");
+    mDebug() << "Database updated to V 2.90";
+}
+
+
 
 bool sqlBase::removePerinatalDevelopmentfromPatientsTable()
 {

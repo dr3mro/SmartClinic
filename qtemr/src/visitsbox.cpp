@@ -1567,8 +1567,12 @@ void visitsBox::roshettaVitalsFiller(mSettings::Vitals &vitals)
 
 void visitsBox::setVitalsPlaceHolderText()
 {
-    QString lastVisitDateTimeString = ui->visitLists->itemText(ui->visitLists->currentIndex()+1);
-    mSettings::Vitals placeHolderText = sqlbase->getPatientVisitVitals(patientBasicDetails.ID,lastVisitDateTimeString);
+    QLocale locale(QLocale::English , QLocale::UnitedStates );
+    QDateTime mDate = locale.toDateTime(ui->visitLists->currentText(),"dd/MM/yyyy hh:mm AP ddd");
+    int mVisitDate = mDate.date().toJulianDay();
+
+    mSettings::Vitals placeHolderText = sqlbase->getPatientVisitVitalsforPlaceholderText(patientBasicDetails.ID,mVisitDate);
+
     ui->pPulse->setPlaceholderText(placeHolderText.pulse <= 0 ? QString():QString::number(placeHolderText.pulse));
     ui->pRR->setPlaceholderText(placeHolderText.RR <= 0 ? QString():QString::number(placeHolderText.RR));
     ui->pTemp->setPlaceholderText(placeHolderText.T <= 0 ? QString():QString::number(placeHolderText.T));
@@ -1607,7 +1611,7 @@ bool visitsBox::mSave(const sqlBase::Visit &visit,const bool &threading)
 #else
         auto f = QtConcurrent::run(visitSaverWorker,&wm_visitSaver::Work);
 #endif
-        drugsAltered = true;
+        drugsAltered = true; // might be not needed as it will be changed in the post thread.
         return true;
     }
     else
