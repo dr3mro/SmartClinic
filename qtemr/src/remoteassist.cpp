@@ -35,7 +35,8 @@ void remoteAssist::loadVisitors()
 
 
     QJsonDocument doc = getJsonDocument();
-    QList<QVariant> list = doc.toVariant().toList();
+    QVariant variant = doc.toVariant();
+    QList<QVariant> list = variant.toList();
     int row = 0;
     foreach (const QVariant &v, list) {
         QMap<QString, QVariant> map = v.toMap();

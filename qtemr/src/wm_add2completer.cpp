@@ -3,6 +3,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "wm_add2completer.h"
+#include "qregularexpression.h"
 
 wm_add2Completer::wm_add2Completer(QObject *parent) : QObject(parent),
     connectionName (QString("qt_sql_extra_add2Completer_%1_%2").arg(QRandomGenerator::global()->bounded(0,9999999)).arg(QTime::currentTime().msecsSinceStartOfDay())),
@@ -103,7 +104,7 @@ void wm_add2Completer::saveDicts(const QStringList & dicts)
         foreach ( QString w , splitDict(d) )
         {
             //mDebug() <<  w << (w.length() > 2)  << !w.contains(QRegularExpression("^(\\d+)")) << !w.contains(QRegularExpression("(\\d+)$"));
-            w.remove(QRegExp(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"]")));
+            w.remove(QRegularExpression(QString::fromUtf8("[-`~!@#$%^&*()_—+=|:;<>«»,.?/{}\'\"]")));
             if ( w.length() > 2 &&  !w.contains(QRegularExpression("^(\\d+)")) && !w.contains(QRegularExpression("(\\d+)$")))
                 sqlextra->addToAutoComplete("dictionary",w);
         }

@@ -3,7 +3,8 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "patienttable.h"
-#include <QModelIndexList>
+#include "qabstractitemmodel.h"
+#include <algorithm>
 #include <cstdlib>
 
 patientTable::patientTable(QWidget *parent):QTableView(parent)
@@ -221,12 +222,17 @@ void patientTable::mSelectRow(int row)
         return;
     }
 
-    QModelIndexList indexes = proxy_model->match(model->index(0,0),Qt::MatchExactly,QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0')));
+    auto modelIndex = model->index(0,0);
+    QModelIndexList indexes = proxy_model->match(modelIndex,Qt::MatchExactly,QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0')));
     if (! indexes.empty()) {
-        std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
-        auto _row = indexes.first().row();
+        //std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
+        std::sort(indexes.begin(),indexes.end(),[](const QModelIndex &a, const QModelIndex &b)
+        {
+            return a.row() > b.row();
+        });
+        auto _first = indexes.first();
+        auto _row = _first.row();
         selectRow(_row);
-        return;
     }
 }
 
@@ -235,7 +241,7 @@ patientTable::~patientTable()
     modelFuture.waitForFinished();
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     reg.setValue("filterColumn",filterColumn);
-    setFilter(filterColumn);
+    emit setFilter(filterColumn);
     delete model;
     delete proxy_model;
     sqlbase->optimize();
