@@ -10,6 +10,7 @@
 #include <QTableView>
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
+#include "qabstractitemmodel.h"
 #include "sqlbase.h"
 #include <QKeyEvent>
 #include <QSettings>
@@ -56,6 +57,7 @@ private:
     QFuture<QStandardItemModel*> initModelFuture;
     QFutureWatcher<QStandardItemModel*> initWatcher;
     int ID;
+    QModelIndexList getSortedMatchedListOfIndexes(const int& row);
 
 signals:
     //void quitUpdateInLinePatientListThread();

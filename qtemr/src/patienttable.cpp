@@ -72,9 +72,24 @@ bool patientTable::eventFilter(QObject *o, QEvent *e)
             return QObject::eventFilter(o,e);
         deceased = sqlbase->getDeceasedList().contains(QString::number(_ID));
         sqlbase->toggleDeceased(_ID,(deceased)? 0:1,row);
-        emit clearSelection();
+        clearSelection();
     }
     return QObject::eventFilter(o,e);
+}
+
+QModelIndexList patientTable::getSortedMatchedListOfIndexes(const int &row)
+{
+    auto start = proxy_model->index(0,0);
+    auto matchingString = QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0'));
+
+    auto indexes = proxy_model->match(start,Qt::MatchExactly,matchingString);
+
+    std::sort(indexes.begin(),indexes.end(),
+              [](const QModelIndex &a, const QModelIndex &b)
+                {
+                    return a.row() > b.row();
+                });
+    return indexes;
 }
 
 void patientTable::keyPressEvent(QKeyEvent *ke)
@@ -129,7 +144,7 @@ void patientTable::tweaksAfterModelLoadingIsFinished()
     loadingIsFinished = true;
     this->horizontalHeader()->setMinimumWidth(55);
     this->setColumnWidth(0,55);
-    emit repaint();
+    repaint();
 }
 
 void patientTable::loadPatient()
@@ -202,38 +217,34 @@ void patientTable::reOpenDatabase()
 {
     setConnection(connectionName);
 }
+//
+//int mSelectRowCompare(const void* a, const void* b)
+//{
+//    const int* x = (int*) a;
+//    const int* y = (int*) b;
 
-int mSelectRowCompare(const void* a, const void* b)
-{
-    const int* x = (int*) a;
-    const int* y = (int*) b;
+//    if (*x < *y)
+//        return 1;
+//    else if (*x > *y)
+//        return -1;
 
-    if (*x < *y)
-        return 1;
-    else if (*x > *y)
-        return -1;
+//    return 0;
+//}
+//std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
 
-    return 0;
-}
+
 void patientTable::mSelectRow(int row)
 {
-    if(row <= 0){
-        selectRow(0);
-        return;
+    int _resultedRow = 0;
+
+    if(row > 0){
+        auto sortedMatchedListOfIndexes = this->getSortedMatchedListOfIndexes(row);
+
+        if(!sortedMatchedListOfIndexes.isEmpty())
+            _resultedRow = sortedMatchedListOfIndexes.constFirst().row();
     }
 
-    auto modelIndex = model->index(0,0);
-    QModelIndexList indexes = proxy_model->match(modelIndex,Qt::MatchExactly,QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0')));
-    if (! indexes.empty()) {
-        //std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
-        std::sort(indexes.begin(),indexes.end(),[](const QModelIndex &a, const QModelIndex &b)
-        {
-            return a.row() > b.row();
-        });
-        auto _first = indexes.first();
-        auto _row = _first.row();
-        selectRow(_row);
-    }
+    selectRow(_resultedRow);
 }
 
 patientTable::~patientTable()
