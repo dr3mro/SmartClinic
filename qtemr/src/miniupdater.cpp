@@ -99,8 +99,8 @@ void miniUpdater::applyUpdate()
 {
     timeOut->stop();
     dataIOhelper::deleteFile(exeBackUp);
-    dataIOhelper::renameFile(EXENAME,exeBackUp);
-    squeeze::expand(updatePath,EXENAME);
+    dataIOhelper::renameFile(qApp->applicationFilePath(),exeBackUp);
+    squeeze::expand(updatePath,qApp->applicationFilePath());
     dataIOhelper::deleteFile(updatePath);
     ui->restartButton->setHidden(false);
     ui->doButton->setHidden(true);
@@ -222,6 +222,6 @@ void miniUpdater::connectionTimeOut()
 void miniUpdater::on_restartButton_clicked()
 {
     qApp->quit();
-    QProcess::startDetached(EXENAME,QStringList());
+    QProcess::startDetached(qApp->applicationFilePath(),QStringList());
 }
 

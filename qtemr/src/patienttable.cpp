@@ -84,11 +84,13 @@ QModelIndexList patientTable::getSortedMatchedListOfIndexes(const int &row)
 
     auto indexes = proxy_model->match(start,Qt::MatchExactly,matchingString);
 
-    std::sort(indexes.begin(),indexes.end(),
+    if (indexes.count() > 1)
+        std::sort(indexes.begin(),indexes.end(),
               [](const QModelIndex &a, const QModelIndex &b)
                 {
                     return a.row() > b.row();
                 });
+
     return indexes;
 }
 

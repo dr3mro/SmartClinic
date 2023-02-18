@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
         if(!QDir(updatePackageDir).exists())
             QDir().mkdir(updatePackageDir);
 
-        squeeze::compact(EXENAME,updatePacakgeFile);
+        squeeze::compact(qApp->applicationFilePath(),updatePacakgeFile);
         QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile(updatePacakgeFile),QCryptographicHash::Md5 ).toHex());
         QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
                     APPVERSION,
