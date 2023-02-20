@@ -564,7 +564,7 @@ void TextEdit::keyPressEvent(QKeyEvent *e)
     }
 
 
-    if ( isCTRL )
+    if ( isCTRL && !isReadOnly())
     {
         switch (e->key()) {
         case Qt::Key_Equal:
@@ -617,7 +617,7 @@ void TextEdit::keyPressEvent(QKeyEvent *e)
         }
     }
 
-    if ( isALT)
+    if ( isALT && !isReadOnly())
     {
         QTextCursor crsr = textCursor();
 
