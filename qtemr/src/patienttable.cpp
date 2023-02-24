@@ -235,8 +235,13 @@ void patientTable::reOpenDatabase()
 //std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
 
 
+#define ENABLESORTEDSELECT
 void patientTable::mSelectRow(int row)
 {
+#ifdef ENABLESORTEDSELECT
+    selectRow(row);
+#else
+
     int _resultedRow = 0;
 
     if(row > 0){
@@ -247,6 +252,7 @@ void patientTable::mSelectRow(int row)
     }
 
     selectRow(_resultedRow);
+#endif
 }
 
 patientTable::~patientTable()
