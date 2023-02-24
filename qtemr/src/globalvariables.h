@@ -9,7 +9,7 @@
 #define STR(x) STR_IMPL_(x)  //indirection to expand argument macros
 
 
-#define BUILDVER 44
+#define BUILDVER 45
 #define MINORVER 8
 #define MAJORVER 3
 
