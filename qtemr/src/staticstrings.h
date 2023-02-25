@@ -83,6 +83,7 @@
 #define _compactMode "compactMode"
 #define _clearDuplicateDrugs "clearDuplicateDrugs"
 #define _preferRTFBanner "preferRTFBanner"
+#define _printerIndex "printerIndex"
 //#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"

@@ -4,6 +4,7 @@
 
 #include "msettings.h"
 #include "datahelper.h"
+#include "qvariant.h"
 
 mSettings &mSettings::instance()
 {
@@ -183,6 +184,7 @@ mSettings::prescriptionPrintSettings mSettings::getPrintSettings(QString printPr
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
     mPageSettings.paperSizeId = settings.value(_paperSizeId,QVariant("A5")).toString();
+    mPageSettings.printerIndex = settings.value(_printerIndex,QVariant(0)).toInt();
     mPageSettings.pageMargin = settings.value(_pageMargin,QVariant(5)).toDouble();
     mPageSettings.showBanner = settings.value(_showBanner,QVariant(true)).toBool();
     mPageSettings.showDrugs = settings.value(_showDrugs,QVariant(true)).toBool();
@@ -255,6 +257,7 @@ void mSettings::savePrintSettings(mSettings::prescriptionPrintSettings mPageSett
     QSettings settings("./settings.ini",QSettings::IniFormat);
     settings.beginGroup(printProfile);
     settings.setValue(_paperSizeId,mPageSettings.paperSizeId);
+    settings.setValue(_printerIndex,mPageSettings.printerIndex);
     settings.setValue(_pageMargin,mPageSettings.pageMargin);
     settings.setValue(_showBanner,mPageSettings.showBanner);
     settings.setValue(_showDrugs,mPageSettings.showDrugs);

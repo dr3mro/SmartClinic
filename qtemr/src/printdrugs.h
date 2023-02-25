@@ -125,6 +125,7 @@ private slots:
     void dietSelected(const QString &_selectedDiet);
     void roshettaEdited(bool b);
     void resetBannerTemplateClicked();
+    void printers_currentIndexChanged(int index);
 
 private:
     void setupPrinter(QPrinter *p);

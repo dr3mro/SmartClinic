@@ -440,6 +440,7 @@ public:
     struct prescriptionPrintSettings
     {
         QString paperSizeId="A5";
+        int printerIndex=0;
         int pageMargin=5;
         bool showBanner=true;
         bool showDrugs=true;
@@ -486,6 +487,7 @@ public:
         bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
         {
             return std::tie(paperSizeId,
+                            printerIndex,
                             pageMargin,
                             showBanner,
                             showDrugs,
@@ -524,6 +526,7 @@ public:
                             preferRTFBanner
                             ) == std::tie(
                         prescriptionprintsettings.paperSizeId,
+                        prescriptionprintsettings.printerIndex,
                         prescriptionprintsettings.pageMargin,
                         prescriptionprintsettings.showBanner,
                         prescriptionprintsettings.showDrugs,

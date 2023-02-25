@@ -3,6 +3,8 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "printdrugs.h"
+#include "qcombobox.h"
+#include "qprinterinfo.h"
 #include "ui_printdrugs.h"
 
 printDrugs::printDrugs(QWidget *parent) :
@@ -14,7 +16,7 @@ printDrugs::printDrugs(QWidget *parent) :
     ui(new Ui::printDrugs)
 {
     ui->setupUi(this);
-    //mDebug() << QPrinterInfo::availablePrinters();
+    ui->printers->insertItems(0,QPrinterInfo::availablePrinterNames());
     m_roshetta = ui->Roshetta->document();
     roshettaMaker.setDocument(m_roshetta);
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
@@ -32,6 +34,7 @@ printDrugs::printDrugs(QWidget *parent) :
 
     applyPageSizeParamaters();
     setupPrinter(printer);
+
 
     connect(ui->printerProfile,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::printerProfile_activated,Qt::QueuedConnection);
     connect(ui->showInvs,&Switch::clicked,this,&printDrugs::showInvs_clicked,Qt::QueuedConnection);
@@ -140,6 +143,9 @@ printDrugs::printDrugs(QWidget *parent) :
     connect(ui->compactMode,&Switch::clicked,this,&printDrugs::compactMode_clicked);
     connect(ui->clearDuplicateDrugs,&Switch::clicked,this,&printDrugs::clearDuplicateDrugs_clicked);
     connect(ui->preferRTF,&Switch::clicked,this,&printDrugs::preferRTF_clicked);
+
+    connect(ui->printers,&QComboBox::currentIndexChanged,this,&printDrugs::printers_currentIndexChanged);
+
     this->setModal(true);
 }
 
@@ -190,6 +196,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
 {
     mSettings::prescriptionPrintSettings printSettings = settings.getPrintSettings(selectedPrintingProfile);
     ui->paperSizeId->setCurrentText(printSettings.paperSizeId);
+    ui->printers->setCurrentIndex(printSettings.printerIndex);
     ui->pageMargin->setValue(printSettings.pageMargin);
     ui->showBanner->setChecked(printSettings.showBanner);
     ui->showDrugs->setChecked(printSettings.showDrugs);
@@ -276,6 +283,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
 {
     mSettings::prescriptionPrintSettings printSettings;
     printSettings.paperSizeId = ui->paperSizeId->currentText();
+    printSettings.printerIndex = ui->printers->currentIndex();
     printSettings.pageMargin = ui->pageMargin->value();
     printSettings.showBanner = ui->showBanner->isChecked();
     printSettings.showDrugs = ui->showDrugs->isChecked();
@@ -436,8 +444,8 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
     }else{
         t.start();
     }
-    
-
+    QString printerName = ui->printers->currentText();
+    p->setPrinterName(printerName);
     if(roshettaMaker.getIsDrugsOutOfRange()){
         int reply = QMessageBox::question(NULL,
                                           "warning",
@@ -454,7 +462,7 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
         if (roshettaData.diet.printRequired){
             printer->setFromTo(1,1);
             _doc->print(p);
-            emit message("Message","Print job is being sent to your Default Printer.");
+            emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
             reply = QMessageBox::question(nullptr,"Attention","Please press Ok when ready to print the selected Diet.",
                                           QMessageBox::Ok,
                                           QMessageBox::Cancel);
@@ -464,7 +472,7 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
             }else if (reply ==  QMessageBox::Ok){
                 printer->setFromTo(2,2);
                 _doc->print(p);
-                emit message("Message","Print job is being sent to your Default Printer.");
+                emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
                 printer->setFromTo(0,0);
             }
         }else{
@@ -474,14 +482,14 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
                                           QMessageBox::No);
             if (reply ==  QMessageBox::Yes){
                 _doc->print(p);
-                emit message("Message","Print job is being sent to your Default Printer.");
+                emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
             }else if (reply ==  QMessageBox::No){
                 return;
             }
         }
     }else{
         _doc->print(p);
-        emit message("Message","Print job is being sent to your Default Printer.");
+        emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
     }
     if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
         this->close();
@@ -1021,3 +1029,9 @@ void printDrugs::resetBannerTemplateClicked()
     }
 
 }
+
+void printDrugs::printers_currentIndexChanged(int index)
+{
+    pSettings.printerIndex = index;
+}
+
