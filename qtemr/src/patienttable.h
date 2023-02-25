@@ -56,7 +56,7 @@ private:
     QFutureWatcher<QStandardItemModel*> watcher;
     QFuture<QStandardItemModel*> initModelFuture;
     QFutureWatcher<QStandardItemModel*> initWatcher;
-    int ID;
+    int ID=1;
     QModelIndexList getSortedMatchedListOfIndexes(const int& row);
 
 signals:

@@ -235,10 +235,10 @@ void patientTable::reOpenDatabase()
 //std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
 
 
-#define ENABLESORTEDSELECT
+#define DISABLESORTEDSELECT 0
 void patientTable::mSelectRow(int row)
 {
-#ifdef ENABLESORTEDSELECT
+#if DISABLESORTEDSELECT
     selectRow(row);
 #else
 
