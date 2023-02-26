@@ -412,15 +412,7 @@ void printDrugs::showEvent(QShowEvent *e)
 
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
-    QPageLayout m_layout;
-    QPageSize pageSize(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
-    m_layout.setPageSize(pageSize,QMarginsF(pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin));
-    m_layout.setOrientation(QPageLayout::Orientation::Portrait);
-    m_layout.setMode(QPageLayout::Mode::StandardMode);
-    preview->setPageSize(pageSize);
-    preview->setPageLayout(m_layout);
-    preview->setFullPage(pSettings.enableFullPage);
-
+    setupPrinter(preview);
     printDoc(preview,m_roshetta,true);
 }
 
@@ -431,11 +423,13 @@ void printDrugs::setupPrinter(QPrinter *p)
     m_layout.setPageSize(pageSize,QMarginsF(pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin));
     m_layout.setOrientation(QPageLayout::Orientation::Portrait);
     m_layout.setMode(QPageLayout::Mode::StandardMode);
+
     p->setPrinterName(printerName);
+
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
     p->setFullPage(pSettings.enableFullPage);
-    //p->setOutputFormat(QPrinter::NativeFormat);
+    p->setDocName(QString("%1_%2_%3").arg(roshettaData.ID).arg(roshettaData.name).arg(roshettaData.printedinDate.toString("yyyy-MM-dd hh:mm AP")));
 }
 
 void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
