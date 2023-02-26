@@ -155,7 +155,7 @@ signals:
     void insertDrug2Patient(QString,QString);
     void updateDrugsCompleter();
     DrugsItemModel* getDrugsModel();
-    void showPreview();
+    //void showPreview();
     void styleVitals(mSettings&);
 
 private:

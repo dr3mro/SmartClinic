@@ -1321,8 +1321,8 @@ void visitsBox::connectSignals(QWidget *parent)
     connect ( shift_pageUp,SIGNAL(activated()),this,SLOT(onShift_pageUp()));
     connect ( shift_pageDown,SIGNAL(activated()),this,SLOT(onShift_pageDown()));
     connect ( printShortcut,SIGNAL(activated()),this,SLOT(on_fastPrint_leftButtonClicked()));
-    connect ( printPreviewShortcut,SIGNAL(activated()),print,SLOT(showPrintPreviewDialog()));
-    connect ( this,SIGNAL(showPreview()),print,SLOT(showPrintPreviewDialog()));// this is for rt
+    connect ( printPreviewShortcut,SIGNAL(activated()),this,SLOT(on_fastPrint_rightButtonClicked()));
+    //connect ( this,SIGNAL(showPreview()),print,SLOT(showPrintPreviewDialog()));// this is for rt
     connect ( easyPrintShortcut,SIGNAL(activated()),this,SLOT(on_fastPrint_middleButtonClicked()));
     connect ( ui->vDrugsTable,SIGNAL(syncDrugs(QList<QStringList>,bool)),this,SIGNAL(syncDrugs(QList<QStringList>,bool)));
     connect ( ui->InvestigationsTable,SIGNAL(selectLastInvRow()),this,SLOT(selectLastInvRow()) );

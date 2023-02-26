@@ -3,7 +3,9 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "printdrugs.h"
+#include "msettings.h"
 #include "qcombobox.h"
+#include "qprinter.h"
 #include "qprinterinfo.h"
 #include "ui_printdrugs.h"
 
@@ -33,7 +35,7 @@ printDrugs::printDrugs(QWidget *parent) :
     lSettings = pSettings =  loadPrintSettings();
 
     applyPageSizeParamaters();
-    setupPrinter(printer);
+    //setupPrinter(printer);
 
 
     connect(ui->printerProfile,QOverload<int>::of(&QComboBox::activated),this,&printDrugs::printerProfile_activated,Qt::QueuedConnection);
@@ -167,10 +169,11 @@ void printDrugs::showPrintDialog()
 
 void printDrugs::showPrintPreviewDialog()
 {
-    if(this->isVisible()){
-        if(!modificationsOK())
-            return;
-    }
+    if(this->isVisible())
+        m_roshetta = ui->Roshetta->document();
+    else
+        m_roshetta = roshettaMaker.createRoshetta(roshettaData,pSettings);
+
     mPrintPreviewDialog previewDialog(this);
     previewDialog.setWindowState(previewDialog.windowState() | Qt::WindowMaximized);
     connect(&previewDialog,SIGNAL(paintRequested(QPrinter*)),this,SLOT(makePrintPreview(QPrinter*)));
@@ -182,7 +185,7 @@ void printDrugs::mPrint(const bool &_reload)
 {
     if(_reload)
         reload();
-
+    setupPrinter(printer);
     printDoc(printer,m_roshetta);
 }
 
@@ -276,6 +279,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
 
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
     setTabWidth();
+    printerName = ui->printers->currentText();
     return printSettings;
 }
 
@@ -345,6 +349,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.compactMode = ui->compactMode->isChecked();
     printSettings.clearDuplicateDrugs = ui->clearDuplicateDrugs->isChecked();
     printSettings.preferRTFBanner = ui->preferRTF->isChecked();
+    printerName = ui->printers->currentText();
     return printSettings;
 }
 
@@ -407,7 +412,6 @@ void printDrugs::showEvent(QShowEvent *e)
 
 void printDrugs::makePrintPreview(QPrinter *preview)
 {
-    reload();
     QPageLayout m_layout;
     QPageSize pageSize(PageMetrics::pageSizeIdFromString(pSettings.paperSizeId));
     m_layout.setPageSize(pageSize,QMarginsF(pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin));
@@ -416,6 +420,7 @@ void printDrugs::makePrintPreview(QPrinter *preview)
     preview->setPageSize(pageSize);
     preview->setPageLayout(m_layout);
     preview->setFullPage(pSettings.enableFullPage);
+
     printDoc(preview,m_roshetta,true);
 }
 
@@ -426,6 +431,7 @@ void printDrugs::setupPrinter(QPrinter *p)
     m_layout.setPageSize(pageSize,QMarginsF(pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin,pSettings.pageMargin));
     m_layout.setOrientation(QPageLayout::Orientation::Portrait);
     m_layout.setMode(QPageLayout::Mode::StandardMode);
+    p->setPrinterName(printerName);
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
     p->setFullPage(pSettings.enableFullPage);
@@ -444,8 +450,7 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
     }else{
         t.start();
     }
-    QString printerName = ui->printers->currentText();
-    p->setPrinterName(printerName);
+
     if(roshettaMaker.getIsDrugsOutOfRange()){
         int reply = QMessageBox::question(NULL,
                                           "warning",
@@ -1033,5 +1038,6 @@ void printDrugs::resetBannerTemplateClicked()
 void printDrugs::printers_currentIndexChanged(int index)
 {
     pSettings.printerIndex = index;
+    printerName = ui->printers->currentText();
 }
 

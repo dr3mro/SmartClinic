@@ -149,6 +149,7 @@ private:
     Roshetta roshettaMaker;
     mSettings::Roshetta roshettaData;
     QString selectedDiet;
+    QString printerName;
 
 
 
