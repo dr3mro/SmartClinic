@@ -429,7 +429,7 @@ void printDrugs::setupPrinter(QPrinter *p)
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
     p->setFullPage(pSettings.enableFullPage);
-    p->setDocName(QString("%1_%2_%3").arg(roshettaData.ID).arg(roshettaData.name).arg(roshettaData.printedinDate.toString("yyyy-MM-dd hh:mm AP")));
+    p->setDocName(QString("%1_%2_%3").arg(roshettaData.ID).arg(roshettaData.name).arg(roshettaData.visitDate.toString("yyyy-MM-dd")));
 }
 
 void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
