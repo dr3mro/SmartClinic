@@ -217,7 +217,7 @@ void invesList::on_ButtonDel_clicked()
 void invesList::on_tableView_clicked(const QModelIndex &index)
 {
     int row = index.row();
-    if ( row < 0 )
+    if ( row < 0 || model->item(row,2)->text().toInt() > 0 )
         ui->ButtonDel->setEnabled(false);
     else
         ui->ButtonDel->setEnabled(true);
