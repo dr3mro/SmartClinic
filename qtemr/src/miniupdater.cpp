@@ -3,6 +3,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "miniupdater.h"
+#include "qmessagebox.h"
 #include "ui_miniupdater.h"
 
 miniUpdater::miniUpdater(QWidget *parent,bool _autoUpate) : QDialog(parent),
@@ -43,6 +44,13 @@ void miniUpdater::disconnected()
 
 void miniUpdater::on_doButton_clicked()
 {
+    QTcpSocket socket;
+    socket.connectToHost("www.dropbox.com", 80);
+    if(!socket.waitForConnected(3000)){
+        QMessageBox::information(nullptr,"No Internet","Failed to connect to update server, please check your connection and try again.",QMessageBox::Button::Ok);
+        return;
+    }
+
     ui->doButton->setEnabled(false);
     ui->closeButton->setText("Abort");
     updateFileGraber = new fileGrabber(true,QUrl(updateUrl),this);
