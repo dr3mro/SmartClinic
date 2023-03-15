@@ -3,6 +3,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "ztableview.h"
+#include "investmodel.h"
 
 zTableView::zTableView(QWidget *parent):QTableView(parent) //-V730
 {
@@ -56,16 +57,33 @@ bool zTableView::isValidRow(int row)
     else if(sortColumn ==6) // InvestTable
     {
         //normal=0,hasMedia=1,isPaid=2,wasPaid=3,nonPrintable=4,PrintableWithMedia=5};
-        if( tableModel->item(row-1,sortColumn)->text().toInt() == 2 ||
-            tableModel->item(row-1,sortColumn)->text().toInt() == 3)
-        {
-            return  ( tableModel->item(row,sortColumn)->text().toInt() < 2 ||
-                      tableModel->item(row,sortColumn)->text().toInt() > 3 );
-        }
-        else
-        {
-            return  ( tableModel->item(row,sortColumn)->text().toInt() == 4 );
-        }
+
+        InvestModel::InvestigationsStates mPreviousRowState = static_cast<InvestModel::InvestigationsStates> (tableModel->item(row-1,sortColumn)->text().toInt());
+        InvestModel::InvestigationsStates mSelectedRowState = static_cast<InvestModel::InvestigationsStates> (tableModel->item(row,sortColumn)->text().toInt());
+
+
+
+        return (mPreviousRowState != mSelectedRowState);
+
+//        if(mPreviousRowState == InvestModel::InvestigationsStates::isPaid || mPreviousRowState == InvestModel::InvestigationsStates::wasPaid){
+//            return (mSelectedRowState != InvestModel::InvestigationsStates::isPaid && mSelectedRowState != InvestModel::InvestigationsStates::wasPaid);
+//        }
+
+//        if(mPreviousRowState == InvestModel::InvestigationsStates::PrintableWithMedia){
+//            return (mSelectedRowState != InvestModel::InvestigationsStates::PrintableWithMedia);
+//        }
+
+//        if( tableModel->item(row-1,sortColumn)->text().toInt() == 2 ||
+//            tableModel->item(row-1,sortColumn)->text().toInt() == 3 ||
+//            tableModel->item(row-1,sortColumn)->text().toInt() == 5)
+//        {
+//            return  ( tableModel->item(row,sortColumn)->text().toInt() < 2 ||
+//                      tableModel->item(row,sortColumn)->text().toInt() > 3 );
+//        }
+//        else
+//        {
+//            return  ( tableModel->item(row,sortColumn)->text().toInt() == 4 );
+//        }
     }
     return false;
 }

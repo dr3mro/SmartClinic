@@ -11,6 +11,7 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include "msettings.h"
+#include "investmodel.h"
 class zTableView : public QTableView
 {
     Q_OBJECT

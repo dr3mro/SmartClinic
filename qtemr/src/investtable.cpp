@@ -364,7 +364,7 @@ void investTable::toggleInvestaigationState(const int &state, const QModelIndex 
     {
         invModel->item(cell.row(),6)->setText(QString::number(InvestModel::InvestigationsStates::PrintableWithMedia));
         QList<QStandardItem*> item = tableModel->takeRow(cell.row());
-        tableModel->insertRow(getInvestigationCount(),item);
+        tableModel->insertRow(getServicesCount(),item);
     }
     else if(state==InvestModel::InvestigationsStates::PrintableWithMedia)
     {
