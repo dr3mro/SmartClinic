@@ -46,8 +46,8 @@ public slots:
 
 private:
     sqlBase *sqlbase;
-    QStandardItemModel *model;
-    QSortFilterProxyModel *proxy_model;
+    QStandardItemModel *model=nullptr;
+    QSortFilterProxyModel *proxy_model=nullptr;
     bool eventFilter(QObject *o, QEvent *e);
     bool loadingIsFinished;
     int filterColumn;
@@ -57,7 +57,7 @@ private:
     QFuture<QStandardItemModel*> initModelFuture;
     QFutureWatcher<QStandardItemModel*> initWatcher;
     int ID=1;
-    QModelIndexList getSortedMatchedListOfIndexes(const int& row);
+    //QModelIndexList getSortedMatchedListOfIndexes(const int& row);
 
 signals:
     //void quitUpdateInLinePatientListThread();

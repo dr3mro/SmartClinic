@@ -77,22 +77,22 @@ bool patientTable::eventFilter(QObject *o, QEvent *e)
     return QObject::eventFilter(o,e);
 }
 
-QModelIndexList patientTable::getSortedMatchedListOfIndexes(const int &row)
-{
-    auto start = proxy_model->index(0,0);
-    auto matchingString = QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0'));
+//QModelIndexList patientTable::getSortedMatchedListOfIndexes(const int &row)
+//{
+//    auto start = proxy_model->index(0,0);
+//    auto matchingString = QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0'));
 
-    auto indexes = proxy_model->match(start,Qt::MatchExactly,matchingString);
+//    auto indexes = proxy_model->match(start,Qt::MatchExactly,matchingString);
 
-    if (indexes.count() > 1)
-        std::sort(indexes.begin(),indexes.end(),
-              [](const QModelIndex &a, const QModelIndex &b)
-                {
-                    return a.row() > b.row();
-                });
+//    if (indexes.count() > 1)
+//        std::sort(indexes.begin(),indexes.end(),
+//              [](const QModelIndex &a, const QModelIndex &b)
+//                {
+//                    return a.row() > b.row();
+//                });
 
-    return indexes;
-}
+//    return indexes;
+//}
 
 void patientTable::keyPressEvent(QKeyEvent *ke)
 {
@@ -241,17 +241,16 @@ void patientTable::mSelectRow(int row)
 #if DISABLESORTEDSELECT
     selectRow(row);
 #else
-
-    int _resultedRow = 0;
-
-    if(row > 0){
-        auto sortedMatchedListOfIndexes = this->getSortedMatchedListOfIndexes(row);
-
-        if(!sortedMatchedListOfIndexes.isEmpty())
-            _resultedRow = sortedMatchedListOfIndexes.constFirst().row();
+    if(proxy_model != nullptr){
+        auto str = QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0'));
+        for(int _row=0; _row < proxy_model->rowCount(); _row++){
+            if(proxy_model->index(_row,0).isValid() &&
+                    proxy_model->index(_row,0).data(Qt::DisplayRole).toString() == str){
+                selectRow(_row);
+                return;
+            }
+        }
     }
-
-    selectRow(_resultedRow);
 #endif
 }
 
