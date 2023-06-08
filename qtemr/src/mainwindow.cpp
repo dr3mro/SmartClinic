@@ -371,7 +371,7 @@ void MainWindow::fillPatient(const sqlBase::Patient &_patient)
     }
 
     if (settings.isInLinePatientList())
-        ui->searchWidgetx->selectRow(_patient.ID-1);
+        ui->searchWidgetx->selectRow(ID-1);
 
     ui->conditionswidget->fillConditions(ID);
     ui->dev->load(ID);

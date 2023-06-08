@@ -241,7 +241,10 @@ void patientTable::mSelectRow(int row)
 #if DISABLESORTEDSELECT
     selectRow(row);
 #else
-    if(proxy_model != nullptr){
+    if (this->horizontalHeader()->sortIndicatorOrder() == Qt::SortOrder::AscendingOrder
+            && proxy_model->sortColumn() == 0){
+        selectRow(row);
+    }else if(proxy_model != nullptr){
         auto str = QStringLiteral("%1").arg(row+1, 5, 10, QLatin1Char('0'));
         for(int _row=0; _row < proxy_model->rowCount(); _row++){
             if(proxy_model->index(_row,0).isValid() &&
