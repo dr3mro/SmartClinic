@@ -131,18 +131,18 @@ void MergeDlg::loadVisits()
 }
 
 void MergeDlg::copyPath(QString src, QString dst)
-{
-    QDir dir(src);
-    if (! dir.exists())
+{  
+    QDir src_dir(src);
+    if (! src_dir.exists())
         return;
 
-    foreach (QString d, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
-        QString dst_path = dst + QDir::separator() + d;
-        dir.mkpath(dst_path);
-        copyPath(src+ QDir::separator() + d, dst_path);
+    QDir dst_dir(dst);   
+    if(! dst_dir.exists()){
+        QDir dir;
+        dir.mkpath(dst);
     }
 
-    foreach (QString f, dir.entryList(QDir::Files)) {
+    foreach (QString f, src_dir.entryList(QDir::Files)) {
         QFile::copy(src + QDir::separator() + f, dst + QDir::separator() + f);
     }
 }
