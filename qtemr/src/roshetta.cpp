@@ -1,5 +1,8 @@
 #include "roshetta.h"
 #include <QApplication>
+#include <QScreen>
+#include <QRegularExpression>
+
 Roshetta::Roshetta(QObject *parent) : QObject(parent)
 {
 

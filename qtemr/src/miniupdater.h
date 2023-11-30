@@ -12,6 +12,7 @@
 #include <QTime>
 #include <QMessageBox>
 #include <QVersionNumber>
+#include <QElapsedTimer>
 #include "globalvariables.h"
 #include "build.h"
 #include "filegrabber.h"

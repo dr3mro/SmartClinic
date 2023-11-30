@@ -5,6 +5,10 @@
 #include "miniupdater.h"
 #include "qmessagebox.h"
 #include "ui_miniupdater.h"
+#include <QWidget>
+#include <QObject>
+#include <QElapsedTimer>
+#include <QProcess>
 
 miniUpdater::miniUpdater(QWidget *parent,bool _autoUpate) : QDialog(parent),
     ui(new Ui::miniUpdater),

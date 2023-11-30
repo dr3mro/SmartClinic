@@ -3,6 +3,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "microupdater.h"
+#include <QSettings>
 
 microUpdater::microUpdater(QObject *parent) : QObject(parent),
   inet(new internet(this)),
@@ -63,9 +64,9 @@ void microUpdater::notifyUser(QByteArray ba)
         msgBox.setText(QString("New Update is available to version: %1, Do you want to update now?")
                           .arg(latestVersion));
 
-        QAbstractButton* pButtonYes    =  msgBox.addButton(tr("Yes"), QMessageBox::YesRole);
-        QAbstractButton* pButtonNo     =  msgBox.addButton(tr("No"), QMessageBox::NoRole);
-        QAbstractButton* pButtonIgnore =  msgBox.addButton(tr("Skip"),QMessageBox::RejectRole);
+        QAbstractButton* pButtonYes    = (QAbstractButton*) msgBox.addButton(tr("Yes"), QMessageBox::YesRole);
+        QAbstractButton* pButtonNo     = (QAbstractButton*) msgBox.addButton(tr("No"), QMessageBox::NoRole);
+        QAbstractButton* pButtonIgnore = (QAbstractButton*) msgBox.addButton(tr("Skip"),QMessageBox::RejectRole);
 
         msgBox.exec();
 

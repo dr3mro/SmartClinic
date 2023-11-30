@@ -4,6 +4,8 @@
 
 #include "datahelper.h"
 #include "msettings.h"
+#include <QRegularExpression>
+
 dataHelper::dataHelper(QObject *parent) : QObject(parent)
 {
 

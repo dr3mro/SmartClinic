@@ -1,6 +1,7 @@
 #include "PageMetrics.h"
 
 #include <QApplication>
+#include <QScreen>
 //#include <QDesktopWidget>
 
 

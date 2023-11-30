@@ -27,7 +27,8 @@ endif()
 
 set(TARGET_NAME "smartClinic3")
 
-#set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
+set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
+set(CMAKE_C_COMPILER_LAUNCHER ccache)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
@@ -113,7 +114,7 @@ set_property(TARGET ${TARGET_NAME} PROPERTY MSVC_RUNTIME_LIBRARY  "MultiThreaded
 
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /VERBOSE:LIB")
 
-target_precompile_headers(${TARGET_NAME} PRIVATE src/pch.h)
+#target_precompile_headers(${TARGET_NAME} PRIVATE src/pch.h)
 
 if(MSVC)
     target_link_libraries(${TARGET_NAME}

@@ -44,13 +44,13 @@
 ****************************************************************************/
 
 #include <qglobal.h>
+#include <QtZlib/zlib.h>
 #include "zipreader.h"
 #include "zipwriter.h"
 #include <qdatetime.h>
 #include <qplatformdefs.h>
 #include <qendian.h>
 #include <qdir.h>
-#include "QtZlib/zlib.h"
 #include "../../mdebug.h"
 
 
