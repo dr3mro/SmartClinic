@@ -68,6 +68,7 @@ else()
 endif()
 
 #find_package(OpenSSL)
+
 find_package(Qt6 COMPONENTS Core)
 
 if (NOT Qt6_FOUND)

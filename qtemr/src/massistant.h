@@ -15,14 +15,12 @@
 #include <QFutureWatcher>
 #include <QShortcut>
 #include "msettings.h"
-#include "dataiohelper.h"
 #include "sqlbase.h"
 #include "sqlextra.h"
 #include "mcalendarwidget.h"
 #include "mlabelmsg.h"
 #include "mdialog.h"
 #include "expecteddeliveries.h"
-#include "mcashtableview.h"
 
 namespace Ui {
 class mAssistant;

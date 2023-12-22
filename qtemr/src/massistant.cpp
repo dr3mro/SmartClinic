@@ -136,7 +136,7 @@ void mAssistant::tweakRegisterTable()
     int servPixelWidth = 50*servCOUNT;
     ui->cashTableView->horizontalHeader()->setDefaultSectionSize(50);
     ui->cashTableView->horizontalHeader()->setStretchLastSection(true);
-    ui->cashTableView->setColumnWidth(0,50);
+    ui->cashTableView->setColumnWidth(0,60);
     //ui->cashTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->cashTableView->setColumnWidth(1,350-servPixelWidth);
     ui->cashTableView->setColumnWidth(4,85);
@@ -218,9 +218,9 @@ void mAssistant::doCalcs()
 
     calcModelFuture.waitForFinished();
     ui->calcTableView->setModel(calcModel);
-    ui->calcTableView->setColumnWidth(0,90);
-    ui->calcTableView->setColumnWidth(1,45);
-    ui->calcTableView->setColumnWidth(2,45);
+    ui->calcTableView->setColumnWidth(0,80);
+    ui->calcTableView->setColumnWidth(1,50);
+    ui->calcTableView->setColumnWidth(2,50);
     ui->calcTableView->horizontalHeader()->setStretchLastSection(true);
     ui->SUMlineEdit->setText(QString::number(TOTAL,'f',2));
     labelMsg.hide();

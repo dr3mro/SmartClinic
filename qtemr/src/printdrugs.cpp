@@ -279,7 +279,7 @@ mSettings::prescriptionPrintSettings printDrugs::loadPrintSettings()
 
     ui->Footer->setHtml(dataIOhelper::readFile(FOOTERFILE));
     setTabWidth();
-    printerName = ui->printers->currentText();
+    //printerName = ui->printers->currentText();
     return printSettings;
 }
 
@@ -349,7 +349,7 @@ mSettings::prescriptionPrintSettings printDrugs::grabPrintSettings()
     printSettings.compactMode = ui->compactMode->isChecked();
     printSettings.clearDuplicateDrugs = ui->clearDuplicateDrugs->isChecked();
     printSettings.preferRTFBanner = ui->preferRTF->isChecked();
-    printerName = ui->printers->currentText();
+    //printerName = ui->printers->currentText();
     return printSettings;
 }
 
@@ -424,7 +424,7 @@ void printDrugs::setupPrinter(QPrinter *p)
     m_layout.setOrientation(QPageLayout::Orientation::Portrait);
     m_layout.setMode(QPageLayout::Mode::StandardMode);
 
-    p->setPrinterName(printerName);
+    p->setPrinterName(ui->printers->currentText());
 
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
@@ -461,7 +461,7 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
         if (roshettaData.diet.printRequired){
             printer->setFromTo(1,1);
             _doc->print(p);
-            emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
+            emit message("Message",QString("Print job is being sent to Printer (%1).").arg(p->printerName()));
             reply = QMessageBox::question(nullptr,"Attention","Please press Ok when ready to print the selected Diet.",
                                           QMessageBox::Ok,
                                           QMessageBox::Cancel);
@@ -471,7 +471,7 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
             }else if (reply ==  QMessageBox::Ok){
                 printer->setFromTo(2,2);
                 _doc->print(p);
-                emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
+                emit message("Message",QString("Print job is being sent to Printer (%1).").arg(p->printerName()));
                 printer->setFromTo(0,0);
             }
         }else{
@@ -481,14 +481,14 @@ void printDrugs::printDoc(QPrinter *p,QTextDocument *_doc,bool isPreview)
                                           QMessageBox::No);
             if (reply ==  QMessageBox::Yes){
                 _doc->print(p);
-                emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
+                emit message("Message",QString("Print job is being sent to Printer (%1).").arg(p->printerName()));
             }else if (reply ==  QMessageBox::No){
                 return;
             }
         }
     }else{
         _doc->print(p);
-        emit message("Message",QString("Print job is being sent to Printer (%1).").arg(printerName));
+        emit message("Message",QString("Print job is being sent to Printer (%1).").arg(p->printerName()));
     }
     if (settings.alwaysClosePrintDlgAfterClick() && isVisible())
         this->close();
@@ -1032,6 +1032,6 @@ void printDrugs::resetBannerTemplateClicked()
 void printDrugs::printers_currentIndexChanged(int index)
 {
     pSettings.printerIndex = index;
-    printerName = ui->printers->currentText();
+    printer->setPrinterName(ui->printers->currentText());
 }
 
