@@ -138,7 +138,7 @@ void mAssistant::tweakRegisterTable()
     ui->cashTableView->horizontalHeader()->setStretchLastSection(true);
     ui->cashTableView->setColumnWidth(0,60);
     //ui->cashTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    ui->cashTableView->setColumnWidth(1,350-servPixelWidth);
+    ui->cashTableView->setColumnWidth(1,630-servPixelWidth);
     ui->cashTableView->setColumnWidth(4,85);
 
     ui->cashTableView->sortByColumn(2,Qt::SortOrder::AscendingOrder);
@@ -329,7 +329,7 @@ void mAssistant::onAgendaModelLoaded()
     ui->agendaTableView->resizeColumnToContents(2);
     ui->agendaTableView->setColumnWidth(0,50);
     //ui->agendaTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    ui->agendaTableView->setColumnWidth(1,330);
+    ui->agendaTableView->setColumnWidth(1,630);
     ui->agendaTableView->horizontalHeader()->setStretchLastSection(true);
     ui->agendaTableView->clearSelection();
 
