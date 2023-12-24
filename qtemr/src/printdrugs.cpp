@@ -1033,5 +1033,6 @@ void printDrugs::printers_currentIndexChanged(int index)
 {
     pSettings.printerIndex = index;
     printer->setPrinterName(ui->printers->currentText());
+    setupPrinter(printer);
 }
 
