@@ -69,7 +69,7 @@ endif()
 
 #find_package(OpenSSL)
 
-find_package(Qt6 COMPONENTS Core)
+#find_package(Qt6 COMPONENTS Core)
 
 if (NOT Qt6_FOUND)
     find_package(Qt5 COMPONENTS Widgets REQUIRED)
