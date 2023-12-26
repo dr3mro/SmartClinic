@@ -14,6 +14,7 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QShortcut>
+#include <QDesktopWidget>
 #include "msettings.h"
 #include "sqlbase.h"
 #include "sqlextra.h"
@@ -23,81 +24,80 @@
 #include "expecteddeliveries.h"
 
 namespace Ui {
-class mAssistant;
+  class mAssistant;
 }
 
 class mAssistant : public mDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit mAssistant(mLabelMsg &labelMsg, QWidget *parent, bool & eMode);
-    void load();
-    ~mAssistant();
+  explicit mAssistant(mLabelMsg &labelMsg, QWidget *parent, bool & eMode);
+  void load();
+  ~mAssistant();
 
 signals:
-    void loadThisPatient(int);
-    void toggleEditMode(bool);
+  void loadThisPatient(int);
+  void toggleEditMode(bool);
 
 private slots:
-    void on_closeButton_clicked();
-    void on_goButton_clicked();
-    void on_fromDate_dateChanged(const QDate &fromDate);
-    void on_toDate_dateChanged(const QDate &toDate);
-    void on_fromTime_timeChanged(const QTime &fromTime);
-    void on_toTime_timeChanged(const QTime &toTime);
-    void on_btnCheckout_clicked();
-    void loadCheckout();
-    void on_cbSinceLastCheckout_toggled(bool checked);
-    void on_cashCalendar_clicked(const QDate &date);
-    void on_agendaCalendar_clicked(const QDate &date);
-    void LoadPatient(const QModelIndex &modelIndex);
-    void loadDeliveries();
-    void onEddModelLoaded();
-    void onAgendaModelLoaded();
-    void onCashModelLoaded();
-    void goExpectedDeliveriesTab();
-    void doCalcs();
+  void on_closeButton_clicked();
+  void on_goButton_clicked();
+  void on_fromDate_dateChanged(const QDate &fromDate);
+  void on_toDate_dateChanged(const QDate &toDate);
+  void on_fromTime_timeChanged(const QTime &fromTime);
+  void on_toTime_timeChanged(const QTime &toTime);
+  void on_btnCheckout_clicked();
+  void loadCheckout();
+  void on_cbSinceLastCheckout_toggled(bool checked);
+  void on_cashCalendar_clicked(const QDate &date);
+  void on_agendaCalendar_clicked(const QDate &date);
+  void LoadPatient(const QModelIndex &modelIndex);
+  void loadDeliveries();
+  void onEddModelLoaded();
+  void onAgendaModelLoaded();
+  void onCashModelLoaded();
+  void goExpectedDeliveriesTab();
+  void doCalcs();
 private:
-    mLabelMsg& labelMsg;
-    bool & editingMode;
-    sqlBase *sqlbase;
-    sqlExtra *sqlextra;
-    QStandardItemModel *calcModel;
-    QStandardItemModel *agendaModel;
-    QStandardItemModel *myRegisterModel;
-    QStandardItemModel *eddModel;
-    QFuture<QStandardItemModel*> eddModelFuture;
-    QFutureWatcher<QStandardItemModel*> eddModelFutureWatcher;
-    QFuture<QStandardItemModel*> agendaModelFuture;
-    QFutureWatcher<QStandardItemModel*> agendaModelFutureWatcher;
-    QFuture<void> agendaModelAttendedFuture;
-//    QFuture<void> registerServiceLoaderFuture;
-//    QFutureWatcher<void> registerServiceLoaderFutureWatcher;
-    QFuture<QStandardItemModel*> calcModelFuture;
-    QFuture<QStandardItemModel*> cashModelFuture;
-    QFutureWatcher<QStandardItemModel*> cashModelFutureWatcher;
-    Ui::mAssistant *ui;
-    mCalendarWidget *fromCalWidget;
-    mCalendarWidget *toCalWidget;
-    mSettings& settings = mSettings::instance();
-    ExpectedDeliveries expectedDeliveries;
-    QCalendarWidget *calendar;
+  mLabelMsg& labelMsg;
+  bool & editingMode;
+  sqlBase *sqlbase;
+  sqlExtra *sqlextra;
+  QStandardItemModel *calcModel;
+  QStandardItemModel *agendaModel;
+  QStandardItemModel *myRegisterModel;
+  QStandardItemModel *eddModel;
+  QFuture<QStandardItemModel*> eddModelFuture;
+  QFutureWatcher<QStandardItemModel*> eddModelFutureWatcher;
+  QFuture<QStandardItemModel*> agendaModelFuture;
+  QFutureWatcher<QStandardItemModel*> agendaModelFutureWatcher;
+  QFuture<void> agendaModelAttendedFuture;
+  //    QFuture<void> registerServiceLoaderFuture;
+  //    QFutureWatcher<void> registerServiceLoaderFutureWatcher;
+  QFuture<QStandardItemModel*> calcModelFuture;
+  QFuture<QStandardItemModel*> cashModelFuture;
+  QFutureWatcher<QStandardItemModel*> cashModelFutureWatcher;
+  Ui::mAssistant *ui;
+  mCalendarWidget *fromCalWidget;
+  mCalendarWidget *toCalWidget;
+  mSettings& settings = mSettings::instance();
+  ExpectedDeliveries expectedDeliveries;
+  QCalendarWidget *calendar;
 
-    void loadCurrentSelectedAgenda();
-    void tweakRegisterTable();
-    void loadRegister();
-    void loadAgenda();
-    void setTimePeriod();
-    void setcheckoutTooltip();
-    bool ignoreKeyEvents=false;
-
+  void loadCurrentSelectedAgenda();
+  void tweakRegisterTable();
+  void loadRegister();
+  void loadAgenda();
+  void setTimePeriod();
+  void setcheckoutTooltip();
+  bool ignoreKeyEvents=false;
 
 protected:
-    void keyPressEvent(QKeyEvent *event)override;
-    void keyReleaseEvent(QKeyEvent *event)override;
-    void showEvent(QShowEvent *e)override;
-    void closeEvent(QCloseEvent *e) override;
+  void keyPressEvent(QKeyEvent *event)override;
+  void keyReleaseEvent(QKeyEvent *event)override;
+  void showEvent(QShowEvent *e)override;
+  void closeEvent(QCloseEvent *e) override;
 
 };
 
