@@ -106,6 +106,10 @@ void patientTable::updatePatientsCompleted()
     proxy_model->setSourceModel(model);
     hideColumn(2);
     mSelectRow(ID-1);
+    this->setColumnWidth(0,sizeHintForColumn(0));
+    repaint();
+//    this->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeMode::ResizeToContents);
+//    this->horizontalHeader()->setSectionResizeMode(1,QHeaderView::ResizeMode::Stretch);
 }
 
 void patientTable::setMyModel()
