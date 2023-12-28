@@ -776,7 +776,7 @@ void visitsBox::keyPressEvent(QKeyEvent *e)
 
 void visitsBox::keyReleaseEvent(QKeyEvent *e)
 {
-    if ( (e->key() == Qt::Key_F6) ) // && !e->isAutoRepeat())
+    if ( (e->key() == Qt::Key_F6) && !e->isAutoRepeat())
     {
         setWindowOpacity(double(1));
 
