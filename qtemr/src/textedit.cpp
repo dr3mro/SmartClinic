@@ -175,7 +175,9 @@ void TextEdit::insertChar(QString str)
 
 
     if ( r.match(str,QRegularExpression::NormalMatch).hasMatch() || isSelectionStyled )
-        tc.clearSelection();
+      tc.clearSelection();
+    else
+      tc.removeSelectedText();
 
     tc.insertText(str);
     setTextCursor(tc);

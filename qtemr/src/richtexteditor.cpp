@@ -291,7 +291,6 @@ void richTextEditor::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Delete:
     case Qt::Key_Backspace:
-    case Qt::Key_Space:
         hide();
         emit deleteText();
         break;
