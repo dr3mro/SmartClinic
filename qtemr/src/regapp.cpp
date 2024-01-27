@@ -17,7 +17,8 @@ QString regApp::genDeviceID()
 {
     QString unique_device_id;
     QProcess p1;
-    p1.start("wmic",QStringList({"bios", "get", "serialnumber"}));
+    //p1.start("wmic",QStringList({"bios", "get", "serialnumber"}));
+    p1.start("powershell",QStringList({"-c","$bios=Get-WmiObject", "win32_BIOS;", "Write-Host", "$bios.SerialNumber"}));
     p1.waitForStarted();
     p1.waitForFinished();
 
@@ -25,7 +26,7 @@ QString regApp::genDeviceID()
     QString key1 = settings1.value("BaseBoardManufacturer","0").toString().split(" ").at(0);
     QString key2 = settings1.value("BaseBoardProduct","0").toString().split(" ").at(0);
 
-    QString bios_serial = QString::fromLocal8Bit( p1.readAll()).split("\n").at(1).simplified();
+    QString bios_serial = QString::fromLocal8Bit( p1.readAll()).split("\n").at(0).simplified();
 
     if ( bios_serial.length() < 4)
     {
