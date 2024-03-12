@@ -27,6 +27,7 @@ void toast::setCenterPos(int pos)
 
 void toast::setMessage(QString title, QString msg)
 {
+    verticalPos = 0;
     setMessageType(title);
     setText(msg);
     wait.setInterval(msg.length()*170);
