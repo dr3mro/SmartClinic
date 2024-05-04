@@ -24,7 +24,7 @@ void wm_mShip::work()
 
     if ( !settings.isDeviceActivated() && !rApp.check_eval_copy() )
     {
-        emit sendMail("New Device Registered",QString("%1 %2").arg(rApp.genDeviceID(),rApp.read_reg_data().join(":")));
+        emit sendMail("New Device Registered",QString("%1 %2").arg(rApp.getDeviceID(),rApp.read_reg_data().join(":")));
     }
 }
 
@@ -88,5 +88,5 @@ bool wm_mShip::isWhiteListed(QByteArray ba)
 void wm_mShip::blockDevice()
 {
     rApp.toggleBlock(true);
-    emit sendMail("Block Message",QString("A new device ( %1 ) has been blocked").arg(rApp.genDeviceID()));
+    emit sendMail("Block Message",QString("A new device ( %1 ) has been blocked").arg(rApp.getDeviceID()));
 }

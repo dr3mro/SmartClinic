@@ -137,7 +137,7 @@ void errorLogViewer::onSendReport_clicked()
     ui->sendReport->setEnabled(false);
     QString report = ui->plainTextEdit->toPlainText();
 
-    report.insert(0,QString("Device ID  : %1 \n\nError log Contents:\n").arg(rApp.genDeviceID()));
+    report.insert(0,QString("Device ID  : %1 \n\nError log Contents:\n").arg(rApp.getDeviceID()));
 
     if (report.length() != 0)
     {

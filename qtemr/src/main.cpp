@@ -327,7 +327,7 @@ int main(int argc, char *argv[])
     QApplication::processEvents();
     SingleInstance cInstance;
     QApplication::processEvents();
-    MainWindow w;
+    MainWindow w; //// boot delay
     QApplication::processEvents();
     banner->updateprogress(QString("Making sure only one instance is running"));
     QApplication::processEvents();
@@ -336,7 +336,7 @@ int main(int argc, char *argv[])
     QObject::connect(&cInstance,SIGNAL(doAction()),&w,SLOT(showMainwindowIfMinimizedToTray()));
     cInstance.listen(singleInstance);
     QApplication::processEvents();
-    w.boot();
+    w.boot(); //// boot delay
     QApplication::processEvents();
     QRect screenres = qApp->primaryScreen()->geometry();
 

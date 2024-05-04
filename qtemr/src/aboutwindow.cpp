@@ -1,9 +1,7 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include "aboutwindow.h"
 #include "ui_aboutwindow.h"
+#include "build.h"
+#include "globalvariables.h"
 
 AboutWindow::AboutWindow(QWidget *parent) : mDialog(parent),
     msgbox (new myMessageBox(this)),
@@ -12,7 +10,7 @@ AboutWindow::AboutWindow(QWidget *parent) : mDialog(parent),
     ui->setupUi(this);
 
     bool reg_status = regMyApp.compare_reg_data();
-    QString unique_device_id = regMyApp.genDeviceID();
+    QString unique_device_id = regMyApp.getDeviceID();
 
     QFont mFont;
     ui->serialNumber->setFont(tweakFont(mFont));
@@ -52,7 +50,7 @@ AboutWindow::~AboutWindow()
 
 void AboutWindow::regButton_clicked()
 {
-    QString unique_device_id = regMyApp.genDeviceID();
+    QString unique_device_id = regMyApp.getDeviceID();
     QString serial_number = regMyApp.generate_serial_number(unique_device_id).split("-").join("");
     QString enetered_serial_number = ui->serialNumber->text().split("-").join("").toUpper();
     if ( enetered_serial_number == "TRIAL" )
@@ -129,4 +127,3 @@ void AboutWindow::serialNumber_textChanged(const QString &arg1)
     else
         ui->regButton->setEnabled(false);
 }
-

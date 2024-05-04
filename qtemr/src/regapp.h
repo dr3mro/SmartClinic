@@ -4,7 +4,6 @@
 
 #ifndef REGAPP_H
 #define REGAPP_H
-
 #include <QObject>
 #include <QtCore>
 #include <QProcess>
@@ -12,8 +11,7 @@
 #include <QFile>
 #include <QList>
 #include <QSettings>
-#include "globalvariables.h"
-#include "email.h"
+
 
 class regApp : public QObject
 {
@@ -21,7 +19,6 @@ class regApp : public QObject
 
 public:
     explicit regApp(QObject *parent = nullptr);
-    QString genDeviceID();
     QString generate_serial_number(QString unique_device_id);
     bool save_reg_data(QString enetered_serial_number);
     QStringList read_reg_data();
@@ -33,9 +30,11 @@ public:
     QByteArray smuggle14(QString &str);
     void toggleBlock(bool b);
     int eval_max();
+    QString getDeviceID();
 
     ~regApp();
 private:
+    QString DeviceID;
 
 signals:
 

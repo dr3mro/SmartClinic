@@ -1,53 +1,33 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include "regapp.h"
-
+#include "globalvariables.h"
 
 regApp::regApp(QObject *parent) :
     QObject(parent)
 {
+  QProcess p1;
 
+  if (QSysInfo::productVersion().toInt() <= 10)
+    p1.start("wmic",QStringList({"bios", "get", "serialnumber"}));
+  else
+    p1.start("powershell",QStringList({"-c","$bios=Get-WmiObject", "win32_BIOS;", "Write-Host", "$bios.SerialNumber"}));
 
+  p1.waitForStarted();
+
+  QSettings settings1("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS",QSettings::NativeFormat);
+  QString key1 = settings1.value("BaseBoardManufacturer","0").toString().split(" ").at(0);
+  QString key2 = settings1.value("BaseBoardProduct","0").toString().split(" ").at(0);
+
+  p1.waitForFinished();
+
+  QString bios_serial = QString::fromLocal8Bit( p1.readAll()).split("\n").at(0).simplified();
+
+  if ( bios_serial.length() < 4)
+  {
+      bios_serial = QString("ABCD");
+  }
+
+  DeviceID = QString("%1-%2-%3-%4").arg(key1.left(2),key2.right(2),bios_serial.left(2),bios_serial.right(2)).toUpper();
 }
-
-
-QString regApp::genDeviceID()
-{
-    QString unique_device_id;
-    QProcess p1;
-
-    if (QSysInfo::productVersion().toInt() <= 10)
-      p1.start("wmic",QStringList({"bios", "get", "serialnumber"}));
-    else
-      p1.start("powershell",QStringList({"-c","$bios=Get-WmiObject", "win32_BIOS;", "Write-Host", "$bios.SerialNumber"}));
-
-    p1.waitForStarted();
-
-    QSettings settings1("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS",QSettings::NativeFormat);
-    QString key1 = settings1.value("BaseBoardManufacturer","0").toString().split(" ").at(0);
-    QString key2 = settings1.value("BaseBoardProduct","0").toString().split(" ").at(0);
-
-    p1.waitForFinished();
-
-    QString bios_serial = QString::fromLocal8Bit( p1.readAll()).split("\n").at(0).simplified();
-
-    if ( bios_serial.length() < 4)
-    {
-        bios_serial = QString("ABCD");
-    }
-
-    unique_device_id = QString("%1-%2-%3-%4")
-            .arg(key1.left(2))
-            .arg(key2.right(2))
-            .arg(bios_serial.left(2))
-            .arg(bios_serial.right(2))
-            .toUpper();
-
-    return unique_device_id;
-}
-
 
 QString regApp::generate_serial_number(QString unique_device_id)
 {
@@ -63,14 +43,14 @@ QString regApp::generate_serial_number(QString unique_device_id)
     QString serialNumber = QString(QCryptographicHash::hash((key),QCryptographicHash::Md5).toHex()).toUpper();
 
     QString SN  = QString("%1-%2-%3-%4-%5-%6-%7-%8")
-            .arg(serialNumber.left(4))
-            .arg(serialNumber.mid(4,4))
-            .arg(serialNumber.mid(8,4))
-            .arg(serialNumber.mid(12,4))
-            .arg(serialNumber.mid(16,4))
-            .arg(serialNumber.mid(20,4))
-            .arg(serialNumber.mid(24,4))
-            .arg(serialNumber.right(4));
+            .arg(serialNumber.left(4),
+                 serialNumber.mid(4,4),
+                 serialNumber.mid(8,4),
+                 serialNumber.mid(12,4),
+                 serialNumber.mid(16,4),
+                 serialNumber.mid(20,4),
+                 serialNumber.mid(24,4),
+                 serialNumber.right(4));
     //mDebug() << SN;
     return SN;
 
@@ -106,7 +86,6 @@ QStringList regApp::read_reg_data(){
     }
     else
     {
-        //evaluate();
         return QStringList() << trialCrypted();
     }
     return reg_data_list;
@@ -114,8 +93,7 @@ QStringList regApp::read_reg_data(){
 
 bool regApp::compare_reg_data(){
 
-    QString unique_device_id = genDeviceID();
-    QString serial_number = generate_serial_number(unique_device_id);
+    QString serial_number = generate_serial_number(DeviceID);
     QByteArray serial_number_array = serial_number.split("-").join("").toUtf8();
     QString serial_number_crypted =  md5Crypt(serial_number_array);
 
@@ -134,7 +112,6 @@ bool regApp::compare_reg_data(){
 bool regApp::check_eval_copy()
 {
     QStringList regs = read_reg_data();
-    QString trailCrypt = trialCrypted();
     foreach(const QString & reg,regs){
         if(reg == trialCrypted()){
             return true;
@@ -178,7 +155,12 @@ void regApp::toggleBlock(bool b)
 
 int regApp::eval_max()
 {
-    return 10;
+  return 10;
+}
+
+QString regApp::getDeviceID()
+{
+  return DeviceID;
 }
 
 regApp::~regApp()
