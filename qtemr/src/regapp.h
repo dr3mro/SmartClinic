@@ -12,7 +12,6 @@
 #include <QList>
 #include <QSettings>
 
-
 class regApp : public QObject
 {
     Q_OBJECT

@@ -1,32 +1,12 @@
 #include "regapp.h"
 #include "globalvariables.h"
+#include "bios.h"
 
 regApp::regApp(QObject *parent) :
     QObject(parent)
 {
-  QProcess p1;
-
-  if (QSysInfo::productVersion().toInt() <= 10)
-    p1.start("wmic",QStringList({"bios", "get", "serialnumber"}));
-  else
-    p1.start("powershell",QStringList({"-c","$bios=Get-WmiObject", "win32_BIOS;", "Write-Host", "$bios.SerialNumber"}));
-
-  p1.waitForStarted();
-
-  QSettings settings1("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS",QSettings::NativeFormat);
-  QString key1 = settings1.value("BaseBoardManufacturer","0").toString().split(" ").at(0);
-  QString key2 = settings1.value("BaseBoardProduct","0").toString().split(" ").at(0);
-
-  p1.waitForFinished();
-
-  QString bios_serial = QString::fromLocal8Bit( p1.readAll()).split("\n").at(0).simplified();
-
-  if ( bios_serial.length() < 4)
-  {
-      bios_serial = QString("ABCD");
-  }
-
-  DeviceID = QString("%1-%2-%3-%4").arg(key1.left(2),key2.right(2),bios_serial.left(2),bios_serial.right(2)).toUpper();
+  Bios &b = Bios::instance();
+  DeviceID = b.getDeviceID();
 }
 
 QString regApp::generate_serial_number(QString unique_device_id)
