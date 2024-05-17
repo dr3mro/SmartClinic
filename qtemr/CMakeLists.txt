@@ -106,7 +106,7 @@ file(GLOB_RECURSE UI ui/*.ui)
 set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/res/MyApplication.rc")
 
 qt_wrap_ui(UI ${UI})
-qt_add_resources(SOURCES res/resources.qrc)
+qt_add_big_resources(SOURCES res/resources.qrc)
 
 
 add_executable(${TARGET_NAME} WIN32 ${UI} ${SOURCES} ${HEADERS} ${APP_ICON_RESOURCE_WINDOWS})

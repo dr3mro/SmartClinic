@@ -9,7 +9,7 @@
 #define STR(x) STR_IMPL_(x)  //indirection to expand argument macros
 
 
-#define BUILDVER 47
+#define BUILDVER 48
 #define MINORVER 8
 #define MAJORVER 3
 
@@ -18,7 +18,7 @@
 #define APPNAMEVER APPNAME " " APPVERSION
 #define singleInstance "COM.SMARTSOFT.SMARTCLINIC3"
 #define DEVELOPER "AMR OSMAN"
-#define APPYEAR STR(2023)
+#define APPYEAR STR(2024)
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
 #define whiteListUrl "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/validKeys?dl=0"
@@ -49,7 +49,7 @@
 #define dbVersion 2.90
 #define minimumDatabaseVersion 2.80
 #define conditionsVersion 1.0
-#define drugsDatabaseVer 211023
+#define drugsDatabaseVer 240517
 #define PORTABILITYLOCK ".portable"
 #define HEADERFILE "header.html"
 #define FOOTERFILE "footer.html"

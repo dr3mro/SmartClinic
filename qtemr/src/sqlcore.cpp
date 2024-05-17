@@ -1,8 +1,6 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include "sqlcore.h"
+#include "globalvariables.h"
+
 
 sqlCore::sqlCore(QObject *parent,QString connectionName) : msql(parent),
     model(new QStandardItemModel(parent)),
@@ -19,7 +17,7 @@ QStandardItemModel *sqlCore::getDrugsIndexModel()
     QStringList  labels;
     labels << "Trade Name" << "Generic Name" << "Price" << "Category" << "Form" << "Manufacturer";
     model->setHorizontalHeaderLabels(labels);
-    bool q = query->exec("SELECT TRADENAME,GENERICNAME,PRICE,MANUFACTURER,CATEGORY,FORM FROM drugsIndex");
+    bool q = query->exec("SELECT name,active,price,company,description,dosage_form FROM druglist");
     if ( !q )
     {
         mDebug() << query->lastError().text();
@@ -61,7 +59,7 @@ QStandardItemModel *sqlCore::getFindDrugsModel(QStandardItemModel *fmodel, QStri
     QStringList  labels;
     labels << "Trade Name" << "Price" << "Manufacturer";
     fmodel->setHorizontalHeaderLabels(labels);
-    QString cmd = QString("SELECT TRADENAME,GENERICNAME,PRICE,MANUFACTURER FROM drugsIndex WHERE ");
+    QString cmd = QString("SELECT name,active,price,company FROM druglist WHERE ");
     int filtersLength = filters.length();
     int fx = 1 ;
 
@@ -108,7 +106,7 @@ QStandardItemModel *sqlCore::getFindDrugsModel(QStandardItemModel *fmodel, QStri
 QStringListModel *sqlCore::getCoreDrugListModel()
 {
     query->clear();
-    bool q = query->exec("SELECT TRADENAME FROM drugsIndex");
+    bool q = query->exec("SELECT name FROM drugslist");
     if (!q)
     {
         mDebug() << query->lastError().text();
@@ -127,7 +125,7 @@ QStringListModel *sqlCore::getCoreDrugListModel()
 QStringList sqlCore::getCoreDrugList()
 {
     query->clear();
-    bool q = query->exec("SELECT TRADENAME,FORM FROM drugsIndex");
+    bool q = query->exec("SELECT name FROM druglist");
     if (!q)
     {
         mDebug() << query->lastError().text();
@@ -148,7 +146,7 @@ QString sqlCore::getDrugDetail(QString tradeName, QString column)
 {
     query->clear();
     QString drugDetail;
-    bool q = query->exec(QString("SELECT %1 FROM drugsIndex WHERE TRADENAME=\"%2\"").arg(column).arg(tradeName));
+    bool q = query->exec(QString("SELECT %1 FROM druglist WHERE name=\"%2\"").arg(column).arg(tradeName));
     if (!q)
     {
         mDebug() << "ERROR GET DRUG DETAILS" << query->lastError().text();
@@ -207,7 +205,7 @@ sqlCore::filters sqlCore::getFilters()
 {
     query->clear();
     filters f;
-    bool q = query->exec("SELECT MANUFACTURER,CATEGORY,FORM FROM drugsIndex");
+    bool q = query->exec("SELECT company,description,dosage_form FROM druglist");
     if ( !q )
     {
         mDebug() << query->lastError().text();
@@ -218,15 +216,15 @@ sqlCore::filters sqlCore::getFilters()
         QString category = query->value(1).toString();
         QString form = query->value(2).toString();
 
-        if (!f.companies.contains(company))
+        if (!f.companies.contains(company) && !company.isEmpty())
         {
             f.companies << company;
         }
-        if (!f.categories.contains(category))
+        if (!f.categories.contains(category) && !category.isEmpty())
         {
             f.categories << category;
         }
-        if (!f.forms.contains(form))
+        if (!f.forms.contains(form) && !form.isEmpty())
         {
             f.forms << form;
         }
@@ -243,6 +241,120 @@ void sqlCore::closeDataBase()
 {
     query->clear();
     db.close();
+}
+
+void sqlCore::processResponse(const QByteArray& response) {
+
+    if (!query->exec("BEGIN TRANSACTION;")) {
+        mDebug() << "Error executing SQL:" << query->lastError().text();
+        return;
+    }
+
+
+    if (!query->exec("DROP table IF EXISTS druglist;")) {
+        mDebug() << "Error executing SQL:" << query->lastError().text();
+        return;
+    }
+
+    if (!query->exec("CREATE TABLE IF NOT EXISTS druglist ("
+                    "id TEXT PRIMARY KEY, "
+                    "name TEXT, "
+                    "arabic TEXT, "
+                    "oldprice TEXT, "
+                    "price TEXT, "
+                    "active TEXT, "
+                    "description TEXT, "
+                    "company TEXT, "
+                    "dosage_form TEXT, "
+                    "units TEXT, "
+                    "barcode TEXT, "
+                    "route TEXT, "
+                    "pharmacology TEXT, "
+                    "sold_times TEXT);")) {
+        mDebug() << "Error executing SQL:" << query->lastError().text();
+        return;
+    }
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(response);
+    QJsonArray jsonArray = jsonResponse.array();
+
+    for (const QJsonValue& value : jsonArray) {
+        QJsonObject obj = value.toObject();
+        QString id = obj["id"].toString();
+        QString name = obj["name"].toString();
+        QString arabic = obj["arabic"].toString();
+        QString price = obj["price"].toString();
+        QString active = obj["active"].toString();
+        QString description = obj["description"].toString();
+        QString company = obj["company"].toString();
+        QString dosage_form = obj["dosage_form"].toString();
+        QString units = obj["units"].toString();
+        QString barcode = obj["barcode"].toString();
+        QString route = obj["route"].toString();
+        QString pharmacology = obj["pharmacology"].toString();
+        QString sold_times = obj["sold_times"].toString();
+
+        QString insertQuery = QString("INSERT INTO druglist "
+                                      "(id, name, arabic, price, active, description, company, "
+                                      "dosage_form, units, barcode, route, pharmacology, sold_times) "
+                                      "VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8', "
+                                      "'%9', '%10', '%11', '%12', '%13');")
+                                  .arg(id, name, arabic, price, active, description, company,
+                                       dosage_form, units, barcode, route, pharmacology, sold_times);
+
+        if (!query->exec(insertQuery)) {
+            mDebug() << "Error executing SQL:" << query->lastError().text();
+            return;
+        }
+    }
+
+    if (!query->exec("COMMIT;")) {
+        mDebug() << "Error executing SQL:" << query->lastError().text();
+    }
+
+    query->exec("UPDATE druglist SET active = UPPER(active);");
+    query->exec("UPDATE druglist SET description = trim(description);");
+    query->exec("UPDATE druglist SET description = ltrim(description,'.');");
+    query->exec("UPDATE druglist SET description = replace(description,'.',' - ');");
+    query->exec("UPDATE druglist SET description = UPPER(description);");
+    query->exec("UPDATE druglist SET dosage_form = trim(dosage_form);");
+    query->exec("UPDATE druglist SET dosage_form = UPPER(dosage_form);");
+    query->exec("UPDATE druglist SET company = trim(company);");
+    query->exec("UPDATE druglist SET company = ltrim(company,'.');");
+    query->exec("UPDATE druglist SET company = ltrim(company,'\"');");
+    query->exec("UPDATE druglist SET company = UPPER(company);");
+    query->exec("UPDATE druglist SET name = UPPER(name);");
+    query->exec("UPDATE druglist SET dosage_form = 'CAPSULE' WHERE dosage_form = 'CAPS';");
+    query->exec("UPDATE druglist SET dosage_form = 'CREAM' WHERE dosage_form = 'CRE';");
+    query->exec("UPDATE druglist SET dosage_form = 'POWDER' WHERE dosage_form = 'POWER';");
+    query->exec("UPDATE druglist SET dosage_form = 'TABLET' WHERE dosage_form = 'TABS.' OR dosage_form = 'TABLETS' ;");
+    query->exec("UPDATE druglist SET dosage_form = 'EAR DROPS' WHERE name = 'CIPROCORT OTIC DROPS 10 ML';");
+    query->exec("UPDATE druglist SET description = 'MULTIVITAMIN' WHERE name = 'REGNADEX 30 TABS';");
+
+    query->exec(QString("UPDATE metadata SET value=%1 WHERE var='version'").arg(QDate::currentDate().toString("yyMMdd")));
+
+    db.close();
+    emit drugsDatabaseUpdateFinished();
+}
+
+
+
+void sqlCore::updateDrugsDatabase()
+{
+
+    QNetworkRequest request(QUrl("https://dwaprices.com/api_dr88g/index.php"));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QObject::connect(&networkManager, &QNetworkAccessManager::finished, [&](QNetworkReply *reply) {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray response = reply->readAll();
+            processResponse(response);
+        } else {
+            qDebug() << "Error:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+    networkManager.post(request, "updatesqlite=1");
 }
 
 

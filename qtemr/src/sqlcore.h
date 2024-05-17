@@ -1,7 +1,3 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #ifndef SQLCORE_H
 #define SQLCORE_H
 
@@ -11,6 +7,9 @@
 #include <QStringList>
 #include "mdebug.h"
 #include "msql.h"
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
 
 class sqlCore : public msql
 {
@@ -26,11 +25,16 @@ public:
     int getDrugsDatabaseVersion();
     filters getFilters();
     void closeDataBase();
+    void updateDrugsDatabase();
     ~sqlCore();
 
 private:
     QStandardItemModel *model;
     QStringListModel *drugModel;
+    void processResponse(const QByteArray& response);
+    QNetworkAccessManager networkManager;
+signals:
+    void drugsDatabaseUpdateFinished();
 };
 
 #endif // SQLCORE_H

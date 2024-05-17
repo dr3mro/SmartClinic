@@ -1,16 +1,14 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #ifndef DRUGINDEX_H
 #define DRUGINDEX_H
 
 #include <QDialog>
 #include "sqlcore.h"
-#include "dataiohelper.h"
 #include "msortfilterproxymodel.h"
 #include "mdialog.h"
 #include <QStyledItemDelegate>
+#include "staticstrings.h"
+#include "mlabelmsg.h"
+
 
 class DrugsIndexPriceItemDelegate : public QStyledItemDelegate
 {
@@ -58,10 +56,15 @@ private:
     int filterColumn;
     mSortFilterProxyModel *proxy_model;
     sqlCore *sqlcore;
+    mLabelMsg message;
 
 private slots:
     void setFilters();
     void load();
+    void on_updateButton_clicked();
+    void on_resetDatabaseButton_clicked();
+    void onDrugsDatabaseChange();
+
 signals:
 
 

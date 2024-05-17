@@ -72,7 +72,7 @@ private slots:
     void findSameTradename();
     void findSameGeneric();
     void findSameIndication();
-    void findSameGroup();
+    //void findSameGroup();
     void searchGenricNameOnline();
     void copy2pDrugsList();
     void toggleAllDrugs();
@@ -123,7 +123,7 @@ private:
     QAction *a_ShowAltDrugsSameTrade;
     QAction *a_ShowAltDrugsSameGeneric;
     QAction *a_ShowAltDrugsSameIndication;
-    QAction *a_ShowAltDrugsSameGroup;
+    //QAction *a_ShowAltDrugsSameGroup;
     QAction *a_EditExpander;
     QAction *a_ResetExpander;
     QMenu *cpDrugsMenu;

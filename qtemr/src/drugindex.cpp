@@ -1,7 +1,3 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include "drugindex.h"
 #include "ui_drugindex.h"
 
@@ -16,6 +12,8 @@ drugIndex::drugIndex(QWidget *parent) :
     proxy_model = new mSortFilterProxyModel(this);
     QTimer::singleShot(0,this,SLOT(load()));
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+    connect(sqlcore,&sqlCore::drugsDatabaseUpdateFinished,this,&drugIndex::onDrugsDatabaseChange);
+    message.setMessage("<b> Please wait... </b>");
 }
 
 drugIndex::~drugIndex()
@@ -162,3 +160,54 @@ void drugIndex::load()
     toggleResetButton();
     setFilters();
 }
+
+
+
+void drugIndex::on_updateButton_clicked()
+{
+    QTcpSocket sock;
+    sock.connectToHost("www.google.com", 80);
+    bool connected = sock.waitForConnected(1000);//ms
+
+    if (!connected)
+    {
+        QMessageBox::information(nullptr,"Error",QString("%1 cannot access the internet, Please check your connection.").arg(APPNAME));
+        sock.abort();
+        return;
+    }
+    sock.close();
+
+    int reply  = QMessageBox::question(nullptr,"Upadating drugs database","Are you sure that you want to update as failure due to loss of internet will delete all drugs?",QMessageBox::Button::Yes,QMessageBox::Button::No);
+    if(reply == QMessageBox::Button::No)
+        return;
+    message.show();
+    sqlcore->updateDrugsDatabase();
+}
+
+
+void drugIndex::on_resetDatabaseButton_clicked()
+{
+    int reply  = QMessageBox::question(nullptr,"Reseting drugs database","Are you sure that you want to reset the drugs database to factory version?",QMessageBox::Button::Yes,QMessageBox::Button::No);
+    if(reply == QMessageBox::Button::No)
+        return;
+
+    message.show();
+    QFile resDrugsdb(":/databases/db");
+    QFile drugsdb("./data/drugs.db");
+    resDrugsdb.open(QIODevice::ReadOnly);
+    QByteArray dbArray = resDrugsdb.readAll();
+    drugsdb.open(QIODevice::WriteOnly);
+    drugsdb.write(dbArray);
+    drugsdb.close();
+    resDrugsdb.close();
+    onDrugsDatabaseChange();
+}
+
+void drugIndex::onDrugsDatabaseChange()
+{
+    QMessageBox::information(nullptr,"Done",QString("%1 will now quit to reload the new changes of drugs index.").arg(APPNAME));
+    message.hide();
+    qApp->quit();
+}
+
+

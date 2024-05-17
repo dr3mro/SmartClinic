@@ -181,8 +181,8 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
     tn_item->setText(newDrug);
 
     if(!sqlextra->isExpandExists(newDrug)){
-        gn_item->setText(sqlcore->getDrugDetail(newDrug,"GENERICNAME"));
-        fm_item->setText(sqlcore->getDrugDetail(newDrug,"FORM"));
+        gn_item->setText(sqlcore->getDrugDetail(newDrug,"active"));
+        fm_item->setText(sqlcore->getDrugDetail(newDrug,"dosage_form"));
     }else{
         gn_item->setText(sqlextra->getExpand(newDrug));
         fm_item->setText("EXPAND");
@@ -191,7 +191,7 @@ bool drugsTable::addDrug2DrugList(QString newDrug)
     ds_item->setText(sqlextra->getDefaultDrugDose(newDrug));   
     rd_item->setText(QString::number(QDate::currentDate().toJulianDay()));
     st_item->setText(state);
-    ps_item->setText(sqlcore->getDrugDetail(newDrug,"PRICE"));
+    ps_item->setText(sqlcore->getDrugDetail(newDrug,"price"));
 
     drugsModel->insertRow(drugsModel->getPrintableDrugsCount(),newRow);
     tweakDrugsTable();
@@ -389,12 +389,12 @@ void drugsTable::replaceDrug(QString newDrug)
     newRow.append(ps_item);
 
     tn_item->setText(newDrug);
-    gn_item->setText(sqlcore->getDrugDetail(newDrug,"GENERICNAME"));
+    gn_item->setText(sqlcore->getDrugDetail(newDrug,"active"));
     ds_item->setText(sqlextra->getDefaultDrugDose(newDrug));
-    fm_item->setText(sqlcore->getDrugDetail(newDrug,"FORM"));
+    fm_item->setText(sqlcore->getDrugDetail(newDrug,"dosage_form"));
     rd_item->setText(QString::number(QDate::currentDate().toJulianDay()));
     st_item->setText(state);
-    ps_item->setText(sqlcore->getDrugDetail(newDrug,"PRICE"));
+    ps_item->setText(sqlcore->getDrugDetail(newDrug,"price"));
     int row = selectionModel()->currentIndex().row();
     drugsModel->removeRow(row);
     drugsModel->insertRow(row,newRow);
@@ -462,7 +462,7 @@ drugsTable::~drugsTable()
     delete a_ShowAltDrugsSameTrade;
     delete a_ShowAltDrugsSameGeneric;
     delete a_ShowAltDrugsSameIndication;
-    delete a_ShowAltDrugsSameGroup;
+    //delete a_ShowAltDrugsSameGroup;
     delete a_EditExpander;
     delete a_ResetExpander;
     delete cpDrugsMenu;
@@ -564,8 +564,8 @@ void drugsTable::createDrugsTableConMenu()
     a_ShowAltDrugsSameIndication = new QAction("&With same indication",altDrugsMenu);
     a_ShowAltDrugsSameIndication->setIcon(QIcon(":/Graphics/beaker"));
 
-    a_ShowAltDrugsSameGroup = new QAction("&With same Drug Group",altDrugsMenu);
-    a_ShowAltDrugsSameGroup->setIcon(QIcon(":/Graphics/beaker"));
+    // a_ShowAltDrugsSameGroup = new QAction("&With same Drug Group",altDrugsMenu);
+    // a_ShowAltDrugsSameGroup->setIcon(QIcon(":/Graphics/beaker"));
 
 
     a_EditExpander = new QAction("&Edit Exapnder",m_drugs);
@@ -581,7 +581,7 @@ void drugsTable::createDrugsTableConMenu()
 
     actionList1 << a_resume << a_stop << a_setDose << a_clearDefaultDose << a_EditExpander << a_ResetExpander << a_checkPrice << a_genericInfo;
     actionList2 <<  a_aAutoComp << a_rAutoComp << a_delete << a_stopAll << a_resumeAll << a_clear << a_clearInactive;
-    actionList3 << a_ShowAltDrugsSameTrade << a_ShowAltDrugsSameGeneric << a_ShowAltDrugsSameIndication << a_ShowAltDrugsSameGroup;
+    actionList3 << a_ShowAltDrugsSameTrade << a_ShowAltDrugsSameGeneric << a_ShowAltDrugsSameIndication ;//<< a_ShowAltDrugsSameGroup;
     actionList4 << a_copy2pWin << a_updateAll2PWin << a_cp4rmPWin << a_cp4rmLastVisit << a_overWrite2pWin ;
     altDrugsMenu->addActions(actionList3);
     cpDrugsMenu->addActions(actionList4);
@@ -622,7 +622,7 @@ void drugsTable::createDrugsTableConMenu()
     connect (a_ShowAltDrugsSameTrade,SIGNAL(triggered()),this,SLOT(findSameTradename()));
     connect (a_ShowAltDrugsSameGeneric,SIGNAL(triggered()),this,SLOT(findSameGeneric()));
     connect (a_ShowAltDrugsSameIndication,SIGNAL(triggered()),this,SLOT(findSameIndication()));
-    connect (a_ShowAltDrugsSameGroup,SIGNAL(triggered()),this,SLOT(findSameGroup()));
+    //connect (a_ShowAltDrugsSameGroup,SIGNAL(triggered()),this,SLOT(findSameGroup()));
 
 }
 
@@ -663,6 +663,7 @@ void drugsTable::genDrugTableToolTip()
     QString dateLabel;
     QString currentTag;
     QString form;
+
     bool isExpand;
     for ( int t = 0 ; t < drugsModel->rowCount() ; t++ )
     {
@@ -675,7 +676,7 @@ void drugsTable::genDrugTableToolTip()
         current = drugsModel->item(t,5)->text().toInt();
         form = drugsModel->item(t,6)->text();
         price = drugsModel->item(t,7)->text();
-        category = sqlcore->getDrugDetail(tradeName,"CATEGORY");
+        category = sqlcore->getDrugDetail(tradeName,"description");
 
         isExpand = (form == "EXPAND" || (form.isEmpty() &&  sqlextra->isExpandExists(tradeName)));
 
@@ -777,7 +778,7 @@ bool drugsTable::isTradeNameinAutocomplete(QString tradeName)
 
 bool drugsTable::isPriceEqual(int row,QString tradeName)
 {
-    double indexPrice = sqlcore->getDrugDetail(tradeName,"PRICE").toDouble();
+    double indexPrice = sqlcore->getDrugDetail(tradeName,"price").toDouble();
     double savedPrice = drugsModel->item(row,7)->text().toDouble();
     return ( dataHelper::doubleEqual(indexPrice,savedPrice));
 }
@@ -887,6 +888,9 @@ void drugsTable::showContextMenu(const QPoint &pos)
     a_genericInfo->setVisible(canFetchDrugInfo && !null_selected);
     a_ShowAltDrugsSameGeneric->setVisible(canFetchDrugInfo && !null_selected);
     a_ShowAltDrugsSameTrade->setVisible(canFetchDrugInfo && !null_selected);
+    a_ShowAltDrugsSameIndication->setVisible(canFetchDrugInfo && !null_selected);
+
+    altDrugsMenu->setEnabled(canFetchDrugInfo && !null_selected);
 
     a_clearInactive->setVisible(isThereInactiveDrugs()&&!isReadOnly&&!no_drugs);
     a_aAutoComp->setVisible(!isTradeNameinAutocomplete(tradeName)&&!isReadOnly&&!null_selected);
@@ -957,7 +961,7 @@ void drugsTable::checkPrice()
 {
     QModelIndex cell =  this->selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
-    double price = sqlcore->getDrugDetail(tradeName,"PRICE").toDouble();
+    double price = sqlcore->getDrugDetail(tradeName,"price").toDouble();
     drugsModel->item(cell.row(),7)->setText(QString::number(price));
     genDrugTableToolTip();
 }
@@ -1131,7 +1135,7 @@ void drugsTable::findSameTradename()
     //    }
 
     QStringList tradeNames = QStringList() << tradeName;
-    findAltDrug("TRADENAME",tradeNames);
+    findAltDrug("name",tradeNames);
     setFindDrugsLabel(QString("Viewing drugs Similar to trade's name : <b>[%1]</b>").arg(tradeName));
     altDrugs->setSelectedDrugName(tradeName);
 }
@@ -1140,17 +1144,14 @@ void drugsTable::findSameGeneric()
 {
     QModelIndex cell = selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
-    QStringList rawGenericNames = drugsModel->item(cell.row(),1)->text().split("+");
     QStringList genericNames;
 
-    foreach(QString gName,rawGenericNames)
-    {
-        QStringList tempString = gName.simplified().split(" ");
-        tempString.removeLast();
-        genericNames << tempString.join(" ").simplified();
-    }
+    if (drugsModel->item(cell.row(),1)->text().contains("+"))
+        genericNames = drugsModel->item(cell.row(),1)->text().split("+");
+    else
+        genericNames = QStringList() << drugsModel->item(cell.row(),1)->text();
 
-    findAltDrug("GENERICNAME",genericNames);
+    findAltDrug("active",genericNames);
     setFindDrugsLabel(QString("Viewing drugs Similar to <b>[%1]</b> generic's name : <b>[%2]</b>").arg(tradeName).arg(genericNames.join(", ")));
     altDrugs->setSelectedDrugName(tradeName);
 }
@@ -1159,7 +1160,7 @@ void drugsTable::findSameIndication()
 {
     QModelIndex cell = selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
-    QString category = sqlcore->getDrugDetail(tradeName,"CATEGORY");
+    QString category = sqlcore->getDrugDetail(tradeName,"description");
     if ( category.length() < 2)
     {
         popUpMessage("Error","Item Not Found!");
@@ -1167,44 +1168,42 @@ void drugsTable::findSameIndication()
     }
     QString indication = category.split(":").at(0);
     QStringList indications = QStringList() << indication.simplified();
-    findAltDrug("CATEGORY",indications);
+    findAltDrug("description",indications);
     setFindDrugsLabel(QString("Viewing drugs Similar to <b>[%1]</b> indication : <b>[%2]</b>").arg(tradeName).arg(indications.join(", ")));
     altDrugs->setSelectedDrugName(tradeName);
 }
 
-void drugsTable::findSameGroup()
-{
-    QModelIndex cell = selectionModel()->currentIndex();
-    QString tradeName = drugsModel->item(cell.row(),0)->text();
-    QString category = sqlcore->getDrugDetail(tradeName,"CATEGORY");
-    if ( category.length() < 2)
-    {
-        popUpMessage("Error","Item Not Found!");
-        return;
-    }
-    QString indication = category.split(":").at(1);
-    QStringList indications = QStringList() << indication.simplified();
-    findAltDrug("CATEGORY",indications);
-    setFindDrugsLabel(QString("Viewing drugs Similar to <b>[%1]</b> drug's group : <b>(%2)</b>").arg(tradeName).arg(indications.join(", ")));
-    altDrugs->setSelectedDrugName(tradeName);
-}
+// void drugsTable::findSameGroup()
+// {
+//     QModelIndex cell = selectionModel()->currentIndex();
+//     QString tradeName = drugsModel->item(cell.row(),0)->text();
+//     QString category = sqlcore->getDrugDetail(tradeName,"description");
+//     if ( category.length() < 2)
+//     {
+//         popUpMessage("Error","Item Not Found!");
+//         return;
+//     }
+//     QString indication = category.split(":").at(1);
+//     QStringList indications = QStringList() << indication.simplified();
+//     findAltDrug("CATEGORY",indications);
+//     setFindDrugsLabel(QString("Viewing drugs Similar to <b>[%1]</b> drug's group : <b>(%2)</b>").arg(tradeName).arg(indications.join(", ")));
+//     altDrugs->setSelectedDrugName(tradeName);
+// }
 
 void drugsTable::searchGenricNameOnline()
 {
-
     QModelIndex cell = selectionModel()->currentIndex();
     QString tradeName = drugsModel->item(cell.row(),0)->text();
-    QStringList rawGenericNames = drugsModel->item(cell.row(),1)->text().split("+");
     QStringList genericNames;
-    foreach(QString gName,rawGenericNames)
-    {
-        QStringList tempString = gName.simplified().split(" ");
-        tempString.removeLast();
-        genericNames << tempString.join(" ").simplified();
-    }
+
+    if (drugsModel->item(cell.row(),1)->text().contains("+"))
+        genericNames = drugsModel->item(cell.row(),1)->text().split("+");
+    else
+        genericNames = QStringList() << drugsModel->item(cell.row(),1)->text();
+
     genericSearch->setTradeName(tradeName);
     genericSearch->setModel(genericNames);
-    //genericSearch->move(mapToGlobal(pos()));
+    genericSearch->move(mapToGlobal(pos()));
     genericSearch->show();
 }
 
