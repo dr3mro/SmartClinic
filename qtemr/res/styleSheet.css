@@ -535,7 +535,9 @@ QToolButton#searchByName,
 QToolButton#searchByTel,
 QToolButton#reload,
 QToolButton#loadID,
-QToolButton#loadName
+QToolButton#loadName,
+QToolButton#updateButton,
+QToolButton#resetDatabaseButton
 
 {
 border:button_border_widthpx solid button_border_color_normal;
@@ -579,7 +581,9 @@ QToolButton#searchByName:disabled,
 QToolButton#searchByTel:disabled,
 QToolButton#reload:disabled,
 QToolButton#loadID:disabled,
-QToolButton#loadName:disabled
+QToolButton#loadName:disabled,
+QToolButton#updateButton:disabled,
+QToolButton#resetDatabaseButton:disabled
 {
 border:button_border_widthpx solid button_border_color_diabled;
 background-color:button_color_disabled;
@@ -617,7 +621,9 @@ QToolButton#searchByName:hover,
 QToolButton#searchByTel:hover,
 QToolButton#reload:hover,
 QToolButton#loadID:hover,
-QToolButton#loadName:hover
+QToolButton#loadName:hover,
+QToolButton#updateButton:hover,
+QToolButton#resetDatabaseButton:hover
 {
 border:button_border_widthpx solid button_border_color_hover;
 background-color:button_color_hover;
@@ -689,9 +695,9 @@ QToolButton#searchByTel:pressed,
 QToolButton#reload:pressed,
 QToolButton#loadID:pressed,
 QToolButton#loadName:pressed,
-QToolButton#updateButton:focused
-QToolButton#updateButton:pressed
-QToolButton#resetDatabaseButton:focused
+QToolButton#updateButton:focus,
+QToolButton#updateButton:pressed,
+QToolButton#resetDatabaseButton:focus,
 QToolButton#resetDatabaseButton:pressed
 {
 border:button_border_widthpx solid button_border_color_focus;
