@@ -688,7 +688,11 @@ QToolButton#searchByName:pressed,
 QToolButton#searchByTel:pressed,
 QToolButton#reload:pressed,
 QToolButton#loadID:pressed,
-QToolButton#loadName:pressed
+QToolButton#loadName:pressed,
+QToolButton#updateButton:focused
+QToolButton#updateButton:pressed
+QToolButton#resetDatabaseButton:focused
+QToolButton#resetDatabaseButton:pressed
 {
 border:button_border_widthpx solid button_border_color_focus;
 background-color:button_color_focus;

@@ -8,7 +8,7 @@ drugIndex::drugIndex(QWidget *parent) :
     ui->setupUi(this);
     sqlcore = new sqlCore(this,"qt_sql_core_drugsIndex");
     QLocale locale("en_US");
-    ui->updated->setText(locale.toString(QDate::fromString(QString::number(sqlcore->getDrugsDatabaseVersion()),"yyMMdd"),"MMMM,yy"));
+    ui->updated->setText(locale.toString(QDate::fromString(QString::number(sqlcore->getDrugsDatabaseVersion()),"yyMMdd").addYears(100),"dd-MMMM-yyyy"));
     proxy_model = new mSortFilterProxyModel(this);
     QTimer::singleShot(0,this,SLOT(load()));
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);

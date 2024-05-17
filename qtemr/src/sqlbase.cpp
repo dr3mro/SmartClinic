@@ -375,7 +375,7 @@ DrugsItemModel *sqlBase::readDrugs(int ID, qint64 visitDate, qint64 visitTime, D
     //QStandardItem *item1,*item2,*item3,*item4,*item5,*item6,*item7,*item8;
     int x =0;
     query->clear();
-    query->exec(QString("select * from drugs where id=%1 and visitdate=%2 and visittime=%3").arg(ID).arg(visitDate).arg(visitTime));
+    query->exec(QString("select TRADENAME,GENERICNAME,DOSE,STARTDATE,STOPDATE,STATE,FORM,PRICE from drugs where id=%1 and visitdate=%2 and visittime=%3").arg(ID).arg(visitDate).arg(visitTime));
     while (query->next())
     {
         auto item1 = new QStandardItem(query->value(0).toString());
