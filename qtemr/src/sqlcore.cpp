@@ -17,7 +17,7 @@ QStandardItemModel *sqlCore::getDrugsIndexModel()
     QStringList  labels;
     labels << "Trade Name" << "Generic Name" << "Price" << "Category" << "Form" << "Manufacturer";
     model->setHorizontalHeaderLabels(labels);
-    bool q = query->exec("SELECT name,active,price,company,description,dosage_form FROM druglist");
+    bool q = query->exec("SELECT  DISTINCT(name) as name,active,price,company,description,dosage_form  FROM druglist ");
     if ( !q )
     {
         mDebug() << query->lastError().text();
@@ -116,7 +116,7 @@ QStandardItemModel *sqlCore::getFindDrugsModel(QStandardItemModel *fmodel, QStri
 QStringListModel *sqlCore::getCoreDrugListModel()
 {
     query->clear();
-    bool q = query->exec("SELECT name FROM drugslist");
+    bool q = query->exec("SELECT DISTINCT name FROM drugslist");
     if (!q)
     {
         mDebug() << query->lastError().text();
@@ -135,7 +135,7 @@ QStringListModel *sqlCore::getCoreDrugListModel()
 QStringList sqlCore::getCoreDrugList()
 {
     query->clear();
-    bool q = query->exec("SELECT name FROM druglist");
+    bool q = query->exec("SELECT DISTINCT name FROM druglist");
     if (!q)
     {
         mDebug() << query->lastError().text();
@@ -333,13 +333,60 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET company = ltrim(company,'.');");
     query->exec("UPDATE druglist SET company = ltrim(company,'\"');");
     query->exec("UPDATE druglist SET company = UPPER(company);");
+
+    query->exec("UPDATE druglist SET name = TRIM(name);");
     query->exec("UPDATE druglist SET name = UPPER(name);");
+    query->exec("UPDATE druglist SET name = replace(name,'\"','');");
+
+    query->exec("UPDATE druglist SET name = replace(name,' MG','MG');");
+    query->exec("UPDATE druglist SET name = replace(name,' MCG','MCG');");
+    query->exec("UPDATE druglist SET name = replace(name,' ML','ML');");
+
+    query->exec("UPDATE druglist SET name = replace(name,' MG','MG');");
+    query->exec("UPDATE druglist SET name = replace(name,' MCG','MCG');");
+    query->exec("UPDATE druglist SET name = replace(name,' ML','ML');");
+
+    query->exec("UPDATE druglist SET name = replace(name,' GRAM','GRAM');");
+    query->exec("UPDATE druglist SET name = replace(name,' GM','GM');");
+
+    query->exec("UPDATE druglist SET name = replace(name,' GRAM','GRAM');");
+    query->exec("UPDATE druglist SET name = replace(name,' GM','GM');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'TABS','TAB');");
+    query->exec("UPDATE druglist SET name = replace(name,'CAPS','CAP');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'.','');");
+    query->exec("UPDATE druglist SET name = replace(name,'.','');");
+    query->exec("UPDATE druglist SET name = replace(name,'.','');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'AMPS','AMP');");
+    query->exec("UPDATE druglist SET name = replace(name,'AMPSS','AMP');");
+    query->exec("UPDATE druglist SET name = replace(name,'FCTAB','FC. TAB');");
+
+    //query->exec("UPDATE druglist SET name = replace(name,'EAR  DROPS','EAR DROPS');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'DISTAB','DIS. TAB');");
+    query->exec("UPDATE druglist SET name = replace(name,'DISTABLETS','DIS. TAB');");
+    query->exec("UPDATE druglist SET name = replace(name,'TABLET','TAB');");
+    query->exec("UPDATE druglist SET name = replace(name,' TABLES','TAB');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'   ',' ');");
+    query->exec("UPDATE druglist SET name = replace(name,'  ',' ');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'1 2 3 (ONE TWO THREE)','123');");
+    query->exec("UPDATE druglist SET name = replace(name,'1 2 3','123');");
+
+    query->exec("UPDATE druglist SET name = TRIM(name);");
+
+    query->exec("UPDATE druglist SET name='CIPROCORT EAR DROPS 10ML' WHERE name = 'CIPROCORT OTIC DROPS 10ML';");
+    query->exec("UPDATE druglist SET dosage_form='EAR DROPS' WHERE name = 'CIPROCORT EAR DROPS 10ML';");
+    query->exec("UPDATE druglist SET description = 'MULTIVITAMIN' WHERE name = 'REGNADEX 30 TAB';");
+
     query->exec("UPDATE druglist SET dosage_form = 'CAPSULE' WHERE dosage_form = 'CAPS';");
     query->exec("UPDATE druglist SET dosage_form = 'CREAM' WHERE dosage_form = 'CRE';");
     query->exec("UPDATE druglist SET dosage_form = 'POWDER' WHERE dosage_form = 'POWER';");
     query->exec("UPDATE druglist SET dosage_form = 'TABLET' WHERE dosage_form = 'TABS.' OR dosage_form = 'TABLETS' ;");
-    query->exec("UPDATE druglist SET dosage_form = 'EAR DROPS' WHERE name = 'CIPROCORT OTIC DROPS 10 ML';");
-    query->exec("UPDATE druglist SET description = 'MULTIVITAMIN' WHERE name = 'REGNADEX 30 TABS';");
+
     query->exec("UPDATE druglist SET active = 'UNSPECIFIED' WHERE TRIM(active) = '';");
     query->exec(QString("UPDATE metadata SET value=%1 WHERE var='version'").arg(QDate::currentDate().toString("yyMMdd")));
     //SELECT name, COUNT(*) c FROM druglist GROUP BY name HAVING c > 1 AND TRIM(pharmacology) != '';
