@@ -342,7 +342,7 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET description = 'MULTIVITAMIN' WHERE name = 'REGNADEX 30 TABS';");
     query->exec("UPDATE druglist SET active = 'UNSPECIFIED' WHERE TRIM(active) = '';");
     query->exec(QString("UPDATE metadata SET value=%1 WHERE var='version'").arg(QDate::currentDate().toString("yyMMdd")));
-
+    //SELECT name, COUNT(*) c FROM druglist GROUP BY name HAVING c > 1 AND TRIM(pharmacology) != '';
     db.close();
     emit drugsDatabaseUpdateFinished();
 }
