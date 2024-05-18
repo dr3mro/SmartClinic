@@ -80,6 +80,7 @@ mSettings::pSettings mSettings::readSettings()
     psettings.useToast = settings.value(_useToast,QVariant(true)).toBool();
     psettings.usePhotoViewer = settings.value(_usePhotoViewer,QVariant(true)).toBool();
     psettings.remmberLastFollowupDate = settings.value(_remmberLastFollowupDate,QVariant(false)).toBool();
+    //psettings.lastSelectedFollowUpDate = getLastSelectedFollowUpDate(); // not needed and caused unneccessary setting save
     psettings.selectedTheme = settings.value(_selectedTheme).toString();
 
     settings.beginGroup(_clinic);
@@ -99,7 +100,7 @@ mSettings::pSettings mSettings::readSettings()
     settings.endGroup();
 
     settings.beginGroup(_Fonts);
-    psettings.defaultFont = settings.value(_defaultFont,QVariant("Tahome")).toString();
+    psettings.defaultFont = settings.value(_defaultFont,QVariant("Tahoma")).toString();
     psettings.defaultFontSize = settings.value(_defaultFontSize,QVariant(8)).toDouble();
     psettings.defaultFontBold = settings.value(_defaultFontBold,QVariant(false)).toBool();
     psettings.textboxFont = settings.value(_textboxFont,QVariant("Tahoma")).toString();

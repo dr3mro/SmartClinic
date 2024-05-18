@@ -4,6 +4,7 @@
 
 #include "welcomebanner.h"
 #include "ui_welcomebanner.h"
+#include <QTimer>
 
 welcomeBanner::welcomeBanner(QWidget *parent) :
     QDialog(parent),
@@ -11,19 +12,15 @@ welcomeBanner::welcomeBanner(QWidget *parent) :
     ui(new Ui::welcomeBanner)
 {
     ui->setupUi(this);
-    ui->progressBar->setAlignment(Qt::AlignCenter);
-    setModal(true);
-    setWindowFlags( Qt::SplashScreen );
-    movie->setScaledSize(ui->progress->size());
     ui->progress->setMovie(movie);
     ui->appName->setText(APPNAME);
     ui->appVer->setText(APPVERSION);
-    movie->start();
+    setModal(true);
+    setWindowFlags( Qt::SplashScreen );
 }
 
 void welcomeBanner::updateprogress(const QString &op_name)
 {
-    //called 11 times
     percent +=9;
     ui->progressBar->setValue(percent);
     ui->current_stage->setText(op_name);
@@ -35,8 +32,20 @@ void welcomeBanner::setProgress(const int &perc)
     ui->progressBar->setValue(percent);
 }
 
+void welcomeBanner::close_later()
+{
+    QTimer::singleShot(1000,this,&welcomeBanner::close);
+}
+
 welcomeBanner::~welcomeBanner()
 {
     delete movie;
     delete ui;
+}
+void welcomeBanner::showEvent(QShowEvent *e)
+{
+    QDialog::showEvent(e);
+    ui->progressBar->setAlignment(Qt::AlignCenter);
+    movie->setScaledSize(ui->progress->size());
+    movie->start();
 }

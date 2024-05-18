@@ -11,6 +11,7 @@
 #include "mdebug.h"
 #include "globalvariables.h"
 #include "datahelper.h"
+
 namespace Ui {
 class welcomeBanner;
 }
@@ -23,11 +24,16 @@ public:
     explicit welcomeBanner(QWidget *parent = nullptr);
     void updateprogress(const QString &op_name);
     void setProgress(const int &perc);
+    void close_later();
     ~welcomeBanner();
 private:
     QMovie *movie;
     int percent=0;
     Ui::welcomeBanner *ui;
+
+protected:
+    void showEvent(QShowEvent *e) override;
+
 };
 
 #endif // WELCOMEBANNER_H

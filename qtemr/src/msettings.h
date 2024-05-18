@@ -311,8 +311,8 @@ public:
                         updateNotify,
                         useToast,
                         usePhotoViewer,
-                        remmberLastFollowupDate,
-                        lastSelectedFollowUpDate) ==
+                        remmberLastFollowupDate/*,
+                        lastSelectedFollowUpDate*/) ==
                     std::tie(psettings.speciality,
                              psettings.autoCompleteByWord,
                              psettings.showChronicConditions,
@@ -345,10 +345,9 @@ public:
                              psettings.updateNotify,
                              psettings.useToast,
                              psettings.usePhotoViewer,
-                             psettings.remmberLastFollowupDate,
-                             psettings.lastSelectedFollowUpDate);
+                             psettings.remmberLastFollowupDate/*,
+                             psettings.lastSelectedFollowUpDate*/);
         }
-
     };
     struct checkout
     {
