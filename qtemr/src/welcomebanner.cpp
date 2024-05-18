@@ -32,9 +32,12 @@ void welcomeBanner::setProgress(const int &perc)
     ui->progressBar->setValue(percent);
 }
 
-void welcomeBanner::close_later()
+void welcomeBanner::close_later(QMainWindow *w)
 {
-    QTimer::singleShot(1000,this,&welcomeBanner::close);
+    QTimer::singleShot(2000,this,[=]{
+        if(w->isVisible())
+            this->close();
+    });
 }
 
 welcomeBanner::~welcomeBanner()
