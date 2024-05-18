@@ -255,6 +255,7 @@ void sqlCore::closeDataBase()
 
 void sqlCore::processResponse(const QByteArray& response) {
 
+    que
     if (!query->exec("BEGIN TRANSACTION;")) {
         mDebug() << "Error executing SQL:" << query->lastError().text();
         return;
@@ -352,22 +353,25 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,' GRAM','GRAM');");
     query->exec("UPDATE druglist SET name = replace(name,' GM','GM');");
 
+    query->exec("UPDATE druglist SET name = replace(name,'TABLET','TAB');");
+    query->exec("UPDATE druglist SET name = replace(name,'CAPSULE','CAP');");
+
     query->exec("UPDATE druglist SET name = replace(name,'TABS','TAB');");
     query->exec("UPDATE druglist SET name = replace(name,'CAPS','CAP');");
 
-    query->exec("UPDATE druglist SET name = replace(name,'.','');");
-    query->exec("UPDATE druglist SET name = replace(name,'.','');");
-    query->exec("UPDATE druglist SET name = replace(name,'.','');");
+    query->exec("UPDATE druglist SET name = replace(name,'...','.');");
+    query->exec("UPDATE druglist SET name = replace(name,'..','.');");
+    query->exec("UPDATE druglist SET name = rtrim(name,'.');");
 
     query->exec("UPDATE druglist SET name = replace(name,'AMPS','AMP');");
     query->exec("UPDATE druglist SET name = replace(name,'AMPSS','AMP');");
-    query->exec("UPDATE druglist SET name = replace(name,'FCTAB','FC. TAB');");
+    query->exec("UPDATE druglist SET name = replace(name,'F.C.TAB','F.C. TAB');");
 
     //query->exec("UPDATE druglist SET name = replace(name,'EAR  DROPS','EAR DROPS');");
 
     query->exec("UPDATE druglist SET name = replace(name,'DISTAB','DIS. TAB');");
     query->exec("UPDATE druglist SET name = replace(name,'DISTABLETS','DIS. TAB');");
-    query->exec("UPDATE druglist SET name = replace(name,'TABLET','TAB');");
+
     query->exec("UPDATE druglist SET name = replace(name,' TABLES','TAB');");
 
     query->exec("UPDATE druglist SET name = replace(name,'   ',' ');");
