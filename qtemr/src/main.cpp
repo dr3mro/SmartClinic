@@ -359,13 +359,12 @@ int main(int argc, char *argv[])
     banner->updateprogress(QString("Starting Application"));
     banner->setProgress(100);
 
-    banner->close_later(&w);
-    banner->deleteLater();
+
 
     QRect screenres = qApp->primaryScreen()->geometry();
     w.move(QPoint(screenres.x(), screenres.y()));
     w.showMaximized();
-
+    banner->deleteLater();
     auto exitCode = a.exec();
     //_CrtDumpMemoryLeaks();
     

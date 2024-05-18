@@ -8,7 +8,6 @@
 #include <QDialog>
 #include <QMovie>
 #include <QProgressBar>
-#include <QMainWindow>
 #include "mdebug.h"
 #include "globalvariables.h"
 #include "datahelper.h"
@@ -25,7 +24,6 @@ public:
     explicit welcomeBanner(QWidget *parent = nullptr);
     void updateprogress(const QString &op_name);
     void setProgress(const int &perc);
-    void close_later(QMainWindow *w);
     ~welcomeBanner();
 private:
     QMovie *movie;
