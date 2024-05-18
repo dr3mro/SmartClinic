@@ -255,7 +255,6 @@ void sqlCore::closeDataBase()
 
 void sqlCore::processResponse(const QByteArray& response) {
 
-    que
     if (!query->exec("BEGIN TRANSACTION;")) {
         mDebug() << "Error executing SQL:" << query->lastError().text();
         return;
@@ -394,6 +393,9 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET active = 'UNSPECIFIED' WHERE TRIM(active) = '';");
     query->exec(QString("UPDATE metadata SET value=%1 WHERE var='version'").arg(QDate::currentDate().toString("yyMMdd")));
     //SELECT name, COUNT(*) c FROM druglist GROUP BY name HAVING c > 1 AND TRIM(pharmacology) != '';
+
+    query->exec("COMMIT;");
+
     db.close();
     emit drugsDatabaseUpdateFinished();
 }
