@@ -25,19 +25,28 @@ QStandardItemModel *sqlCore::getDrugsIndexModel()
     int x=0;
     while (query->next())
     {
-        QString category = query->value(4).toString();
+        QString tradeName = query->value(0).toString();
+        QString genericName = query->value(1).toString();
+        QString price = query->value(2).toString();
         QString manufacturer = query->value(3).toString();
+        QString category = query->value(4).toString();
         QString form = query->value(5).toString();
-        //QStandardItem *tradeitem = new QStandardItem (crypto.decryptToString(query->value(0).toString()));
-        QStandardItem *tradeitem = new QStandardItem (query->value(0).toString());
+        QString manufactorer = query->value(6).toString();
+
+        QStandardItem *tradeitem = new QStandardItem (tradeName);
         tradeitem->setToolTip(category);
-        QStandardItem *genericitem = new QStandardItem (query->value(1).toString());
-        genericitem->setToolTip(QString("<p align=left > %1 </p>").arg(query->value(1).toString()));
+
+        QStandardItem *genericitem = new QStandardItem (genericName);
+        genericitem->setToolTip(QString("<p align=left > %1 </p>").arg(genericName));
+
         QStandardItem *priceitem = new QStandardItem();
-        priceitem->setData(QVariant(query->value(2).toDouble()),Qt::DisplayRole);
+        priceitem->setData(QVariant(price.toDouble()),Qt::DisplayRole);
+
         QStandardItem *categoryitem = new QStandardItem(category);
         priceitem->setToolTip(manufacturer);
+
         QStandardItem *formitem = new QStandardItem(form);
+
         QStandardItem *manufactureritem = new QStandardItem(manufacturer);
 
         model->setItem(x, 0,tradeitem);
@@ -46,7 +55,8 @@ QStandardItemModel *sqlCore::getDrugsIndexModel()
         model->setItem(x, 3,categoryitem);
         model->setItem(x, 4,formitem);
         model->setItem(x, 5,manufactureritem);
-        x+=1;
+
+        x++;
     }
     query->finish();
     return model;
@@ -330,14 +340,12 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET dosage_form = 'TABLET' WHERE dosage_form = 'TABS.' OR dosage_form = 'TABLETS' ;");
     query->exec("UPDATE druglist SET dosage_form = 'EAR DROPS' WHERE name = 'CIPROCORT OTIC DROPS 10 ML';");
     query->exec("UPDATE druglist SET description = 'MULTIVITAMIN' WHERE name = 'REGNADEX 30 TABS';");
-
+    query->exec("UPDATE druglist SET active = 'UNSPECIFIED' WHERE TRIM(active) = '';");
     query->exec(QString("UPDATE metadata SET value=%1 WHERE var='version'").arg(QDate::currentDate().toString("yyMMdd")));
 
     db.close();
     emit drugsDatabaseUpdateFinished();
 }
-
-
 
 void sqlCore::updateDrugsDatabase()
 {

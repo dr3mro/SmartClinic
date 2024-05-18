@@ -130,11 +130,7 @@ void drugIndex::load()
 {
     model = sqlcore->getDrugsIndexModel();
     ui->tradeName->setChecked(true);
-    ui->indexTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->indexTable->horizontalHeader()->setStretchLastSection( true );
-    ui->indexTable->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-    ui->indexTable->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->indexTable->setSelectionBehavior(QAbstractItemView::SelectRows );
+
     filterColumn = 0;
     model->setSortRole(Qt::EditRole);
     proxy_model->setFilterKeyColumn(filterColumn);
@@ -144,14 +140,9 @@ void drugIndex::load()
     proxy_model->setManufacturer("All Companies");
     proxy_model->setForm("All Forms");
     ui->indexTable->setModel(proxy_model);
-    ui->indexTable->setColumnWidth(0,300);
-    ui->indexTable->setColumnWidth(1,250);
-    ui->indexTable->sortByColumn(0,Qt::AscendingOrder);
-    ui->indexTable->hideColumn(3);
-    ui->indexTable->hideColumn(4);
-    ui->indexTable->hideColumn(5);
-    ui->indexTable->setWordWrap(false);
-    ui->indexTable->setItemDelegate(new DrugsIndexPriceItemDelegate(this));
+    // ui->indexTable->setColumnWidth(0,300);
+    // ui->indexTable->setColumnWidth(1,250);
+
     connect(ui->categories,SIGNAL(currentTextChanged(QString)),this,SLOT(setCategory(QString)));
     connect(ui->manufacturer,SIGNAL(currentTextChanged(QString)),this,SLOT(setManufacturer(QString)));
     connect(ui->form,SIGNAL(currentTextChanged(QString)),this,SLOT(setForm(QString)));
@@ -159,6 +150,22 @@ void drugIndex::load()
     connect(proxy_model,SIGNAL(rowsInserted(QModelIndex,int,int)),this,SLOT(setResultsCount(QModelIndex,int,int)));
     toggleResetButton();
     setFilters();
+
+    ui->indexTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->indexTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    ui->indexTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    // ui->indexTable->horizontalHeader()->setStretchLastSection( true );
+    ui->indexTable->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+
+    ui->indexTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->indexTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->indexTable->setSelectionBehavior(QAbstractItemView::SelectRows );
+    ui->indexTable->sortByColumn(0,Qt::AscendingOrder);
+    ui->indexTable->hideColumn(3);
+    ui->indexTable->hideColumn(4);
+    ui->indexTable->hideColumn(5);
+    ui->indexTable->setWordWrap(false);
+    ui->indexTable->setItemDelegate(new DrugsIndexPriceItemDelegate(this));
 }
 
 
