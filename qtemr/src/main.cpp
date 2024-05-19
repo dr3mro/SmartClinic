@@ -360,10 +360,13 @@ int main(int argc, char *argv[])
     banner->setProgress(100);
 
 
+    w.showMaximized();
+    qApp->processEvents();
 
     QRect screenres = qApp->primaryScreen()->geometry();
     w.move(QPoint(screenres.x(), screenres.y()));
-    w.showMaximized();
+    qApp->processEvents();
+
     banner->deleteLater();
     auto exitCode = a.exec();
     //_CrtDumpMemoryLeaks();
