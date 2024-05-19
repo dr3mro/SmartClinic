@@ -396,7 +396,7 @@ void sqlCore::processResponse(const QByteArray& response) {
 
     query->exec("COMMIT;");
 
-    db.close();
+
     emit drugsDatabaseUpdateFinished();
 }
 
