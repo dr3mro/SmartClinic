@@ -251,35 +251,37 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(":/fonts/CoconNextLight");
     QFontDatabase::addApplicationFont(":/fonts/ConcoNextBold");
 
-    QCommandLineParser clParser;
-    clParser.setApplicationDescription("Smart Clinic helper");
-    clParser.addHelpOption();
-    clParser.addVersionOption();
+    if  (argc > 1){
+        QCommandLineParser clParser;
+        clParser.setApplicationDescription("Smart Clinic helper");
+        clParser.addHelpOption();
+        clParser.addVersionOption();
 
-    QCommandLineOption makeUpdatePkgOption("makeUpdatePackage", QCoreApplication::translate("main", "make update package"));
+        QCommandLineOption makeUpdatePkgOption("makeUpdatePackage", QCoreApplication::translate("main", "make update package"));
 
-    clParser.addOption(makeUpdatePkgOption);
-    clParser.process(a);
-    bool makeUpdatePKG = clParser.isSet(makeUpdatePkgOption);
-    if(makeUpdatePKG){
-        if(!QDir(updatePackageDir).exists())
-            QDir().mkdir(updatePackageDir);
+        clParser.addOption(makeUpdatePkgOption);
+        clParser.process(a);
+        bool makeUpdatePKG = clParser.isSet(makeUpdatePkgOption);
+        if(makeUpdatePKG){
+            if(!QDir(updatePackageDir).exists())
+              QDir().mkdir(updatePackageDir);
 
-        squeeze::compact(qApp->applicationFilePath(),updatePacakgeFile);
-        QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile(updatePacakgeFile),QCryptographicHash::Md5 ).toHex());
-        QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
-                    APPVERSION,
-                    BUILD,
-                    BUILDDATE,
-                    BUILDTIME,
-                    pkgUrl,
-                    md5,
-                    GITMESSAGE)
+            squeeze::compact(qApp->applicationFilePath(),updatePacakgeFile);
+            QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile(updatePacakgeFile),QCryptographicHash::Md5 ).toHex());
+            QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
+                  APPVERSION,
+                  BUILD,
+                  BUILDDATE,
+                  BUILDTIME,
+                  pkgUrl,
+                  md5,
+                  GITMESSAGE)
                 .toUtf8();
-        dataIOhelper::saveFile(updateInfoFile,updateData);
-//        qDebug() << updateData;
-        exit(0);
-    }
+            dataIOhelper::saveFile(updateInfoFile,updateData);
+            //        qDebug() << updateData;
+            exit(0);
+          }
+      }
 
     qRegisterMetaType<QVector<int> >("QVector<int>");
     qRegisterMetaType<QTextCursor>("QTextCursor");
@@ -291,6 +293,7 @@ int main(int argc, char *argv[])
 
     welcomeBanner *banner = new welcomeBanner;
     banner->show();
+    a.processEvents();
 
     banner->updateprogress(QString("initializing application"));
     dataIOhelper::setCurrentFolder();
@@ -361,11 +364,11 @@ int main(int argc, char *argv[])
 
 
     w.showMaximized();
-    qApp->processEvents();
+    a.processEvents();
 
     QRect screenres = qApp->primaryScreen()->geometry();
     w.move(QPoint(screenres.x(), screenres.y()));
-    qApp->processEvents();
+    a.processEvents();
 
     banner->deleteLater();
     auto exitCode = a.exec();
