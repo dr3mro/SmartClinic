@@ -5,7 +5,10 @@
 #include "toast.h"
 #include <QScreen>
 
-toast::toast(QWidget *parent):QLabel(parent)
+toast::toast(QWidget *parent):QLabel(parent),
+  centerPos(0),
+  horizontalPos(0),
+  verticalPos(0)
 {
     setText("This is a notification");
     setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -22,12 +25,12 @@ toast::toast(QWidget *parent):QLabel(parent)
 void toast::setCenterPos(int pos)
 {
     centerPos = pos;
-    horizontalPos = centerPos;
+    horizontalPos.store(centerPos);
 }
 
 void toast::setMessage(QString title, QString msg)
 {
-    verticalPos = 0;
+    //verticalPos.store(0);
     setMessageType(title);
     setText(msg);
     wait.setInterval(msg.length()*170);
@@ -70,7 +73,7 @@ void toast::setMessageType(QString title)
 
 void toast::moveToastin()
 {
-    verticalPos+=1;
+    verticalPos++;
     QRect scr = getScreenRect();
     move(horizontalPos+scr.left(),verticalPos+scr.top());
     if (verticalPos > 0)
@@ -82,7 +85,7 @@ void toast::moveToastin()
 
 void toast::moveToastout()
 {
-    verticalPos-=1;
+    verticalPos--;
     QRect scr = getScreenRect();
     move(horizontalPos+scr.left(),verticalPos+scr.top());
     if (verticalPos < -height())

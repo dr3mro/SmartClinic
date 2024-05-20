@@ -14,6 +14,8 @@
 #include <QMouseEvent>
 #include <QShowEvent>
 #include <QWindow>
+#include <atomic>
+
 class toast : public QLabel
 {
     Q_OBJECT
@@ -29,9 +31,9 @@ private slots:
 private:
     void moveCenter();
     QRect getScreenRect();
-    int centerPos;
-    int horizontalPos=0;
-    int verticalPos=0;
+    std::atomic_int centerPos;
+    std::atomic_int horizontalPos;
+    std::atomic_int verticalPos;
     QTimer miTimer;
     QTimer moTimer;
     QTimer fTimer;
