@@ -43,7 +43,10 @@ void toast::setMessage(QString title, QString msg)
         wait.start();
         QRect scr = getScreenRect();
         move(horizontalPos+scr.left(),verticalPos+scr.top());
-    }
+    }else if (moTimer.isActive()){
+        moTimer.stop();
+        miTimer.start();
+      }
 }
 
 void toast::setMessageType(QString title)
