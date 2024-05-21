@@ -11,7 +11,7 @@
 
 printDrugs::printDrugs(QWidget *parent) :
     QDialog(parent),
-    printer ( new QPrinter(QPrinter::HighResolution)),
+    printer ( new QPrinter()),
     dlg ( new QPrintDialog(printer,this)),
     wm_add2completer(new wm_add2Completer),
     sqlextra(new sqlExtra(this,printDrugsDatabaseConnectionName,false)),
@@ -425,7 +425,7 @@ void printDrugs::setupPrinter(QPrinter *p)
     m_layout.setMode(QPageLayout::Mode::StandardMode);
 
     p->setPrinterName(ui->printers->currentText());
-    p->setResolution(QPrinter::HighResolution);
+
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
     p->setFullPage(pSettings.enableFullPage);
