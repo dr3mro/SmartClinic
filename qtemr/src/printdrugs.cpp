@@ -425,7 +425,7 @@ void printDrugs::setupPrinter(QPrinter *p)
     m_layout.setMode(QPageLayout::Mode::StandardMode);
 
     p->setPrinterName(ui->printers->currentText());
-
+    p->setResolution(QPrinter::HighResolution);
     p->setPageSize(pageSize);
     p->setPageLayout(m_layout);
     p->setFullPage(pSettings.enableFullPage);
@@ -1032,7 +1032,6 @@ void printDrugs::resetBannerTemplateClicked()
 void printDrugs::printers_currentIndexChanged(int index)
 {
     pSettings.printerIndex = index;
-    printer->setPrinterName(ui->printers->currentText());
     setupPrinter(printer);
 }
 
