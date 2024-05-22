@@ -4126,34 +4126,30 @@ QStandardItemModel *sqlBase::getMyRegisterModel(RegisterRange timeframe, QStanda
     else if ( (timeframe.endDate - timeframe.startDate) == 1 )
     {
         querycmd=QString("SELECT * FROM registerView "
-                         "WHERE visitJulianDate=%1 AND visitTime>=%2 AND visitTime<=%3 "
+                         "WHERE visitJulianDate=%1 AND visitTime>=%2 AND visitTime<=86400 "
                          "UNION ALL "
                          "SELECT * FROM registerView "
-                         "WHERE visitJulianDate=%4 AND visitTime>=%5 AND visitTime<=%6")
+                         "WHERE visitJulianDate=%3 AND visitTime>=0 AND visitTime<=%4")
                 .arg(timeframe.startDate)
                 .arg(timeframe.startTime)
-                .arg(86340)
                 .arg(timeframe.endDate)
-                .arg(0)
                 .arg(timeframe.endTime);
     }
     else if ( (timeframe.endDate - timeframe.startDate) >= 2 )
     {
         querycmd=QString("SELECT * FROM registerView "
-                         "WHERE visitJulianDate=%1 AND visitTime>=%2 AND visitTime<=%3 "
+                         "WHERE visitJulianDate=%1 AND visitTime>=%2 AND visitTime<=86400 "
                          "UNION ALL "
                          "SELECT * FROM registerView "
-                         "WHERE visitJulianDate>%4 AND visitJulianDate<%5 "
+                         "WHERE visitJulianDate>%3 AND visitJulianDate<%4 "
                          "UNION ALL "
                          "SELECT * FROM registerView "
-                         "WHERE visitJulianDate=%6 AND visitTime>=%7 AND visitTime<=%8")
+                         "WHERE visitJulianDate=%5 AND visitTime>=0 AND visitTime<=%6")
                 .arg(timeframe.startDate)
                 .arg(timeframe.startTime)
-                .arg(86340)
                 .arg(timeframe.startDate)
                 .arg(timeframe.endDate)
                 .arg(timeframe.endDate)
-                .arg(0)
                 .arg(timeframe.endTime);
     }
     else

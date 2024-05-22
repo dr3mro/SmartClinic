@@ -371,6 +371,7 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,'DISTAB','DIS. TAB');");
     query->exec("UPDATE druglist SET name = replace(name,'DISTABLETS','DIS. TAB');");
 
+    query->exec("UPDATE druglist SET name = replace(name,'-',' ');");
     query->exec("UPDATE druglist SET name = replace(name,' TABLES','TAB');");
 
     query->exec("UPDATE druglist SET name = replace(name,'   ',' ');");
