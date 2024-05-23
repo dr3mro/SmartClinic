@@ -352,6 +352,18 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,' GRAM','GRAM');");
     query->exec("UPDATE druglist SET name = replace(name,' GM','GM');");
 
+
+    query->exec("UPDATE druglist SET name = replace(name,'M.I.U.','MIU');");
+    query->exec("UPDATE druglist SET name = replace(name,'M.I.U','MIU');");
+    query->exec("UPDATE druglist SET name = replace(name,'M.IU','MIU');");
+    query->exec("UPDATE druglist SET name = replace(name,'  MIU','MIU');");
+    query->exec("UPDATE druglist SET name = replace(name,' MIU','MIU');");
+    query->exec("UPDATE druglist SET name = replace(name,' IU-','IU');");
+    query->exec("UPDATE druglist SET name = replace(name,' IU','IU');");
+    query->exec("UPDATE druglist SET name = replace(name,' I.U.','IU');");
+    query->exec("UPDATE druglist SET name = replace(name,'I.U.','IU');");
+
+
     query->exec("UPDATE druglist SET name = replace(name,'TABLET','TAB');");
     query->exec("UPDATE druglist SET name = replace(name,'CAPSULE','CAP');");
 
@@ -366,13 +378,34 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,'AMPSS','AMP');");
     query->exec("UPDATE druglist SET name = replace(name,'F.C.TAB','F.C. TAB');");
 
-    //query->exec("UPDATE druglist SET name = replace(name,'EAR  DROPS','EAR DROPS');");
+    query->exec("UPDATE druglist SET name = replace(name,'BONE CARE BONE CARE 0.5MCG 30 CAP. 30 CAP','BONE CARE 0.5MCG 30 CAP');");
 
     query->exec("UPDATE druglist SET name = replace(name,'DISTAB','DIS. TAB');");
     query->exec("UPDATE druglist SET name = replace(name,'DISTABLETS','DIS. TAB');");
 
     query->exec("UPDATE druglist SET name = replace(name,'-',' ');");
     query->exec("UPDATE druglist SET name = replace(name,' TABLES','TAB');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'IUVIAL','IU VIAL');");
+    query->exec("UPDATE druglist SET name = replace(name,'.VIAL',' VIAL');");
+    query->exec("UPDATE druglist SET name = replace(name,'.AMP',' AMP');");
+    query->exec("UPDATE druglist SET name = replace(name,'.TAB',' TAB');");
+    query->exec("UPDATE druglist SET name = replace(name,'.CAP',' CAP');");
+    query->exec("UPDATE druglist SET name = replace(name,'S.R','SR ');");
+    query->exec("UPDATE druglist SET name = replace(name,'M.R.','MR');");
+    query->exec("UPDATE druglist SET name = replace(name,' M.R','MR');");
+    query->exec("UPDATE druglist SET name = replace(name,'I.V','IV');");
+    query->exec("UPDATE druglist SET name = replace(name,'I.M','IM');");
+    query->exec("UPDATE druglist SET name = replace(name,'I.V.','IV ');");
+    query->exec("UPDATE druglist SET name = replace(name,'I.M.','IM ');");
+    query->exec("UPDATE druglist SET name = replace(name,'IM.','IM ');");
+    query->exec("UPDATE druglist SET name = replace(name,'IV.','IV ');");
+    query->exec("UPDATE druglist SET name = replace(name,'VIAL.','VIAL ');");
+    query->exec("UPDATE druglist SET name = replace(name,'VIALS','VIAL ');");
+    query->exec("UPDATE druglist SET name = replace(name,'AMP.','AMP ');");
+    query->exec("UPDATE druglist SET name = replace(name,'CAP.','CAP ');");
+    query->exec("UPDATE druglist SET name = replace(name,'TAB.','TAB ');");
+    query->exec("UPDATE druglist SET name = replace(name,'DROPS.','DROPS');");
 
     query->exec("UPDATE druglist SET name = replace(name,'   ',' ');");
     query->exec("UPDATE druglist SET name = replace(name,'  ',' ');");
@@ -390,6 +423,8 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET dosage_form = 'CREAM' WHERE dosage_form = 'CRE';");
     query->exec("UPDATE druglist SET dosage_form = 'POWDER' WHERE dosage_form = 'POWER';");
     query->exec("UPDATE druglist SET dosage_form = 'TABLET' WHERE dosage_form = 'TABS.' OR dosage_form = 'TABLETS' ;");
+
+
 
     query->exec("UPDATE druglist SET active = 'UNSPECIFIED' WHERE TRIM(active) = '';");
     query->exec(QString("UPDATE metadata SET value=%1 WHERE var='version'").arg(QDate::currentDate().toString("yyMMdd")));
