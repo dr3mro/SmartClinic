@@ -395,10 +395,19 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,'M.R.','MR');");
     query->exec("UPDATE druglist SET name = replace(name,' M.R','MR');");
     query->exec("UPDATE druglist SET name = replace(name,'I.V','IV');");
-    query->exec("UPDATE druglist SET name = replace(name,'I.M','IM');");
-    query->exec("UPDATE druglist SET name = replace(name,'I.V.','IV ');");
-    query->exec("UPDATE druglist SET name = replace(name,'I.M.','IM ');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'F.C.','FC');");
+    query->exec("UPDATE druglist SET name = replace(name,'F.C','FC');");
+    query->exec("UPDATE druglist SET name = replace(name,'S.C.','SC');");
+    query->exec("UPDATE druglist SET name = replace(name,'S.C','SC');");
+
+
     query->exec("UPDATE druglist SET name = replace(name,'IM.','IM ');");
+    query->exec("UPDATE druglist SET name = replace(name,'I.M.','IM ');");
+    query->exec("UPDATE druglist SET name = replace(name,'I.M','IM');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'I.V.','IV ');");
+
     query->exec("UPDATE druglist SET name = replace(name,'IV.','IV ');");
     query->exec("UPDATE druglist SET name = replace(name,'VIAL.','VIAL ');");
     query->exec("UPDATE druglist SET name = replace(name,'VIALS','VIAL ');");
@@ -406,6 +415,14 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,'CAP.','CAP ');");
     query->exec("UPDATE druglist SET name = replace(name,'TAB.','TAB ');");
     query->exec("UPDATE druglist SET name = replace(name,'DROPS.','DROPS');");
+    query->exec("UPDATE druglist SET name = replace(name,'PRE FILLED','PREFILLED');");
+
+    query->exec("UPDATE druglist SET name = replace(name,' /IM','/IM');");
+    query->exec("UPDATE druglist SET name = replace(name,' /IV','/IV');");
+    query->exec("UPDATE druglist SET name = replace(name,'IV /','IV/');");
+    query->exec("UPDATE druglist SET name = replace(name,'IM /','IM/');");
+    query->exec("UPDATE druglist SET name = replace(name,'IV / IM','IV/IM');");
+    query->exec("UPDATE druglist SET name = replace(name,' /SC','/SC');");
 
     query->exec("UPDATE druglist SET name = replace(name,'   ',' ');");
     query->exec("UPDATE druglist SET name = replace(name,'  ',' ');");
