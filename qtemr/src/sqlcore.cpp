@@ -421,11 +421,15 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,' /IV','/IV');");
     query->exec("UPDATE druglist SET name = replace(name,'IV /','IV/');");
     query->exec("UPDATE druglist SET name = replace(name,'IM /','IM/');");
-    query->exec("UPDATE druglist SET name = replace(name,'IV / IM','IV/IM');");
+
     query->exec("UPDATE druglist SET name = replace(name,' /SC','/SC');");
+
+
 
     query->exec("UPDATE druglist SET name = replace(name,'   ',' ');");
     query->exec("UPDATE druglist SET name = replace(name,'  ',' ');");
+
+    query->exec("UPDATE druglist SET name = replace(name,'IV / IM','IV/IM');");
 
     query->exec("UPDATE druglist SET name = replace(name,'1 2 3 (ONE TWO THREE)','123');");
     query->exec("UPDATE druglist SET name = replace(name,'1 2 3','123');");
