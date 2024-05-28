@@ -434,6 +434,10 @@ void sqlCore::processResponse(const QByteArray& response) {
     query->exec("UPDATE druglist SET name = replace(name,'1 2 3 (ONE TWO THREE)','123');");
     query->exec("UPDATE druglist SET name = replace(name,'1 2 3','123');");
 
+    query->exec("UPDATE druglist SET name = RTRIM(name,'$$');");
+    query->exec("UPDATE druglist SET name = replace(name,'ZORA C 20/LOZENGES','ZORA C 20 LOZENGES');");
+    query->exec("DELETE FROM druglist WHERE name='ZORA C 20 LOZENGE';");
+
     query->exec("UPDATE druglist SET name = TRIM(name);");
 
     query->exec("UPDATE druglist SET name='CIPROCORT EAR DROPS 10ML' WHERE name = 'CIPROCORT OTIC DROPS 10ML';");
