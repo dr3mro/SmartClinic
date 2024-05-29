@@ -13,6 +13,7 @@ drugIndex::drugIndex(QWidget *parent) :
     QTimer::singleShot(0,this,SLOT(load()));
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     connect(sqlcore,&sqlCore::drugsDatabaseUpdateFinished,this,&drugIndex::onDrugsDatabaseChange);
+    connect(sqlcore,&sqlCore::progress,this,&drugIndex::setMessageText);
     message.setMessage("<b> Please wait... </b>");
 }
 
@@ -184,7 +185,7 @@ void drugIndex::on_updateButton_clicked()
     }
     sock.close();
 
-    int reply  = QMessageBox::question(nullptr,"Upadating drugs database","Are you sure that you want to update as failure due to loss of internet will delete all drugs?",QMessageBox::Button::Yes,QMessageBox::Button::No);
+    int reply  = QMessageBox::question(nullptr,"Upadating drugs database","Are you sure that you want to update drugs index database?",QMessageBox::Button::Yes,QMessageBox::Button::No);
     if(reply == QMessageBox::Button::No)
         return;
     message.show();
@@ -207,14 +208,23 @@ void drugIndex::on_resetDatabaseButton_clicked()
     drugsdb.write(dbArray);
     drugsdb.close();
     resDrugsdb.close();
-    onDrugsDatabaseChange();
+    onDrugsDatabaseChange(true);
 }
 
-void drugIndex::onDrugsDatabaseChange()
+void drugIndex::onDrugsDatabaseChange(bool success)
 {
-    QMessageBox::information(nullptr,"Done",QString("%1 will now quit to reload the new changes of drugs index.").arg(APPNAME));
+    if(success){
+        QMessageBox::information(nullptr,"Done",QString("%1 will now quit to reload the new changes of drugs index.").arg(APPNAME));
+        qApp->quit();
+    }else{
+        QMessageBox::information(nullptr,"Done","Updating drugs index Database failed! Try Again later.");
+    }
     message.hide();
-    qApp->quit();
+}
+
+void drugIndex::setMessageText(const QString &status)
+{
+    message.setMessage(status);
 }
 
 

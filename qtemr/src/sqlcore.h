@@ -32,9 +32,15 @@ private:
     QStandardItemModel *model;
     QStringListModel *drugModel;
     void processResponse(const QByteArray& response);
+    void sendProgress(const QString &status);
     QNetworkAccessManager networkManager;
+
 signals:
-    void drugsDatabaseUpdateFinished();
+    void drugsDatabaseUpdateFinished(bool success);
+    void progress(const QString &status);
+private slots:
+    void downloadProgress(qint64 a,qint64 b);
+
 };
 
 #endif // SQLCORE_H

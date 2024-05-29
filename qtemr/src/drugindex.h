@@ -49,7 +49,11 @@ private slots:
     void setResultsCount(QModelIndex, int, int);
     void on_resetButton_clicked();
     void toggleResetButton();
-
+    void setFilters();
+    void load();
+    void on_updateButton_clicked();
+    void on_resetDatabaseButton_clicked();
+    void onDrugsDatabaseChange(bool success);
 private:
     Ui::drugIndex *ui;
     QStandardItemModel *model;
@@ -58,12 +62,8 @@ private:
     sqlCore *sqlcore;
     mLabelMsg message;
 
-private slots:
-    void setFilters();
-    void load();
-    void on_updateButton_clicked();
-    void on_resetDatabaseButton_clicked();
-    void onDrugsDatabaseChange();
+public slots:
+    void setMessageText(const QString &status);
 
 signals:
 

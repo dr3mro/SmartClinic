@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
 
     welcomeBanner *banner = new welcomeBanner;
     banner->show();
-    a.processEvents();
+    a.processEvents(QEventLoop::AllEvents);
 
     banner->updateprogress(QString("initializing application"));
     dataIOhelper::setCurrentFolder();
@@ -364,11 +364,11 @@ int main(int argc, char *argv[])
 
 
     w.showMaximized();
-    a.processEvents();
+    a.processEvents(QEventLoop::AllEvents);
 
     QRect screenres = qApp->primaryScreen()->geometry();
     w.move(QPoint(screenres.x(), screenres.y()));
-    a.processEvents();
+    a.processEvents(QEventLoop::AllEvents);
 
     banner->deleteLater();
     auto exitCode = a.exec();
