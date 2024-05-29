@@ -38,6 +38,7 @@ private:
 signals:
     void drugsDatabaseUpdateFinished(bool success);
     void progress(const QString &status);
+
 private slots:
     void downloadProgress(qint64 a,qint64 b);
 

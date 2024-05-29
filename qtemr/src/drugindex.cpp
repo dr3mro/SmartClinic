@@ -214,6 +214,7 @@ void drugIndex::on_resetDatabaseButton_clicked()
 void drugIndex::onDrugsDatabaseChange(bool success)
 {
     if(success){
+        emit resetDrugsAutoComplete();
         QMessageBox::information(nullptr,"Done",QString("%1 will now quit to reload the new changes of drugs index.").arg(APPNAME));
         qApp->quit();
     }else{

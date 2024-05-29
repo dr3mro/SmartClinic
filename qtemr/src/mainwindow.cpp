@@ -157,6 +157,7 @@ void MainWindow::boot()
     connect (&netserver,&NetServer::loadVisitors,rAssistant,&remoteAssist::loadVisitors);
     connect (rAssistant,&remoteAssist::search,ui->searchWidgetx,&searchWidget::setSearchString);
     connect (rAssistant,&remoteAssist::createVisitor,this,&MainWindow::newPatientWithData);
+    connect (drugindex,&drugIndex::resetDrugsAutoComplete,sqlextra,&sqlExtra::resetDrugsTable);
     if ( ! settings.isDeviceActivated())
         mship->run();
 
