@@ -58,8 +58,8 @@ private slots:
   void on_resetDatabaseButton_clicked();
   void onDrugsDatabaseChange(bool success);
 private:
-  Ui::drugIndex *ui;
   QStandardItemModel *model;
+  Ui::drugIndex *ui;
   int filterColumn;
   mSortFilterProxyModel *proxy_model;
   sqlCore *sqlcore;

@@ -7,7 +7,8 @@
 #include <algorithm>
 #include <cstdlib>
 
-patientTable::patientTable(QWidget *parent):QTableView(parent)
+patientTable::patientTable(QWidget *parent):QTableView(parent),
+  proxy_model(new QSortFilterProxyModel(this))
 {
     QSettings reg("HKEY_CURRENT_USER\\Software\\SmartClinicApp",QSettings::NativeFormat);
     filterColumn =  reg.value("filterColumn").toInt();
@@ -16,6 +17,12 @@ patientTable::patientTable(QWidget *parent):QTableView(parent)
     connect(&watcher,&QFutureWatcher<QStandardItemModel*>::finished, this, &patientTable::updatePatientsCompleted,Qt::QueuedConnection);
     connect(&initWatcher,&QFutureWatcher<QStandardItemModel*>::finished, this,&patientTable::setMyModel,Qt::QueuedConnection);
     connect (this,&patientTable::loadSelectedPatient,this,&patientTable::activated,Qt::QueuedConnection);
+
+    proxy_model->setFilterKeyColumn(filterColumn);
+    proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
+    proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxy_model->setSortCaseSensitivity(Qt::CaseInsensitive);
     viewport()->installEventFilter(this);
 }
 
@@ -108,46 +115,36 @@ void patientTable::updatePatientsCompleted()
     mSelectRow(ID-1);
     this->setColumnWidth(0,sizeHintForColumn(0));
     repaint();
-//    this->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeMode::ResizeToContents);
-//    this->horizontalHeader()->setSectionResizeMode(1,QHeaderView::ResizeMode::Stretch);
 }
 
 void patientTable::setMyModel()
 {
     model = initModelFuture.result();
-
-    model->setHorizontalHeaderLabels( QStringList() << "ID" << "Name " );
-
-    this->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    this->horizontalHeader()->setStretchLastSection( true );
-    this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Interactive);
-    this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-
-    this->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAsNeeded);
-
-    this->setSelectionMode(QAbstractItemView::SingleSelection);
-    this->setSelectionBehavior(QAbstractItemView::SelectRows );
-
-    proxy_model = new QSortFilterProxyModel(this);
-    proxy_model->setFilterKeyColumn(filterColumn);
-    proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    model->setHorizontalHeaderLabels( QStringList() << "ID" << "Name " );  
     proxy_model->setSourceModel(model);
-    proxy_model->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    proxy_model->setSortCaseSensitivity(Qt::CaseInsensitive);
 
     setModel(proxy_model);
-    mSelectRow(0);
+
     emit setFilter(filterColumn);
     emit modelLoadingFinished();
 }
 
 void patientTable::tweaksAfterModelLoadingIsFinished()
 {
-    hideColumn(2);
-    loadingIsFinished = true;
-    this->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeMode::ResizeToContents);
-    this->horizontalHeader()->setSectionResizeMode(1,QHeaderView::ResizeMode::Stretch);
+  this->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  this->horizontalHeader()->setSectionHidden(2,true);
+
+  this->horizontalHeader()->setStretchLastSection(true);
+  this->horizontalHeader()->setSectionResizeMode(0,QHeaderView::ResizeMode::ResizeToContents);
+  this->horizontalHeader()->setSectionResizeMode(1,QHeaderView::ResizeMode::Stretch);
+
+  this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+  this->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAsNeeded);
+  this->setSelectionMode(QAbstractItemView::SingleSelection);
+  this->setSelectionBehavior(QAbstractItemView::SelectRows );
+  this->hideColumn(2);
+  this->mSelectRow(0);
+  loadingIsFinished = true;
 }
 
 void patientTable::loadPatient()

@@ -290,26 +290,28 @@ int main(int argc, char *argv[])
     qRegisterMetaType<QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
 
-
     welcomeBanner *banner = new welcomeBanner;
     banner->show();
     qApp->processEvents(QEventLoop::AllEvents);
 
     banner->updateprogress(QString("initializing application"));
+    qApp->processEvents(QEventLoop::AllEvents);
     dataIOhelper::setCurrentFolder();
 
     initializeSettings();
 
     banner->updateprogress(QString("initializing settings"));
+    qApp->processEvents(QEventLoop::AllEvents);
     QSharedMemory sharedMemory;
 
     sharedMemory.setKey(singleInstance);
 
     banner->updateprogress(QString("initializing single Instance"));
-
+    qApp->processEvents(QEventLoop::AllEvents);
     isSharedMemoryCreated = sharedMemory.create(1);
 
     banner->updateprogress(QString("initializing logger"));
+    qApp->processEvents(QEventLoop::AllEvents);
 
     qSetMessagePattern("[%{type}] %{appname} (%{file}:%{line}) - %{message}");
 
@@ -317,30 +319,39 @@ int main(int argc, char *argv[])
     a.setQuitOnLastWindowClosed(false);
 
     banner->updateprogress(QString("creating folders"));
+    qApp->processEvents(QEventLoop::AllEvents);
     createFolders();
 
     dataIOhelper::dumpLogoNotExists();
-
     dataIOhelper::dumpTemplates();
+
     banner->updateprogress(QString("drugs local databse"));
+    qApp->processEvents(QEventLoop::AllEvents);
+
     copyDrugsDatabase2LocalDataFolder();
     banner->updateprogress(QString("creating UserInterface"));
+    qApp->processEvents(QEventLoop::AllEvents);
+
     SingleInstance cInstance;
     MainWindow w;
+
     banner->updateprogress(QString("Making sure only one instance is running"));
+    qApp->processEvents(QEventLoop::AllEvents);
+
     seatBelt(cInstance,banner);
     QObject::connect(&cInstance,SIGNAL(doAction()),&w,SLOT(showMainwindowIfMinimizedToTray()));
     cInstance.listen(singleInstance);
     w.boot();
     banner->updateprogress(QString("Starting Application"));
+    qApp->processEvents(QEventLoop::AllEvents);
+
     banner->setProgress(100);
-    w.showMaximized();
     qApp->processEvents(QEventLoop::AllEvents);
+
     banner->deleteLater();
-    qApp->processEvents(QEventLoop::AllEvents);
+    w.showMaximized();
     QRect screenres = qApp->primaryScreen()->geometry();
     w.move(QPoint(screenres.x(), screenres.y()));
-    qApp->processEvents(QEventLoop::AllEvents);
     //_CrtDumpMemoryLeaks();
     return  a.exec();
 }
