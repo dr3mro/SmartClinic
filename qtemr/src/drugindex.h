@@ -9,6 +9,9 @@
 #include "staticstrings.h"
 #include "mlabelmsg.h"
 
+#include <QtConcurrent>
+#include <QFutureWatcher>
+#include <QFuture>
 
 class DrugsIndexPriceItemDelegate : public QStyledItemDelegate
 {
@@ -50,7 +53,7 @@ private slots:
   void on_resetButton_clicked();
   void toggleResetButton();
   void setFilters();
-  void load();
+
   void on_updateButton_clicked();
   void on_resetDatabaseButton_clicked();
   void onDrugsDatabaseChange(bool success);
@@ -61,6 +64,15 @@ private:
   mSortFilterProxyModel *proxy_model;
   sqlCore *sqlcore;
   mLabelMsg message;
+
+
+  void loadModel();
+  void load();
+
+  QFutureWatcher<QStandardItemModel*> futureWatcher;
+  QFuture<QStandardItemModel*> future;
+
+
 
 public slots:
   void setMessageText(const QString &status);

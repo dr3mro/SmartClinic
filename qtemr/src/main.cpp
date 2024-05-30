@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
 
     welcomeBanner *banner = new welcomeBanner;
     banner->show();
-    a.processEvents(QEventLoop::AllEvents);
+    qApp->processEvents(QEventLoop::AllEvents);
 
     banner->updateprogress(QString("initializing application"));
     dataIOhelper::setCurrentFolder();
@@ -316,63 +316,31 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(myMessageLogger);
     a.setQuitOnLastWindowClosed(false);
 
-
     banner->updateprogress(QString("creating folders"));
-
-
     createFolders();
-
 
     dataIOhelper::dumpLogoNotExists();
 
     dataIOhelper::dumpTemplates();
-
-
     banner->updateprogress(QString("drugs local databse"));
-
-
     copyDrugsDatabase2LocalDataFolder();
-
-
     banner->updateprogress(QString("creating UserInterface"));
-
-
     SingleInstance cInstance;
-
-
     MainWindow w;
-
-
     banner->updateprogress(QString("Making sure only one instance is running"));
-
-
-
     seatBelt(cInstance,banner);
-
-
-
     QObject::connect(&cInstance,SIGNAL(doAction()),&w,SLOT(showMainwindowIfMinimizedToTray()));
-
     cInstance.listen(singleInstance);
-
-
     w.boot();
-
-
     banner->updateprogress(QString("Starting Application"));
     banner->setProgress(100);
-
-
     w.showMaximized();
-    a.processEvents(QEventLoop::AllEvents);
-
+    qApp->processEvents(QEventLoop::AllEvents);
+    banner->deleteLater();
+    qApp->processEvents(QEventLoop::AllEvents);
     QRect screenres = qApp->primaryScreen()->geometry();
     w.move(QPoint(screenres.x(), screenres.y()));
-    a.processEvents(QEventLoop::AllEvents);
-
-    banner->deleteLater();
-    auto exitCode = a.exec();
+    qApp->processEvents(QEventLoop::AllEvents);
     //_CrtDumpMemoryLeaks();
-    
-    return  exitCode;// a.exec();;
+    return  a.exec();
 }

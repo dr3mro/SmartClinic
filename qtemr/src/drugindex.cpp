@@ -1,8 +1,11 @@
 #include "drugindex.h"
 #include "ui_drugindex.h"
 
+
+
 drugIndex::drugIndex(QWidget *parent) :
     mDialog(parent),
+    model(new QStandardItemModel(this)),
     ui(new Ui::drugIndex)
 {
     ui->setupUi(this);
@@ -10,9 +13,10 @@ drugIndex::drugIndex(QWidget *parent) :
     QLocale locale("en_US");
     ui->updated->setText(locale.toString(QDate::fromString(QString::number(sqlcore->getDrugsDatabaseVersion()),"yyMMdd").addYears(100),"dd-MMMM-yyyy"));
     proxy_model = new mSortFilterProxyModel(this);
-    QTimer::singleShot(0,this,SLOT(load()));
+    QTimer::singleShot(0,this,&drugIndex::loadModel);
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
     connect(sqlcore,&sqlCore::drugsDatabaseUpdateFinished,this,&drugIndex::onDrugsDatabaseChange);
+    connect(&futureWatcher,&QFutureWatcher<QStandardItemModel*>::finished, this,&drugIndex::load,Qt::QueuedConnection);
     connect(sqlcore,&sqlCore::progress,this,&drugIndex::setMessageText);
     message.setMessage("<b> Please wait... </b>");
 }
@@ -23,6 +27,7 @@ drugIndex::~drugIndex()
     delete sqlcore;
     QSqlDatabase::removeDatabase("qt_sql_core_drugsIndex");
     delete proxy_model;
+    delete model;
     delete ui;
 }
 
@@ -129,7 +134,6 @@ void drugIndex::setFilters()
 
 void drugIndex::load()
 {
-    model = sqlcore->getDrugsIndexModel();
     ui->tradeName->setChecked(true);
 
     filterColumn = 0;
@@ -221,6 +225,16 @@ void drugIndex::onDrugsDatabaseChange(bool success)
         QMessageBox::information(nullptr,"Done","Updating drugs index Database failed! Try Again later.");
     }
     message.hide();
+}
+
+void drugIndex::loadModel()
+{
+#if QT_VERSION >= 0x060000
+    future = QtConcurrent::run(&sqlCore::getDrugsIndexModel,sqlcore,model);
+#else
+    future = QtConcurrent::run(sqlcore,&sqlCore::getDrugsIndexModel,model);
+#endif
+    futureWatcher.setFuture(future);
 }
 
 void drugIndex::setMessageText(const QString &status)

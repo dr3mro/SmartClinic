@@ -17,7 +17,7 @@ class sqlCore : public msql
 public:
     struct filters{QStringList categories;QStringList companies;QStringList forms;};
     explicit sqlCore(QObject *parent=nullptr, QString connectionName="qt_sql_core_connection");
-    QStandardItemModel *getDrugsIndexModel();
+    QStandardItemModel *getDrugsIndexModel(QStandardItemModel *model);
     QStandardItemModel *getFindDrugsModel(QStandardItemModel *model, QString col, QStringList filters);
     QStringListModel *getCoreDrugListModel();
     QStringList getCoreDrugList();
@@ -29,7 +29,6 @@ public:
     ~sqlCore();
 
 private:
-    QStandardItemModel *model;
     QStringListModel *drugModel;
     void processResponse(const QByteArray& response);
     void sendProgress(const QString &status);

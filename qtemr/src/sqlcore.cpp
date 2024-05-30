@@ -3,7 +3,6 @@
 
 
 sqlCore::sqlCore(QObject *parent,QString connectionName) : msql(parent),
-    model(new QStandardItemModel(parent)),
     drugModel(new QStringListModel(parent))
 {
     QString path = QString("./data/drugs.db");
@@ -11,7 +10,7 @@ sqlCore::sqlCore(QObject *parent,QString connectionName) : msql(parent),
         mDebug() << "Failed to connect to drugs index data base";
 }
 
-QStandardItemModel *sqlCore::getDrugsIndexModel()
+QStandardItemModel *sqlCore::getDrugsIndexModel(QStandardItemModel *model)
 {
     query->clear();
     QStringList  labels;
@@ -504,8 +503,6 @@ void sqlCore::updateDrugsDatabase()
 
 sqlCore::~sqlCore()
 {
-    model->removeRows(0,model->rowCount());
-    delete model;
     drugModel->removeRows(0,drugModel->rowCount());
     delete drugModel;
 }
