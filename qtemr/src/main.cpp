@@ -118,8 +118,10 @@ void copyDrugsDatabase2LocalDataFolder()
 bool isAppClosedNormaly()
 {
     QFile lockFile(".lock");
+    bool lockexists = lockFile.exists();
+    lockFile.close();
 
-    if (!lockFile.exists())
+    if (!lockexists)
         return true;
     return false;
 }
@@ -209,11 +211,11 @@ void seatBelt(SingleInstance &cInstance,welcomeBanner * banner)
                                          "<li>coreComponents.db : %4</li>"
                                          "</ul>"
                                          "<p>It seams that %5</p>")
-                                 .arg(APPNAMEVER)
-                                 .arg(APPNAME)
-                                 .arg(r_p?"OK":"Corrupted")
-                                 .arg(r_c?"OK":"Corrupted")
-                                 .arg((r_p && r_c)? "Everything is alright, Application will now continue.":"There is a corruption in your Data! Application will now close."));
+                                     .arg(APPNAMEVER)
+                                     .arg(APPNAME)
+                                     .arg(r_p?"OK":"Corrupted")
+                                     .arg(r_c?"OK":"Corrupted")
+                                     .arg((r_p && r_c)? "Everything is alright, Application will now continue.":"There is a corruption in your Data! Application will now close."));
         if (!r_p || !r_c )
             exit(1);
     }
@@ -264,24 +266,24 @@ int main(int argc, char *argv[])
         bool makeUpdatePKG = clParser.isSet(makeUpdatePkgOption);
         if(makeUpdatePKG){
             if(!QDir(updatePackageDir).exists())
-              QDir().mkdir(updatePackageDir);
+                QDir().mkdir(updatePackageDir);
 
             squeeze::compact(qApp->applicationFilePath(),updatePacakgeFile);
             QString md5 = QString(QCryptographicHash::hash(dataIOhelper::readFile(updatePacakgeFile),QCryptographicHash::Md5 ).toHex());
             QByteArray updateData = QString("%1;%2;%3;%4;%5;%6;%7").arg(
-                  APPVERSION,
-                  BUILD,
-                  BUILDDATE,
-                  BUILDTIME,
-                  pkgUrl,
-                  md5,
-                  GITMESSAGE)
-                .toUtf8();
+                                                                       APPVERSION,
+                                                                       BUILD,
+                                                                       BUILDDATE,
+                                                                       BUILDTIME,
+                                                                       pkgUrl,
+                                                                       md5,
+                                                                       GITMESSAGE)
+                                        .toUtf8();
             dataIOhelper::saveFile(updateInfoFile,updateData);
             //        qDebug() << updateData;
             exit(0);
-          }
-      }
+        }
+    }
 
     qRegisterMetaType<QVector<int> >("QVector<int>");
     qRegisterMetaType<QTextCursor>("QTextCursor");
@@ -341,6 +343,7 @@ int main(int argc, char *argv[])
     seatBelt(cInstance,banner);
     QObject::connect(&cInstance,SIGNAL(doAction()),&w,SLOT(showMainwindowIfMinimizedToTray()));
     cInstance.listen(singleInstance);
+    qApp->processEvents(QEventLoop::AllEvents);
     w.boot();
     banner->updateprogress(QString("Starting Application"));
     qApp->processEvents(QEventLoop::AllEvents);
