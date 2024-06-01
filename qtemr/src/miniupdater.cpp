@@ -182,7 +182,6 @@ void miniUpdater::closeEvent(QCloseEvent *e)
                                  QMessageBox::Yes,QMessageBox::No);
         if ( reply == QMessageBox::Yes)
         {
-            delete updateFileGraber;
             downloading = false;
             e->accept();
         }
