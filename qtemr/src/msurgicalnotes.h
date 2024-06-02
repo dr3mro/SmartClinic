@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -6,23 +7,23 @@
 #define MSURGICALNOTES_H
 
 #include <QObject>
-#include <QTableView>
 #include <QStandardItemModel>
+#include <QTableView>
+
 #include "sqlbase.h"
 
-class mSurgicalNotes : public QTableView
-{
-    Q_OBJECT
+class mSurgicalNotes : public QTableView {
+  Q_OBJECT
 
-public:
-    explicit mSurgicalNotes(QWidget *);
-    void fillTable(int ID);
-    ~mSurgicalNotes();
-    QStandardItemModel *model;
-    sqlBase *sqlbase;
+ public:
+  explicit mSurgicalNotes(QWidget *);
+  void fillTable(int ID);
+  ~mSurgicalNotes();
+  QStandardItemModel *model;
+  sqlBase *sqlbase;
 
-signals:
-    void disableDeleteEditButton();
+ signals:
+  void disableDeleteEditButton();
 };
 
-#endif // MSURGICALNOTES_H
+#endif  // MSURGICALNOTES_H

@@ -3,20 +3,19 @@
 
 #include <QObject>
 
-class Bios : public QObject
-{
+class Bios : public QObject {
   Q_OBJECT
-public:
+ public:
   static Bios &instance();
   QString getDeviceID();
-private:
-  Bios();
-  Bios(const Bios&);
-  ~Bios();
-  Bios & operator = (const Bios&);
-  QString DeviceID;
-signals:
 
+ private:
+  Bios();
+  Bios(const Bios &);
+  ~Bios();
+  Bios &operator=(const Bios &);
+  QString DeviceID;
+ signals:
 };
 
-#endif // BIOS_H
+#endif  // BIOS_H

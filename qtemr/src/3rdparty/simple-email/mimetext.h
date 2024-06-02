@@ -19,21 +19,19 @@
 #define MIMETEXT_H
 
 #include "mimepart.h"
-
 #include "smtpexports.h"
 
 namespace SimpleMail {
 
-class  MimeText : public MimePart
-{
-public:
-    MimeText(const QString &text = QString());
-    virtual ~MimeText();
+class MimeText : public MimePart {
+ public:
+  MimeText(const QString &text = QString());
+  virtual ~MimeText();
 
-    void setText(const QString &text);
-    QString text() const;
+  void setText(const QString &text);
+  QString text() const;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMETEXT_H
+#endif  // MIMETEXT_H

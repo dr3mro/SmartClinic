@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -7,24 +8,23 @@
 
 #include <QObject>
 #include <QRandomGenerator>
+
 #include "sqlbase.h"
 
-class wm_visitListLoader : public QObject
-{
-    Q_OBJECT
-public:
-    explicit wm_visitListLoader(QObject *parent = nullptr);
-    ~wm_visitListLoader();
-    void setID(int id);
-private:
-    QString connectionName;
-    sqlBase *sqlbase;
-    int ID;
+class wm_visitListLoader : public QObject {
+  Q_OBJECT
+ public:
+  explicit wm_visitListLoader(QObject *parent = nullptr);
+  ~wm_visitListLoader();
+  void setID(int id);
 
+ private:
+  QString connectionName;
+  sqlBase *sqlbase;
+  int ID;
 
-public slots:
-    QVector<sqlBase::visitItem> Work();
-
+ public slots:
+  QVector<sqlBase::visitItem> Work();
 };
 
-#endif // WM_VISITLISTLOADER_H
+#endif  // WM_VISITLISTLOADER_H

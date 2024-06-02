@@ -19,72 +19,56 @@
 
 using namespace SimpleMail;
 
-EmailAddress::EmailAddress() : d_ptr(new EmailAddressPrivate)
-{
+EmailAddress::EmailAddress() : d_ptr(new EmailAddressPrivate) {}
 
+EmailAddress::EmailAddress(const EmailAddress &other) : d_ptr(other.d_ptr) {}
+
+EmailAddress::EmailAddress(const QString &nameAndAddress)
+    : d_ptr(new EmailAddressPrivate) {
+  Q_D(EmailAddress);
+  int p1 = nameAndAddress.indexOf(QLatin1String("<"));
+  int p2 = nameAndAddress.indexOf(QLatin1String(">"));
+
+  if (p1 == -1) {
+    // no name, only email address
+    d->address = nameAndAddress;
+  } else {
+    d->address = nameAndAddress.mid(p1 + 1, p2 - p1 - 1);
+    d->name = nameAndAddress.left(p1);
+  }
 }
 
-EmailAddress::EmailAddress(const EmailAddress &other) : d_ptr(other.d_ptr)
-{
-
+EmailAddress::EmailAddress(const QString &address, const QString &name)
+    : d_ptr(new EmailAddressPrivate) {
+  Q_D(EmailAddress);
+  d->address = address;
+  d->name = name;
 }
 
-EmailAddress::EmailAddress(const QString &nameAndAddress) : d_ptr(new EmailAddressPrivate)
-{
-    Q_D(EmailAddress);
-    int p1 = nameAndAddress.indexOf(QLatin1String("<"));
-    int p2 = nameAndAddress.indexOf(QLatin1String(">"));
+EmailAddress::~EmailAddress() {}
 
-    if (p1 == -1) {
-        // no name, only email address
-        d->address = nameAndAddress;
-    } else {
-        d->address = nameAndAddress.mid(p1 + 1, p2 - p1 - 1);
-        d->name = nameAndAddress.left(p1);
-    }
+EmailAddress &EmailAddress::operator=(const EmailAddress &other) {
+  d_ptr = other.d_ptr;
+  return *this;
 }
 
-EmailAddress::EmailAddress(const QString &address, const QString &name) : d_ptr(new EmailAddressPrivate)
-{
-    Q_D(EmailAddress);
-    d->address = address;
-    d->name = name;
+void EmailAddress::setName(const QString &name) {
+  Q_D(EmailAddress);
+  d->name = name;
+}
+void EmailAddress::setAddress(const QString &address) {
+  Q_D(EmailAddress);
+  d->address = address;
 }
 
-EmailAddress::~EmailAddress()
-{
+EmailAddressPrivate *EmailAddress::d_func() { return d_ptr.data(); }
+
+QString EmailAddress::name() const {
+  Q_D(const EmailAddress);
+  return d->name;
 }
 
-EmailAddress &EmailAddress::operator=(const EmailAddress &other)
-{
-    d_ptr = other.d_ptr;
-    return *this;
-}
-
-void EmailAddress::setName(const QString &name)
-{
-    Q_D(EmailAddress);
-    d->name = name;
-}
-void EmailAddress::setAddress(const QString &address)
-{
-    Q_D(EmailAddress);
-    d->address = address;
-}
-
-EmailAddressPrivate *EmailAddress::d_func()
-{
-    return d_ptr.data();
-}
-
-QString EmailAddress::name() const
-{
-    Q_D(const EmailAddress);
-    return d->name;
-}
-
-QString EmailAddress::address() const
-{
-    Q_D(const EmailAddress);
-    return d->address;
+QString EmailAddress::address() const {
+  Q_D(const EmailAddress);
+  return d->address;
 }

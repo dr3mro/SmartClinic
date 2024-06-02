@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -12,19 +13,18 @@ namespace Ui {
 class notifications;
 }
 
-class notifications : public QDialog
-{
-    Q_OBJECT
+class notifications : public QDialog {
+  Q_OBJECT
 
-public:
-    explicit notifications(QWidget *parent = nullptr);
-    void fillList(QStringList n);
-    ~notifications();
-private slots:
-    void keyPressEvent(QKeyEvent *e);
+ public:
+  explicit notifications(QWidget *parent = nullptr);
+  void fillList(QStringList n);
+  ~notifications();
+ private slots:
+  void keyPressEvent(QKeyEvent *e);
 
-private:
-    Ui::notifications *ui;
+ private:
+  Ui::notifications *ui;
 };
 
-#endif // NOTIFICATIONS_H
+#endif  // NOTIFICATIONS_H

@@ -17,32 +17,23 @@
 */
 
 #include "mimetext.h"
-#include "mimepart_p.h"
 
 #include <QDebug>
 
+#include "mimepart_p.h"
+
 using namespace SimpleMail;
 
-MimeText::MimeText(const QString &txt)
-{
-    Q_D(MimePart);
-    d->contentType = QByteArrayLiteral("text/plain");
-    d->contentCharset = QByteArrayLiteral("UTF-8");
-    d->contentEncoding = QuotedPrintable;
-    setData(txt);
+MimeText::MimeText(const QString &txt) {
+  Q_D(MimePart);
+  d->contentType = QByteArrayLiteral("text/plain");
+  d->contentCharset = QByteArrayLiteral("UTF-8");
+  d->contentEncoding = QuotedPrintable;
+  setData(txt);
 }
 
-MimeText::~MimeText()
-{
+MimeText::~MimeText() {}
 
-}
+void MimeText::setText(const QString &text) { setData(text); }
 
-void MimeText::setText(const QString &text)
-{
-    setData(text);
-}
-
-QString MimeText::text() const
-{
-    return data();
-}
+QString MimeText::text() const { return data(); }

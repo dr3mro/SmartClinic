@@ -23,31 +23,30 @@
 namespace SimpleMail {
 
 class ServerReplyPrivate;
-class  ServerReply : public QObject
-{
-    Q_OBJECT
-    Q_DECLARE_PRIVATE(ServerReply)
-public:
-    explicit ServerReply(QObject *parent = nullptr);
-    virtual ~ServerReply();
+class ServerReply : public QObject {
+  Q_OBJECT
+  Q_DECLARE_PRIVATE(ServerReply)
+ public:
+  explicit ServerReply(QObject *parent = nullptr);
+  virtual ~ServerReply();
 
-    bool error() const;
+  bool error() const;
 
-    int responseCode() const;
-    QString responseText() const;
+  int responseCode() const;
+  QString responseText() const;
 
-Q_SIGNALS:
-    void finished();
+ Q_SIGNALS:
+  void finished();
 
-protected:
-    void finish(bool error, int responseCode, const QString &responseText);
+ protected:
+  void finish(bool error, int responseCode, const QString &responseText);
 
-private:
-    friend class ServerPrivate;
+ private:
+  friend class ServerPrivate;
 
-    ServerReplyPrivate *d_ptr;
+  ServerReplyPrivate *d_ptr;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // SERVERREPLY_H
+#endif  // SERVERREPLY_H

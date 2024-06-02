@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -7,28 +8,26 @@
 
 #include <QObject>
 #include <QRandomGenerator>
+
 #include "sqlbase.h"
 
-class wm_visitSaver : public QObject
-{
-    Q_OBJECT
-public:
-    explicit wm_visitSaver(QObject *parent = nullptr);
-    ~wm_visitSaver();
-    void setVisitData(const sqlBase::visitData &_data);
+class wm_visitSaver : public QObject {
+  Q_OBJECT
+ public:
+  explicit wm_visitSaver(QObject *parent = nullptr);
+  ~wm_visitSaver();
+  void setVisitData(const sqlBase::visitData &_data);
 
-signals:
-    void finished();
-    void finishedSavingState(bool);
-public slots:
-    void Work();
-private:
-    sqlBase::visitData visitData;
-    QString connectionName;
-    sqlBase *sqlbase;
+ signals:
+  void finished();
+  void finishedSavingState(bool);
+ public slots:
+  void Work();
 
-    
-
+ private:
+  sqlBase::visitData visitData;
+  QString connectionName;
+  sqlBase *sqlbase;
 };
 
-#endif // WM_VISITSAVER_H
+#endif  // WM_VISITSAVER_H

@@ -17,15 +17,15 @@
 #ifndef FEEDBACK_H
 #define FEEDBACK_H
 
-#include <QWidget>
-#include <QSettings>
-
 #include <QListWidget>
+#include <QSettings>
+#include <QWidget>
+
 #include "3rdparty/simple-email/SimpleMail"
 #include "globalvariables.h"
 
 namespace Ui {
-    class FeedBack;
+class FeedBack;
 }
 
 namespace SimpleMail {
@@ -34,28 +34,27 @@ class Server;
 
 using namespace SimpleMail;
 
-class FeedBack : public QWidget
-{
-    Q_OBJECT
+class FeedBack : public QWidget {
+  Q_OBJECT
 
-public:
-    explicit FeedBack(QWidget *parent = nullptr);
-    void clear();
-    const bool & get_isBusy();
-    ~FeedBack();
+ public:
+  explicit FeedBack(QWidget *parent = nullptr);
+  void clear();
+  const bool &get_isBusy();
+  ~FeedBack();
 
-private Q_SLOTS:
-    void on_addAttachment_clicked();
-    void on_sendEmail_clicked();
-    void sendMailAsync(const MimeMessage &msg);
-    void on_attachments_itemClicked(QListWidgetItem *item);
-    void on_deleteButton_clicked();
+ private Q_SLOTS:
+  void on_addAttachment_clicked();
+  void on_sendEmail_clicked();
+  void sendMailAsync(const MimeMessage &msg);
+  void on_attachments_itemClicked(QListWidgetItem *item);
+  void on_deleteButton_clicked();
 
-private:
-    std::vector<Server *> m_aServers;
-    Ui::FeedBack *ui;
-    void errorMessage(const QString & message);
-    bool isBusy=false;
+ private:
+  std::vector<Server *> m_aServers;
+  Ui::FeedBack *ui;
+  void errorMessage(const QString &message);
+  bool isBusy = false;
 };
 
-#endif // FEEDBACK_H
+#endif  // FEEDBACK_H

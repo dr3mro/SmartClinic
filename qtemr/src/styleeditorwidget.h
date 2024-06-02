@@ -1,28 +1,29 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #ifndef STYLEEDITORWIDGET_H
 #define STYLEEDITORWIDGET_H
 
+#include <QColorDialog>
 #include <QObject>
 #include <QWidget>
-#include <QColorDialog>
 
 #include "m_scolorbutton.h"
 
-class StyleEditorWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit StyleEditorWidget(QWidget *parent = nullptr);
+class StyleEditorWidget : public QWidget {
+  Q_OBJECT
+ public:
+  explicit StyleEditorWidget(QWidget *parent = nullptr);
 
-signals:
+ signals:
 
-public slots:
-    void buttonSetColor();
-private:
-    QColorDialog dialog;
+ public slots:
+  void buttonSetColor();
+
+ private:
+  QColorDialog dialog;
 };
 
-#endif // STYLEEDITORWIDGET_H
+#endif  // STYLEEDITORWIDGET_H

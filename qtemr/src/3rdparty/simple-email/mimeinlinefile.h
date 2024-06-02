@@ -19,19 +19,18 @@
 #define MIMEINLINEFILE_H
 
 #include "mimefile.h"
-
 #include "smtpexports.h"
 
 namespace SimpleMail {
 
-class  MimeInlineFile : public MimeFile
-{
-public:
-    MimeInlineFile(QFile *f);
-    MimeInlineFile(const QByteArray &stream, const QString &fileName, const QByteArray &mimeType = {});
-    virtual ~MimeInlineFile();
+class MimeInlineFile : public MimeFile {
+ public:
+  MimeInlineFile(QFile *f);
+  MimeInlineFile(const QByteArray &stream, const QString &fileName,
+                 const QByteArray &mimeType = {});
+  virtual ~MimeInlineFile();
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMEINLINEFILE_H
+#endif  // MIMEINLINEFILE_H

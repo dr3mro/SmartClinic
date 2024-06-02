@@ -25,28 +25,29 @@
 
 namespace SimpleMail {
 
-class MimeMessagePrivate : public QSharedData
-{
-public:
-    MimeMessagePrivate() = default;
-    ~MimeMessagePrivate();
+class MimeMessagePrivate : public QSharedData {
+ public:
+  MimeMessagePrivate() = default;
+  ~MimeMessagePrivate();
 
-    inline static QByteArray encode(const QByteArray &addressKind, const QList<EmailAddress> &emails, MimePart::Encoding codec);
-    inline static QByteArray encodeData(MimePart::Encoding codec, const QString &data, bool autoencoding);
+  inline static QByteArray encode(const QByteArray &addressKind,
+                                  const QList<EmailAddress> &emails,
+                                  MimePart::Encoding codec);
+  inline static QByteArray encodeData(MimePart::Encoding codec,
+                                      const QString &data, bool autoencoding);
 
-    QList<EmailAddress> recipientsTo;
-    QList<EmailAddress> recipientsCc;
-    QList<EmailAddress> recipientsBcc;
-    QString subject;
-    EmailAddress sender;
-    MimePart *content = nullptr;
-    MimePart::Encoding encoding = MimePart::_8Bit;
-    bool autoMimeContentCreated;
-    EmailAddress replyTo;
-    QList<QByteArray> listExtraHeaders;
+  QList<EmailAddress> recipientsTo;
+  QList<EmailAddress> recipientsCc;
+  QList<EmailAddress> recipientsBcc;
+  QString subject;
+  EmailAddress sender;
+  MimePart *content = nullptr;
+  MimePart::Encoding encoding = MimePart::_8Bit;
+  bool autoMimeContentCreated;
+  EmailAddress replyTo;
+  QList<QByteArray> listExtraHeaders;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMEMESSAGE_P_H
-
+#endif  // MIMEMESSAGE_P_H

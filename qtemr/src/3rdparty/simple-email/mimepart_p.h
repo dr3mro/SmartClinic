@@ -25,29 +25,27 @@
 class QFile;
 namespace SimpleMail {
 
-class MimePartPrivate : public QSharedData
-{
-public:
-    virtual ~MimePartPrivate();
+class MimePartPrivate : public QSharedData {
+ public:
+  virtual ~MimePartPrivate();
 
-    bool writeRaw(QIODevice *input, QIODevice *out);
-    bool writeBase64(QIODevice *input, QIODevice *out);
-    bool writeQuotedPrintable(QIODevice *input, QIODevice *out);
+  bool writeRaw(QIODevice *input, QIODevice *out);
+  bool writeBase64(QIODevice *input, QIODevice *out);
+  bool writeQuotedPrintable(QIODevice *input, QIODevice *out);
 
-    QByteArray header;
-    QIODevice *contentDevice = nullptr;
+  QByteArray header;
+  QIODevice *contentDevice = nullptr;
 
-    QByteArray contentId;
-    QByteArray contentName;
-    QByteArray contentType;
-    QByteArray contentCharset;
-    QByteArray contentBoundary;
+  QByteArray contentId;
+  QByteArray contentName;
+  QByteArray contentType;
+  QByteArray contentCharset;
+  QByteArray contentBoundary;
 
-    MimeContentFormatter formatter;
-    MimePart::Encoding contentEncoding = MimePart::_7Bit;
+  MimeContentFormatter formatter;
+  MimePart::Encoding contentEncoding = MimePart::_7Bit;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMEPART_P_H
-
+#endif  // MIMEPART_P_H

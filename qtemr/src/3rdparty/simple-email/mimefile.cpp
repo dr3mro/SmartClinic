@@ -16,47 +16,44 @@
 */
 
 #include "mimefile.h"
-#include "mimepart_p.h"
 
 #include <QtCore/QBuffer>
-#include <QtCore/QMimeDatabase>
 #include <QtCore/QFileInfo>
+#include <QtCore/QMimeDatabase>
+
+#include "mimepart_p.h"
 
 using namespace SimpleMail;
 
-MimeFile::MimeFile(QFile *file)
-{
-    Q_D(MimePart);
-    d->contentEncoding = Base64;
-    d->contentDevice = file;
+MimeFile::MimeFile(QFile *file) {
+  Q_D(MimePart);
+  d->contentEncoding = Base64;
+  d->contentDevice = file;
 
-    const QString filename = QFileInfo(*file).fileName();
-    d->contentName = filename.toLatin1();
+  const QString filename = QFileInfo(*file).fileName();
+  d->contentName = filename.toLatin1();
 
-    QMimeDatabase db;
-    QMimeType mime = db.mimeTypeForFile(file->fileName());
-    d->contentType = mime.name().toLatin1();
-    if (d->contentType.isEmpty()) {
-        d->contentType = QByteArrayLiteral("application/octet-stream");
-    }
+  QMimeDatabase db;
+  QMimeType mime = db.mimeTypeForFile(file->fileName());
+  d->contentType = mime.name().toLatin1();
+  if (d->contentType.isEmpty()) {
+    d->contentType = QByteArrayLiteral("application/octet-stream");
+  }
 }
 
-MimeFile::MimeFile(const QByteArray &stream, const QString &fileName) : MimeFile(stream, fileName, {})
-{
+MimeFile::MimeFile(const QByteArray &stream, const QString &fileName)
+    : MimeFile(stream, fileName, {}) {}
+
+MimeFile::MimeFile(const QByteArray &stream, const QString &fileName,
+                   const QByteArray &mimeType) {
+  Q_D(MimePart);
+  d->contentEncoding = Base64;
+  d->contentName = fileName.toLatin1();
+  d->contentType = mimeType;
+  if (d->contentType.isEmpty()) {
+    d->contentType = QByteArrayLiteral("application/octet-stream");
+  }
+  setContent(stream);
 }
 
-MimeFile::MimeFile(const QByteArray &stream, const QString &fileName, const QByteArray &mimeType)
-{
-    Q_D(MimePart);
-    d->contentEncoding = Base64;
-    d->contentName = fileName.toLatin1();
-    d->contentType = mimeType;
-    if (d->contentType.isEmpty()) {
-        d->contentType = QByteArrayLiteral("application/octet-stream");
-    }
-    setContent(stream);
-}
-
-MimeFile::~MimeFile()
-{
-}
+MimeFile::~MimeFile() {}

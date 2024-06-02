@@ -18,64 +18,62 @@
 #ifndef MIMEMESSAGE_H
 #define MIMEMESSAGE_H
 
-#include "mimepart.h"
-#include "emailaddress.h"
-
-#include "smtpexports.h"
-
 #include <QSharedDataPointer>
+
+#include "emailaddress.h"
+#include "mimepart.h"
+#include "smtpexports.h"
 
 class QIODevice;
 namespace SimpleMail {
 
 class MimeMessagePrivate;
-class  MimeMessage
-{
-public:
-    explicit MimeMessage(bool createAutoMimeConent = true);
-    MimeMessage(const MimeMessage &other);
-    virtual ~MimeMessage();
+class MimeMessage {
+ public:
+  explicit MimeMessage(bool createAutoMimeConent = true);
+  MimeMessage(const MimeMessage &other);
+  virtual ~MimeMessage();
 
-    MimeMessage &operator=(const MimeMessage &other);
+  MimeMessage &operator=(const MimeMessage &other);
 
-    void setSender(const EmailAddress &sender);
-    EmailAddress sender() const;
+  void setSender(const EmailAddress &sender);
+  EmailAddress sender() const;
 
-    void setToRecipients(const QList<EmailAddress> &toList);
-    QList<EmailAddress> toRecipients() const;
-    void addTo(const EmailAddress &rcpt);
+  void setToRecipients(const QList<EmailAddress> &toList);
+  QList<EmailAddress> toRecipients() const;
+  void addTo(const EmailAddress &rcpt);
 
-    void setCcRecipients(const QList<EmailAddress> &ccList);
-    QList<EmailAddress> ccRecipients() const;
-    void addCc(const EmailAddress &rcpt);
+  void setCcRecipients(const QList<EmailAddress> &ccList);
+  QList<EmailAddress> ccRecipients() const;
+  void addCc(const EmailAddress &rcpt);
 
-    void setBccRecipients(const QList<EmailAddress> &bccList);
-    QList<EmailAddress> bccRecipients() const;
-    void addBcc(const EmailAddress &rcpt);
+  void setBccRecipients(const QList<EmailAddress> &bccList);
+  QList<EmailAddress> bccRecipients() const;
+  void addBcc(const EmailAddress &rcpt);
 
-    void setSubject(const QString &subject);
-    void addPart(MimePart* part);
+  void setSubject(const QString &subject);
+  void addPart(MimePart *part);
 
-    void setHeaderEncoding(MimePart::Encoding);
+  void setHeaderEncoding(MimePart::Encoding);
 
-    void addHeader(const QByteArray &headerName, const QByteArray &headerValue);
-    QList<QByteArray> getHeaders() const;
+  void addHeader(const QByteArray &headerName, const QByteArray &headerValue);
+  QList<QByteArray> getHeaders() const;
 
-    void setReplyto(const EmailAddress &replyTo);
-    EmailAddress replyTo() const;
+  void setReplyto(const EmailAddress &replyTo);
+  EmailAddress replyTo() const;
 
-    QString subject() const;
-    QList<MimePart *> parts() const;
+  QString subject() const;
+  QList<MimePart *> parts() const;
 
-    MimePart& getContent();
-    void setContent(MimePart *content);
+  MimePart &getContent();
+  void setContent(MimePart *content);
 
-    bool write(QIODevice *device) const;
+  bool write(QIODevice *device) const;
 
-protected:
-    QSharedDataPointer<MimeMessagePrivate> d;
+ protected:
+  QSharedDataPointer<MimeMessagePrivate> d;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMEMESSAGE_H
+#endif  // MIMEMESSAGE_H

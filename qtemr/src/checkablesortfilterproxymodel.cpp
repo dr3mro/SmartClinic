@@ -1,51 +1,48 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "checkablesortfilterproxymodel.h"
 
-CheckableSortFilterProxyModel::CheckableSortFilterProxyModel(QObject *parent) :
-    QSortFilterProxyModel(parent){}
+CheckableSortFilterProxyModel::CheckableSortFilterProxyModel(QObject *parent)
+    : QSortFilterProxyModel(parent) {}
 
-QVariant CheckableSortFilterProxyModel::data(const QModelIndex &index, int role) const
-{
-    if (!index.isValid())
-        return QVariant();
+QVariant CheckableSortFilterProxyModel::data(const QModelIndex &index,
+                                             int role) const {
+  if (!index.isValid()) return QVariant();
 
-    if ( index.column() == 1 && (role == Qt::CheckStateRole || role == Qt::DisplayRole) )
-    {
-        if (role == Qt::CheckStateRole)
-            return index.data(Qt::EditRole).toBool() ? QVariant(Qt::Checked) : QVariant(Qt::Unchecked);
-        else if (role == Qt::DisplayRole)
-            return QVariant();
-    }
+  if (index.column() == 1 &&
+      (role == Qt::CheckStateRole || role == Qt::DisplayRole)) {
+    if (role == Qt::CheckStateRole)
+      return index.data(Qt::EditRole).toBool() ? QVariant(Qt::Checked)
+                                               : QVariant(Qt::Unchecked);
+    else if (role == Qt::DisplayRole)
+      return QVariant();
+  }
 
-    return QSortFilterProxyModel::data(index,role);
+  return QSortFilterProxyModel::data(index, role);
 }
 
-bool CheckableSortFilterProxyModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if(!index.isValid())
-        return false;
+bool CheckableSortFilterProxyModel::setData(const QModelIndex &index,
+                                            const QVariant &value, int role) {
+  if (!index.isValid()) return false;
 
-    if( index.column() == 1 && role == Qt::CheckStateRole)
-    {
-        QVariant data = (value.toInt() == Qt::Checked) ? QVariant(1) : QVariant (0);
-        return QSortFilterProxyModel::setData(index, data, Qt::EditRole);
-    }
-    else
-        return QSortFilterProxyModel::setData(index,value,role);
-
+  if (index.column() == 1 && role == Qt::CheckStateRole) {
+    QVariant data = (value.toInt() == Qt::Checked) ? QVariant(1) : QVariant(0);
+    return QSortFilterProxyModel::setData(index, data, Qt::EditRole);
+  } else
+    return QSortFilterProxyModel::setData(index, value, role);
 }
 
-Qt::ItemFlags CheckableSortFilterProxyModel::flags ( const QModelIndex & index ) const {
-    if(!index.isValid())
-        return Qt::ItemIsEnabled;
+Qt::ItemFlags CheckableSortFilterProxyModel::flags(
+    const QModelIndex &index) const {
+  if (!index.isValid()) return Qt::ItemIsEnabled;
 
-    if ( index.column() == 1 )
-        return Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-    else if ( index.column() == 0 )
-        return Qt::ItemIsSelectable;
-    else
-        return QSortFilterProxyModel::flags(index);
-
+  if (index.column() == 1)
+    return Qt::ItemIsUserCheckable | Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+  else if (index.column() == 0)
+    return Qt::ItemIsSelectable;
+  else
+    return QSortFilterProxyModel::flags(index);
 }

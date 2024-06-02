@@ -1,20 +1,19 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #ifndef MFONTCOMBOBOX_H
 #define MFONTCOMBOBOX_H
 
+#include <QFontComboBox>
 #include <QObject>
 #include <QWidget>
-#include <QFontComboBox>
 
-
-class mFontComboBox : public QFontComboBox
-{
-    Q_OBJECT
-public:
-    explicit mFontComboBox(QWidget *parent=nullptr);
+class mFontComboBox : public QFontComboBox {
+  Q_OBJECT
+ public:
+  explicit mFontComboBox(QWidget *parent = nullptr);
 };
 
-#endif // MFONTCOMBOBOX_H
+#endif  // MFONTCOMBOBOX_H

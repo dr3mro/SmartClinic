@@ -1,284 +1,215 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #pragma once
 #ifndef MSETTINGS_H
 #define MSETTINGS_H
 
-#include <QObject>
-#include <QSettings>
+#include <math.h>
+
 #include <QApplication>
 #include <QList>
+#include <QObject>
 #include <QPair>
-#include "mdebug.h"
-#include "globalvariables.h"
-#include "staticstrings.h"
-#include "mstyler.h"
-#include "datahelper.h"
+#include <QSettings>
 
-#include <math.h>
+#include "datahelper.h"
+#include "globalvariables.h"
+#include "mdebug.h"
+#include "mstyler.h"
+#include "staticstrings.h"
 class dataHelper;
 
-class mSettings : public QObject
-{
-    Q_OBJECT
-public:
-    // this is data structure to hold the vitals for printing
+class mSettings : public QObject {
+  Q_OBJECT
+ public:
+  // this is data structure to hold the vitals for printing
 
-    struct Vitals{
-        int pulse=-1;
-        QString BP="";
-        int RR=-1;
-        double T=-1.0;
-        double weight=-1.0;
-        double height=-1.0;
-        int sPo2=-1;
-        QString RBS="-1";
+  struct Vitals {
+    int pulse = -1;
+    QString BP = "";
+    int RR = -1;
+    double T = -1.0;
+    double weight = -1.0;
+    double height = -1.0;
+    int sPo2 = -1;
+    QString RBS = "-1";
 
-        void clear(){
-            pulse=-1;
-            BP="-1";
-            RR=-1;
-            T=-1;;
-            weight=-1;
-            height=-1;
-            sPo2=-1;
-            RBS="-1";
-        }
-        int getRows()
-        {
-            int rows = 0;
-            if(weight != 0)
-                rows++;
-            if(height != 0)
-                rows++;
-            if(sPo2 != 0)
-                rows++;
-            if(RBS != "")
-                rows++;
-            if(pulse != 0)
-                rows++;
-            if(RR != 0)
-                rows++;
-            if(BP != "")
-                rows++;
-            if(T != 0)
-                rows++;
+    void clear() {
+      pulse = -1;
+      BP = "-1";
+      RR = -1;
+      T = -1;
+      ;
+      weight = -1;
+      height = -1;
+      sPo2 = -1;
+      RBS = "-1";
+    }
+    int getRows() {
+      int rows = 0;
+      if (weight != 0) rows++;
+      if (height != 0) rows++;
+      if (sPo2 != 0) rows++;
+      if (RBS != "") rows++;
+      if (pulse != 0) rows++;
+      if (RR != 0) rows++;
+      if (BP != "") rows++;
+      if (T != 0) rows++;
 
-            return rows;
-        }
+      return rows;
+    }
 
-        bool operator==(const Vitals& vitals) const
-        {
-            return std::tie(
-                        pulse,
-                        BP,
-                        RR,
-                        T,
-                        weight,
-                        height,
-                        sPo2,
-                        RBS
-                        ) ==
-                    std::tie(
-                        vitals.pulse,
-                        vitals.BP,
-                        vitals.RR,
-                        vitals.T,
-                        vitals.weight,
-                        vitals.height,
-                        vitals.sPo2,
-                        vitals.RBS
-                        );
-        }
-    };
-    // this is data structure to hold the drug for printing
-    struct drug{
-        QString TradeName;
-        QString Dose;
-        QString StartDate;
-    };
+    bool operator==(const Vitals& vitals) const {
+      return std::tie(pulse, BP, RR, T, weight, height, sPo2, RBS) ==
+             std::tie(vitals.pulse, vitals.BP, vitals.RR, vitals.T,
+                      vitals.weight, vitals.height, vitals.sPo2, vitals.RBS);
+    }
+  };
+  // this is data structure to hold the drug for printing
+  struct drug {
+    QString TradeName;
+    QString Dose;
+    QString StartDate;
+  };
 
-    enum mSex{
-        male,
-        female
-    };
+  enum mSex { male, female };
 
-    struct mDiet{
-        bool printRequired=false;
-        QString contents="";
-    };
+  struct mDiet {
+    bool printRequired = false;
+    QString contents = "";
+  };
 
-    // this is data structure to hold the roshetta for printing
-    struct Roshetta
-    {
-        QString getNextFromJulian(const qint64& nextDateJulian){
-            QVector<QPair<QString,int> > options { {"تمت الإستشارة",0},
-                                                   {"أسبوع",1},
-                                                   {"أسبوعين",2},
-                                                   {"٣أسابيع",3},
-                                                   {"شهر",4},
-                                                   {"شهر",5},
-                                                   {"شهر و نصف",6},
-                                                   {"شهر و نصف",7},
-                                                   {"شهرين",8},
-                                                   {"شهرين",9},
-                                                   {"شهرين",10},
-                                                   {"٣ شهور",11},
-                                                   {"٣ شهور",12},
-                                                   {"٣ شهور",13},
-                                                   {"٣ شهور",14},
-                                                   {"٣ شهور",15},
-                                                   {"٤ شهور",16},
-                                                   {"٤ شهور",17},
-                                                   {"٤ شهور",18},
-                                                   {"٤ شهور",19},
-                                                   {"٥ شهور",20},
-                                                   {"٥ شهور",21},
-                                                   {"٥ شهور",22},
-                                                   {"٥ شهور",23},
-                                                   {"٦ شهور",24} };
-            qint64 julianToday = QDate::currentDate().toJulianDay();
-            qint64 remainingDays = nextDateJulian - julianToday;
-            qint64 remainingWeeks = round(remainingDays / 7 );
+  // this is data structure to hold the roshetta for printing
+  struct Roshetta {
+    QString getNextFromJulian(const qint64& nextDateJulian) {
+      QVector<QPair<QString, int> > options{
+          {"تمت الإستشارة", 0}, {"أسبوع", 1},     {"أسبوعين", 2},
+          {"٣أسابيع", 3},       {"شهر", 4},       {"شهر", 5},
+          {"شهر و نصف", 6},     {"شهر و نصف", 7}, {"شهرين", 8},
+          {"شهرين", 9},         {"شهرين", 10},    {"٣ شهور", 11},
+          {"٣ شهور", 12},       {"٣ شهور", 13},   {"٣ شهور", 14},
+          {"٣ شهور", 15},       {"٤ شهور", 16},   {"٤ شهور", 17},
+          {"٤ شهور", 18},       {"٤ شهور", 19},   {"٥ شهور", 20},
+          {"٥ شهور", 21},       {"٥ شهور", 22},   {"٥ شهور", 23},
+          {"٦ شهور", 24}};
+      qint64 julianToday = QDate::currentDate().toJulianDay();
+      qint64 remainingDays = nextDateJulian - julianToday;
+      qint64 remainingWeeks = round(remainingDays / 7);
 
-            for(const auto &x:options){
-                if(x.second == remainingWeeks)
-                    return x.first;
-                else if(x.second < remainingWeeks)
-                    continue;
-                else
-                    return x.first;
-            }
-            return options.last().first;
+      for (const auto& x : options) {
+        if (x.second == remainingWeeks)
+          return x.first;
+        else if (x.second < remainingWeeks)
+          continue;
+        else
+          return x.first;
+      }
+      return options.last().first;
+    }
 
+    QString ID;
+    QString name;
+    mSex sex;
+    int age;
+    QString Diagnosis;
+    Vitals vitals;
+    QDate visitDate;
+    QDate nextDate;
+    dataHelper::AgeStyle ageStyle;
+    QDateTime printedinDate;
+    bool caseClosed;
+    QString visitSymbole;
+    QList<drug> currentDrugsList;
+    QList<drug> baseDrugsList;
+    QList<drug> currentAlteredDrugsList;
+    QList<drug> baseAlteredDrugsList;
+    QStringList requests;
+    mDiet diet;
+  };
 
+  struct dbOptions {
+    QString autovacuum = "NONE";
+    bool optimize = false;
+    bool shrinkMem = false;
+    QString WAL_CheckPoint = "OFF";
+    QString shared_cache = "SHARED";
+    QString temp_store = "DEFAULT";
+    QString synchronous = "NORMAL";
+    QString journal_mode = "DELETE";
+    QString locking_mode =
+        "NORMAL";  // exclusive was removed as it crashes the application
+    int cache_size = 2000;
+    int page_size = 4096;
 
-        }
+    void clear() {
+      autovacuum = "NONE";
+      optimize = false;
+      shrinkMem = false;
+      WAL_CheckPoint = "OFF";
+      shared_cache = "SHARED";
+      temp_store = "DEFAULT";
+      synchronous = "NORMAL";
+      journal_mode = "DELETE";
+      locking_mode = "NORMAL";
+      cache_size = 2000;
+      page_size = 4096;
+    }
+    bool operator!=(const dbOptions& dboptions) const {
+      return std::tie(autovacuum, optimize, shrinkMem, WAL_CheckPoint,
+                      shared_cache, temp_store, synchronous, journal_mode,
+                      locking_mode, cache_size, page_size) !=
+             std::tie(dboptions.autovacuum, dboptions.optimize,
+                      dboptions.shrinkMem, dboptions.WAL_CheckPoint,
+                      dboptions.shared_cache, dboptions.temp_store,
+                      dboptions.synchronous, dboptions.journal_mode,
+                      dboptions.locking_mode, dboptions.cache_size,
+                      dboptions.page_size);
+    }
+  };
+  struct pSettings {
+    int speciality;
+    bool autoCompleteByWord;
+    bool showChronicConditions;
+    bool showNavArrows;
+    bool smallScreenMode;
+    bool simpleExamination;
+    bool alwaysSave;
+    bool inLinePatientList;
+    int autosaveinterval;
+    bool autoSave;
+    bool minimizeToTray;
+    bool autoClosePrintDlg;
+    bool enableVisualEffects;
+    bool updateNotify;
+    bool useToast;
+    bool usePhotoViewer;
 
-        QString ID;
-        QString name;
-        mSex sex;
-        int age;
-        QString Diagnosis;
-        Vitals vitals;
-        QDate visitDate;
-        QDate nextDate;
-        dataHelper::AgeStyle ageStyle;
-        QDateTime printedinDate;
-        bool caseClosed;
-        QString visitSymbole;
-        QList<drug> currentDrugsList;
-        QList<drug> baseDrugsList;
-        QList<drug> currentAlteredDrugsList;
-        QList<drug> baseAlteredDrugsList;
-        QStringList requests;
-        mDiet diet;
-    };
+    double newVisitPrice;
+    double followVisitprice1;
+    double followVisitprice2;
+    double followVisitprice3;
+    double followVisitprice4;
 
-    struct dbOptions
-    {
-        QString autovacuum="NONE";
-        bool optimize=false;
-        bool shrinkMem=false;
-        QString WAL_CheckPoint="OFF";
-        QString shared_cache="SHARED";
-        QString temp_store="DEFAULT";
-        QString synchronous="NORMAL";
-        QString journal_mode="DELETE";
-        QString locking_mode="NORMAL"; // exclusive was removed as it crashes the application
-        int cache_size=2000;
-        int page_size=4096;
+    int workingdays;
 
-        void clear()
-        {
-            autovacuum="NONE";
-            optimize=false;
-            shrinkMem=false;
-            WAL_CheckPoint="OFF";
-            shared_cache="SHARED";
-            temp_store="DEFAULT";
-            synchronous="NORMAL";
-            journal_mode="DELETE";
-            locking_mode="NORMAL";
-            cache_size=2000;
-            page_size=4096;
-        }
-        bool operator!=(const dbOptions& dboptions) const
-        {
-            return std::tie
-                    (autovacuum,
-                     optimize,
-                     shrinkMem,
-                     WAL_CheckPoint,
-                     shared_cache,
-                     temp_store,
-                     synchronous,
-                     journal_mode,
-                     locking_mode,
-                     cache_size,
-                     page_size
-                     )
-                    !=std::tie
-                    (
-                        dboptions.autovacuum,
-                        dboptions.optimize,
-                        dboptions.shrinkMem,
-                        dboptions.WAL_CheckPoint,
-                        dboptions.shared_cache,
-                        dboptions.temp_store,
-                        dboptions.synchronous,
-                        dboptions.journal_mode,
-                        dboptions.locking_mode,
-                        dboptions.cache_size,
-                        dboptions.page_size
-                        );
-        }
-    };
-    struct pSettings
-    {
-        int speciality;
-        bool autoCompleteByWord;
-        bool showChronicConditions;
-        bool showNavArrows;
-        bool smallScreenMode;
-        bool simpleExamination;
-        bool alwaysSave;
-        bool inLinePatientList;
-        int autosaveinterval;
-        bool autoSave;
-        bool minimizeToTray;
-        bool autoClosePrintDlg;
-        bool enableVisualEffects;
-        bool updateNotify;
-        bool useToast;
-        bool usePhotoViewer;
+    QString selectedTheme;
+    QString defaultFont;
+    double defaultFontSize;
+    bool defaultFontBold;
+    QString textboxFont;
+    double textboxFontSize;
+    bool textboxFontBold;
 
-        double newVisitPrice;
-        double followVisitprice1;
-        double followVisitprice2;
-        double followVisitprice3;
-        double followVisitprice4;
+    int maxFollowUps;
+    int maxFollowUpsPerProblem;
+    bool autoSetnewAfterMaxPerProblemIsReached;
+    bool remmberLastFollowupDate;
+    int lastSelectedFollowUpDate;
 
-        int workingdays;
-
-        QString selectedTheme;
-        QString defaultFont;
-        double defaultFontSize;
-        bool defaultFontBold;
-        QString textboxFont;
-        double textboxFontSize;
-        bool textboxFontBold;
-
-        int maxFollowUps;
-        int maxFollowUpsPerProblem;
-        bool autoSetnewAfterMaxPerProblemIsReached;
-        bool remmberLastFollowupDate;
-        int lastSelectedFollowUpDate;
-
-        bool operator==(const pSettings& psettings) const
-        {
-            return std::tie(
+    bool operator==(const pSettings& psettings) const {
+      return std::tie(
                         speciality,
                         autoCompleteByWord,
                         showChronicConditions,
@@ -347,282 +278,241 @@ public:
                              psettings.usePhotoViewer,
                              psettings.remmberLastFollowupDate/*,
                              psettings.lastSelectedFollowUpDate*/);
-        }
+    }
+  };
+  struct checkout {
+    int time;
+    int date;
+  };
+  struct clinicPrices {
+    double newVisit;
+    double followUp1;
+    double followUp2;
+    double followUp3;
+    double followUp4;
+  };
+  struct clinicSystem {
+    int MaxfollowUps;
+    bool autoNewVisit;
+  };
+  struct textboxFont  // why is twice ?
+  {
+    double fontSize;
+    QString fontName;
+    bool fontBold;
+
+    bool operator==(const textboxFont& _font) const {
+      return std::tie(fontSize, fontName, fontBold) ==
+             std::tie(_font.fontSize, _font.fontName, _font.fontBold);
     };
-    struct checkout
-    {
-        int time;
-        int date;
+  };
+
+  struct defaultFont  // why is twice ?
+  {
+    double fontSize;
+    QString fontName;
+    bool fontBold;
+
+    bool operator==(const defaultFont& _font) const {
+      return std::tie(fontSize, fontName, fontBold) ==
+             std::tie(_font.fontSize, _font.fontName, _font.fontBold);
     };
-    struct clinicPrices
-    {
-        double newVisit;
-        double followUp1;
-        double followUp2;
-        double followUp3;
-        double followUp4;
+  };
+
+  struct roshettaFont {
+    int fontSize = 10;
+    QString fontName = "tahoma";
+    bool fontBold = false;
+    bool italic = false;
+    bool operator==(const roshettaFont& _font) const {
+      return std::tie(fontSize, fontName, fontBold, italic) ==
+             std::tie(_font.fontSize, _font.fontName, _font.fontBold,
+                      _font.italic);
     };
-    struct clinicSystem
-    {
-        int MaxfollowUps;
-        bool autoNewVisit;
+  };
+
+  enum drugsPrintMode { visitOnly = 0, baseOnly = 1, both = 2 };
+  enum bannerStyle { belowHeader = 0, replaceLogo = 1 };
+  struct prescriptionPrintSettings {
+    QString paperSizeId = "A5";
+    int printerIndex = 0;
+    int pageMargin = 5;
+    bool showBanner = true;
+    bool showDrugs = true;
+    bool showInvestigations = true;
+    bool showMeasurments = true;
+    bool showDrugsTableOutline = true;
+    drugsPrintMode drugsPrintMode = drugsPrintMode::visitOnly;
+    bool showDrugsTitle = true;
+    bool showPrescriptionHeader = true;
+    bool showPrescriptionFooter = true;
+    bool showPrescriptionLogo = true;
+    bannerStyle prescriptionBannerStyle = belowHeader;
+    int logoSize = 72;
+
+    int headerHeightPercent = 10;
+    int footerHeightPercent = 5;
+    int bannerHeightPercent = 5;
+
+    struct roshettaFont doseFont {
+      10, "Tahoma", false, false
     };
-    struct textboxFont // why is twice ?
-    {
-        double fontSize;
-        QString fontName;
-        bool fontBold;
-
-        bool operator==(const textboxFont& _font) const
-        {
-            return std::tie(
-                        fontSize,
-                        fontName,
-                        fontBold
-                        ) == std::tie(
-                        _font.fontSize,
-                        _font.fontName,
-                        _font.fontBold);
-
-        };
+    struct roshettaFont bannerFont {
+      10, "Tahoma", false, false
     };
-
-    struct defaultFont // why is twice ?
-    {
-        double fontSize;
-        QString fontName;
-        bool fontBold;
-
-        bool operator==(const defaultFont& _font) const
-        {
-            return std::tie(
-                        fontSize,
-                        fontName,
-                        fontBold
-                        ) == std::tie(
-                        _font.fontSize,
-                        _font.fontName,
-                        _font.fontBold);
-
-        };
+    struct roshettaFont altBannerFont {
+      10, "Tahoma", false, false
     };
-
-
-    struct roshettaFont
-    {
-        int fontSize=10;
-        QString fontName="tahoma";
-        bool fontBold=false;
-        bool italic=false;
-        bool operator==(const roshettaFont& _font) const
-        {
-            return std::tie(
-                        fontSize,
-                        fontName,
-                        fontBold,
-                        italic
-                        ) == std::tie(
-                        _font.fontSize,
-                        _font.fontName,
-                        _font.fontBold,
-                        _font.italic);
-
-        };
+    struct roshettaFont roshettaFont {
+      10, "Tahoma", false, false
+    };
+    struct roshettaFont requestsFont {
+      10, "Tahoma", false, false
+    };
+    struct roshettaFont measurementsFont {
+      10, "Tahoma", false, false
+    };
+    struct roshettaFont signatureFont {
+      10, "Tahoma", false, false
     };
 
-    enum drugsPrintMode{
-        visitOnly=0,baseOnly=1,both=2
-    };
-    enum bannerStyle{
-        belowHeader=0,replaceLogo=1
-    };
-    struct prescriptionPrintSettings
-    {
-        QString paperSizeId="A5";
-        int printerIndex=0;
-        int pageMargin=5;
-        bool showBanner=true;
-        bool showDrugs=true;
-        bool showInvestigations=true;
-        bool showMeasurments=true;
-        bool showDrugsTableOutline=true;
-        drugsPrintMode drugsPrintMode=drugsPrintMode::visitOnly;
-        bool showDrugsTitle=true;
-        bool showPrescriptionHeader=true;
-        bool showPrescriptionFooter=true;
-        bool showPrescriptionLogo=true;
-        bannerStyle prescriptionBannerStyle=belowHeader;
-        int logoSize=72;
+    bool showDrugsInitDate = true;
+    bool showSignaturePrintedOn = true;
 
-        int headerHeightPercent=10;
-        int footerHeightPercent=5;
-        int bannerHeightPercent=5;
+    bool showOnlyNewlyModifiedAddedDrugs = false;
+    // bool showTradeNamesBold=false;
+    bool showDoseNewLine = true;
 
-        struct roshettaFont doseFont{10,"Tahoma",false,false};
-        struct roshettaFont bannerFont{10,"Tahoma",false,false};
-        struct roshettaFont altBannerFont{10,"Tahoma",false,false};
-        struct roshettaFont roshettaFont{10,"Tahoma",false,false};
-        struct roshettaFont requestsFont{10,"Tahoma",false,false};
-        struct roshettaFont measurementsFont{10,"Tahoma",false,false};
-        struct roshettaFont signatureFont{10,"Tahoma",false,false};
+    bool preferArabic = true;
+    // bool showStartDate=true;
+    // bool showHorizontalLineBelowHeader=false;
+    bool enableFullPage = false;
+    bool enableBodyHeaderSeparator = false;
+    bool compactMode = true;
+    bool clearDuplicateDrugs = false;
+    bool preferRTFBanner = true;
 
+    bool operator==(
+        const prescriptionPrintSettings& prescriptionprintsettings) const {
+      return std::tie(paperSizeId, printerIndex, pageMargin, showBanner,
+                      showDrugs, showInvestigations, showMeasurments,
+                      showDrugsTableOutline, drugsPrintMode, showDrugsTitle,
+                      showPrescriptionHeader, showPrescriptionFooter,
+                      showPrescriptionLogo, prescriptionBannerStyle, logoSize,
+                      headerHeightPercent, footerHeightPercent,
+                      bannerHeightPercent, bannerFont, altBannerFont,
+                      roshettaFont, doseFont, requestsFont, measurementsFont,
+                      signatureFont, showDrugsInitDate, showSignaturePrintedOn,
+                      showOnlyNewlyModifiedAddedDrugs,
+                      // showTradeNamesBold,
+                      showDoseNewLine, preferArabic /*,
+                                        showStartDate,
+                                        showHorizontalLineBelowHeader*/
+                      ,
+                      enableFullPage, enableBodyHeaderSeparator, compactMode,
+                      clearDuplicateDrugs, preferRTFBanner) ==
+             std::tie(prescriptionprintsettings.paperSizeId,
+                      prescriptionprintsettings.printerIndex,
+                      prescriptionprintsettings.pageMargin,
+                      prescriptionprintsettings.showBanner,
+                      prescriptionprintsettings.showDrugs,
+                      prescriptionprintsettings.showInvestigations,
+                      prescriptionprintsettings.showMeasurments,
+                      prescriptionprintsettings.showDrugsTableOutline,
+                      prescriptionprintsettings.drugsPrintMode,
+                      prescriptionprintsettings.showDrugsTitle,
+                      prescriptionprintsettings.showPrescriptionHeader,
+                      prescriptionprintsettings.showPrescriptionFooter,
+                      prescriptionprintsettings.showPrescriptionLogo,
+                      prescriptionprintsettings.prescriptionBannerStyle,
+                      prescriptionprintsettings.logoSize,
+                      prescriptionprintsettings.headerHeightPercent,
+                      prescriptionprintsettings.footerHeightPercent,
+                      prescriptionprintsettings.bannerHeightPercent,
+                      prescriptionprintsettings.bannerFont,
+                      prescriptionprintsettings.altBannerFont,
+                      prescriptionprintsettings.roshettaFont,
+                      prescriptionprintsettings.doseFont,
+                      prescriptionprintsettings.requestsFont,
+                      prescriptionprintsettings.measurementsFont,
+                      prescriptionprintsettings.signatureFont,
+                      prescriptionprintsettings.showDrugsInitDate,
+                      prescriptionprintsettings.showSignaturePrintedOn,
+                      prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
+                      // prescriptionprintsettings.showTradeNamesBold,
+                      prescriptionprintsettings.showDoseNewLine,
+                      prescriptionprintsettings.preferArabic /*,
+                       prescriptionprintsettings.showStartDate,
+                       prescriptionprintsettings.showHorizontalLineBelowHeader*/
+                      ,
+                      prescriptionprintsettings.enableFullPage,
+                      prescriptionprintsettings.enableBodyHeaderSeparator,
+                      prescriptionprintsettings.compactMode,
+                      prescriptionprintsettings.clearDuplicateDrugs,
+                      prescriptionprintsettings.preferRTFBanner);
+    }
+  };
+  struct lineStyle {
+    QString errorStylesheet;
+    QString warningStylesheet;
+    QString normalStylesheet;
+  };
+  static mSettings& instance();
+  void saveSettings(const pSettings& psets);
+  pSettings readSettings();
+  QString themeMaker();
+  // double getVisitPrice(int visitType);
+  mSettings::clinicPrices getClinicPrices();
+  checkout getCheckout();
+  void setCheckout(qint64 date, qint64 time);
+  prescriptionPrintSettings getPrintSettings(QString printProfile);
+  void savePrintSettings(prescriptionPrintSettings mPageSettings,
+                         QString printProfile);
+  bool isAutoCompleteByWord();
+  int userSpeciality();
+  bool showChronicBox();
+  bool showNavigation();
+  bool isMinimizedToTray();
+  bool getScreenMode();
+  bool isVisualEffectsEnabled();
+  bool isAlwaysSave();
+  bool isAutoSave();
+  bool alwaysClosePrintDlgAfterClick();
+  bool isUpdateNotify();
+  bool isUseToast();
+  bool isUseNativePhotoViewer();
+  bool isRemmberlastFollowupDate();
+  int getWorkingDays() const;
+  int getAutoSaveInterval();
+  QString getSelectedTheme();
+  bool isInLinePatientList();
+  bool isSimpleExamination();
+  int getMaxFollowUps();
+  int getMaxFollowUpsPerProblem();
+  bool autoSetNewAfterMaxFollowUpsPerProblem();
+  textboxFont getTextboxFont();
+  defaultFont getDefaultFont();
+  bool isDeviceBlocked();
+  bool isDeviceActivated();
+  dbOptions readDbOptions();
+  void saveDbOptions(const dbOptions& options);
+  mStyler::Style& getStyle();
+  lineStyle getLineStylesheet();
+  void saveLastSelectedFollowUpDate(const QDate& date);
+  int getLastSelectedFollowUpDate();
 
-        bool showDrugsInitDate=true;
-        bool showSignaturePrintedOn=true;
+ public slots:
+  void setSelectedTheme(QString t);
 
-        bool showOnlyNewlyModifiedAddedDrugs=false;
-        //bool showTradeNamesBold=false;
-        bool showDoseNewLine=true;
-
-        bool preferArabic=true;
-        //bool showStartDate=true;
-        //bool showHorizontalLineBelowHeader=false;
-        bool enableFullPage=false;
-        bool enableBodyHeaderSeparator=false;
-        bool compactMode=true;
-        bool clearDuplicateDrugs=false;
-        bool preferRTFBanner=true;
-
-        bool operator==(const prescriptionPrintSettings& prescriptionprintsettings) const
-        {
-            return std::tie(paperSizeId,
-                            printerIndex,
-                            pageMargin,
-                            showBanner,
-                            showDrugs,
-                            showInvestigations,
-                            showMeasurments,
-                            showDrugsTableOutline,
-                            drugsPrintMode,
-                            showDrugsTitle,
-                            showPrescriptionHeader,
-                            showPrescriptionFooter,
-                            showPrescriptionLogo,
-                            prescriptionBannerStyle,
-                            logoSize,
-                            headerHeightPercent,
-                            footerHeightPercent,
-                            bannerHeightPercent,
-                            bannerFont,
-                            altBannerFont,
-                            roshettaFont,
-                            doseFont,
-                            requestsFont,
-                            measurementsFont,
-                            signatureFont,
-                            showDrugsInitDate,
-                            showSignaturePrintedOn,
-                            showOnlyNewlyModifiedAddedDrugs,
-                            //showTradeNamesBold,
-                            showDoseNewLine,
-                            preferArabic/*,
-                            showStartDate,
-                            showHorizontalLineBelowHeader*/,
-                            enableFullPage,
-                            enableBodyHeaderSeparator,
-                            compactMode,
-                            clearDuplicateDrugs,
-                            preferRTFBanner
-                            ) == std::tie(
-                        prescriptionprintsettings.paperSizeId,
-                        prescriptionprintsettings.printerIndex,
-                        prescriptionprintsettings.pageMargin,
-                        prescriptionprintsettings.showBanner,
-                        prescriptionprintsettings.showDrugs,
-                        prescriptionprintsettings.showInvestigations,
-                        prescriptionprintsettings.showMeasurments,
-                        prescriptionprintsettings.showDrugsTableOutline,
-                        prescriptionprintsettings.drugsPrintMode,
-                        prescriptionprintsettings.showDrugsTitle,
-                        prescriptionprintsettings.showPrescriptionHeader,
-                        prescriptionprintsettings.showPrescriptionFooter,
-                        prescriptionprintsettings.showPrescriptionLogo,
-                        prescriptionprintsettings.prescriptionBannerStyle,
-                        prescriptionprintsettings.logoSize,
-                        prescriptionprintsettings.headerHeightPercent,
-                        prescriptionprintsettings.footerHeightPercent,
-                        prescriptionprintsettings.bannerHeightPercent,
-                        prescriptionprintsettings.bannerFont,
-                        prescriptionprintsettings.altBannerFont,
-                        prescriptionprintsettings.roshettaFont,
-                        prescriptionprintsettings.doseFont,
-                        prescriptionprintsettings.requestsFont,
-                        prescriptionprintsettings.measurementsFont,
-                        prescriptionprintsettings.signatureFont,
-                        prescriptionprintsettings.showDrugsInitDate,
-                        prescriptionprintsettings.showSignaturePrintedOn,
-                        prescriptionprintsettings.showOnlyNewlyModifiedAddedDrugs,
-                        //prescriptionprintsettings.showTradeNamesBold,
-                        prescriptionprintsettings.showDoseNewLine,
-                        prescriptionprintsettings.preferArabic/*,
-                        prescriptionprintsettings.showStartDate,
-                        prescriptionprintsettings.showHorizontalLineBelowHeader*/,
-                        prescriptionprintsettings.enableFullPage,
-                        prescriptionprintsettings.enableBodyHeaderSeparator,
-                        prescriptionprintsettings.compactMode,
-                        prescriptionprintsettings.clearDuplicateDrugs,
-                        prescriptionprintsettings.preferRTFBanner); }
-    };
-    struct lineStyle
-    {
-        QString errorStylesheet;
-        QString warningStylesheet;
-        QString normalStylesheet;
-    };
-    static mSettings &instance();
-    void saveSettings(const pSettings &psets);
-    pSettings readSettings();
-    QString themeMaker();
-    //double getVisitPrice(int visitType);
-    mSettings::clinicPrices getClinicPrices();
-    checkout getCheckout();
-    void setCheckout(qint64 date, qint64 time);
-    prescriptionPrintSettings getPrintSettings(QString printProfile);
-    void savePrintSettings(prescriptionPrintSettings mPageSettings,QString printProfile);
-    bool isAutoCompleteByWord();
-    int userSpeciality();
-    bool showChronicBox();
-    bool showNavigation();
-    bool isMinimizedToTray();
-    bool getScreenMode();
-    bool isVisualEffectsEnabled();
-    bool isAlwaysSave();
-    bool isAutoSave();
-    bool alwaysClosePrintDlgAfterClick();
-    bool isUpdateNotify();
-    bool isUseToast();
-    bool isUseNativePhotoViewer();
-    bool isRemmberlastFollowupDate();
-    int  getWorkingDays()const;
-    int getAutoSaveInterval();
-    QString getSelectedTheme();
-    bool isInLinePatientList();
-    bool isSimpleExamination();
-    int getMaxFollowUps();
-    int getMaxFollowUpsPerProblem();
-    bool autoSetNewAfterMaxFollowUpsPerProblem();
-    textboxFont getTextboxFont();
-    defaultFont getDefaultFont();
-    bool isDeviceBlocked();
-    bool isDeviceActivated();
-    dbOptions readDbOptions();
-    void saveDbOptions(const dbOptions &options);
-    mStyler::Style &getStyle();
-    lineStyle getLineStylesheet();
-    void saveLastSelectedFollowUpDate(const QDate  & date);
-    int getLastSelectedFollowUpDate();
-
-public slots:
-    void setSelectedTheme(QString t);
-private:
-    mSettings();
-    mSettings(const mSettings&);
-    ~mSettings();
-    mSettings & operator = (const mSettings&);
-    mStyler styler;
-    dbOptions dboptions;
-    pSettings psettings;
-    bool dbOptionsInit=false;
+ private:
+  mSettings();
+  mSettings(const mSettings&);
+  ~mSettings();
+  mSettings& operator=(const mSettings&);
+  mStyler styler;
+  dbOptions dboptions;
+  pSettings psettings;
+  bool dbOptionsInit = false;
 };
 
-#endif // MSETTINGS_H
+#endif  // MSETTINGS_H

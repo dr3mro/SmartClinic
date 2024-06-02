@@ -1,41 +1,40 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #ifndef MMESSAGEBOX_H
 #define MMESSAGEBOX_H
 
-#include <QWidget>
+#include <QApplication>
+#include <QCloseEvent>
 #include <QMessageBox>
 #include <QObject>
-#include <QCloseEvent>
-#include <QApplication>
-
 #include <QPropertyAnimation>
+#include <QWidget>
 
-class mMessageBox : public QMessageBox
-{
-    Q_OBJECT
-public:
-    explicit mMessageBox(QWidget *parent=nullptr);
-//    void toggleVisualEffects(bool b);
-//    bool getVisualEffectStatus();
-    int exec();
-    ~mMessageBox();
+class mMessageBox : public QMessageBox {
+  Q_OBJECT
+ public:
+  explicit mMessageBox(QWidget *parent = nullptr);
+  //    void toggleVisualEffects(bool b);
+  //    bool getVisualEffectStatus();
+  int exec();
+  ~mMessageBox();
 
-public slots:
-    void done(int result);
-    void show();
-    void onFadeOutFinished();
+ public slots:
+  void done(int result);
+  void show();
+  void onFadeOutFinished();
 
-protected:
-    bool enableVisualEffects=true;
-    void closeEvent(QCloseEvent *e);
+ protected:
+  bool enableVisualEffects = true;
+  void closeEvent(QCloseEvent *e);
 
-private:
-    QPropertyAnimation *mpFadeIn;
-    QPropertyAnimation *mpFadeOut;
-    int mResult;
+ private:
+  QPropertyAnimation *mpFadeIn;
+  QPropertyAnimation *mpFadeOut;
+  int mResult;
 };
 
-#endif // MMESSAGEBOX_H
+#endif  // MMESSAGEBOX_H

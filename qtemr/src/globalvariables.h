@@ -1,13 +1,13 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #ifndef GLOBALVARIABLES
 #define GLOBALVARIABLES
 
-#define STR_IMPL_(x) #x      //stringify argument
-#define STR(x) STR_IMPL_(x)  //indirection to expand argument macros
-
+#define STR_IMPL_(x) #x      // stringify argument
+#define STR(x) STR_IMPL_(x)  // indirection to expand argument macros
 
 #define BUILDVER 48
 #define MINORVER 8
@@ -21,17 +21,21 @@
 #define APPYEAR STR(2024)
 #define COMMENTS ""
 #define EXENAME "smartClinic3.exe"
-#define whiteListUrl "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/validKeys?dl=0"
+#define whiteListUrl \
+  "https://dl.dropboxusercontent.com/s/m3p1ldvusb1ug0y/validKeys?dl=0"
 
 #define updatePackageDir "updatePKGs"
 
 #ifdef __GNUC__
-#define updateInfo "https://dl.dropboxusercontent.com/s/e3uv38igk8ahry2/updateInfo7?dl=0"
+#define updateInfo \
+  "https://dl.dropboxusercontent.com/s/e3uv38igk8ahry2/updateInfo7?dl=0"
 #define updatePacakgeFile "updatePKGs/sc7.pkg"
 #define updateInfoFile "updateInfo7"
-#define pkgUrl "https://dl.dropboxusercontent.com/s/5ryt5gg0e2cr2ac/sc7.pkg?dl=0"
+#define pkgUrl \
+  "https://dl.dropboxusercontent.com/s/5ryt5gg0e2cr2ac/sc7.pkg?dl=0"
 #elif _MSC_VER
-#define updateInfo "https://dl.dropboxusercontent.com/s/fy9ork77kzpfkr7/updateInfo?dl=0"
+#define updateInfo \
+  "https://dl.dropboxusercontent.com/s/fy9ork77kzpfkr7/updateInfo?dl=0"
 #define updatePacakgeFile "updatePKGs/sc.pkg"
 #define updateInfoFile "updateInfo"
 #define pkgUrl "https://dl.dropboxusercontent.com/s/kz0zb1ich48aolq/sc.pkg?dl=0"
@@ -41,8 +45,9 @@
 #define blockRegKey "Default"
 #define activateRegKey "Activated"
 #define blockregPath "HKEY_CURRENT_USER\\Software\\cortex64"
-//#define selfEmail "smartclinic22@gmail.com" my1stlov // unsecure mode on
-#define selfEmail "smartclinic3x.app@gmail.com" // secure mode on with app pass on
+// #define selfEmail "smartclinic22@gmail.com" my1stlov // unsecure mode on
+#define selfEmail \
+  "smartclinic3x.app@gmail.com"  // secure mode on with app pass on
 #define selfPass "xgbavzirteiudizs"
 #define devEmail "dr3mro@gmail.com"
 #define exeBackUp "backup/~smartClinic3.exe"
@@ -56,4 +61,4 @@
 #define BANNERFILE "banner.html"
 #define LOGOFILE "logo.jpg"
 
-#endif // GLOBALVARIABLES
+#endif  // GLOBALVARIABLES

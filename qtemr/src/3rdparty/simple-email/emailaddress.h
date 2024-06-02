@@ -18,43 +18,39 @@
 #ifndef EMAILADDRESS_H
 #define EMAILADDRESS_H
 
-#include <QtCore/QSharedDataPointer>
 #include <QString>
+#include <QtCore/QSharedDataPointer>
 
 #include "smtpexports.h"
 
 namespace SimpleMail {
 
 class EmailAddressPrivate;
-class EmailAddress
-{
-public:
-    EmailAddress();
-    EmailAddress(const EmailAddress &other);
-    EmailAddress(const QString &nameAndAddress);
-    EmailAddress(const QString &address, const QString &name);
-    virtual ~EmailAddress();
+class EmailAddress {
+ public:
+  EmailAddress();
+  EmailAddress(const EmailAddress &other);
+  EmailAddress(const QString &nameAndAddress);
+  EmailAddress(const QString &address, const QString &name);
+  virtual ~EmailAddress();
 
-    EmailAddress &operator=(const EmailAddress &other);
+  EmailAddress &operator=(const EmailAddress &other);
 
-    QString name() const;
-    void setName(const QString &name);
+  QString name() const;
+  void setName(const QString &name);
 
-    QString address() const;
-    void setAddress(const QString &address);
+  QString address() const;
+  void setAddress(const QString &address);
 
-protected:
-    QSharedDataPointer<EmailAddressPrivate> d_ptr;
+ protected:
+  QSharedDataPointer<EmailAddressPrivate> d_ptr;
 
-private:
-    // Q_DECLARE_PRIVATE equivalent for shared data pointers
-    EmailAddressPrivate* d_func();
-    inline const EmailAddressPrivate* d_func() const
-    {
-        return d_ptr.constData();
-    }
+ private:
+  // Q_DECLARE_PRIVATE equivalent for shared data pointers
+  EmailAddressPrivate *d_func();
+  inline const EmailAddressPrivate *d_func() const { return d_ptr.constData(); }
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // EMAILADDRESS_H
+#endif  // EMAILADDRESS_H

@@ -1,15 +1,13 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "xcheckbox.h"
 
-xCheckBox::xCheckBox(QWidget *parent)
-{
-    connect (parent->window(),SIGNAL(setReadWrite(bool)),this,SLOT(makeEditable(bool)));
+xCheckBox::xCheckBox(QWidget *parent) {
+  connect(parent->window(), SIGNAL(setReadWrite(bool)), this,
+          SLOT(makeEditable(bool)));
 }
 
-void xCheckBox::makeEditable(bool b)
-{
-    setEnabled(b);
-}
+void xCheckBox::makeEditable(bool b) { setEnabled(b); }

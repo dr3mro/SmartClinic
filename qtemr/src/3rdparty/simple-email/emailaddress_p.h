@@ -24,14 +24,12 @@
 
 namespace SimpleMail {
 
-class EmailAddressPrivate : public QSharedData
-{
-public:
-    QString name;
-    QString address;
+class EmailAddressPrivate : public QSharedData {
+ public:
+  QString name;
+  QString address;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // EMAILADDRESS_P_H
-
+#endif  // EMAILADDRESS_P_H

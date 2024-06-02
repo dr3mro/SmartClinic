@@ -1,12 +1,12 @@
 #ifndef ABOUTWINDOW_H
 #define ABOUTWINDOW_H
 
-#include <QMessageBox>
 #include <QKeyEvent>
+#include <QMessageBox>
 
+#include "mdialog.h"
 #include "mymessagebox.h"
 #include "regapp.h"
-#include "mdialog.h"
 
 #ifdef __GNUC__
 #define COMPILER "GCC Compiler"
@@ -20,28 +20,27 @@ namespace Ui {
 class AboutWindow;
 }
 
-class AboutWindow : public mDialog
-{
-    Q_OBJECT
+class AboutWindow : public mDialog {
+  Q_OBJECT
 
-public:
-    explicit AboutWindow(QWidget *parent = nullptr);
-    ~AboutWindow();
+ public:
+  explicit AboutWindow(QWidget *parent = nullptr);
+  ~AboutWindow();
 
-private slots:
-    void regButton_clicked();
-    void keyPressEvent(QKeyEvent *e);
-    void serialNumber_textChanged(const QString &arg1);
+ private slots:
+  void regButton_clicked();
+  void keyPressEvent(QKeyEvent *e);
+  void serialNumber_textChanged(const QString &arg1);
 
-signals:
-    void registerApp();
+ signals:
+  void registerApp();
 
-private:
-    myMessageBox *msgbox;
-    Ui::AboutWindow *ui;
-    regApp regMyApp;
-    void register_App();
-    QFont & tweakFont(QFont &font);
+ private:
+  myMessageBox *msgbox;
+  Ui::AboutWindow *ui;
+  regApp regMyApp;
+  void register_App();
+  QFont &tweakFont(QFont &font);
 };
 
-#endif // ABOUTWINDOW_H
+#endif  // ABOUTWINDOW_H

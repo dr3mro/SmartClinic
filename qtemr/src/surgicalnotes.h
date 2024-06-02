@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -6,45 +7,47 @@
 #define SURGICALNOTES_H
 
 #include <QDialog>
-#include "msettings.h"
+
 #include "dataiohelper.h"
-#include "surgicalnoteeditor.h"
+#include "msettings.h"
 #include "mymessagebox.h"
+#include "surgicalnoteeditor.h"
 
 namespace Ui {
 class surgicalNotes;
 }
 
-class surgicalNotes : public QDialog
-{
-    Q_OBJECT
+class surgicalNotes : public QDialog {
+  Q_OBJECT
 
-public:
-    explicit surgicalNotes(const int &_ID, QWidget *parent = nullptr);
-    //surgicalNoteEditor *addNewNote;
+ public:
+  explicit surgicalNotes(const int &_ID, QWidget *parent = nullptr);
+  // surgicalNoteEditor *addNewNote;
 
-    int ID;
-    ~surgicalNotes();
+  int ID;
+  ~surgicalNotes();
 
-public slots:
-    void reloadNotes(const int &_ID);
-private slots:
-    void on_closeButton_clicked();
-    void on_buttonAdd_clicked();
-    void addsNote(QString surgeryID,int julianDate, QString opName, QString opReport);
-    void savesNote(QString surgeryID,int julianDate, QString opName, QString opReport);
-    void on_buttonDel_clicked();
-    void toggleDeleteEditButtons();
-    void disableDeleteEditButtons();
-    void on_buttonEdit_clicked();
+ public slots:
+  void reloadNotes(const int &_ID);
+ private slots:
+  void on_closeButton_clicked();
+  void on_buttonAdd_clicked();
+  void addsNote(QString surgeryID, int julianDate, QString opName,
+                QString opReport);
+  void savesNote(QString surgeryID, int julianDate, QString opName,
+                 QString opReport);
+  void on_buttonDel_clicked();
+  void toggleDeleteEditButtons();
+  void disableDeleteEditButtons();
+  void on_buttonEdit_clicked();
 
-private:
-    Ui::surgicalNotes *ui;
+ private:
+  Ui::surgicalNotes *ui;
 
-signals:
-    void addsNoteSignal(QString,int,QString,QString);
-    void savesNoteSignal(QString,int,QString,QString);
-    void deleteNote(QString surgeryID);
+ signals:
+  void addsNoteSignal(QString, int, QString, QString);
+  void savesNoteSignal(QString, int, QString, QString);
+  void deleteNote(QString surgeryID);
 };
 
-#endif // SURGICALNOTES_H
+#endif  // SURGICALNOTES_H

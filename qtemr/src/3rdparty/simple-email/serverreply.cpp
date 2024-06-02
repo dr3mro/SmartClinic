@@ -14,46 +14,38 @@
   See the LICENSE file for more details.
 */
 #include "serverreply.h"
+
 #include "serverreply_p.h"
 
 using namespace SimpleMail;
 
-ServerReply::ServerReply(QObject *parent) : QObject(parent)
-  , d_ptr(new ServerReplyPrivate)
-{
+ServerReply::ServerReply(QObject *parent)
+    : QObject(parent), d_ptr(new ServerReplyPrivate) {}
 
+ServerReply::~ServerReply() { delete d_ptr; }
+
+bool ServerReply::error() const {
+  Q_D(const ServerReply);
+  return d->error;
 }
 
-ServerReply::~ServerReply()
-{
-    delete d_ptr;
+int ServerReply::responseCode() const {
+  Q_D(const ServerReply);
+  return d->responseCode;
 }
 
-bool ServerReply::error() const
-{
-    Q_D(const ServerReply);
-    return d->error;
+QString ServerReply::responseText() const {
+  Q_D(const ServerReply);
+  return d->responseText;
 }
 
-int ServerReply::responseCode() const
-{
-    Q_D(const ServerReply);
-    return d->responseCode;
-}
-
-QString ServerReply::responseText() const
-{
-    Q_D(const ServerReply);
-    return d->responseText;
-}
-
-void ServerReply::finish(bool error, int responseCode, const QString &responseText)
-{
-    Q_D(ServerReply);
-    d->error = error;
-    d->responseCode = responseCode;
-    d->responseText = responseText;
-    Q_EMIT finished();
+void ServerReply::finish(bool error, int responseCode,
+                         const QString &responseText) {
+  Q_D(ServerReply);
+  d->error = error;
+  d->responseCode = responseCode;
+  d->responseText = responseText;
+  Q_EMIT finished();
 }
 
 #include "moc_serverreply.cpp"

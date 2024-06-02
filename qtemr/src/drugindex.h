@@ -2,45 +2,45 @@
 #define DRUGINDEX_H
 
 #include <QDialog>
-#include "sqlcore.h"
-#include "msortfilterproxymodel.h"
-#include "mdialog.h"
-#include <QStyledItemDelegate>
-#include "staticstrings.h"
-#include "mlabelmsg.h"
-
-#include <QtConcurrent>
-#include <QFutureWatcher>
 #include <QFuture>
+#include <QFutureWatcher>
+#include <QStyledItemDelegate>
+#include <QtConcurrent>
 
-class DrugsIndexPriceItemDelegate : public QStyledItemDelegate
-{
+#include "mdialog.h"
+#include "mlabelmsg.h"
+#include "msortfilterproxymodel.h"
+#include "sqlcore.h"
+#include "staticstrings.h"
+
+class DrugsIndexPriceItemDelegate : public QStyledItemDelegate {
   Q_OBJECT
-public:
-  DrugsIndexPriceItemDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) { }
+ public:
+  DrugsIndexPriceItemDelegate(QObject *parent = nullptr)
+      : QStyledItemDelegate(parent) {}
   QString displayText(const QVariant &value, const QLocale &locale) const {
 #if QT_VERSION >= 0x060000
-    if ( value.metaType().id() == QMetaType::Double) return locale.toString(value.toDouble(), 'f', 2);
+    if (value.metaType().id() == QMetaType::Double)
+      return locale.toString(value.toDouble(), 'f', 2);
 #else
-    if ( value.type() == QVariant::Double) return locale.toString(value.toDouble(), 'f', 2);
+    if (value.type() == QVariant::Double)
+      return locale.toString(value.toDouble(), 'f', 2);
 #endif
     return QStyledItemDelegate::displayText(value, locale);
   }
 };
 
-
 namespace Ui {
-  class drugIndex;
+class drugIndex;
 }
 
-class drugIndex : public mDialog
-{
+class drugIndex : public mDialog {
   Q_OBJECT
-public:
+ public:
   explicit drugIndex(QWidget *parent = nullptr);
   ~drugIndex();
 
-private slots:
+ private slots:
   void on_closeButton_clicked();
   void on_search_textChanged(const QString &arg1);
   void on_tradeName_clicked(bool status);
@@ -57,7 +57,8 @@ private slots:
   void on_updateButton_clicked();
   void on_resetDatabaseButton_clicked();
   void onDrugsDatabaseChange(bool success);
-private:
+
+ private:
   QStandardItemModel *model;
   Ui::drugIndex *ui;
   int filterColumn;
@@ -65,23 +66,17 @@ private:
   sqlCore *sqlcore;
   mLabelMsg message;
 
-
   void loadModel();
   void load();
 
-  QFutureWatcher<QStandardItemModel*> futureWatcher;
-  QFuture<QStandardItemModel*> future;
+  QFutureWatcher<QStandardItemModel *> futureWatcher;
+  QFuture<QStandardItemModel *> future;
 
-
-
-public slots:
+ public slots:
   void setMessageText(const QString &status);
 
-signals:
+ signals:
   void resetDrugsAutoComplete();
-
 };
 
-
-
-#endif // DRUGINDEX_H
+#endif  // DRUGINDEX_H

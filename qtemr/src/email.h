@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -6,22 +7,22 @@
 #define EMAIL_H
 
 #include <QObject>
+
 #include "3rdparty/simple-email/SimpleMail"
 #include "globalvariables.h"
-//#include "memory"
+// #include "memory"
 
-class email : public QObject
-{
-    Q_OBJECT
+class email : public QObject {
+  Q_OBJECT
 
-public:
-    explicit email(QObject *parent = nullptr);
-    void sendEmail(QString subject , QString messageText );
+ public:
+  explicit email(QObject *parent = nullptr);
+  void sendEmail(QString subject, QString messageText);
 
-signals:
-    void messageSent();
-    void messageFailed();
-    void mDisconnected();
+ signals:
+  void messageSent();
+  void messageFailed();
+  void mDisconnected();
 };
 
-#endif // EMAIL_H
+#endif  // EMAIL_H

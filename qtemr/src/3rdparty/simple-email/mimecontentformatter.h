@@ -24,21 +24,20 @@
 
 namespace SimpleMail {
 
-class  MimeContentFormatter
-{
-public:
-    explicit MimeContentFormatter(int max_length = 76);
+class MimeContentFormatter {
+ public:
+  explicit MimeContentFormatter(int max_length = 76);
 
-    void setMaxLength(int l);
-    int maxLength() const;
+  void setMaxLength(int l);
+  int maxLength() const;
 
-    QByteArray format(const QByteArray &content, int &chars) const;
-    QByteArray formatQuotedPrintable(const QByteArray &content, int &chars) const;
+  QByteArray format(const QByteArray &content, int &chars) const;
+  QByteArray formatQuotedPrintable(const QByteArray &content, int &chars) const;
 
-protected:
-    int max_length;
+ protected:
+  int max_length;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMECONTENTFORMATTER_H
+#endif  // MIMECONTENTFORMATTER_H

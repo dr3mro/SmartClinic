@@ -25,15 +25,13 @@
 
 namespace SimpleMail {
 
-class MimeMultiPartPrivate : public MimePartPrivate
-{
-public:
-    virtual ~MimeMultiPartPrivate();
-    QList<MimePart*> parts;
-    MimeMultiPart::MultiPartType type;
+class MimeMultiPartPrivate : public MimePartPrivate {
+ public:
+  virtual ~MimeMultiPartPrivate();
+  QList<MimePart*> parts;
+  MimeMultiPart::MultiPartType type;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMEMULTIPART_P_H
-
+#endif  // MIMEMULTIPART_P_H

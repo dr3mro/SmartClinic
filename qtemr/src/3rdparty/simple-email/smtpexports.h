@@ -9,4 +9,4 @@
 #define SMTP_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif // SMTPEXPORTS_H
+#endif  // SMTPEXPORTS_H

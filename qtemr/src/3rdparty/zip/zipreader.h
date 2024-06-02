@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -49,64 +50,62 @@
 #include <QtCore/qdatetime.h>
 #include <QtCore/qfile.h>
 #include <QtCore/qstring.h>
-#include <QApplication>
 
+#include <QApplication>
 
 class ZipReaderPrivate;
 
-class  ZipReader
-{
-public:
-    ZipReader(const QString &fileName, QIODevice::OpenMode mode = QIODevice::ReadOnly );
+class ZipReader {
+ public:
+  ZipReader(const QString &fileName,
+            QIODevice::OpenMode mode = QIODevice::ReadOnly);
 
-    explicit ZipReader(QIODevice *device);
-    ~ZipReader();
+  explicit ZipReader(QIODevice *device);
+  ~ZipReader();
 
-    QIODevice* device() const;
+  QIODevice *device() const;
 
-    bool isReadable() const;
-    bool exists() const;
+  bool isReadable() const;
+  bool exists() const;
 
-    struct  FileInfo
-    {
-        FileInfo();
-        FileInfo(const FileInfo &other);
-        ~FileInfo();
-        FileInfo &operator=(const FileInfo &other);
-        bool isValid() const;
-        QString filePath;
-        uint isDir : 1;
-        uint isFile : 1;
-        uint isSymLink : 1;
-        QFile::Permissions permissions;
-        uint crc32;
-        qint64 size;
-        QDateTime lastModified;
-        void *d;
-    };
+  struct FileInfo {
+    FileInfo();
+    FileInfo(const FileInfo &other);
+    ~FileInfo();
+    FileInfo &operator=(const FileInfo &other);
+    bool isValid() const;
+    QString filePath;
+    uint isDir : 1;
+    uint isFile : 1;
+    uint isSymLink : 1;
+    QFile::Permissions permissions;
+    uint crc32;
+    qint64 size;
+    QDateTime lastModified;
+    void *d;
+  };
 
-    QList<FileInfo> fileInfoList() const;
-    int count() const;
+  QList<FileInfo> fileInfoList() const;
+  int count() const;
 
-    FileInfo entryInfoAt(int index) const;
-    QByteArray fileData(const QString &fileName) const;
-    bool extractAll(const QString &destinationDir) const;
+  FileInfo entryInfoAt(int index) const;
+  QByteArray fileData(const QString &fileName) const;
+  bool extractAll(const QString &destinationDir) const;
 
-    enum Status {
-        NoError,
-        FileReadError,
-        FileOpenError,
-        FilePermissionsError,
-        FileError
-    };
+  enum Status {
+    NoError,
+    FileReadError,
+    FileOpenError,
+    FilePermissionsError,
+    FileError
+  };
 
-    Status status() const;
+  Status status() const;
 
-    void close();
+  void close();
 
-private:
-    ZipReaderPrivate *d;
-
+ private:
+  ZipReaderPrivate *d;
 };
 
-#endif // QZIPREADER_H
+#endif  // QZIPREADER_H

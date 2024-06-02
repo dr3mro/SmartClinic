@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -11,23 +12,22 @@ namespace Ui {
 class colorPicker;
 }
 
-class colorPicker : public QWidget
-{
-    Q_OBJECT
+class colorPicker : public QWidget {
+  Q_OBJECT
 
-public:
-    explicit colorPicker(QWidget *parent = nullptr);
-    ~colorPicker();
-public slots:
+ public:
+  explicit colorPicker(QWidget *parent = nullptr);
+  ~colorPicker();
+ public slots:
 
-private:
-    Ui::colorPicker *ui;
-    void setColors();
-signals:
-    void newColor(const QColor&);
-protected:
-    void showEvent(QShowEvent *e);
+ private:
+  Ui::colorPicker *ui;
+  void setColors();
+ signals:
+  void newColor(const QColor &);
 
+ protected:
+  void showEvent(QShowEvent *e);
 };
 
-#endif // COLORPICKER_H
+#endif  // COLORPICKER_H

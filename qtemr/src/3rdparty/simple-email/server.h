@@ -26,168 +26,164 @@ namespace SimpleMail {
 class MimeMessage;
 class ServerReply;
 class ServerPrivate;
-class  Server : public QObject
-{
-    Q_OBJECT
-    Q_DECLARE_PRIVATE(Server)
-public:
-    enum AuthMethod
-    {
-        AuthNone,
-        AuthPlain,
-        AuthLogin,
-        AuthCramMd5,
-    };
-    Q_ENUM(AuthMethod)
+class Server : public QObject {
+  Q_OBJECT
+  Q_DECLARE_PRIVATE(Server)
+ public:
+  enum AuthMethod {
+    AuthNone,
+    AuthPlain,
+    AuthLogin,
+    AuthCramMd5,
+  };
+  Q_ENUM(AuthMethod)
 
-    enum SmtpError
-    {
-        ConnectionTimeoutError,
-        ResponseTimeoutError,
-        SendDataTimeoutError,
-        AuthenticationFailedError,
-        ServerError,    // 4xx smtp error
-        ClientError,    // 5xx smtp error
-    };
-    Q_ENUM(SmtpError)
+  enum SmtpError {
+    ConnectionTimeoutError,
+    ResponseTimeoutError,
+    SendDataTimeoutError,
+    AuthenticationFailedError,
+    ServerError,  // 4xx smtp error
+    ClientError,  // 5xx smtp error
+  };
+  Q_ENUM(SmtpError)
 
-    enum ConnectionType
-    {
-        TcpConnection,
-        SslConnection,
-        TlsConnection,     // STARTTLS
-    };
-    Q_ENUM(ConnectionType)
+  enum ConnectionType {
+    TcpConnection,
+    SslConnection,
+    TlsConnection,  // STARTTLS
+  };
+  Q_ENUM(ConnectionType)
 
-    enum PeerVerificationType
-    {
-        VerifyNone,
-        VerifyPeer,
-    };
-    Q_ENUM(PeerVerificationType)
+  enum PeerVerificationType {
+    VerifyNone,
+    VerifyPeer,
+  };
+  Q_ENUM(PeerVerificationType)
 
-    explicit Server(QObject *parent = nullptr);
-    virtual ~Server();
+  explicit Server(QObject *parent = nullptr);
+  virtual ~Server();
 
-    /**
-     * Returns the hostname of the SMTP server
-     */
-    QString host() const;
+  /**
+   * Returns the hostname of the SMTP server
+   */
+  QString host() const;
 
-    /**
-     * Defines the hostname of the SMTP server
-     */
-    void setHost(const QString &host);
+  /**
+   * Defines the hostname of the SMTP server
+   */
+  void setHost(const QString &host);
 
-    /**
-     * Returns the port of the SMTP server
-     */
-    quint16 port() const;
+  /**
+   * Returns the port of the SMTP server
+   */
+  quint16 port() const;
 
-    /**
-     * Defines the port of the SMTP server
-     */
-    void setPort(quint16 port);
+  /**
+   * Defines the port of the SMTP server
+   */
+  void setPort(quint16 port);
 
-    /**
-     * The hostname is sent by the EHLO command.
-     */
-    QString hostname() const;
+  /**
+   * The hostname is sent by the EHLO command.
+   */
+  QString hostname() const;
 
-    /**
-     * Defines the client's hostname. This is the hostname is sent by the EHLO command.
-     * Defaults to the local hostname
-     */
-    void setHostname(const QString &hostname);
+  /**
+   * Defines the client's hostname. This is the hostname is sent by the EHLO
+   * command. Defaults to the local hostname
+   */
+  void setHostname(const QString &hostname);
 
-    /**
-     * Returns the connection type of the SMTP server
-     */
-    ConnectionType connectionType() const;
+  /**
+   * Returns the connection type of the SMTP server
+   */
+  ConnectionType connectionType() const;
 
-    /**
-     * Defines the connection type of the SMTP server
-     */
-    void setConnectionType(ConnectionType ct);
+  /**
+   * Defines the connection type of the SMTP server
+   */
+  void setConnectionType(ConnectionType ct);
 
-    /**
-     * Returns the username that will authenticate on the SMTP server
-     */
-    QString username() const;
+  /**
+   * Returns the username that will authenticate on the SMTP server
+   */
+  QString username() const;
 
-    /**
-     * Defines the username that will authenticate on the SMTP server
-     */
-    void setUsername(const QString &username);
+  /**
+   * Defines the username that will authenticate on the SMTP server
+   */
+  void setUsername(const QString &username);
 
-    /**
-     * Returns the password that will authenticate on the SMTP server
-     */
-    QString password() const;
+  /**
+   * Returns the password that will authenticate on the SMTP server
+   */
+  QString password() const;
 
-    /**
-     * Defines the password that will authenticate on the SMTP server
-     */
-    void setPassword(const QString &password);
+  /**
+   * Defines the password that will authenticate on the SMTP server
+   */
+  void setPassword(const QString &password);
 
-    /**
-     * Returns the authenticaion method of the SMTP server
-     */
-    AuthMethod authMethod() const;
+  /**
+   * Returns the authenticaion method of the SMTP server
+   */
+  AuthMethod authMethod() const;
 
-    /**
-     * Defines the authenticaion method of the SMTP server
-     */
-    void setAuthMethod(AuthMethod method);
+  /**
+   * Defines the authenticaion method of the SMTP server
+   */
+  void setAuthMethod(AuthMethod method);
 
-    /**
-     * Sends the email async.
-     * The email is added to a queue and is processed once
-     * the connection and protocol commands are exchanged,
-     * if the server reports PIPELINING the recipients commands
-     * are sent in one go automatically.
-     *
-     * You must delete the returned object, if you do so before
-     * it's finished() signal is emited this class won't send
-     * the email.
-     */
-    ServerReply *sendMail(const MimeMessage &msg);
+  /**
+   * Sends the email async.
+   * The email is added to a queue and is processed once
+   * the connection and protocol commands are exchanged,
+   * if the server reports PIPELINING the recipients commands
+   * are sent in one go automatically.
+   *
+   * You must delete the returned object, if you do so before
+   * it's finished() signal is emited this class won't send
+   * the email.
+   */
+  ServerReply *sendMail(const MimeMessage &msg);
 
-    /**
-     * Returns the number of emails in queue
-     * Can be useful if you create multiple Server instances and
-     * want to load balance your emails.
-     */
-    int queueSize() const;
+  /**
+   * Returns the number of emails in queue
+   * Can be useful if you create multiple Server instances and
+   * want to load balance your emails.
+   */
+  int queueSize() const;
 
-    /**
-     * Connects to the SMTP server.
-     * This is called automatically when an email is sent, and usually SMTP servers
-     * timeout the connection after a while.
-     */
-    void connectToServer();
+  /**
+   * Connects to the SMTP server.
+   * This is called automatically when an email is sent, and usually SMTP
+   * servers timeout the connection after a while.
+   */
+  void connectToServer();
 
-    /**
-     * @brief ignoreSslErrors tells the socket to ignore all pending ssl errors if SSL encryption is active.
-     *      Must be called in a direct connected slot/functor
-     */
-    void ignoreSslErrors();
+  /**
+   * @brief ignoreSslErrors tells the socket to ignore all pending ssl errors if
+   * SSL encryption is active. Must be called in a direct connected slot/functor
+   */
+  void ignoreSslErrors();
 
-    /**
-     * @brief ignoreSslErrors tells the socket to ignore the given ssl errors if SSL encryption is active.
-     * @param errors defines the errors to ignore
-     */
-    void ignoreSslErrors(const QList<QSslError> &errors);
+  /**
+   * @brief ignoreSslErrors tells the socket to ignore the given ssl errors if
+   * SSL encryption is active.
+   * @param errors defines the errors to ignore
+   */
+  void ignoreSslErrors(const QList<QSslError> &errors);
 
-Q_SIGNALS:
-    void smtpError(SmtpError e, const QString &description);
-    void sslErrors(const QList<QSslError> &sslErrorList);
-    void disconnected();
+ Q_SIGNALS:
+  void smtpError(SmtpError e, const QString &description);
+  void sslErrors(const QList<QSslError> &sslErrorList);
+  void disconnected();
 
-private:
-    ServerPrivate *d_ptr;
+ private:
+  ServerPrivate *d_ptr;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // SERVER_H
+#endif  // SERVER_H

@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -7,27 +8,25 @@
 
 #include <QObject>
 #include <QtNetwork/QTcpSocket>
-class internet : public QObject
-{
-    Q_OBJECT
-    QTcpSocket *tcpSocket;
+class internet : public QObject {
+  Q_OBJECT
+  QTcpSocket *tcpSocket;
 
-public:
-    explicit internet(QObject *parent = nullptr);
-    ~internet();
+ public:
+  explicit internet(QObject *parent = nullptr);
+  ~internet();
 
-signals:
-    void connected();
-    void disconnected();
+ signals:
+  void connected();
+  void disconnected();
 
-public slots:
-    void checkOnline();
+ public slots:
+  void checkOnline();
 
-private slots:
-    void socketConnected();
-    void socketDisconnected();
-    void timeout(QAbstractSocket::SocketError);
-
+ private slots:
+  void socketConnected();
+  void socketDisconnected();
+  void timeout(QAbstractSocket::SocketError);
 };
 
-#endif // INTERNET_H
+#endif  // INTERNET_H

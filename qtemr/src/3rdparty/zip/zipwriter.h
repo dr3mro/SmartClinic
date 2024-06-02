@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -45,60 +46,55 @@
 #ifndef QZIPWRITER_H
 #define QZIPWRITER_H
 
-#include <QtCore/qstring.h>
 #include <QtCore/qfile.h>
-
+#include <QtCore/qstring.h>
 
 class ZipWriterPrivate;
 
+class ZipWriter {
+ public:
+  ZipWriter(const QString &fileName,
+            QIODevice::OpenMode mode = (QIODevice::WriteOnly |
+                                        QIODevice::Truncate));
 
-class  ZipWriter
-{
-public:
-    ZipWriter(const QString &fileName, QIODevice::OpenMode mode = (QIODevice::WriteOnly | QIODevice::Truncate) );
+  explicit ZipWriter(QIODevice *device);
+  ~ZipWriter();
 
-    explicit ZipWriter(QIODevice *device);
-    ~ZipWriter();
+  QIODevice *device() const;
 
-    QIODevice* device() const;
+  bool isWritable() const;
+  bool exists() const;
 
-    bool isWritable() const;
-    bool exists() const;
+  enum Status {
+    NoError,
+    FileWriteError,
+    FileOpenError,
+    FilePermissionsError,
+    FileError
+  };
 
-    enum Status {
-        NoError,
-        FileWriteError,
-        FileOpenError,
-        FilePermissionsError,
-        FileError
-    };
+  Status status() const;
 
-    Status status() const;
+  enum CompressionPolicy { AlwaysCompress, NeverCompress, AutoCompress };
 
-    enum CompressionPolicy {
-        AlwaysCompress,
-        NeverCompress,
-        AutoCompress
-    };
+  void setCompressionPolicy(CompressionPolicy policy);
+  CompressionPolicy compressionPolicy() const;
 
-    void setCompressionPolicy(CompressionPolicy policy);
-    CompressionPolicy compressionPolicy() const;
+  void setCreationPermissions(QFile::Permissions permissions);
+  QFile::Permissions creationPermissions() const;
 
-    void setCreationPermissions(QFile::Permissions permissions);
-    QFile::Permissions creationPermissions() const;
+  void addFile(const QString &fileName, const QByteArray &data);
 
-    void addFile(const QString &fileName, const QByteArray &data);
+  void addFile(const QString &fileName, QIODevice *device);
 
-    void addFile(const QString &fileName, QIODevice *device);
+  void addDirectory(const QString &dirName);
 
-    void addDirectory(const QString &dirName);
+  void addSymLink(const QString &fileName, const QString &destination);
 
-    void addSymLink(const QString &fileName, const QString &destination);
+  void close();
 
-    void close();
-private:
-    ZipWriterPrivate *d;
-
+ private:
+  ZipWriterPrivate *d;
 };
 
-#endif // QZIPWRITER_H
+#endif  // QZIPWRITER_H

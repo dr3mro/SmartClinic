@@ -1,4 +1,5 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
@@ -31,7 +32,7 @@
 #define _workingDays "workingDays"
 #define _lastSelectedFollowUpDate "lastSelectedFollowUpDate"
 
-//print settings
+// print settings
 #define _paperSizeId "paperSizeId"
 #define _pageMargin "pageMargin"
 #define _showBanner "showBanner"
@@ -74,17 +75,17 @@
 #define _showDrugsInitDate "showDrugsInitDate"
 #define _showSignaturePrintedOn "showSignaturePrintedOn"
 #define _showOnlyNewlyModifiedAddedDrugs "showOnlyNewlyModifiedAddedDrugs"
-//#define _showTradeNamesBold "showTradeNamesBold"
+// #define _showTradeNamesBold "showTradeNamesBold"
 #define _showDoseNewLine "showDoseNewLine"
 #define _preferArabic "prefereArabic"
-//#define _showStartDate "showStartDate"
+// #define _showStartDate "showStartDate"
 #define _enableFullPage "enableFullPage"
 #define _enableBodyHeaderSeparator "enableBodyHeaderSeparator"
 #define _compactMode "compactMode"
 #define _clearDuplicateDrugs "clearDuplicateDrugs"
 #define _preferRTFBanner "preferRTFBanner"
 #define _printerIndex "printerIndex"
-//#define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
+// #define _showHorizontalLineBelowHeader "showHorizontalLineBelowHeader"
 
 #define _Fonts "Fonts"
 #define _defaultFont "defaultFont"
@@ -98,7 +99,8 @@
 #define _clinic "Clinic"
 #define _maxFollowUps "maxFollowUps"
 #define _maxFollowUpsPerProblem "maxFollowUpsPerProblem"
-#define _autoSetnewAfterMaxPerProblemIsReached "autoSetnewAfterMaxPerProblemIsReached"
+#define _autoSetnewAfterMaxPerProblemIsReached \
+  "autoSetnewAfterMaxPerProblemIsReached"
 
 #define _checkOut "CheckOut"
 #define _checkoutDate "checkoutDate"
@@ -153,4 +155,4 @@
 #define _th_enable3D "enable3D"
 #define _th_selected_item_text_color "selected_item_text_color"
 
-#endif // STATICSTRINGS_H
+#endif  // STATICSTRINGS_H

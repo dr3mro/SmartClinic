@@ -24,13 +24,13 @@
 
 namespace SimpleMail {
 
-class  QuotedPrintable
-{
-public:
-    static QByteArray encode(const QByteArray &input, bool rfc2047, int *printable = nullptr, int *encoded = nullptr);
-    static QByteArray decode(const QByteArray &input);
+class QuotedPrintable {
+ public:
+  static QByteArray encode(const QByteArray &input, bool rfc2047,
+                           int *printable = nullptr, int *encoded = nullptr);
+  static QByteArray decode(const QByteArray &input);
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // QUOTEDPRINTABLE_H
+#endif  // QUOTEDPRINTABLE_H

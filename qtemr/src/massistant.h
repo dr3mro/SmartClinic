@@ -1,46 +1,47 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #ifndef MASSISTANT_H
 #define MASSISTANT_H
 
-#include <QDialog>
 #include <QCalendarWidget>
-#include <QKeyEvent>
-#include <QMouseEvent>
-#include <QMessageBox>
-#include <QtConcurrent/QtConcurrent>
+#include <QDesktopWidget>
+#include <QDialog>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QKeyEvent>
+#include <QMessageBox>
+#include <QMouseEvent>
 #include <QShortcut>
-#include <QDesktopWidget>
+#include <QtConcurrent/QtConcurrent>
+
+#include "expecteddeliveries.h"
+#include "mcalendarwidget.h"
+#include "mdialog.h"
+#include "mlabelmsg.h"
 #include "msettings.h"
 #include "sqlbase.h"
 #include "sqlextra.h"
-#include "mcalendarwidget.h"
-#include "mlabelmsg.h"
-#include "mdialog.h"
-#include "expecteddeliveries.h"
 
 namespace Ui {
-  class mAssistant;
+class mAssistant;
 }
 
-class mAssistant : public mDialog
-{
+class mAssistant : public mDialog {
   Q_OBJECT
 
-public:
-  explicit mAssistant(mLabelMsg &labelMsg, QWidget *parent, bool & eMode);
+ public:
+  explicit mAssistant(mLabelMsg &labelMsg, QWidget *parent, bool &eMode);
   void load();
   ~mAssistant();
 
-signals:
+ signals:
   void loadThisPatient(int);
   void toggleEditMode(bool);
 
-private slots:
+ private slots:
   void on_closeButton_clicked();
   void on_goButton_clicked();
   void on_fromDate_dateChanged(const QDate &fromDate);
@@ -59,29 +60,30 @@ private slots:
   void onCashModelLoaded();
   void goExpectedDeliveriesTab();
   void doCalcs();
-private:
-  mLabelMsg& labelMsg;
-  bool & editingMode;
+
+ private:
+  mLabelMsg &labelMsg;
+  bool &editingMode;
   sqlBase *sqlbase;
   sqlExtra *sqlextra;
   QStandardItemModel *calcModel;
   QStandardItemModel *agendaModel;
   QStandardItemModel *myRegisterModel;
   QStandardItemModel *eddModel;
-  QFuture<QStandardItemModel*> eddModelFuture;
-  QFutureWatcher<QStandardItemModel*> eddModelFutureWatcher;
-  QFuture<QStandardItemModel*> agendaModelFuture;
-  QFutureWatcher<QStandardItemModel*> agendaModelFutureWatcher;
+  QFuture<QStandardItemModel *> eddModelFuture;
+  QFutureWatcher<QStandardItemModel *> eddModelFutureWatcher;
+  QFuture<QStandardItemModel *> agendaModelFuture;
+  QFutureWatcher<QStandardItemModel *> agendaModelFutureWatcher;
   QFuture<void> agendaModelAttendedFuture;
   //    QFuture<void> registerServiceLoaderFuture;
   //    QFutureWatcher<void> registerServiceLoaderFutureWatcher;
-  QFuture<QStandardItemModel*> calcModelFuture;
-  QFuture<QStandardItemModel*> cashModelFuture;
-  QFutureWatcher<QStandardItemModel*> cashModelFutureWatcher;
+  QFuture<QStandardItemModel *> calcModelFuture;
+  QFuture<QStandardItemModel *> cashModelFuture;
+  QFutureWatcher<QStandardItemModel *> cashModelFutureWatcher;
   Ui::mAssistant *ui;
   mCalendarWidget *fromCalWidget;
   mCalendarWidget *toCalWidget;
-  mSettings& settings = mSettings::instance();
+  mSettings &settings = mSettings::instance();
   ExpectedDeliveries expectedDeliveries;
   QCalendarWidget *calendar;
 
@@ -91,14 +93,13 @@ private:
   void loadAgenda();
   void setTimePeriod();
   void setcheckoutTooltip();
-  bool ignoreKeyEvents=false;
+  bool ignoreKeyEvents = false;
 
-protected:
-  void keyPressEvent(QKeyEvent *event)override;
-  void keyReleaseEvent(QKeyEvent *event)override;
-  void showEvent(QShowEvent *e)override;
+ protected:
+  void keyPressEvent(QKeyEvent *event) override;
+  void keyReleaseEvent(QKeyEvent *event) override;
+  void showEvent(QShowEvent *e) override;
   void closeEvent(QCloseEvent *e) override;
-
 };
 
-#endif // MASSISTANT_H
+#endif  // MASSISTANT_H

@@ -5,14 +5,13 @@
 
 namespace SimpleMail {
 
-class ServerReplyPrivate
-{
-public:
-    QString responseText;
-    int responseCode = 0;
-    bool error = false;
+class ServerReplyPrivate {
+ public:
+  QString responseText;
+  int responseCode = 0;
+  bool error = false;
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // SERVERREPLY_P_H
+#endif  // SERVERREPLY_P_H

@@ -19,21 +19,20 @@
 #define MIMEATTACHMENT_H
 
 #include <QFile>
-#include "mimepart.h"
-#include "mimefile.h"
 
+#include "mimefile.h"
+#include "mimepart.h"
 #include "smtpexports.h"
 
 namespace SimpleMail {
 
-class  MimeAttachment : public MimeFile
-{
-public:
-    MimeAttachment(QFile *file);
-    MimeAttachment(const QByteArray &stream, const QString &fileName);
-    virtual ~MimeAttachment();
+class MimeAttachment : public MimeFile {
+ public:
+  MimeAttachment(QFile *file);
+  MimeAttachment(const QByteArray &stream, const QString &fileName);
+  virtual ~MimeAttachment();
 };
 
-}
+}  // namespace SimpleMail
 
-#endif // MIMEATTACHMENT_H
+#endif  // MIMEATTACHMENT_H

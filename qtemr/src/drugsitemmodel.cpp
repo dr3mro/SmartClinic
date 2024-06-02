@@ -1,58 +1,50 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// This is an open source non-commercial project. Dear PVS-Studio, please check
+// it.
 
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "drugsitemmodel.h"
 
-DrugsItemModel::DrugsItemModel(QObject *parent):QStandardItemModel(parent)
-{
-    //mDebug() << "drugs Object Created" << this ;
+DrugsItemModel::DrugsItemModel(QObject *parent) : QStandardItemModel(parent) {
+  // mDebug() << "drugs Object Created" << this ;
 }
 
-DrugsItemModel::~DrugsItemModel()
-{
-    //mDebug() << "drugs Object Deleted" << this ;
+DrugsItemModel::~DrugsItemModel() {
+  // mDebug() << "drugs Object Deleted" << this ;
 }
 
-bool DrugsItemModel::isThereActiveDrugs()
-{
-    for ( int i = 0 ; i < rowCount() ; i++ )
-    {
-         int current = item(i,5)->text().toInt();
-         switch (current) {
-         case 1:
-             return true;
-             break;
-         default:
-             break;
-         }
+bool DrugsItemModel::isThereActiveDrugs() {
+  for (int i = 0; i < rowCount(); i++) {
+    int current = item(i, 5)->text().toInt();
+    switch (current) {
+      case 1:
+        return true;
+        break;
+      default:
+        break;
     }
-    return false;
+  }
+  return false;
 }
 
-bool DrugsItemModel::isThereInactiveDrugs()
-{
-    for ( int i = 0 ; i < rowCount() ; i++ )
-    {
-         int current = item(i,5)->text().toInt();
-         switch (current) {
-         case 0:
-             return true;
-             break;
-         default:
-             break;
-         }
+bool DrugsItemModel::isThereInactiveDrugs() {
+  for (int i = 0; i < rowCount(); i++) {
+    int current = item(i, 5)->text().toInt();
+    switch (current) {
+      case 0:
+        return true;
+        break;
+      default:
+        break;
     }
-    return false;
+  }
+  return false;
 }
 
-int DrugsItemModel::getPrintableDrugsCount()
-{
-    int x = 0;
-    for ( int i = 0 ; i < rowCount() ; i++ )
-    {
-         if(item(i,5)->text().toInt() == 1)
-             x++;
-    }
-    return x;
+int DrugsItemModel::getPrintableDrugsCount() {
+  int x = 0;
+  for (int i = 0; i < rowCount(); i++) {
+    if (item(i, 5)->text().toInt() == 1) x++;
+  }
+  return x;
 }

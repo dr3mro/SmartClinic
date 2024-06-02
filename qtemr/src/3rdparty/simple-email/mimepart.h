@@ -18,79 +18,69 @@
 #ifndef MIMEPART_H
 #define MIMEPART_H
 
-#include <QtCore/QSharedDataPointer>
 #include <QtCore/QMetaType>
+#include <QtCore/QSharedDataPointer>
 
 #include "mimecontentformatter.h"
-
 #include "smtpexports.h"
 
 class QIODevice;
 namespace SimpleMail {
 
 class MimePartPrivate;
-class  MimePart
-{
-public:
-    enum Encoding {        
-        _7Bit,
-        _8Bit,
-        Base64,
-        QuotedPrintable
-    };
+class MimePart {
+ public:
+  enum Encoding { _7Bit, _8Bit, Base64, QuotedPrintable };
 
-    MimePart();
-    MimePart(const MimePart &other);
-    virtual ~MimePart();
+  MimePart();
+  MimePart(const MimePart &other);
+  virtual ~MimePart();
 
-    MimePart &operator=(const MimePart &other);
+  MimePart &operator=(const MimePart &other);
 
-    QByteArray header() const;
-    QByteArray content() const;
+  QByteArray header() const;
+  QByteArray content() const;
 
-    void setContent(const QByteArray &content);
-    void setHeader(const QByteArray &header);
+  void setContent(const QByteArray &content);
+  void setHeader(const QByteArray &header);
 
-    void addHeaderLine(const QByteArray &line);
+  void addHeaderLine(const QByteArray &line);
 
-    void setContentId(const QByteArray &cId);
-    QByteArray contentId() const;
+  void setContentId(const QByteArray &cId);
+  QByteArray contentId() const;
 
-    void setContentName(const QByteArray &contentName);
-    QByteArray contentName() const;
+  void setContentName(const QByteArray &contentName);
+  QByteArray contentName() const;
 
-    void setContentType(const QByteArray &contentType);
-    QByteArray contentType() const;
+  void setContentType(const QByteArray &contentType);
+  QByteArray contentType() const;
 
-    void setCharset(const QByteArray &charset);
-    QByteArray charset() const;
+  void setCharset(const QByteArray &charset);
+  QByteArray charset() const;
 
-    void setEncoding(Encoding enc);
-    Encoding encoding() const;
+  void setEncoding(Encoding enc);
+  Encoding encoding() const;
 
-    void setData(const QString &data);
-    QString data() const;
+  void setData(const QString &data);
+  QString data() const;
 
-    MimeContentFormatter *contentFormatter();
+  MimeContentFormatter *contentFormatter();
 
-    bool write(QIODevice *device);
+  bool write(QIODevice *device);
 
-protected:
-    MimePart(MimePartPrivate *d);
-    virtual bool writeData(QIODevice *device);
+ protected:
+  MimePart(MimePartPrivate *d);
+  virtual bool writeData(QIODevice *device);
 
-    QSharedDataPointer<MimePartPrivate> d_ptr;
+  QSharedDataPointer<MimePartPrivate> d_ptr;
 
-    // Q_DECLARE_PRIVATE equivalent for shared data pointers
-    MimePartPrivate* d_func();
-    inline const MimePartPrivate* d_func() const
-    {
-        return d_ptr.constData();
-    }
+  // Q_DECLARE_PRIVATE equivalent for shared data pointers
+  MimePartPrivate *d_func();
+  inline const MimePartPrivate *d_func() const { return d_ptr.constData(); }
 };
 
-}
+}  // namespace SimpleMail
 
-Q_DECLARE_METATYPE(SimpleMail::MimePart*)
+Q_DECLARE_METATYPE(SimpleMail::MimePart *)
 
-#endif // MIMEPART_H
+#endif  // MIMEPART_H
