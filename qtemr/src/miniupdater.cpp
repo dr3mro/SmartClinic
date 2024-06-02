@@ -13,6 +13,7 @@
 miniUpdater::miniUpdater(QWidget *parent,bool _autoUpate) : QDialog(parent),
     ui(new Ui::miniUpdater),
     timeOut(new QTimer(this)),
+    updateFileGraber (new fileGrabber(true,QUrl(),this)),
     autoUpdate(_autoUpate)
 {
       ui->setupUi(this);
@@ -32,6 +33,9 @@ miniUpdater::miniUpdater(QWidget *parent,bool _autoUpate) : QDialog(parent),
 
 miniUpdater::~miniUpdater()
 {
+    delete timeOut;
+    delete updateFileGraber;
+    delete microupdater;
     delete ui;
 }
 
@@ -57,10 +61,9 @@ void miniUpdater::on_doButton_clicked()
 
     ui->doButton->setEnabled(false);
     ui->closeButton->setText("Abort");
-    updateFileGraber = new fileGrabber(true,QUrl(updateUrl),this);
+
     downloading = true;
     connect( updateFileGraber,SIGNAL(downloadSaved(double)),this,SLOT(downloadingFinished(double)));
-    connect( updateFileGraber,SIGNAL(finished()),updateFileGraber,SLOT(deleteLater()) );
     connect( updateFileGraber,SIGNAL(downloadProgress(qint64,qint64)),this,SLOT(downloadProgress(qint64,qint64)));
     connect( updateFileGraber,SIGNAL(verifyFile(QString)),this,SLOT(verifyUpdate(QString)) );
     connect( timeOut,SIGNAL(timeout()),this,SLOT(connectionTimeOut()));
@@ -69,6 +72,7 @@ void miniUpdater::on_doButton_clicked()
     ui->speed->show();
     clock.start();
     timeOut->start(15000);
+    updateFileGraber->setURL(QUrl(updateUrl));
     updateFileGraber->run();
     ui->textEdit->append("<html><p style='color:blue;'><b>Downloading Update, Please Wait!</b></p></html>");
 }

@@ -1,7 +1,3 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include "filegrabber.h"
 
 fileGrabber::fileGrabber(bool _save, QUrl _url, QObject *parent) : QObject(parent),
@@ -67,6 +63,11 @@ void fileGrabber::abort()
 {
     reply->abort();
     emit finished();
+}
+
+void fileGrabber::setURL(const QUrl &_url)
+{
+    url = _url;
 }
 
 fileGrabber::~fileGrabber()

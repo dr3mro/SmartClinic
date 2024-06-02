@@ -1,7 +1,3 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #ifndef FILEGRABBER_H
 #define FILEGRABBER_H
 
@@ -21,13 +17,14 @@ class fileGrabber : public QObject
 {
     Q_OBJECT
 public:
-    explicit fileGrabber(bool save, QUrl url,QObject *parent = nullptr);
+    explicit fileGrabber(bool save, QUrl url = QUrl(),QObject *parent = nullptr);
     void doDownload(const QUrl &url);
     QString saveFileName(const QUrl &url);
     bool closeFile();
     void openFile(const QString &filename);
     void run();
     void abort();
+    void setURL(const QUrl &_url);
     ~fileGrabber();
 public slots:
     void execute();
