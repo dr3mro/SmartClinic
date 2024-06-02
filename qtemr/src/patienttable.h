@@ -58,11 +58,9 @@ class patientTable : public QTableView {
   QFuture<QStandardItemModel *> initModelFuture;
   QFutureWatcher<QStandardItemModel *> initWatcher;
   int ID = 1;
-  // QModelIndexList getSortedMatchedListOfIndexes(const int& row);
+  inline void commonTweaksForPatientTable();
 
  signals:
-  // void quitUpdateInLinePatientListThread();
-  // void quitSetMyModelThread();
   void modelLoadingFinished();
   void loadSelectedPatient(const QModelIndex);
   void focusFilterBox();

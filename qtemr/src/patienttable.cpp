@@ -1,13 +1,4 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check
-// it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include "patienttable.h"
-
-#include <algorithm>
-#include <cstdlib>
-
 #include "qabstractitemmodel.h"
 
 patientTable::patientTable(QWidget *parent)
@@ -80,23 +71,23 @@ bool patientTable::eventFilter(QObject *o, QEvent *e) {
   return QObject::eventFilter(o, e);
 }
 
-// QModelIndexList patientTable::getSortedMatchedListOfIndexes(const int &row)
-//{
-//     auto start = proxy_model->index(0,0);
-//     auto matchingString = QStringLiteral("%1").arg(row+1, 5, 10,
-//     QLatin1Char('0'));
+void patientTable::commonTweaksForPatientTable()
+{
+  this->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  this->horizontalHeader()->setSectionHidden(2, true);
 
-//    auto indexes = proxy_model->match(start,Qt::MatchExactly,matchingString);
+  this->horizontalHeader()->setStretchLastSection(true);
+  this->horizontalHeader()->setSectionResizeMode(
+      0, QHeaderView::ResizeMode::ResizeToContents);
+  this->horizontalHeader()->setSectionResizeMode(
+      1, QHeaderView::ResizeMode::Stretch);
 
-//    if (indexes.count() > 1)
-//        std::sort(indexes.begin(),indexes.end(),
-//              [](const QModelIndex &a, const QModelIndex &b)
-//                {
-//                    return a.row() > b.row();
-//                });
-
-//    return indexes;
-//}
+  this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+  this->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAsNeeded);
+  this->setSelectionMode(QAbstractItemView::SingleSelection);
+  this->setSelectionBehavior(QAbstractItemView::SelectRows);
+  this->hideColumn(2);
+}
 
 void patientTable::keyPressEvent(QKeyEvent *ke) {
   if ((ke->key() == Qt::Key_Up) && (currentIndex().row() == 0))
@@ -106,10 +97,8 @@ void patientTable::keyPressEvent(QKeyEvent *ke) {
 
 void patientTable::updatePatientsCompleted() {
   proxy_model->setSourceModel(model);
-  hideColumn(2);
+  commonTweaksForPatientTable();
   mSelectRow(ID - 1);
-  this->setColumnWidth(0, sizeHintForColumn(0));
-  repaint();
 }
 
 void patientTable::setMyModel() {
@@ -125,20 +114,7 @@ void patientTable::setMyModel() {
 }
 
 void patientTable::tweaksAfterModelLoadingIsFinished() {
-  this->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  this->horizontalHeader()->setSectionHidden(2, true);
-
-  this->horizontalHeader()->setStretchLastSection(true);
-  this->horizontalHeader()->setSectionResizeMode(
-      0, QHeaderView::ResizeMode::ResizeToContents);
-  this->horizontalHeader()->setSectionResizeMode(
-      1, QHeaderView::ResizeMode::Stretch);
-
-  this->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-  this->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAsNeeded);
-  this->setSelectionMode(QAbstractItemView::SingleSelection);
-  this->setSelectionBehavior(QAbstractItemView::SelectRows);
-  this->hideColumn(2);
+  commonTweaksForPatientTable();
   this->mSelectRow(0);
   loadingIsFinished = true;
 }
@@ -175,7 +151,7 @@ void patientTable::setConnection(QString conname) {
   connectionName = conname;
   sqlbase = new sqlBase(this, connectionName, false);
   sqlbase->createPatientItemModel();
-  // qRegisterMetaType<QVector<int> >("QVector<int>");
+
   connect(sqlbase, SIGNAL(patientIconSet(bool, int)), this,
           SLOT(setPatientIcon(bool, int)));
   connect(this, &patientTable::modelLoadingFinished, this,
@@ -200,26 +176,8 @@ void patientTable::closeDatabase() {
 }
 
 void patientTable::reOpenDatabase() { setConnection(connectionName); }
-//
-// int mSelectRowCompare(const void* a, const void* b)
-//{
-//    const int* x = (int*) a;
-//    const int* y = (int*) b;
 
-//    if (*x < *y)
-//        return 1;
-//    else if (*x > *y)
-//        return -1;
-
-//    return 0;
-//}
-// std::qsort(&indexes,indexes.size(),sizeof(decltype(indexes)::value_type),mSelectRowCompare);
-
-#define DISABLESORTEDSELECT 0
 void patientTable::mSelectRow(int row) {
-#if DISABLESORTEDSELECT
-  selectRow(row);
-#else
   if (this->horizontalHeader()->sortIndicatorOrder() ==
           Qt::SortOrder::AscendingOrder &&
       proxy_model->sortColumn() == 0) {
@@ -234,7 +192,6 @@ void patientTable::mSelectRow(int row) {
       }
     }
   }
-#endif
 }
 
 patientTable::~patientTable() {
