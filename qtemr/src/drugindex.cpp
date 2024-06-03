@@ -1,5 +1,4 @@
 #include "drugindex.h"
-
 #include "ui_drugindex.h"
 
 drugIndex::drugIndex(QWidget *parent)
@@ -22,7 +21,8 @@ drugIndex::drugIndex(QWidget *parent)
   connect(&futureWatcher, &QFutureWatcher<QStandardItemModel *>::finished, this,
           &drugIndex::load, Qt::QueuedConnection);
   connect(sqlcore, &sqlCore::progress, this, &drugIndex::setMessageText);
-  message.setMessage("<b> Please wait... </b>");
+
+  message.setMessage ("<b> Please wait... </b>");
 }
 
 drugIndex::~drugIndex() {
@@ -34,14 +34,21 @@ drugIndex::~drugIndex() {
   delete ui;
 }
 
-void drugIndex::on_closeButton_clicked() { this->close(); }
+void
+drugIndex::on_closeButton_clicked ()
+{
+  this->close ();
+}
 
-void drugIndex::on_search_textChanged(const QString &arg1) {
-  // proxy_model->setFilterRegExp(arg1);
+void
+drugIndex::on_search_textChanged (const QString &arg1)
+{
   proxy_model->setFilterWildcard(arg1);
 }
 
-void drugIndex::on_tradeName_clicked(bool status) {
+void
+drugIndex::on_tradeName_clicked (bool status)
+{
   ui->search->setFocus(Qt::OtherFocusReason);
   if (status) {
     filterColumn = 0;
@@ -49,7 +56,9 @@ void drugIndex::on_tradeName_clicked(bool status) {
   }
 }
 
-void drugIndex::on_genericName_clicked(bool status) {
+void
+drugIndex::on_genericName_clicked (bool status)
+{
   ui->search->setFocus(Qt::OtherFocusReason);
   if (status) {
     filterColumn = 1;
@@ -57,7 +66,9 @@ void drugIndex::on_genericName_clicked(bool status) {
   }
 }
 
-void drugIndex::on_indication_clicked(bool status) {
+void
+drugIndex::on_indication_clicked (bool status)
+{
   ui->search->setFocus(Qt::OtherFocusReason);
   if (status) {
     filterColumn = 3;
@@ -65,35 +76,47 @@ void drugIndex::on_indication_clicked(bool status) {
   }
 }
 
-void drugIndex::setCategory(QString category) {
+void
+drugIndex::setCategory (QString category)
+{
   proxy_model->setCategory(category);
   proxy_model->setFilterFixedString(ui->search->text());
   toggleResetButton();
 }
 
-void drugIndex::setManufacturer(QString manufacturer) {
+void
+drugIndex::setManufacturer (QString manufacturer)
+{
   proxy_model->setManufacturer(manufacturer);
   proxy_model->setFilterFixedString(ui->search->text());
   toggleResetButton();
 }
 
-void drugIndex::setForm(QString form) {
+void
+drugIndex::setForm (QString form)
+{
   proxy_model->setForm(form);
   proxy_model->setFilterFixedString(ui->search->text());
   toggleResetButton();
 }
 
-void drugIndex::setResultsCount(QModelIndex, int, int) {
+void
+drugIndex::setResultsCount (QModelIndex, int, int)
+{
   ui->resultsCount->setText(QString("<b>%1</b>").arg(proxy_model->rowCount()));
 }
 
-void drugIndex::on_resetButton_clicked() {
+void
+drugIndex::on_resetButton_clicked ()
+{
   ui->categories->setCurrentIndex(0);
   ui->form->setCurrentIndex(0);
   ui->manufacturer->setCurrentIndex(0);
 }
 
-void drugIndex::toggleResetButton() {
+void
+drugIndex::toggleResetButton ()
+{
   ui->search->setFocus(Qt::OtherFocusReason);
   bool c = (ui->categories->currentIndex() != 0) ? true : false;
   bool f = (ui->form->currentIndex() != 0) ? true : false;
@@ -101,11 +124,12 @@ void drugIndex::toggleResetButton() {
   ui->resetButton->setEnabled((m | c | f));
 }
 
-void drugIndex::setFilters() {
+void
+drugIndex::setFilters ()
+{
   ui->categories->insertItem(0, "All Drugs");
   ui->manufacturer->insertItem(0, "All Companies");
   ui->form->insertItem(0, "All Forms");
-
   sqlCore::filters f = sqlcore->getFilters();
   ui->categories->insertItems(1, f.categories);
   ui->manufacturer->insertItems(1, f.companies);
@@ -113,7 +137,9 @@ void drugIndex::setFilters() {
   ui->resultsCount->setText(QString("<b>%1</b>").arg(proxy_model->rowCount()));
 }
 
-void drugIndex::load() {
+void
+drugIndex::load ()
+{
   ui->tradeName->setChecked(true);
 
   filterColumn = 0;
@@ -125,9 +151,6 @@ void drugIndex::load() {
   proxy_model->setManufacturer("All Companies");
   proxy_model->setForm("All Forms");
   ui->indexTable->setModel(proxy_model);
-  // ui->indexTable->setColumnWidth(0,300);
-  // ui->indexTable->setColumnWidth(1,250);
-
   connect(ui->categories, SIGNAL(currentTextChanged(QString)), this,
           SLOT(setCategory(QString)));
   connect(ui->manufacturer, SIGNAL(currentTextChanged(QString)), this,
@@ -147,9 +170,8 @@ void drugIndex::load() {
       1, QHeaderView::Stretch);
   ui->indexTable->horizontalHeader()->setSectionResizeMode(
       2, QHeaderView::ResizeToContents);
-  // ui->indexTable->horizontalHeader()->setStretchLastSection( true );
-  ui->indexTable->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 
+  ui->indexTable->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
   ui->indexTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
   ui->indexTable->setSelectionMode(QAbstractItemView::SingleSelection);
   ui->indexTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -161,7 +183,9 @@ void drugIndex::load() {
   ui->indexTable->setItemDelegate(new DrugsIndexPriceItemDelegate(this));
 }
 
-void drugIndex::on_updateButton_clicked() {
+void
+drugIndex::on_updateButton_clicked ()
+{
   QTcpSocket sock;
   sock.connectToHost("www.google.com", 80);
   bool connected = sock.waitForConnected(1000);  // ms
@@ -182,10 +206,12 @@ void drugIndex::on_updateButton_clicked() {
       QMessageBox::Button::Yes, QMessageBox::Button::No);
   if (reply == QMessageBox::Button::No) return;
   message.show();
-  sqlcore->updateDrugsDatabase();
+  sqlcore->updateDrugsDatabase ();
 }
 
-void drugIndex::on_resetDatabaseButton_clicked() {
+void
+drugIndex::on_resetDatabaseButton_clicked ()
+{
   int reply =
       QMessageBox::question(nullptr, "Reseting drugs database",
                             "Are you sure that you want to reset the drugs "
@@ -205,7 +231,9 @@ void drugIndex::on_resetDatabaseButton_clicked() {
   onDrugsDatabaseChange(true);
 }
 
-void drugIndex::onDrugsDatabaseChange(bool success) {
+void
+drugIndex::onDrugsDatabaseChange (bool success)
+{
   if (success) {
     emit resetDrugsAutoComplete();
     QMessageBox::information(
@@ -221,7 +249,9 @@ void drugIndex::onDrugsDatabaseChange(bool success) {
   message.hide();
 }
 
-void drugIndex::loadModel() {
+void
+drugIndex::loadModel ()
+{
 #if QT_VERSION >= 0x060000
   future = QtConcurrent::run(&sqlCore::getDrugsIndexModel, sqlcore, model);
 #else
@@ -230,6 +260,8 @@ void drugIndex::loadModel() {
   futureWatcher.setFuture(future);
 }
 
-void drugIndex::setMessageText(const QString &status) {
+void
+drugIndex::setMessageText (const QString &status)
+{
   message.setMessage(status);
 }

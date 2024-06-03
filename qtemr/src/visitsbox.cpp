@@ -3,32 +3,31 @@
 #include "ui_visitsbox.h"
 #include "visithelper.h"
 
-visitsBox::visitsBox(QWidget *parent)
-    : mDialog(parent),
-      ui(new Ui::visitsBox),
-      msgbox(new myMessageBox(this)),
-      sqlbase(new sqlBase(this, "qt_sql_base_visitbox_connection", false)),
-      sqlextra(new sqlExtra(this, "qt_sql_extra_visitbox_connection", false)),
-      autoSaveTimer(new QTimer),
-      add2CompleterWorker(new wm_add2Completer),
-      visitSaverWorker(new wm_visitSaver),
-      print(new printDrugs(this)),
-      // calWidget(new mCalendarWidget(this)),
-      shift_pageUp(
-          new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageUp), this)),
-      shift_pageDown(
-          new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageDown), this)),
-      printShortcut(new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_P), this)),
-      easyPrintShortcut(
-          new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this)),
-      printPreviewShortcut(
-          new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_R), this)),
-      toggleFollowupDate(new QShortcut(Qt::Key_F12, this)),
-      vTypeUp(new QShortcut(Qt::Key_F10, this)),
-      vTypeDown(new QShortcut(Qt::Key_F11, this)),
-      visitAsRequest(new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F3), this)),
-      lastSelectedFollowupDate(
-          QDate::fromJulianDay(settings.getLastSelectedFollowUpDate()))
+visitsBox::visitsBox (QWidget *parent)
+    : mDialog (parent), ui (new Ui::visitsBox),
+      msgbox (new myMessageBox (this)),
+      sqlbase (new sqlBase (this, "qt_sql_base_visitbox_connection", false)),
+      sqlextra (
+          new sqlExtra (this, "qt_sql_extra_visitbox_connection", false)),
+      autoSaveTimer (new QTimer), add2CompleterWorker (new wm_add2Completer),
+      visitSaverWorker (new wm_visitSaver), print (new printDrugs (this)),
+      shift_pageUp (
+          new QShortcut (QKeySequence (Qt::SHIFT | Qt::Key_PageUp), this)),
+      shift_pageDown (
+          new QShortcut (QKeySequence (Qt::SHIFT | Qt::Key_PageDown), this)),
+      printShortcut (
+          new QShortcut (QKeySequence (Qt::CTRL | Qt::Key_P), this)),
+      easyPrintShortcut (
+          new QShortcut (QKeySequence (Qt::CTRL | Qt::Key_O), this)),
+      printPreviewShortcut (
+          new QShortcut (QKeySequence (Qt::CTRL | Qt::Key_R), this)),
+      toggleFollowupDate (new QShortcut (Qt::Key_F12, this)),
+      vTypeUp (new QShortcut (Qt::Key_F10, this)),
+      vTypeDown (new QShortcut (Qt::Key_F11, this)),
+      visitAsRequest (
+          new QShortcut (QKeySequence (Qt::SHIFT | Qt::Key_F3), this)),
+      lastSelectedFollowupDate (
+          QDate::fromJulianDay (settings.getLastSelectedFollowUpDate ()))
 
 {
   ui->setupUi(this);
@@ -1295,20 +1294,6 @@ void visitsBox::connectSignals(QWidget *parent) {
   connect(visitAsRequest, &QShortcut::activated, this,
           &visitsBox::on_ButtonVisit_clicked);
 }
-
-// void visitsBox::initializeVariables()
-//{
-//     calWidget = new mCalendarWidget(ui->dateFollowUp);
-//     ui->dateFollowUp->setCalendarWidget(calWidget);
-//     shift_pageUp  = new QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageUp),
-//     this); shift_pageUp->setContext(Qt::WindowShortcut); shift_pageDown = new
-//     QShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageDown), this);
-//     shift_pageDown->setContext(Qt::WindowShortcut);
-//     printShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_P),this);
-//     easyPrintShortcut = new QShortcut(QKeySequence(Qt::CTRL +
-//     Qt::Key_O),this); printPreviewShortcut = new
-//     QShortcut(QKeySequence(Qt::CTRL + Qt::Key_I),this);
-// }
 
 void visitsBox::addThisToCompleter(const sqlBase::Visit &visit) {
   add2CompleterWorker->setVisitData(visit);

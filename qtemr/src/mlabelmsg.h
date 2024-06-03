@@ -6,6 +6,8 @@
 #ifndef MLABELMSG_H
 #define MLABELMSG_H
 
+#include "mdebug.h"
+#include "windowmanager.h"
 #include <QApplication>
 #include <QFont>
 #include <QGraphicsDropShadowEffect>
@@ -13,19 +15,19 @@
 #include <QObject>
 #include <QString>
 
-#include "windowmanager.h"
-
 class mLabelMsg : public QLabel {
   Q_OBJECT
  public:
-  explicit mLabelMsg(QWidget *parent = nullptr);
-  ~mLabelMsg();
-  void show();
-  void setMessage(QString msg);
+   explicit mLabelMsg (QWidget *parent = nullptr);
+   ~mLabelMsg ();
+   void show ();
+   void setMessage (QString msg);
 
  private:
-  QGraphicsDropShadowEffect *effect;
-  WindowManager wm;
+   QGraphicsDropShadowEffect *effect;
+   WindowManager wm;
+ signals:
+   void escKeyPressed ();
 };
 
 #endif  // MLABELMSG_H

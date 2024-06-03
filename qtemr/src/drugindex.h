@@ -53,7 +53,6 @@ class drugIndex : public mDialog {
   void on_resetButton_clicked();
   void toggleResetButton();
   void setFilters();
-
   void on_updateButton_clicked();
   void on_resetDatabaseButton_clicked();
   void onDrugsDatabaseChange(bool success);
@@ -65,10 +64,8 @@ class drugIndex : public mDialog {
   mSortFilterProxyModel *proxy_model;
   sqlCore *sqlcore;
   mLabelMsg message;
-
   void loadModel();
   void load();
-
   QFutureWatcher<QStandardItemModel *> futureWatcher;
   QFuture<QStandardItemModel *> future;
 

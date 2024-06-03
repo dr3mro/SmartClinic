@@ -30,7 +30,7 @@ class sqlCore : public msql {
   int getDrugsDatabaseVersion();
   filters getFilters();
   void closeDataBase();
-  void updateDrugsDatabase();
+  void updateDrugsDatabase ();
   ~sqlCore();
 
  private:

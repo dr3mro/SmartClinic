@@ -1,13 +1,10 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check
-// it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 #include "mlabelmsg.h"
 
-mLabelMsg::mLabelMsg(QWidget *parent) : QLabel(parent) {
-  effect = new QGraphicsDropShadowEffect(this);
-  effect->setColor(Qt::gray);
+mLabelMsg::mLabelMsg (QWidget *parent)
+    : QLabel (parent), effect (new QGraphicsDropShadowEffect (this))
+{
+
+  effect->setColor (Qt::gray);
   effect->setBlurRadius(5);
   effect->setXOffset(2);
   effect->setYOffset(2);
@@ -26,7 +23,7 @@ mLabelMsg::mLabelMsg(QWidget *parent) : QLabel(parent) {
               "color: rgb(170, 255, 127);"));
 }
 
-mLabelMsg::~mLabelMsg() { delete effect; }
+mLabelMsg::~mLabelMsg () { delete effect; }
 
 void mLabelMsg::show() {
   wm.centerOnScreen(this);
@@ -34,7 +31,10 @@ void mLabelMsg::show() {
   QWidget::show();
 }
 
-void mLabelMsg::setMessage(QString msg) {
+void
+mLabelMsg::setMessage (QString msg)
+{
   setText(msg);
   resize(msg.length() * 11, 50);
+  setFocus (Qt::OtherFocusReason);
 }
